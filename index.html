@@ -1,133 +1,1671 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="utf-8" />
+  <title>Phoenix Feuer v1.0 — Mobile Operator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Phoenix Feuer v1.0 — Mobile Finanz-OS</title>
   <meta name="theme-color" content="#0b1020" />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="icon" href="./assets/icons/icon-192.png" />
+
+  <link rel="manifest" href='data:application/manifest+json,{
+    "name":"Phoenix Feuer v1.0",
+    "short_name":"Feuer v1",
+    "start_url":".",
+    "display":"standalone",
+    "background_color":"#0b1020",
+    "theme_color":"#2563eb",
+    "icons":[{"src":"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>","sizes":"192x192 512x512","type":"image/svg+xml"}]
+  }'>
+
   <style>
-    :root{--bg:#0b1020;--fg:#e6e9ef;--line:#1a2238;--acc:#2563eb}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
-    header{padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg)}
-    h1{margin:0;font-size:18px;letter-spacing:.2px}
-    main{padding:16px 20px}
-    .card{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
-    .row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
-    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px}
-    .ok{background:#102233;border-color:#1c335e;color:#9cc3ff}
-    .warn{background:#231a10;border-color:#5e331c;color:#ffc89c}
-    code{background:#0f152d;border:1px solid #1a2238;border-radius:6px;padding:2px 6px}
-    a{color:var(--fg)}
-    small{opacity:.8}
-    .mono{font-family:ui-monospace,Consolas,Menlo,monospace}
-    button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
-    button:active{transform:translateY(1px)}
+    :root{
+      --bg:#0b1020; --bg-elev:#121a33; --card:#0f172a; --ink:#e6ebff; --ink-dim:#a9b1d8;
+      --brand:#6ea8fe; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --muted:#2a355a;
+      --ring:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.32);
+      --radius:18px; --radius-sm:12px; --space:14px; --tap:48px; --maxw:620px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+    [data-theme="light"]{
+      --bg:#f5f7ff; --bg-elev:#ffffff; --card:#ffffff; --ink:#0b1020; --ink-dim:#334072; --muted:#e8ecff;
+      --shadow:0 8px 24px rgba(16,24,40,.08);
+    }
+    *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+    html,body{height:100%}
+    html{scroll-behavior:smooth; overscroll-behavior-y:none}
+    body{
+      margin:0; font-family:var(--font);
+      background:linear-gradient(180deg,var(--bg) 0%, #0b1330 100%); color:var(--ink);
+      line-height:1.55; letter-spacing:.2px; -webkit-font-smoothing:antialiased;
+    }
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding: env(safe-area-inset-top) var(--space) calc(96px + env(safe-area-inset-bottom)); }
+    header.top{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter:saturate(140%) blur(6px);
+      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      border-bottom:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      padding:10px calc((100vw - var(--maxw))/2 + var(--space));
+    }
+    @media (prefers-reduced-transparency: reduce){ header.top{ backdrop-filter:none } }
+    .brandline{ display:flex; align-items:center; gap:12px; }
+    .logo{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; font-size:20px; background:#0e1738; box-shadow: var(--shadow) }
+    h1{ font-size: clamp(18px, 4.8vw, 20px); margin:0; letter-spacing:.3px; font-weight:700}
+    .sub{ font-size:12px; color:var(--ink-dim); margin-top:2px }
+    .muted{ color:var(--ink-dim); font-size:13px }
+    .grid{ display:grid; gap:var(--space); margin-top:var(--space) }
+    .card{ 
+      background:var(--card); 
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent); 
+      border-radius:var(--radius); 
+      padding:var(--space); 
+      box-shadow: var(--shadow);
+    }
+    .card h2{ font-size:16px; margin:0 0 10px 0; letter-spacing:.2px }
+    .row{ display:flex; align-items:center; gap:10px }
+    .split{ display:flex; gap:var(--space) } .split>*{ flex:1 }
+    .kpi{ font: 700 18px var(--mono); letter-spacing:.3px }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
+      background: color-mix(in oklab, var(--muted) 60%, transparent); 
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      font-size:12px; color:var(--ink-dim);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:var(--tap);
+      padding:10px 14px; border-radius:14px; 
+      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 94%, #1a2550) 0%, var(--bg-elev) 100%);
+      color:var(--ink); font-weight:600; text-decoration:none; cursor:pointer; transition:transform .12s ease;
+    }
+    .btn:active{ transform: scale(.98) }
+    .btn:focus-visible{ outline: 3px solid color-mix(in oklab,var(--ring) 60%, transparent); }
+    .btn.ghost{ background:transparent; box-shadow:none }
+    .btn.primary{ background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color:#1e40af; color:#fff }
+    .btn.ok{ background: linear-gradient(180deg, #059669, #047857); border-color:#065f46; color:#fff }
+    .btn.warn{ background: linear-gradient(180deg, #d97706, #b45309); border-color:#92400e; color:#fff }
+    .btn.danger{ background: linear-gradient(180deg, #ef4444, #b91c1c); border-color:#7f1d1d; color:#fff }
+    .btn.block{ width:100% }
+    .check{ width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+      background:#0b132b; border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent); cursor:pointer;
+    }
+    .check.done{ background:#10b981; border-color:#059669; color:#001a10 }
+    .list{ display:flex; flex-direction:column; gap:10px }
+    .item{ display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px;
+      background: color-mix(in oklab, var(--muted) 35%, transparent);
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+    }
+    .item strong{ font-size:15px }
+    .tag{ font:600 11px var(--mono); padding:.5px 6px; border-radius:999px; background:#0b1838; border:1px solid #1f2d59 }
+    .hide{ display:none !important }
+    .okc{ color:var(--ok) } .warnc{ color:var(--warn) } .danger{ color:var(--danger) }
+
+    nav.tabs{
+      position: fixed; bottom:0; left:0; right:0; z-index:30;
+      background: color-mix(in oklab, var(--bg) 94%, #0a0f22);
+      border-top: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      padding:10px calc((100vw - var(--maxw))/2 + var(--space)) calc(10px + env(safe-area-inset-bottom));
+      backdrop-filter: blur(8px);
+    }
+    .tabbar{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+      gap:8px; max-width:var(--maxw); margin:0 auto;
+    }
+    .tab[role="tab"]{ min-height:54px; border-radius:14px; 
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      background: linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 90%, #000));
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-dim)
+    }
+    .tab.active{ outline:2px solid var(--ring); color:var(--ink) }
+
+    /* Forms */
+    .ctl{ display:flex; flex-direction:column; gap:6px }
+    label{ font-size:13px; color:var(--ink-dim) }
+    input[type="text"], input[type="url"], input[type="number"], input[type="date"], textarea, select{
+      width:100%; min-height:var(--tap); padding:12px 12px; border-radius:12px;
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      background:var(--bg-elev); color:var(--ink); font-size:15px; outline:none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus, select:focus{ 
+      border-color:var(--ring); 
+      box-shadow: 0 0 0 3px color-mix(in oklab,var(--ring) 25%, transparent);
+    }
+    textarea{ min-height:96px; resize:vertical }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+
+    /* Modal */
+    .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.65); backdrop-filter: blur(4px);
+      display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .18s; z-index:50 }
+    .modal-overlay.active{ opacity:1; pointer-events:auto }
+    .modal-content{ 
+      background:var(--bg-elev); 
+      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      padding:var(--space); border-radius:var(--radius); width:calc(100% - var(--space)*2); max-width:520px;
+      transform:translateY(8px); transition:transform .18s }
+    .modal-overlay.active .modal-content{ transform:translateY(0) }
+
+    /* Progress */
+    .progress-wrap{ display:flex; flex-direction:column; gap:4px }
+    .progress-bar{ width:100%; height:8px; border-radius:999px; 
+      background: color-mix(in oklab,var(--muted) 50%, transparent); 
+      overflow:hidden;
+    }
+    .progress-bar-inner{ height:100%; border-radius:999px; transition:width .3s ease }
+
+    /* Manual styles */
+    .manual h3{ margin:10px 0 6px 0; font-size:15px }
+    .manual h4{ margin:8px 0 6px 0; font-size:14px }
+    .callout{
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
+      border-radius:var(--radius-sm);
+      padding:10px 12px;
+    }
+    .tbl{ width:100%; border-collapse:collapse; font-size:13px }
+    .tbl th,.tbl td{ 
+      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent); 
+      padding:8px 10px; 
+      vertical-align:top;
+    }
+    .tbl th{ background: color-mix(in oklab, var(--bg-elev) 70%, transparent); text-align:left; }
+
+    @media (prefers-reduced-motion: reduce){
+      .modal-content, .progress-bar-inner{ transition:none !important }
+    }
+    @media (max-width:380px){ .split{flex-direction:column} .btn{padding:10px 10px} }
   </style>
 </head>
 <body>
-  <header><h1>🔥 Phoenix Feuer v1.0 — bereit</h1></header>
-  <main>
-    <div class="card">
-      <div class="row">
-        <span class="badge ok" id="online-badge">Online</span>
-        <span class="badge" id="sw-badge">Service Worker: …</span>
-        <span class="badge" id="mf-badge">Manifest: …</span>
+  <header class="top" role="banner">
+    <div class="brandline">
+      <div class="logo" aria-hidden="true">🔥</div>
+      <div>
+        <h1>Phoenix Feuer <span style="font-size:12px; font-family:var(--mono); background:var(--muted); padding:2px 6px; border-radius:6px; vertical-align:middle;">v1.0</span></h1>
+        <div class="sub"><span id="datestamp"></span> · <span id="status" aria-live="polite">bereit</span></div>
       </div>
-      <p>Du siehst diese Seite. Das Grundgerüst funktioniert. Das Manifest und der Service Worker registrieren sich automatisch.</p>
-      <p>Manifest-Check: <a href="./manifest.webmanifest" target="_blank" rel="noopener">manifest.webmanifest</a></p>
-      <div class="row">
-        <button id="installBtn" style="display:none">Zum Startbildschirm hinzufügen</button>
-        <button id="clearCacheBtn">App-Cache leeren</button>
+      <div style="margin-left:auto" class="row">
+        <button id="themeBtn" class="btn" title="Hell/Dunkel umschalten" aria-pressed="true">☀️/🌙</button>
       </div>
-      <small class="mono">Pfad: <span id="path"></span></small>
     </div>
+  </header>
 
-    <div class="card">
-      <strong>Hinweis:</strong>
-      <p>Alle Pfade sind relativ (<code>./…</code>). Das ist wichtig bei GitHub Pages, weil deine App unter <code>/REPO/</code> läuft.</p>
-      <p>Wenn du später baust und in <code>/docs</code> deployst, musst du die Pages-Einstellung anpassen.</p>
-    </div>
+  <main class="wrap" role="main">
+    <section id="view" aria-live="polite">
+      <div class="muted">Lade Oberfläche…</div>
+    </section>
   </main>
 
+  <nav class="tabs" role="tablist" aria-label="Primäre Navigation">
+    <div class="tabbar"></div>
+  </nav>
+
+  <input id="importFile" type="file" accept="application/json" class="hide" />
+  <div id="modal-container" aria-live="polite"></div>
+
+  <audio id="beep" class="hide">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAZGF0YYQAAAAA/////wAAAP///wAAAP///wAAAP///wAAAP///wAAAP///w==" type="audio/wav">
+  </audio>
+
   <script>
-    // Online/Offline
-    const onlineBadge = document.getElementById('online-badge');
-    function setOnlineStatus() {
-      const on = navigator.onLine;
-      onlineBadge.textContent = on ? 'Online' : 'Offline';
-      onlineBadge.className = 'badge ' + (on ? 'ok' : 'warn');
+  (() => {
+    // ---- [PATCH] ES5-sichere Polyfills (ersetzt ||Gleich-Syntax) ----
+    window.requestIdleCallback = window.requestIdleCallback || function(cb){ return setTimeout(function(){ cb({ timeRemaining:function(){ return 0; }, didTimeout:true }); }, 1); };
+    window.cancelIdleCallback = window.cancelIdleCallback || function(id){ return clearTimeout(id); };
+
+    // ======================= CORE =======================
+    const APP = { NAME:"Phoenix Feuer", VERSION:"1.0.0-feuer", SCHEMA:5 };
+    const STORAGE_KEY = "PHOENIX_FEUER_V10";
+    const $  = (sel, root) => (root || document).querySelector(sel);
+    const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+    let view = null; // [PATCH] Erst bei init() setzen
+    let wakeLock = null;
+
+    const NAV = [
+      { id:"home",     label:"Home",     icon:"🏠" },
+      { id:"sprint",   label:"Sprint",   icon:"⏱️" },
+      { id:"audits",   label:"Leads",    icon:"🧭" },
+      { id:"evidence", label:"Evidence", icon:"📎" },
+      { id:"outreach", label:"Outreach", icon:"📬" },
+      { id:"finance",  label:"Finanzen", icon:"💶" },
+      { id:"arsenal",  label:"Arsenal",  icon:"🚀" },
+      { id:"roadmap",  label:"Roadmap",  icon:"🗺️" },
+      { id:"doktrin",  label:"Doktrin",  icon:"📘" }
+    ];
+
+    // ---------- DOKTRIN & ARSENAL ----------
+    const MISSION = Object.freeze({
+      PRIMARY: "ZIEL: 01.01.2026 = Selbstständiger SEO-Consultant.",
+      OUTREACH_DAILY_TARGET: 5
+    });
+
+    const KI_ARSENAL = [
+      { id:"P_25", title:"Collector (Evidence 3+1)", category:"Audit", target:"Gemini",
+        prompt:"Rolle: Collector. Analysiere {URL}. Sammle SERP-Snippets (Top-10). Extrahiere 3+1 Evidenzen (3 harte, 1 weiche). Gib Quellen, kurze Risiko-Notiz und Next Step. Format: Markdown mit Abschnitten." },
+      { id:"P_26", title:"Analyst (Executive Summary)", category:"Audit", target:"ChatGPT",
+        prompt:"Rolle: Analyst. Verdichte die gesammelten Evidenzen zu einem Executive Summary für {URL} (≤1 Seite): 1) P0/P1-Funde, 2) Business-Auswirkung, 3) 30-Tage-Plan, 4) Erfolgsmessung. Ton: konkret, knapp." },
+      { id:"P_15", title:"Agent K – Brief-Analyse (Admin-Angst)", category:"Admin", target:"GPT",
+        prompt:"Analysiere [Dateiname/Brief-Inhalt] neutral. Extrahiere: Fristen, Forderungen, Risiken, To-dos, Kommunikationsvorschlag (sachlich). Liefere Checkliste (heute/morgen/diese Woche) und Textbaustein für Antwort." }
+    ];
+
+    // [PATCH] Ersetzt ||= für Kompatibilität
+    function groupBy(arr, key){ return arr.reduce(function(m,x){ m[x[key]] = m[x[key]] || []; m[x[key]].push(x); return m; }, {}); }
+    async function copyToClipboard(text){
+      try{ await navigator.clipboard.writeText(text); setStatus("kopiert!"); }
+      catch(e){
+        const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
+        ta.select(); document.execCommand("copy"); ta.remove(); setStatus("in Zwischenablage (Fallback)");
+      }
     }
-    window.addEventListener('online', setOnlineStatus);
-    window.addEventListener('offline', setOnlineStatus);
-    setOnlineStatus();
+    function journalPromptUse(entry){
+      state.arsenalJournal = state.arsenalJournal || []; // [PATCH] Ersetzt ||=
+      state.arsenalJournal.unshift({ ...entry, ts:new Date().toISOString() });
+      save();
+    }
 
-    // Pfad
-    document.getElementById('path').textContent = location.href;
+    // ---------- State ----------
+    let state = load() || seed();
+    migrateIfNeeded(state);
+    backfill();
 
-    // Manifest-Check
-    const mfBadge = document.getElementById('mf-badge');
-    fetch('./manifest.webmanifest')
-      .then(r => { mfBadge.textContent = r.ok ? 'Manifest: OK' : 'Manifest: Fehler'; if(r.ok){mfBadge.className='badge ok';} })
-      .catch(_ => { mfBadge.textContent = 'Manifest: Fehler'; mfBadge.className='badge warn'; });
+    // ---------- Seed / Backfill / Migrate ----------
+    function seed(){
+      const d=todayISO();
+      return {
+        _meta:{version:APP.VERSION, schema:APP.SCHEMA, created:Date.now()},
+        theme:"dark",
+        activeView:"home",
+        lastSaved:Date.now(),
+        daily:{ date:d, mode:"A", buddha:"", log:"", exec:"", outreachToday:0 },
+        home:{ mit:[
+          { id:id(), text:"Mission setzen (Tägliches Protokoll starten)", done:false }
+        ], kpis:{ sprints:0, outreach:0, evidence:0 } },
+        sprint:{ running:false, startedAt:null, endAt:null, durationMin:90, note:"", remainingSec:90*60 },
+        audits:[],
+        evidence:[],
+        outreach:[],
+        finance:{ income:[], expense:[] },
+        legal:{ pfaendungsgrenze:1555.00, hinzuverdienstgrenze:19661.25, kurGrenzeUmsatz:100000, emRenteBasis:800 },
+        compliance:{ maxDailyWorkMin:180, todayWorkMin:0, sprintType:"ARBEIT" },
+        pi:{ targetStartPI:"2025-11-01", selfEmploymentStart:"2026-01-01", targetDischarge:"2029-01-15", phase:"PREP" },
+        statusLog: [],
+        arsenalJournal: []
+      };
+    }
+    // [PATCH] Ersetzt alle ||= und ?. für maximale Kompatibilität
+    function backfill(){
+      state._meta = state._meta || {version:APP.VERSION, schema:APP.SCHEMA};
+      state._meta.version = APP.VERSION;
+      state.theme = state.theme || "dark";
+      state.activeView = state.activeView || "home";
+      state.daily = state.daily || { date:todayISO(), mode:"A", buddha:"", log:"", exec:"", outreachToday:0 };
+      state.home = state.home || {mit:[], kpis:{}};
+      state.home.kpis = Object.assign({ sprints:0, outreach:0, evidence:(state.evidence||[]).length }, state.home.kpis||{});
+      state.sprint = state.sprint || { running:false, startedAt:null, endAt:null, durationMin:90, note:"", remainingSec:90*60 };
+      state.finance = state.finance || { income:[], expense:[] };
+      state.legal = state.legal || { pfaendungsgrenze:1555.00, hinzuverdienstgrenze:19661.25, kurGrenzeUmsatz:100000, emRenteBasis:800 };
+      state.compliance = state.compliance || { maxDailyWorkMin:180, todayWorkMin:0, sprintType:"ARBEIT" };
+      state.pi = state.pi || { targetStartPI:"2025-11-01", selfEmploymentStart:"2026-01-01", targetDischarge:"2029-01-15", phase:"PREP" };
+      state.home.kpis.outreach = (state.daily && state.daily.outreachToday) || 0;
+      state._meta.schema = state._meta.schema || APP.SCHEMA;
+      state.statusLog = state.statusLog || [];
+      state.arsenalJournal = state.arsenalJournal || [];
+    }
+    function migrateIfNeeded(s){
+      try{
+        if(!s || !s._meta || typeof s._meta.schema!=="number") return;
+        if(s._meta.schema<5){
+          s.statusLog = s.statusLog || []; // [PATCH] Ersetzt ||=
+          s.arsenalJournal = s.arsenalJournal || []; // [PATCH] Ersetzt ||=
+          s._meta.schema = 5;
+        }
+      }catch(e){ console.warn("Migration skipped:", e); }
+    }
 
-    // Service Worker
-    const swBadge = document.getElementById('sw-badge');
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js', { scope: './' })
-          .then(reg => {
-            swBadge.textContent = 'Service Worker: Aktiv';
-            swBadge.className = 'badge ok';
+    function load(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return null;
+        return JSON.parse(raw);
+      }catch(e){ console.warn("Load failed (localStorage evtl. blockiert auf file://)", e); return null }
+    }
+    let _tSave=null, _req=0;
+    function save(){
+      state.lastSaved = Date.now();
+      const me = ++_req;
+      const commit = function(){
+        if(me!==_req) return;
+        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); setStatus("gespeichert"); }
+        catch(e){ setStatus("Speicherfehler"); console.warn("Save failed", e); } // [PATCH] catch(e) hinzugefügt
+        setTimeout(function(){ setStatus("bereit"); }, 800);
+      };
+      if('requestIdleCallback' in window){
+        if(_tSave) cancelIdleCallback(_tSave);
+        _tSave = requestIdleCallback(commit, {timeout:400});
+      }else{
+        if(_tSave) clearTimeout(_tSave);
+        _tSave = setTimeout(commit, 200);
+      }
+    }
 
-            // Sofortige Aktivierung neuer Versionen
-            if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-            reg.addEventListener('updatefound', () => {
-              const nw = reg.installing;
-              nw && nw.addEventListener('statechange', () => {
-                if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-                  console.log('Neue Version installiert. Reload beim nächsten Start.');
-                }
-              });
-            });
-          })
-          .catch(err => {
-            swBadge.textContent = 'Service Worker: Fehler';
-            swBadge.className = 'badge warn';
-            console.error('SW-Registrierung fehlgeschlagen:', err);
-          });
+    // ---------- Utils ----------
+    function id(){ return Math.random().toString(36).slice(2,10) }
+    function todayISO(){ return new Date().toISOString().slice(0,10) }
+    function at00(dstr){ return new Date(dstr+"T00:00:00") }
+    function addDays(dstr, n){ const d=at00(dstr); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10) }
+    function escapeHTML(s){ s = String(s || ""); return s.replace(/[&<>"']/g, function(m){ return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]; }) }
+    function setStatus(txt){ var el = $("#status"); if(el) el.textContent = txt; } // [PATCH] Null-Check
+    function fmtEUR(v){ return (Number(v)||0).toLocaleString('de-DE', { style:'currency', currency:'EUR' }); }
+    function vibrate(pat){ if(navigator.vibrate) navigator.vibrate(pat || [60,40,60]); }
+
+    // ======================= NAV / RENDER =======================
+    function renderNav(){
+      const bar = document.querySelector('.tabbar');
+      if (!bar) return; // [PATCH] Null-Check
+      bar.innerHTML = NAV.map(function(n,i){
+        return `
+        <button class="tab ${state.activeView===n.id?'active':''}" role="tab" aria-selected="${state.activeView===n.id}" aria-controls="panel-${n.id}" data-action="navigate" data-view="${n.id}">
+          <div aria-hidden="true">${n.icon}</div><div>${n.label}</div>
+        </button>
+      `}).join('');
+    }
+
+    function render(){
+      var ds = $("#datestamp"); if(ds) ds.textContent = new Intl.DateTimeFormat("de-DE", { dateStyle:"full", timeStyle:"short" }).format(new Date());
+      renderNav();
+      
+      // [PATCH] Sicherstellen, dass view existiert, bevor darauf zugegriffen wird
+      if (!view) {
+          view = $("#view"); // Erneuter Versuch, view zu holen
+          if (!view) {
+              console.error("CRITICAL: #view element not found during render().");
+              return; // Abbruch, wenn #view immer noch nicht da ist
+          }
+      }
+      
+      view.innerHTML = `<div class="grid" id="panel-${state.activeView}" role="tabpanel"></div>`;
+      const root = view.firstElementChild;
+      if (!root) return; // [PATCH] Sicherstellen, dass root existiert
+
+      const renderFunc = ({
+        home: renderHome,
+        sprint: renderSprint,
+        audits: renderAudits,
+        evidence: renderEvidence,
+        outreach: renderOutreach,
+        finance: renderFinance,
+        arsenal: renderArsenal,
+        roadmap: renderRoadmap,
+        doktrin: renderManual
+      }[state.activeView] || renderHome);
+      
+      renderFunc(root);
+    }
+
+    // ======================= COMPLIANCE CALC =======================
+    function computeCompliance(){
+      const L = state.legal, F = state.finance;
+      const now = new Date(), y=now.getFullYear(), m=now.getMonth();
+      const sum = function(arr){ return arr.reduce(function(s,x){ return s + (Number(x.amount)||0); }, 0); };
+      const inY = function(arr){ return arr.filter(function(x){ const d=new Date(x.date); return d.getFullYear()===y; }); };
+      const inM = function(arr){ return arr.filter(function(x){ const d=new Date(x.date); return d.getFullYear()===y && d.getMonth()===m; }); };
+
+      const monGew = sum(inM(F.income||[])) - sum(inM(F.expense||[]));
+      const jahUms = sum(inY(F.income||[]));
+      const jahGew = sum(inY(F.income||[])) - sum(inY(F.expense||[]));
+
+      const hvLimit = Number(L.hinzuverdienstgrenze||19661.25);
+      const hvPct = Math.min(100, Math.round((jahUms / hvLimit) * 100));
+      let hvAmpel = "ok"; if(hvPct >= 85 && hvPct < 100) hvAmpel = "warn"; if(hvPct >= 100) hvAmpel = "danger";
+
+      const paceSollMonat = hvLimit / 12;
+      const paceIstMonat = sum(inM(F.income||[]));
+      const paceRestMonat = Math.max(0, paceSollMonat - paceIstMonat);
+
+      const pfg = Number(L.pfaendungsgrenze||1555.00);
+      const pfaendbarAnzeige = Math.max(0, monGew - pfg);
+
+      // [PATCH] Ersetzt ?. für Kompatibilität
+      const complianceState = state.compliance || {};
+      const workUsed = Number(complianceState.todayWorkMin || 0);
+      const workMax = Number(complianceState.maxDailyWorkMin || 180);
+
+      return {
+        monatsGewinn: monGew,
+        jahresGewinn: jahGew,
+        jahresUmsatz: jahUms,
+        hinzuverdienstLimit: hvLimit,
+        hinzuverdienstPct: hvPct,
+        hinzuverdienstAmpel: hvAmpel,
+        paceSollMonat,
+        paceIstMonat,
+        paceRestMonat,
+        pfaendungsgrenze: pfg,
+        pfaendbarAnzeige,
+        workToday: {
+          used: workUsed,
+          max:  workMax
+        }
+      };
+    }
+
+    function ProgressBar(props){
+      const label = props.label, value = props.value, max = props.max, unit = props.unit, theme = props.theme || 'brand';
+      const pct = Math.max(0, Math.min(100, max>0? (value/max*100):0));
+      const clr = theme==='danger' ? 'var(--danger)' : theme==='warn' ? 'var(--warn)' : 'var(--brand)';
+      const tone = pct>=100 ? 'var(--danger)' : pct>=80 ? 'var(--warn)' : 'var(--ink-dim)';
+      return `
+        <div class="progress-wrap" role="group" aria-label="${escapeHTML(label)}">
+          <div class="row" style="justify-content:space-between;font-size:12px">
+            <span style="color:var(--ink-dim)">${label}</span>
+            <span style="font-family:var(--mono);color:${tone}">${(Number(value)||0).toLocaleString('de-DE')} / ${(Number(max)||0).toLocaleString('de-DE')} ${unit||''}</span>
+          </div>
+          <div class="progress-bar" aria-hidden="true"><div class="progress-bar-inner" style="width:${pct}%;background:${clr}"></div></div>
+        </div>`;
+    }
+
+    // ======================= VIEWS =======================
+    function renderHome(root){
+      const comp = computeCompliance();
+
+      const mission = { id:"MISSION_CMD", text: MISSION.PRIMARY, done:false, locked:true };
+      const mitArr = Array.isArray(state.home.mit) ? state.home.mit : [];
+      state.home.mit = [mission, ...mitArr.filter(function(x){ return x.id!=="MISSION_CMD"; })].slice(0,3);
+
+      const daily = document.createElement("div"); daily.className="card";
+      // [PATCH] Ersetzt alle ?.
+      const dailyState = state.daily || {};
+      daily.innerHTML = `
+        <h2>Tägliches Protokoll</h2>
+        <div class="split">
+          <div class="ctl"><label>Datum</label><input id="dDate" type="date" value="${dailyState.date || todayISO()}"></div>
+          <div class="ctl"><label>Woche</label><input type="text" value="" placeholder="auto" disabled></div>
+        </div>
+        <div class="row" style="gap:10px; margin-top:8px">
+          <div class="pill">Modus</div>
+          <label class="row" style="gap:6px"><input type="radio" name="mode" value="A" ${dailyState.mode==="A"?"checked":""}> A: 05:30 Lernen → 09:00 Arbeiten</label>
+        </div>
+        <div class="row" style="gap:10px">
+          <label class="row" style="gap:6px"><input type="radio" name="mode" value="B" ${dailyState.mode==="B"?"checked":""}> B: 05:30 Arbeiten → 09:00 Lernen</label>
+        </div>
+        <div class="row" style="gap:10px; margin-top:8px">
+          <div class="pill">Outreach (System > Emotion): <code class="tag">${dailyState.outreachToday||0}/${MISSION.OUTREACH_DAILY_TARGET}</code></div>
+          <div class="row" style="margin-left:auto; gap:6px">
+            <button class="btn" data-action="outreach-minus" aria-label="Outreach verringern">–</button>
+            <button class="btn ok" data-action="outreach-plus" aria-label="Outreach erhöhen">+</button>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:6px">Ziel: 2×90-Min-Sprints, 5 qualifizierte Kontakte, Follow-ups in 72 h.</div>
+      `;
+
+      const kpis = document.createElement("div"); kpis.className="card";
+      kpis.innerHTML = `
+        <h2>Status • Heute</h2>
+        <div class="row" style="gap:10px">
+          <div class="pill">Version <code class="tag">${APP.VERSION}</code></div>
+          <div class="pill">Tab <code class="tag">${state.activeView}</code></div>
+          <div class="pill">Modus <code class="tag">${dailyState.mode||"A"}</code></div>
+        </div>
+        <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px">
+          <div class="card" style="padding:10px"><div class="muted">Leads</div><div class="kpi">${state.audits.length}</div></div>
+          <div class="card" style="padding:10px"><div class="muted">Beweise</div><div class="kpi">${state.evidence.length}</div></div>
+          <div class="card" style="padding:10px"><div class="muted">Sprints</div><div class="kpi">${state.home.kpis.sprints}</div></div>
+          <div class="card" style="padding:10px"><div class="muted">Outreach</div><div class="kpi">${dailyState.outreachToday||0}/${MISSION.OUTREACH_DAILY_TARGET}</div></div>
+        </div>
+      `;
+
+      const mit = document.createElement("div"); mit.className="card";
+      mit.innerHTML = `<h2>Primär-Direktiven (max. 3)</h2>`;
+      const list = document.createElement("div"); list.className="list";
+      state.home.mit.forEach(function(item){
+        const it = document.createElement("div"); it.className="item";
+        const chk = document.createElement("button"); chk.className="check"+(item.done?" done":""); chk.setAttribute("aria-pressed",!!item.done);
+        chk.textContent = item.done ? "✓" : "";
+        chk.addEventListener('click', function(){ if(item.locked){ vibrate([40,40,40]); return; } item.done=!item.done; save(); render(); });
+        const txt = document.createElement("div"); txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
+        it.append(chk, txt); list.append(it);
       });
-    } else {
-      swBadge.textContent = 'Service Worker: Nicht unterstützt';
-      swBadge.className = 'badge warn';
+      const add = document.createElement("div"); add.className="row"; add.style.gap="10px";
+      add.innerHTML = `
+        <div class="ctl" style="flex:1"><label>Neue Direktive</label><input id="mitNew" type="text" inputmode="latin" placeholder="Kurz & messbar (≤ 80 Zeichen)"></div>
+        <button class="btn ok" data-action="mit-add">Hinzufügen</button>`;
+      mit.append(list, document.createElement("div"), add);
+
+      const journal = document.createElement("div"); journal.className="card";
+      journal.innerHTML = `
+        <h2>Buddha-Status & Logbuch</h2>
+        <div class="ctl"><label>Mikrobeobachtungen</label><textarea id="buddha">${escapeHTML(dailyState.buddha||"")}</textarea></div>
+        <div class="ctl"><label>Logbuch (Erkenntnisse, Engpässe)</label><textarea id="log">${escapeHTML(dailyState.log||"")}</textarea></div>
+        <div class="ctl"><label>Executive Summary (≤ 1 Seite)</label><textarea id="exec">${escapeHTML(dailyState.exec||"")}</textarea></div>
+      `;
+
+      const ops = document.createElement("div"); ops.className="card";
+      ops.innerHTML = `
+        <h2>Compliance, Backup & Sicherheit</h2>
+        ${ProgressBar({label:'Arbeitszeit heute', value:comp.workToday.used, max:comp.workToday.max, unit:'Min', theme: comp.workToday.used>=comp.workToday.max?'danger':'brand'})}
+        ${ProgressBar({label:'Hinzuverdienst (Jahr)', value:comp.jahresUmsatz, max:comp.hinzuverdienstLimit, unit:'€',
+          theme: comp.hinzuverdienstAmpel==='danger'?'danger':(comp.hinzuverdienstAmpel==='warn'?'warn':'brand') })}
+        ${ProgressBar({label:'Pfändungsfreigrenze (Monatsgewinn)', value:comp.monatsGewinn, max:comp.pfaendungsgrenze, unit:'€', theme: comp.monatsGewinn>comp.pfaendungsgrenze?'warn':'brand'})}
+        <div class="muted" style="margin-top:6px">Leitplanke pro Monat (≈): <code class="tag">${comp.paceSollMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code> · Ist: <code class="tag">${comp.paceIstMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code> · Rest (≈): <code class="tag">${comp.paceRestMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code></div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn block" data-action="export-json">⬇️ Export (klar)</button>
+          <button class="btn block" data-action="export-encrypted">🔐 Export (verschlüsselt)</button>
+        </div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn block" data-action="import-json">⬆️ Import</button>
+          <button class="btn danger block" data-action="factory-reset">⚠️ Werkseinstellungen</button>
+        </div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn block" data-action="request-notify">🔔 Benachrichtigungen</button>
+          <button class="btn block" data-action="toggle-wakelock">💡 Bildschirm an</button>
+        </div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn block" data-action="export-arsenal-journal">🧾 Journal exportieren (CSV)</button>
+        </div>
+        <div id="quota" class="muted" style="margin-top:6px"></div>
+        <div class="muted" style="margin-top:6px">Operative Richtwerte; keine Rechtsberatung. Täglicher Export empfohlen.</div>
+      `;
+
+      const qa = document.createElement("div"); qa.className="card";
+      qa.innerHTML = `
+        <h2>Quick Actions</h2>
+        <div class="split" style="margin-top:8px">
+          <button class="btn primary block" data-action="${state.sprint.running?'pause-sprint':'start-sprint'}">${state.sprint.running?'⏸️ Sprint pausieren':'⏱️ 90-Min-Sprint'}</button>
+          <button class="btn block" data-action="show-modal" data-modal-type="quick-evidence">📎 Beweis sichern</button>
+        </div>
+        <div class="split" style="margin-top:8px">
+          <button class="btn danger block" data-action="case-a01">🚨 PROTOKOLL A-01</button>
+        </div>`;
+
+      root.append(daily, kpis, mit, journal, ops, qa);
+
+      // Bind
+      daily.querySelector("#dDate").onchange = function(e){
+        const newDate = e.target.value;
+        if(state.daily && state.daily.date !== newDate){ // [PATCH] Null-Check
+          state.daily.date = newDate;
+          state.daily.outreachToday = 0;
+          state.compliance.todayWorkMin = 0;
+          save(); render();
+        }
+      };
+      daily.querySelectorAll('input[name="mode"]').forEach(function(r){ r.onchange = function(e){ state.daily.mode = e.target.value; save(); }; });
+      journal.querySelector("#buddha").oninput = function(e){ state.daily.buddha=e.target.value; save(); };
+      journal.querySelector("#log").oninput    = function(e){ state.daily.log=e.target.value; save(); };
+      journal.querySelector("#exec").oninput   = function(e){ state.daily.exec=e.target.value; save(); };
+
+      // Storage quota
+      if(navigator.storage && navigator.storage.estimate){
+        navigator.storage.estimate().then(function({usage, quota}){
+          const pct = quota? Math.round((usage/quota)*100) : 0;
+          var qEl = $("#quota"); if(qEl) qEl.textContent = `Speicher: ${(usage/1e6).toFixed(1)} MB / ${(quota/1e6).toFixed(1)} MB (${pct}%)`;
+        }).catch(function(){});
+      }
     }
 
-    // A2HS Button
-    let deferredPrompt = null;
-    const installBtn = document.getElementById('installBtn');
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-    });
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
+    // ===== Sprint =====
+    let sprintTicker=null, pageHiddenAt=null;
+    function renderSprint(root){
+      const c = document.createElement("div"); c.className="card";
+      const left = remaining();
+      c.innerHTML = `
+        <h2>90-Minuten-Sprint</h2>
+        <div class="split">
+          <div class="ctl"><label>Dauer (Min)</label>
+            <select id="durSel">
+              ${[25,50,90,120].map(function(v){ return `<option ${v==state.sprint.durationMin?'selected':''}>${v}</option>`; }).join('')}
+            </select>
+          </div>
+          <div class="ctl"><label>Status</label><input value="${state.sprint.running?'läuft':'bereit'}" disabled></div>
+          <div class="ctl"><label>Sprint-Typ</label>
+            <select id="stype">
+              <option value="ARBEIT" ${state.compliance.sprintType==="ARBEIT"?"selected":""}>Arbeit</option>
+              <option value="LERNEN" ${state.compliance.sprintType==="LERNEN"?"selected":""}>Lernen</option>
+            </select>
+          </div>
+        </div>
+        <div class="ctl"><label>Ziel</label><textarea id="snote" placeholder="Klarer Output (z. B. 'Summary v1 fertig')">${escapeHTML(state.sprint.note||"")}</textarea></div>
+        <div class="row" style="gap:10px; margin-top:8px">
+          <span class="kpi" id="timerBadge" style="font-size:28px">${fmtTimer(left)}</span>
+          <span class="pill">Rest</span>
+        </div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn primary block" data-action="${state.sprint.running?'pause-sprint':'start-sprint'}">${state.sprint.running?'Pausieren':'Starten'}</button>
+          <button class="btn warn block" data-action="reset-sprint">Zurücksetzen</button>
+        </div>
+        <div class="split" style="margin-top:10px">
+          <button class="btn danger block" data-action="case-p01">🛑 PROTOKOLL P-01 (BURNOUT)</button>
+        </div>
+        <div class="muted" style="margin-top:6px">Tipp: Benachrichtigungen & Bildschirm-an aktivieren.</div>`;
+      root.append(c);
+
+      $("#snote").oninput = function(e){ state.sprint.note=e.target.value; save(); };
+      $("#durSel").onchange = function(e){
+        const val = Number(e.target.value)||90;
+        state.sprint.durationMin = val;
+        if(!state.sprint.running){
+          state.sprint.remainingSec = val*60; save(); render();
+        }else{
+          const rem = Math.max(1, Math.floor((state.sprint.endAt - Date.now())/1000));
+          const total = val*60;
+          state.sprint.endAt = Date.now() + Math.min(rem, total)*1000;
+          save(); render();
+        }
+      };
+      $("#stype").onchange = function(e){ state.compliance.sprintType = e.target.value; save(); };
+
+      startTicker();
+
+      function remaining(){
+        if(state.sprint.running && state.sprint.endAt){
+          return Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000));
+        }
+        return Math.max(0, Math.floor(state.sprint.remainingSec||state.sprint.durationMin*60));
+      }
+      function startTicker(){
+        stopTicker();
+        sprintTicker = setInterval(function(){
+          const b = $("#timerBadge"); if(!b) return stopTicker();
+          const left = (state.sprint.running && state.sprint.endAt) ? Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000))
+                     : Math.max(0, Math.floor(state.sprint.remainingSec||0));
+          b.textContent = fmtTimer(left);
+          if(state.sprint.running && left<=0){
+            state.sprint.running=false; state.sprint.startedAt=null; state.sprint.endAt=null; state.sprint.remainingSec=0;
+            state.home.kpis.sprints += 1;
+            if(state.compliance.sprintType === "ARBEIT"){
+              state.compliance.todayWorkMin = Math.min(
+                Number(state.compliance.todayWorkMin||0) + Number(state.sprint.durationMin||0),
+                Number(state.compliance.maxDailyWorkMin||180)
+              );
+            }
+            save();
+            try{ var beepEl = $("#beep"); if(beepEl) { beepEl.currentTime=0; beepEl.play().catch(function(){}); } }catch(e){}
+            vibrate([100,40,100,40,200]);
+            notify("Sprint beendet – Evidence loggen!");
+            alert("Sprint beendet – Evidence loggen!");
+            render();
+          }
+        }, 500);
+      }
+    }
+    function stopTicker(){ if(sprintTicker){ clearInterval(sprintTicker); sprintTicker=null; } }
+    function fmtTimer(sec){ const m = Math.floor(sec/60).toString().padStart(2,"0"); const s = (sec%60).toString().padStart(2,"0"); return `${m}:${s}`; }
+
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden){ pageHiddenAt = Date.now(); } else { pageHiddenAt = null; }
     });
 
-    // Cache leeren
-    document.getElementById('clearCacheBtn').addEventListener('click', async () => {
-      if (!('caches' in window)) return alert('Cache API nicht verfügbar.');
-      const keys = await caches.keys();
-      await Promise.all(keys.map(k => caches.delete(k)));
-      alert('App-Cache wurde geleert. Starte die Seite neu.');
-      location.reload();
+    // ===== Audits =====
+    const GATE_ITEMS = [
+      ["klartext","Klartext-Ton"],
+      ["belege","≥ 2 Belege je Kernbefund"],
+      ["serp","SERP beigefügt"],
+      ["prio","P1/P2/P3 schlüssig"],
+      ["ampel","Ampel begründet"],
+      ["msum","Management-Summary (1 Seite)"],
+      ["plan30","30-Tage-Plan realistisch"],
+      ["ordnung","Dateiordnung korrekt"],
+      ["next","Nächster Schritt klar"],
+      ["mobil","Mobil gut lesbar"],
+      ["fit","Immobilien-Fit"],
+      ["evidence31","Evidence 3+1 erfüllt"]
+    ];
+    function gateScore(g){
+      const total = GATE_ITEMS.length;
+      const ok = GATE_ITEMS.reduce(function(n,item){ var k = item[0]; return n + (g && g[k] ? 1 : 0); }, 0); // [PATCH] Ersetzt ?.
+      return Math.round(100 * ok / total);
+    }
+    function renderGateChecklistHTML(a){
+      const g = a.gate||{};
+      return `<div class="list" style="margin-top:8px">
+        ${GATE_ITEMS.map(function(item){ var key=item[0], label=item[1]; return `
+          <label class="row" style="gap:8px">
+            <input type="checkbox" data-gate="${key}" data-aid="${a.id}" ${g[key]?"checked":""}> <span>${label}</span>
+          </label>`}).join("")}
+        <div class="pill" style="margin-top:8px"><span>Score</span><code class="tag">${a.gateScore||0}</code></div>
+      </div>`;
+    }
+    function renderAudits(root){
+      const make = document.createElement("div"); make.className="card";
+      make.innerHTML = `
+        <h2>Lead anlegen</h2>
+        <div class="split">
+          <div class="ctl"><label>Domain/URL</label><input id="aDomain" type="text" placeholder="kunde-immobilien.de/expose/altbau-92qm" autocapitalize="off" spellcheck="false"></div>
+          <div class="ctl"><label>Status</label>
+            <select id="aStage">
+              ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(s){ return `<option>${s}</option>`; }).join("")}
+            </select>
+          </div>
+        </div>
+        <button class="btn ok block" data-action="audit-add">Lead hinzufügen</button>`;
+      root.append(make);
+
+      const toolbar = document.createElement("div"); toolbar.className="card";
+      toolbar.innerHTML = `
+        <h2>Leads (${state.audits.length})</h2>
+        <div class="split">
+          <div class="ctl"><label>Suche</label><input id="fText" type="text" placeholder="domain, teil..." inputmode="latin" autocapitalize="off"></div>
+          <div class="ctl"><label>Status</label>
+            <select id="fStage">
+              <option value="">(alle)</option>
+              ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(s){ return `<option>${s}</option>`; }).join("")}
+            </select>
+          </div>
+        </div>`;
+      root.append(toolbar);
+
+      const list = document.createElement("div"); list.className="card";
+      const ul = document.createElement("div"); ul.className="list";
+      list.append(ul); root.append(list);
+
+      const renderList = function(){
+        ul.innerHTML = "";
+        const q = (toolbar.querySelector("#fText").value||"").toLowerCase();
+        const st= toolbar.querySelector("#fStage").value;
+        state.audits
+          .filter(function(a){ return (!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st); })
+          .forEach(function(a){
+            const it = document.createElement("div"); it.className="item";
+            const gateOk = (a.gateScore||0)>=98;
+            it.innerHTML = `
+              <div style="flex:1">
+                <strong>${escapeHTML(a.domain)}</strong>
+                <div class="muted">Status: ${a.stage} • seit ${a.created} ${gateOk?`• <span class="okc">Gate ${a.gateScore}</span>`:``}</div>
+                <div class="row" style="gap:6px; margin-top:8px; flex-wrap:wrap">
+                  <button class="btn" data-action="launch-arsenal" data-prompt-id="P_25" data-domain="${a.domain}">🚀 Collector (P-25)</button>
+                  <button class="btn" data-action="launch-arsenal" data-prompt-id="P_26" data-domain="${a.domain}">📊 Analyst (P-26)</button>
+                </div>
+                <details style="margin-top:6px">
+                  <summary>Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}</summary>
+                  ${renderGateChecklistHTML(a)}
+                </details>
+              </div>
+              <select class="btn ghost" data-aid="${a.id}" data-action="audit-stage">
+                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(st){ return `<option ${a.stage===st?"selected":""}>${st}</option>`; }).join("")}
+              </select>
+              <button class="btn ghost danger" data-action="delete" data-collection="audits" data-id="${a.id}">✕</button>`;
+            ul.append(it);
+          });
+        list.firstElementChild.innerHTML = `<h2>Leads (${ul.childElementCount})</h2>`;
+      };
+      renderList();
+      toolbar.querySelectorAll("input,select").forEach(function(c){ c.oninput = renderList; });
+
+      ul.addEventListener("change", function(e){
+        const sel = e.target.closest('[data-action="audit-stage"]');
+        if(sel){ const a = state.audits.find(function(x){ return x.id===sel.dataset.aid; }); if(a){ a.stage = sel.value; save(); } }
+        const gchk = e.target.closest('input[type="checkbox"][data-gate]');
+        if(gchk){
+          const a = state.audits.find(function(x){ return x.id===gchk.dataset.aid; });
+          if(a){ 
+            a.gate = a.gate || {}; // [PATCH] Ersetzt ||=
+            a.gate[gchk.dataset.gate] = gchk.checked; 
+            a.gateScore = gateScore(a.gate); 
+            save();
+            const sum = gchk.closest('details'); 
+            if(sum) { var sumEl = sum.querySelector('summary'); if(sumEl) sumEl.innerHTML = `Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}`; }
+          }
+        }
+      });
+    }
+
+    // ===== Evidence =====
+    function renderEvidence(root){
+      const form = document.createElement("div"); form.className="card";
+      form.innerHTML = `
+        <h2>Beweis erfassen (3+1)</h2>
+        <div class="ctl"><label>Titel</label><input id="eTitle" type="text" placeholder="z. B. 'CLS: Layoutsprung (P1)'"></div>
+        <div class="ctl"><label>Link (Drive)</label><input id="eUrl" type="url" placeholder="https://drive.google.com/..."></div>
+        <div class="split">
+          <div class="ctl"><label>Typ</label>
+            <select id="eType">${["CLS_KOLLAPS","H1_ANOMALIE","ALT_BLINDHEIT","CANONICAL_LOSS","BREADCRUMB_VOID","SONSTIGES"].map(function(t){ return `<option>${t}</option>`; }).join("")}</select>
+          </div>
+          <div class="ctl"><label>Lead (Audit)</label><select id="eAudit"></select></div>
+        </div>
+        <div class="ctl"><label>Zitat/Notiz</label><textarea id="eNote" placeholder="{<img src='/cover.jpg'>...}"></textarea></div>
+        <button class="btn ok block" data-action="evidence-add">Beweis speichern</button>
+        <div class="muted" style="margin-top:6px">Dateiname: <code>YYYY-MM-DD_{domain}_M##_Label_v01.jpg</code></div>`;
+      root.append(form);
+
+      const selAudit = form.querySelector("#eAudit");
+      selAudit.innerHTML = state.audits.map(function(a){ return `<option value="${a.id}">${escapeHTML(a.domain)}</option>`; }).join("") || `<option value="">(kein Lead)</option>`;
+
+      if(state._evidenceDraft){
+        const d=state._evidenceDraft;
+        if(d.title) $("#eTitle").value = d.title;
+        if(d.type)  $("#eType").value  = d.type;
+        if(d.note)  $("#eNote").value  = d.note;
+        if(d.auditId && [].slice.call(selAudit.options).some(function(o){ return o.value===d.auditId; })) selAudit.value = d.auditId;
+        setStatus("Evidence vorbefüllt (Arsenal/Drill)");
+      }
+
+      const list = document.createElement("div"); list.className="card";
+      list.innerHTML = `<h2>Beweis-Liste (${state.evidence.length})</h2>`;
+      const ul = document.createElement("div"); ul.className="list";
+      state.evidence.slice(0,50).forEach(function(e){
+        const audit = state.audits.find(function(a){ return a.id===e.audit; });
+        const it = document.createElement("div"); it.className="item";
+        it.innerHTML = `
+          <div style="flex:1">
+            <strong>${escapeHTML(e.title) || '(Kein Titel)'}</strong>
+            <div class="muted">${new Date(e.ts).toLocaleString("de-DE")} • ${e.type} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
+            ${e.url?(`<div class="muted">Link: ${escapeHTML(e.url)}</div>`):""}
+            ${e.note?(`<div class="muted" style="font-family:var(--mono); background:var(--bg); padding:4px 6px; border-radius:6px; margin-top:4px;">${escapeHTML(e.note)}</div>`):""}
+          </div>
+          <button class="btn ghost danger" data-action="delete" data-collection="evidence" data-id="${e.id}">✕</button>`;
+        ul.append(it);
+      });
+      list.append(ul);
+      root.append(list);
+    }
+
+    // ===== Outreach =====
+    function renderOutreach(root){
+      const card = document.createElement("div"); card.className="card";
+      card.innerHTML = `
+        <h2>Outreach-Planner (${MISSION.OUTREACH_DAILY_TARGET}/Tag · FU in 72 h)</h2>
+        <div class="split">
+          <div class="ctl"><label>Kontakt</label><input id="oName" type="text" placeholder="z. B. Sabine Keller · ImmoX Berlin" autocomplete="name"></div>
+          <div class="ctl"><label>Kanal</label>
+            <select id="oChannel">${["Email","LinkedIn","Telefon","Formular"].map(function(c){ return `<option>${c}</option>`; }).join("")}</select>
+          </div>
+        </div>
+        <div class="split">
+          <div class="ctl"><label>Adresse/Handle</label><input id="oHandle" type="text" placeholder="mail@domain.tld oder linkedin.com/in/..."></div>
+          <div class="ctl"><label>Lead (optional)</label>
+            <select id="oAudit"><option value="">(frei)</option>${state.audits.map(function(a){ return `<option value="${a.id}">${escapeHTML(a.domain)}</option>`; }).join("")}</select>
+          </div>
+        </div>
+        <div class="ctl"><label>Notiz</label><textarea id="oNote" placeholder="Beleg/CTA in einem Satz"></textarea></div>
+        <button class="btn ok block" data-action="outreach-add">Kontakt eintragen</button>
+        <div class="muted" style="margin-top:6px">Neuer Kontakt → FU1 = +72 h, FU2 = weitere +72 h. Buttons ändern Status.</div>`;
+      root.append(card);
+
+      const bar = document.createElement("div"); bar.className="card";
+      bar.innerHTML = `
+        <h2>Kontakte (${state.outreach.length})</h2>
+        <div class="split">
+          <div class="ctl"><label>Filter</label>
+            <select id="of">
+              <option value="">(alle)</option>
+              <option value="due">Fällig heute/überfällig</option>
+              <option value="sent">Nur gesendet</option>
+              <option value="fu1">Nur FU1 geplant/erledigt</option>
+              <option value="fu2">Nur FU2 geplant/erledigt</option>
+              <option value="done">Erledigt</option>
+              <option value="lost">Verworfen</option>
+            </select>
+          </div>
+          <div class="ctl"><label>Suche</label><input id="oq" type="text" placeholder="Name, Unternehmen, Handle"></div>
+        </div>`;
+      root.append(bar);
+
+      const list = document.createElement("div"); list.className="card";
+      const ul = document.createElement("div"); ul.className="list";
+      list.append(ul); root.append(list);
+
+      const renderList = function(){
+        ul.innerHTML = "";
+        const f = bar.querySelector("#of").value;
+        const q = (bar.querySelector("#oq").value||"").toLowerCase();
+        const today = todayISO();
+        const dueFlag = function(o){
+          const d = (o.status==="SENT"||o.status==="FU1") ? o.due1 : (o.status==="FU2" ? o.due2 : null);
+          if(!d) return "";
+          if(d <= today) return `<span class="tag" style="border-color:#92400e">FÄLLIG</span>`;
+          if(d === addDays(today,1)) return `<span class="tag">morgen</span>`;
+          return `<span class="tag">${d}</span>`;
+        };
+        state.outreach
+          .filter(function(o){
+            const txt = (o.contact+" "+(o.handle||"")).toLowerCase();
+            if(q && !txt.includes(q)) return false;
+            if(f==="due"){
+              const d = (o.status==="SENT"||o.status==="FU1")?o.due1:(o.status==="FU2"?o.due2:null);
+              return d && d <= today && !["DONE","LOST"].includes(o.status);
+            }
+            if(f==="sent") return o.status==="SENT";
+            if(f==="fu1")  return ["FU1","SENT"].includes(o.status);
+            if(f==="fu2")  return ["FU2"].includes(o.status);
+            if(f==="done") return o.status==="DONE";
+            if(f==="lost") return o.status==="LOST";
+            return true;
+          })
+          .forEach(function(o){
+            const audit = state.audits.find(function(a){ return a.id===o.audit; });
+            const it = document.createElement("div"); it.className="item";
+            it.innerHTML = `
+              <div style="flex:1">
+                <strong>${escapeHTML(o.contact)}</strong>
+                <div class="muted">${o.channel}${o.handle?(" • "+escapeHTML(o.handle)):""} • ${o.created} • <span class="${o.status==='DONE'?'okc':o.status==='LOST'?'danger':'warnc'}">${o.status}</span> ${dueFlag(o)} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
+                ${o.notes?(`<div class="muted" style="margin-top:4px">${escapeHTML(o.notes)}</div>`):""}
+              </div>
+              <div class="row" style="gap:6px; flex-wrap:wrap">
+                ${actionButtons(o)}
+              </div>`;
+            ul.append(it);
+          });
+        list.firstElementChild.innerHTML = `<h2>Kontakte (${ul.childElementCount})</h2>`;
+      };
+      bar.querySelectorAll("input,select").forEach(function(c){ c.oninput = renderList; });
+      renderList();
+
+      ul.addEventListener("click",function(e){
+        const b = e.target.closest("button[data-act]"); if(!b) return;
+        const o = state.outreach.find(function(x){ return x.id===b.dataset.id; }); if(!o) return;
+        const act = b.dataset.act;
+        if(act==="FU1"){ o.status="FU1"; if(!o.due1) o.due1 = addDays(todayISO(),3); }
+        if(act==="FU2"){ o.status="FU2"; if(!o.due2) o.due2 = addDays(todayISO(),3); }
+        if(act==="DONE"){ o.status="DONE"; }
+        if(act==="LOST"){ o.status="LOST"; }
+        if(act==="SNOOZE1"){ o.due1 = addDays(o.due1||todayISO(),1); }
+        if(act==="SNOOZE2"){ o.due2 = addDays(o.due2||todayISO(),1); }
+        save(); render();
+      });
+    }
+    function actionButtons(o){
+      const btn = function(label, act, cls){ cls=cls||"btn ghost"; return `<button class="${cls}" data-act="${act}" data-id="${o.id}">${label}</button>`; };
+      if(o.status==="SENT") return btn("FU1 geplant","FU1")+btn("+1 Tag","SNOOZE1");
+      if(o.status==="FU1")  return btn("FU1 erledigt → FU2","FU2")+btn("+1 Tag","SNOOZE1");
+      if(o.status==="FU2")  return btn("Abschluss","DONE")+btn("+1 Tag","SNOOZE2");
+      if(o.status==="DONE") return btn("Erledigt","DONE","btn ok");
+      if(o.status==="LOST") return btn("Verworfen","LOST","btn danger");
+      return btn("Gesendet","SENT")+btn("Verwerfen","LOST","btn warn");
+    }
+
+    // ===== Finance =====
+    function renderFinance(root){
+      const status = computeCompliance();
+      const top = document.createElement("div"); top.className="grid";
+      top.style.gridTemplateColumns = "repeat(auto-fit, minmax(140px, 1fr))";
+      top.innerHTML = `
+        <div class="card" style="text-align:center;"> <p class="muted">Monatsgewinn</p> <p class="kpi" style="font-size:20px;">${fmtEUR(status.monatsGewinn)}</p> </div>
+        <div class="card" style="text-align:center;"> <p class="muted">Jahresgewinn</p> <p class="kpi" style="font-size:20px;">${fmtEUR(status.jahresGewinn)}</p> </div>
+        <div class="card" style="text-align:center;"> <p class="muted">Pfändbar (ca.)</p> <p class="kpi" style="font-size:20px; color:var(--danger);">${fmtEUR(status.pfaendbarAnzeige||0)}</p> </div>`;
+      root.append(top);
+
+      const inc = document.createElement("div"); inc.className="card";
+      inc.innerHTML = `<div class="row" style="justify-content: space-between; margin-bottom:12px;"><h2>Einnahmen</h2><button class="btn primary" data-action="show-modal" data-modal-type="add-income">Neu</button></div>
+      <div class="list">${(state.finance.income||[]).map(function(e){ return `
+        <div class="item">
+          <div><strong>${escapeHTML(e.desc||'—')}</strong><div class="muted">${new Date(e.date).toLocaleDateString('de-DE')}</div></div>
+          <div class="row" style="margin-left:auto;">
+            <span class="kpi" style="font-size:16px; color:var(--ok);">${fmtEUR(e.amount||0)}</span>
+            <button class="btn ghost danger" data-action="delete" data-collection="finance.income" data-id="${e.id}">✕</button>
+          </div>
+        </div>`}).join('') || `<p class="muted" style="text-align:center; padding:12px 0;">Keine Einnahmen erfasst.</p>`}</div>`;
+      root.append(inc);
+
+      const exp = document.createElement("div"); exp.className="card";
+      exp.innerHTML = `<div class="row" style="justify-content: space-between; margin-bottom:12px;"><h2>Ausgaben</h2><button class="btn" data-action="show-modal" data-modal-type="add-expense">Neu</button></div>
+      <div class="list">${(state.finance.expense||[]).map(function(a){ return `
+        <div class="item">
+          <div><strong>${escapeHTML(a.desc||'—')}</strong><div class="muted">${new Date(a.date).toLocaleDateString('de-DE')}</div></div>
+          <div class="row" style="margin-left:auto;">
+            <span class="kpi" style="font-size:16px; color:var(--warn);">${fmtEUR(a.amount||0)}</span>
+            <button class="btn ghost danger" data-action="delete" data-collection="finance.expense" data-id="${a.id}">✕</button>
+          </div>
+        </div>`}).join('') || `<p class="muted" style="text-align:center; padding:12px 0;">Keine Ausgaben erfasst.</p>`}</div>`;
+      root.append(exp);
+    }
+
+    // ===== Arsenal =====
+    function renderArsenal(root){
+      const call = document.createElement("div"); call.className="card";
+      call.innerHTML = `
+        <h2>🚀 Arsenal</h2>
+        <div class="callout">
+          Verlierst du den Fokus in Tools? Dann pausiere 12 Stunden das Prompten.
+          <button class="btn danger" data-action="case-t01">PROTOKOLL T-01 (TOOL-FALLE)</button>
+        </div>`;
+      root.append(call);
+
+      const groups = groupBy(KI_ARSENAL, "category");
+      Object.keys(groups).forEach(function(cat){
+        const card = document.createElement("div"); card.className="card";
+        card.innerHTML = `<h2>${escapeHTML(cat)}</h2>`;
+        const list = document.createElement("div"); list.className="list";
+        groups[cat].forEach(function(p){
+          const it = document.createElement("div"); it.className="item";
+          it.innerHTML = `
+            <div style="flex:1">
+              <strong>${escapeHTML(p.title)}</strong>
+              <div class="muted">Ziel-KI: ${escapeHTML(p.target)} • ID: ${escapeHTML(p.id)}</div>
+            </div>
+            <div class="row" style="gap:6px">
+              <button class="btn primary" data-action="copy-pre-by-id" data-prompt-id="${p.id}">Kopieren</button>
+            </div>`;
+          list.append(it);
+        });
+        card.append(list); root.append(card);
+      });
+
+      const journal = document.createElement("div"); journal.className="card";
+      const last = (state.arsenalJournal||[]).slice(0,20);
+      journal.innerHTML = `
+        <h2>Prompt-Journal</h2>
+        <div class="list">${
+          last.length ? last.map(function(j){ return `
+            <div class="item">
+              <div style="flex:1">
+                <strong>${escapeHTML(j.id)} · ${escapeHTML(j.title||'')}</strong>
+                <div class="muted">${new Date(j.ts).toLocaleString('de-DE')} · ${escapeHTML(j.domain||'-')}</div>
+              </div>
+            </div>`
+          }).join('') : `<p class="muted">Keine Einträge.</p>`
+        }</div>`;
+      root.append(journal);
+    }
+
+    // ===== Roadmap =====
+    function renderRoadmap(root){
+      const card = document.createElement("div"); card.className="card";
+      card.innerHTML = `
+        <h2>Projekt-Ziele</h2>
+        <ul>
+          <li>6–10 Audits, Gate ≥ 98</li>
+          <li>3 Pilotkunden, Outreach täglich</li>
+          <li>Evidence 3+1 je Befund, täglicher Export</li>
+        </ul>`;
+      root.append(card);
+
+      const r = document.createElement("div"); r.className="card";
+      r.innerHTML = `
+        <h2>Zeitschienen</h2>
+        <ul>
+          <li>PI-Antrag Ziel: ${escapeHTML(state.pi.targetStartPI)}</li>
+          <li>Start Selbstständigkeit: ${escapeHTML(state.pi.selfEmploymentStart)}</li>
+          <li>Ziel Entschuldung (≈): ${escapeHTML(state.pi.targetDischarge)}</li>
+        </ul>
+        <div class="split" style="margin-top:10px">
+          <button class="btn block" data-action="export-json">📄 Export Status (klar)</button>
+          <button class="btn block" data-action="export-encrypted">🔐 Export (verschlüsselt)</button>
+        </div>`;
+      root.append(r);
+    }
+
+    // ===== Doktrin (Manual) mit AQL =====
+    function renderManual(root){
+      const m = document.createElement("div"); m.className="card manual";
+      m.innerHTML = `
+        <h2>📘 Doktrin — Phoenix Feuer</h2>
+        <p>Dieses Dokument ist deine Referenz. Es fasst Regeln, Ziele und Abläufe in einfachen Sätzen zusammen. Es ist die Basis für ruhige, klare Entscheidungen.</p>
+
+        <h3>Kernregeln (Realität zuerst)</h3>
+        <ul>
+          <li>Halte die Grenzen ein: <strong>&lt; 3 h Arbeit/Tag</strong>, <strong>19.661,25 €</strong> Hinzuverdienst pro Jahr, <strong>1.555,00 €</strong> pfändungsfrei pro Monat.</li>
+          <li>Arbeite in Sprints. Schreibe klare Ziele. Dokumentiere Ergebnisse.</li>
+          <li>Nutze KI bewusst: erst sammeln (P-25), dann bewerten (P-26).</li>
+          <li>Exportiere Daten täglich. Schütze sensible Inhalte mit Passwort.</li>
+        </ul>
+
+        <h3>Notfall-Protokolle</h3>
+        <ul>
+          <li><strong>A-01 Admin-Angst:</strong> Öffne das Dokument, sichere es, nutze <em>Agent K</em> (P-15). Teile To-dos in Heute/Morgen/Woche.</li>
+          <li><strong>P-01 Burnout:</strong> Pause 2 Stunden. Kein Bildschirm. Trinken. Gehen. Atmen.</li>
+          <li><strong>T-01 Tool-Falle:</strong> 12 Stunden kein Prompten. Nur Umsetzen. Eigenes Log.</li>
+        </ul>
+
+        <h3>AQL – Akzeptanzkriterien (müssen grün sein)</h3>
+        <div class="callout">
+          <table class="tbl">
+            <thead><tr><th>ID</th><th>Kriterium</th><th>Nachweis</th></tr></thead>
+            <tbody>
+              <tr><td>AQL-01</td><td>Kaltstart offline. Home, Arsenal, Doktrin rendern fehlerfrei.</td><td>Flugmodus, App öffnen.</td></tr>
+              <tr><td>AQL-02</td><td>Arsenal P-25/P-26 ersetzt {URL} korrekt.</td><td>Lead mit Domain → „kopiert!“</td></tr>
+              <tr><td>AQL-03</td><td>Arbeitszeit-Gate blockiert >3h. Override nur mit Begründung.</td><td>Soft-Block Modal mit Pflichtfeld.</td></tr>
+              <tr><td>AQL-04</td><td>Mission-Slot ist gesperrt.</td><td>Checkbox klick → Vibration.</td></tr>
+              <tr><td>AQL-05</td><td>Outreach-Ziel sichtbar: X/5.</td><td>Home-KPI, Zähler-Buttons.</td></tr>
+              <tr><td>AQL-06</td><td>Protokolle A-01 / P-01 / T-01 öffnen Modal und loggen Eintrag.</td><td>StatusLog-Eintrag vorhanden.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Hinweise</h3>
+        <ul>
+          <li>Exportiere jeden Tag. Prüfe monatlich die Zahlen gegen die Leitplanken.</li>
+          <li>Schreibe kurze Sätze. Trenne Denken und Tun.</li>
+          <li>Wenn du unsicher bist: erst sammeln, dann entscheiden.</li>
+        </ul>
+
+        <p class="muted">Stand: 22.10.2025 · Dies ist die Offline-Master-Referenz. Änderungen zuerst online pflegen, dann hier spiegeln.</p>
+      `;
+      root.append(m);
+    }
+
+    // ======================= MODALS =======================
+    function renderModal(type, payload){
+      payload = payload || {};
+      let inner='';
+      if(type==='quick-evidence') inner = modalEvidenceQuick(payload);
+      if(type==='add-income') inner = modalIncome();
+      if(type==='add-expense') inner = modalExpense();
+      if(type==='export-encrypted') inner = modalExportEncrypted();
+      if(type==='work-cap') inner = `
+        <div class="grid" style="gap:var(--space)">
+          <h2>Arbeitszeit-Limit erreicht</h2>
+          <p class="muted">Du würdest heute die 3-Stunden-Grenze überschreiten. Bitte wähle eine Option.</p>
+          <div class="ctl"><label>Override-Begründung (Pflicht)</label><textarea id="overrideNote" placeholder="Kurz & sachlich (z. B. Abgabe heute, Einmal-Override)"></textarea></div>
+          <div class="split">
+            <button class="btn" data-action="switch-to-learn">Als Lernen starten</button>
+            <button class="btn warn" data-action="force-once-confirm">Einmalig starten (mit Log)</button>
+            <button class="btn" data-action="close-modal">Abbrechen</button>
+          </div>
+        </div>`;
+
+      if(type==='case-a01') inner = `
+        <div class="grid" style="gap:var(--space)">
+          <h2>🚨 PROTOKOLL A-01 — Admin-Angst</h2>
+          <ol style="margin:0; padding-left:18px">
+            <li>Dokument öffnen. Drei ruhige Atemzüge.</li>
+            <li>Fristen und Forderungen markieren. Datei in Drive sichern.</li>
+            <li>Prompt an GPT: <button class="btn primary" data-action="copy-pre-by-id" data-prompt-id="P_15">Agent K (P-15) kopieren</button></li>
+            <li>To-dos ins Log: heute, morgen, diese Woche.</li>
+          </ol>
+          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Schließen</button></div>
+        </div>`;
+
+      if(type==='case-p01') inner = `
+        <div class="grid" style="gap:var(--space)">
+          <h2>🛑 PROTOKOLL P-01 — Burnout</h2>
+          <p>Jetzt 2 Stunden Pause. Kein Bildschirm. Wasser. Spaziergang. Atmung.</p>
+          <p class="muted">Ich erinnere dich nach 2 Stunden.</p>
+          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Okay</button></div>
+        </div>`;
+
+      if(type==='case-t01') inner = `
+        <div class="grid" style="gap:var(--space)">
+          <h2>⚠️ PROTOKOLL T-01 — Tool-Falle</h2>
+          <ol style="margin:0; padding-left:18px">
+            <li>12 Stunden kein Prompten.</li>
+            <li>Nur Google-Recherche und Umsetzen.</li>
+            <li>Kurzer Log-Eintrag: Wodurch kam der Drift?</li>
+          </ol>
+          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Bestätigen</button></div>
+        </div>`;
+
+      $("#modal-container").innerHTML = `
+        <div class="modal-overlay" data-action="close-modal">
+          <div class="modal-content" role="dialog" aria-modal="true">${inner}</div>
+        </div>`;
+      
+      // [PATCH] Ersetzt ?. für Kompatibilität
+      requestAnimationFrame(function(){ 
+        var ov = $(".modal-overlay"); 
+        if(ov) ov.classList.add("active"); 
+      });
+      const first = $("#modal-container input, #modal-container select, #modal-container textarea, #modal-container button");
+      if(first) first.focus({preventScroll:true});
+    }
+    function closeModal(){ 
+      const ov=$(".modal-overlay"); 
+      if(!ov) return; 
+      ov.classList.remove("active"); 
+      setTimeout(function(){ $("#modal-container").innerHTML=''; }, 160); 
+    }
+
+    function modalEvidenceQuick(payload){
+      payload = payload || {};
+      const title = payload.title || '', type = payload.type || 'SONSTIGES', note = payload.note || '', auditId = payload.auditId || null;
+      const auditOpts = (state.audits||[]).map(function(a){ return `<option value="${a.id}" ${auditId===a.id?'selected':''}>${escapeHTML(a.domain)}</option>`; }).join('');
+      return `
+        <form id="form-evidence" class="grid" style="gap:var(--space)">
+          <h2>Evidence (Quick)</h2>
+          <div class="ctl"><label>Titel</label><input name="title" value="${escapeHTML(title)}"></div>
+          <div class="ctl"><label>Typ</label><input name="type" value="${escapeHTML(type)}"></div>
+          <div class="ctl"><label>Audit</label><select name="audit">${auditOpts||'<option value="">(kein Lead)</option>'}</select></div>
+          <div class="ctl"><label>Notiz</label><textarea name="note">${escapeHTML(note)}</textarea></div>
+          <div class="row" style="justify-content:flex-end;gap:8px">
+            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
+            <button class="btn primary">Speichern</button>
+          </div>
+        </form>`;
+    }
+    function modalIncome(){
+      return `
+        <form id="form-income" class="grid" style="gap:var(--space)">
+          <h2>Einnahme erfassen</h2>
+          <div class="ctl"><label>Betrag (€)</label><input name="betrag" type="number" inputmode="decimal" step="0.01" required></div>
+          <div class="ctl"><label>Beschreibung</label><input name="beschreibung" required></div>
+          <div class="row" style="justify-content:flex-end;gap:8px">
+            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
+            <button class="btn primary">Speichern</button>
+          </div>
+        </form>`;
+    }
+    function modalExpense(){
+      return `
+        <form id="form-expense" class="grid" style="gap:var(--space)">
+          <h2>Ausgabe erfassen</h2>
+          <div class="ctl"><label>Betrag (€)</label><input name="betrag" type="number" inputmode="decimal" step="0.01" required></div>
+          <div class="ctl"><label>Beschreibung</label><input name="beschreibung" required></div>
+          <div class="row" style="justify-content:flex-end;gap:8px">
+            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
+            <button class="btn primary">Speichern</button>
+          </div>
+        </form>`;
+    }
+    function modalExportEncrypted(){
+      return `
+        <form id="form-export-enc" class="grid" style="gap:var(--space)">
+          <h2>Verschlüsselter Export</h2>
+          <div class="ctl"><label>Passwort (AES-GCM, PBKDF2)</label><input name="pw" type="password" minlength="8" required></div>
+          <div class="row" style="justify-content:flex-end;gap:8px">
+            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
+            <button class="btn primary">Export starten</button>
+          </div>
+          <p class="muted">Hinweis: Passwort sicher notieren. Ohne Passwort keine Wiederherstellung.</p>
+        </form>`;
+    }
+
+    // ======================= EVENTS =======================
+    document.body.addEventListener('click', async function(e){
+      const a = e.target.closest('[data-action]'); if(!a) return;
+      const action = a.dataset.action;
+      const targetView = a.dataset.view;
+      const modalType = a.dataset.modalType;
+
+      if(action==='navigate'){ state.activeView = targetView||'home'; save(); render(); return; }
+
+      // Sprint Start/Stop
+      if(action==='start-sprint'){
+        const dur = Number(state.sprint.durationMin||90);
+        const isWork = state.compliance.sprintType === "ARBEIT";
+        const used = Number(state.compliance.todayWorkMin||0);
+        const max  = Number(state.compliance.maxDailyWorkMin||180);
+        if(isWork && (used + dur) > max && !state.sprint.forceOnce){
+          renderModal('work-cap'); return;
+        }
+        delete state.sprint.forceOnce;
+
+        if(!state.sprint.running){
+          if(!state.sprint.remainingSec || state.sprint.remainingSec<=0) state.sprint.remainingSec = (state.sprint.durationMin||90)*60;
+          state.sprint.endAt = Date.now() + state.sprint.remainingSec*1000;
+          state.sprint.running = true; state.sprint.startedAt = Date.now();
+          await ensureWakeLock(true);
+          save(); render();
+        }
+        return;
+      }
+      if(action==='pause-sprint'){
+        if(state.sprint.running){
+          const left = Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000));
+          state.sprint.remainingSec = left; state.sprint.running=false; state.sprint.endAt=null;
+          await ensureWakeLock(false);
+          save(); render();
+        }
+        return;
+      }
+      if(action==='reset-sprint'){
+        state.sprint.running=false; state.sprint.startedAt=null; state.sprint.endAt=null;
+        state.sprint.remainingSec=(state.sprint.durationMin||90)*60;
+        await ensureWakeLock(false);
+        save(); render(); return;
+      }
+
+      // Outreach & Home
+      if(action==='outreach-plus'){ state.daily.outreachToday = Math.min(999, (state.daily.outreachToday||0)+1); state.home.kpis.outreach=state.daily.outreachToday; save(); render(); return; }
+      if(action==='outreach-minus'){ state.daily.outreachToday = Math.max(0, (state.daily.outreachToday||0)-1); state.home.kpis.outreach=state.daily.outreachToday; save(); render(); return; }
+      if(action==='mit-add'){
+        // [PATCH] Ersetzt ?.
+        var mitNewEl = $("#mitNew");
+        const v = (mitNewEl && mitNewEl.value) ? mitNewEl.value.trim() : ""; 
+        if(!v) return;
+        if(state.home.mit.length>=3){ state.home.mit.shift(); }
+        state.home.mit.push({id:id(), text:v, done:false}); save(); render(); return;
+      }
+
+      // Audits + Evidence + Outreach
+      if(action==='audit-add'){
+        const domain = $("#aDomain").value.trim(); const stage = $("#aStage").value;
+        if(!domain) return;
+        state.audits.unshift({ id:id(), domain, stage, owner:"Eric", created:todayISO(), gate:{}, gateScore:0 });
+        save(); render(); return;
+      }
+      if(action==='evidence-add'){
+        const title = $("#eTitle").value.trim();
+        const url   = $("#eUrl").value.trim();
+        const type  = $("#eType").value;
+        const audit = $("#eAudit").value || null;
+        const note  = $("#eNote").value.trim();
+        if(!title && !note) return;
+        state.evidence.unshift({ id:id(), title, url, type, audit, note, ts:new Date().toISOString() });
+        state.home.kpis.evidence = state.evidence.length;
+        delete state._evidenceDraft;
+        save(); render(); return;
+      }
+      if(action==='outreach-add'){
+        const contact = $("#oName").value.trim();
+        const channel = $("#oChannel").value;
+        const handle  = $("#oHandle").value.trim();
+        const audit   = $("#oAudit").value || null;
+        const notes   = $("#oNote").value.trim();
+        if(!contact) return;
+        const created = todayISO();
+        const due1 = addDays(created,3), due2 = addDays(due1,3);
+        state.outreach.unshift({ id:id(), contact, channel, handle, audit, created, status:"SENT", due1, due2, notes });
+        state.daily.outreachToday = (state.daily.outreachToday||0)+1;
+        state.home.kpis.outreach=state.daily.outreachToday;
+        save(); render(); return;
+      }
+
+      // Modals & System
+      if(action==='show-modal'){ renderModal(modalType); return; }
+      if(action==='close-modal'){ if(e.target.closest('.modal-overlay')) closeModal(); return; }
+      if(action==='switch-to-learn'){ state.compliance.sprintType = "LERNEN"; save(); closeModal(); document.querySelector('[data-action="start-sprint"]').click(); return; }
+      if(action==='force-once-confirm'){
+        // [PATCH] Ersetzt ?.
+        var overrideEl = $("#overrideNote");
+        const note = (overrideEl && overrideEl.value) ? overrideEl.value.trim() : "";
+        if(!note){ alert("Bitte kurze Begründung angeben."); return; }
+        state.sprint.forceOnce = true;
+        state.statusLog.push({ ts: Date.now(), code:"OVERRIDE_WORK_CAP", note });
+        save(); closeModal();
+        const startBtn = $('[data-action="start-sprint"]'); if(startBtn) startBtn.click();
+        return;
+      }
+
+      if(action==='delete'){
+        if(confirm('Diesen Eintrag wirklich löschen?')){
+          const path = a.dataset.collection.split('.');
+          if(path.length===2){
+            const bucket = path[0], sub = path[1];
+            state[bucket][sub] = state[bucket][sub].filter(function(x){ return x.id!==a.dataset.id; });
+          }else{
+            const col = path[0];
+            state[col] = state[col].filter(function(x){ return x.id!==a.dataset.id; });
+          }
+          save(); render();
+        }
+        return;
+      }
+
+      if(action==='copy-pre'){
+        const t = document.getElementById(a.dataset.target); if(t){ copyToClipboard(t.textContent||''); }
+        return;
+      }
+      if(action==='prefill-evidence'){
+        const title = a.dataset.title||"", type=a.dataset.type||"SONSTIGES";
+        const noteEl = document.getElementById(a.dataset.note); const note = noteEl? noteEl.textContent : "";
+        const sel = document.getElementById(a.dataset.sel); const auditId = sel? sel.value : null;
+        state._evidenceDraft = { title, type, note, auditId };
+        state.activeView = "evidence"; save(); render(); return;
+      }
+      if(action==='request-notify'){ await ensureNotificationPermission(); return; }
+      if(action==='toggle-wakelock'){ await ensureWakeLock(!wakeLock); return; }
+
+      if(action==='export-json'){ doExportPlain(); return; }
+      if(action==='export-encrypted'){ renderModal('export-encrypted'); return; }
+      if(action==='export-arsenal-journal'){
+        const rows = (state.arsenalJournal||[]).map(function(j){ return [
+          new Date(j.ts).toISOString(), (j.id||''), (j.title||''), (j.domain||'')
+        ]; });
+        const csv = ["ts,id,title,domain"].concat(rows.map(function(r){ return r.map(function(x){ return `"${String(x).replace(/"/g,'""')}"`; }).join(','); })).join("\n");
+        const blob = new Blob([csv], {type:"text/csv"});
+        const aEl = document.createElement("a"); aEl.download = `${todayISO()}_phoenix_arsenal_journal.csv`; aEl.href = URL.createObjectURL(blob); aEl.click();
+        URL.revokeObjectURL(aEl.href);
+        return;
+      }
+      if(action==='factory-reset'){
+        if(confirm("Wirklich alle lokalen Daten löschen? (vorher Export speichern)")){
+          // [PATCH] try...catch für localStorage auf file://
+          try {
+            localStorage.removeItem(STORAGE_KEY); 
+          } catch(e) {
+            console.warn("Konnte localStorage nicht löschen, fahre fort mit reload.", e);
+          }
+          location.reload();
+        }
+        return;
+      }
+
+      // Arsenal Aktionen
+      if(action==='launch-arsenal'){
+        const pid = a.dataset.promptId;
+        const domain = (a.dataset.domain||'').trim();
+        const art = KI_ARSENAL.find(function(x){ return x.id===pid; });
+        if(!art) return setStatus(`P-ID ${pid} nicht gefunden.`);
+        const url = domain ? (domain.startsWith('http')?domain:`https://${domain}`) : '{URL}';
+        const ready = art.prompt.replaceAll("{URL}", url);
+        await copyToClipboard(ready);
+        journalPromptUse({ id: pid, title: art.title, domain });
+        setStatus(`OK: ${art.title} für ${domain||'—'} vorbereitet.`);
+        return;
+      }
+      if(action==='copy-pre-by-id'){
+        const pid = a.dataset.promptId;
+        const art = KI_ARSENAL.find(function(x){ return x.id===pid; });
+        if(!art) return setStatus(`P-ID ${pid} nicht gefunden.`);
+        await copyToClipboard(art.prompt);
+        journalPromptUse({ id: pid, title: art.title, domain: '-' });
+        return;
+      }
+
+      // Protokolle
+      if(action==='case-a01'){ renderModal('case-a01'); state.statusLog.push({ts:Date.now(), code:'A-01'}); save(); return; }
+      if(action==='case-t01'){ renderModal('case-t01'); state.statusLog.push({ts:Date.now(), code:'T-01'}); save(); return; }
+      if(action==='case-p01'){
+        // [PATCH] Ersetzt ?.
+        if(state.sprint && state.sprint.running){ var btn=$('[data-action="pause-sprint"]'); if(btn) btn.click(); }
+        state._p01RemindAt = Date.now() + 2*60*60*1000;
+        notify("P-01 aktiv: 2 h offline. Ich erinnere dich.");
+        state.statusLog.push({ts:Date.now(), code:'P-01'});
+        save(); renderModal('case-p01');
+        setTimeout(function(){ notify("P-01: 2 h sind um. Sanft wieder starten."); }, 2*60*60*1000);
+        return;
+      }
     });
+
+    // Modal submits
+    document.body.addEventListener('submit', async function(e){
+      const f = e.target; if(!f.id) return;
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(f).entries());
+      if(f.id==='form-evidence'){
+        state.evidence.unshift({
+          id:id(), title:(data.title||'').trim(), type:(data.type||'SONSTIGES').trim(),
+          audit:data.audit||null, note:(data.note||'').trim(), ts:new Date().toISOString()
+        });
+        state.home.kpis.evidence = state.evidence.length;
+        save(); render(); closeModal(); return;
+      }
+      if(f.id==='form-income' || f.id==='form-expense'){
+        const bucket = f.id==='form-income' ? 'income' : 'expense';
+        state.finance[bucket].unshift({
+          id:id(), date: todayISO(), amount: parseFloat(data.betrag||'0')||0, desc: (data.beschreibung||'').trim()
+        });
+        save(); render(); closeModal(); return;
+      }
+      if(f.id==='form-export-enc'){
+        const pw = (data.pw||'').trim();
+        if(pw.length<8){ alert("Passwort zu kurz (min. 8)"); return; }
+        await doExportEncrypted(pw);
+        closeModal();
+        return;
+      }
+    });
+
+    // File import
+    var importEl = $("#importFile");
+    if (importEl) importEl.addEventListener("change", function(e){
+      // [PATCH] Ersetzt ?.
+      const file = (e.target.files && e.target.files[0]); if(!file) return;
+      const reader = new FileReader();
+      reader.onload = async function(){
+        try{
+          let data = JSON.parse(String(reader.result));
+          if(data && data.__enc==="AES-GCM"){
+            const pw = prompt("Passwort für verschlüsselten Export:");
+            if(!pw){ alert("Abgebrochen."); return; }
+            data = await decryptExport(data, pw);
+          }
+          if(!data || typeof data!=="object"){ alert("Ungültige Datei."); return; }
+          const template = seed();
+          Object.keys(template).forEach(function(k){ if(data.hasOwnProperty(k)) state[k] = data[k]; });
+          migrateIfNeeded(state); backfill(); save(); render();
+        }catch(err){ alert("Import fehlgeschlagen."); console.error(err); }
+      };
+      reader.readAsText(file);
+    });
+
+    // ======================= NOTIFY & WAKE LOCK =======================
+    async function ensureNotificationPermission(){
+      try{
+        if(!("Notification" in window)) { alert("Benachrichtigungen werden nicht unterstützt."); return; }
+        if(Notification.permission==="granted"){ notify("Benachrichtigungen aktiviert."); return; }
+        const res = await Notification.requestPermission();
+        if(res==="granted") notify("Benachrichtigungen aktiviert.");
+      }catch(e){}
+    }
+    function notify(msg){
+      try{
+        if(("Notification" in window) && Notification.permission==="granted"){
+          new Notification("Phoenix Feuer", { body: msg });
+        }
+      }catch(e){}
+    }
+    async function ensureWakeLock(enable){
+      try{
+        if(!('wakeLock' in navigator)) return;
+        if(enable && !wakeLock){
+          wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', function(){ wakeLock=null; });
+          setStatus("Bildschirm bleibt an");
+        }else if(!enable && wakeLock){
+          await wakeLock.release(); wakeLock=null; setStatus("Bildschirm-Timeout wieder aktiv");
+        }
+      }catch(e){ /* meist bei Sperrbildschirm */ }
+    }
+
+    // ======================= EXPORT (klar & verschlüsselt) =======================
+    function doExportPlain(){
+      try {
+        const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
+        const a = document.createElement("a"); const d = todayISO();
+        a.download = `${d}_phoenix_feuer_v10_backup.json`; a.href = URL.createObjectURL(blob); a.click();
+        URL.revokeObjectURL(a.href);
+      } catch(e) {
+        alert("Export fehlgeschlagen: " + e.message);
+      }
+    }
+
+    async function doExportEncrypted(password){
+      try {
+        const enc = await encryptExport(state, password);
+        const blob = new Blob([JSON.stringify(enc, null, 2)], {type:"application/json"});
+        const a = document.createElement("a"); const d = todayISO();
+        a.download = `${d}_phoenix_feuer_v10_backup.enc.json`; a.href = URL.createObjectURL(blob); a.click();
+        URL.revokeObjectURL(a.href);
+      } catch(e) {
+        alert("Verschlüsselter Export fehlgeschlagen: " + e.message);
+      }
+    }
+
+    // WebCrypto helpers
+    async function deriveKey(pw, salt){
+      const enc = new TextEncoder();
+      const keyMat = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+      return crypto.subtle.deriveKey(
+        {name:"PBKDF2", salt, iterations:120000, hash:"SHA-256"},
+        keyMat, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]
+      );
+    }
+    function toB64(arr){ return btoa(String.fromCharCode.apply(null, new Uint8Array(arr))); }
+    function fromB64(b64){ return Uint8Array.from(atob(b64), function(c){ return c.charCodeAt(0); }); }
+
+    async function encryptExport(obj, pw){
+      const enc = new TextEncoder();
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv   = crypto.getRandomValues(new Uint8Array(12));
+      const key  = await deriveKey(pw, salt);
+      const data = enc.encode(JSON.stringify(obj));
+      const ct   = await crypto.subtle.encrypt({name:"AES-GCM", iv}, key, data);
+      return { __enc:"AES-GCM", v:1, salt:toB64(salt), iv:toB64(iv), ct:toB64(ct) };
+    }
+    async function decryptExport(pkg, pw){
+      const dec = new TextDecoder();
+      const salt = fromB64(pkg.salt), iv = fromB64(pkg.iv), ct = fromB64(pkg.ct);
+      const key = await deriveKey(pw, salt);
+      const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv}, key, ct);
+      return JSON.parse(dec.decode(plain));
+    }
+
+    // ======================= [PATCH] ROBUSTE INIT-LOGIK =======================
+    function setTheme(mode){
+      document.documentElement.setAttribute("data-theme", mode);
+      state.theme = mode; 
+      save();
+    }
+
+    function init(){
+      try{
+        view = $("#view"); // [PATCH] View-Element hier holen
+        if (!view) {
+            console.error("SCHWERER FEHLER: #view konnte nicht gefunden werden.");
+            document.body.innerHTML = '<h1 style="color:red;padding:20px;">Startfehler: #view fehlt.</h1>';
+            return;
+        }
+
+        setTheme(state.theme || "dark");
+
+        const tBtn = $("#themeBtn");
+        if (tBtn) tBtn.onclick = function(){ setTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"); };
+
+        renderNav();
+
+        // PWA Service Worker (nur bei http/https)
+        if ('serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')){
+          const swCode = `
+            const CACHE = 'feuer-v10-${APP.VERSION}';
+            self.addEventListener('install', e=>{ self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c=> c.addAll(['./']))); });
+            self.addEventListener('activate', e=>{
+              e.waitUntil(caches.keys().then(keys=> Promise.all(keys.filter(k=> k.startsWith('feuer-v10-') && k!==CACHE).map(k=> caches.delete(k)))));
+              self.clients.claim();
+            });
+            self.addEventListener('fetch', e=>{
+              const req = e.request;
+              if(req.method!=='GET'){ return; }
+              e.respondWith(
+                caches.match(req).then(hit => {
+                  const net = fetch(req).then(res=>{
+                    if(res && res.ok){ caches.open(CACHE).then(c=> c.put(req, res.clone())).catch(()=>{}); }
+                    return res;
+                  }).catch(()=> hit || caches.match('./'));
+                  return hit || net;
+                })
+              );
+            });
+          `;
+          const swBlob = new Blob([swCode], {type:'text/javascript'});
+          const swUrl  = URL.createObjectURL(swBlob);
+          navigator.serviceWorker.register(swUrl).catch(function(e){ console.warn("SW-Registrierung fehlgeschlagen", e); });
+        }
+
+        if (navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
+
+        if (state._p01RemindAt && Date.now() >= state._p01RemindAt){
+          notify("P-01: 2 h sind um. Sanft wieder starten.");
+          delete state._p01RemindAt; save();
+        }
+
+        render(); // Haupt-Render-Aufruf
+      }catch(err){
+        console.error("Fehler bei init():", err);
+        if (view){ // view sollte jetzt definiert sein
+          view.innerHTML = `<div class="card" style="margin:20px;"><h2>Fehler beim Start</h2><p class="muted" style="color:var(--danger);">${escapeHTML(String(err.message||err))}</p><pre style="font-size:10px;color:var(--ink-dim);">${escapeHTML(err.stack || '')}</pre></div>`;
+        }
+        setStatus("Init-Fehler");
+      }
+    }
+
+    // Robuste Startlogik: Warten, bis der DOM bereit ist, oder sofort starten.
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', init, { once:true });
+    } else {
+      // Verzögert init() leicht, um sicherzustellen, dass die WebView "atmen" kann
+      setTimeout(init, 0);
+    }
+    
+  })();
   </script>
 </body>
 </html>
