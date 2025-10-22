@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Phoenix Feuer v1.0 — Mobile Finanz-OS</title>
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/icons/icon-192.png" />
+  <style>
+    :root{--bg:#0b1020;--fg:#e6e9ef;--line:#1a2238;--acc:#2563eb}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    header{padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg)}
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    main{padding:16px 20px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+    .ok{background:#102233;border-color:#1c335e;color:#9cc3ff}
+    .warn{background:#231a10;border-color:#5e331c;color:#ffc89c}
+    code{background:#0f152d;border:1px solid #1a2238;border-radius:6px;padding:2px 6px}
+    a{color:var(--fg)}
+    small{opacity:.8}
+    .mono{font-family:ui-monospace,Consolas,Menlo,monospace}
+    button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+    button:active{transform:translateY(1px)}
+  </style>
+</head>
+<body>
+  <header><h1>🔥 Phoenix Feuer v1.0 — bereit</h1></header>
+  <main>
+    <div class="card">
+      <div class="row">
+        <span class="badge ok" id="online-badge">Online</span>
+        <span class="badge" id="sw-badge">Service Worker: …</span>
+        <span class="badge" id="mf-badge">Manifest: …</span>
+      </div>
+      <p>Du siehst diese Seite. Das Grundgerüst funktioniert. Das Manifest und der Service Worker registrieren sich automatisch.</p>
+      <p>Manifest-Check: <a href="./manifest.webmanifest" target="_blank" rel="noopener">manifest.webmanifest</a></p>
+      <div class="row">
+        <button id="installBtn" style="display:none">Zum Startbildschirm hinzufügen</button>
+        <button id="clearCacheBtn">App-Cache leeren</button>
+      </div>
+      <small class="mono">Pfad: <span id="path"></span></small>
+    </div>
+
+    <div class="card">
+      <strong>Hinweis:</strong>
+      <p>Alle Pfade sind relativ (<code>./…</code>). Das ist wichtig bei GitHub Pages, weil deine App unter <code>/REPO/</code> läuft.</p>
+      <p>Wenn du später baust und in <code>/docs</code> deployst, musst du die Pages-Einstellung anpassen.</p>
+    </div>
+  </main>
+
+  <script>
+    // Online/Offline
+    const onlineBadge = document.getElementById('online-badge');
+    function setOnlineStatus() {
+      const on = navigator.onLine;
+      onlineBadge.textContent = on ? 'Online' : 'Offline';
+      onlineBadge.className = 'badge ' + (on ? 'ok' : 'warn');
+    }
+    window.addEventListener('online', setOnlineStatus);
+    window.addEventListener('offline', setOnlineStatus);
+    setOnlineStatus();
+
+    // Pfad
+    document.getElementById('path').textContent = location.href;
+
+    // Manifest-Check
+    const mfBadge = document.getElementById('mf-badge');
+    fetch('./manifest.webmanifest')
+      .then(r => { mfBadge.textContent = r.ok ? 'Manifest: OK' : 'Manifest: Fehler'; if(r.ok){mfBadge.className='badge ok';} })
+      .catch(_ => { mfBadge.textContent = 'Manifest: Fehler'; mfBadge.className='badge warn'; });
+
+    // Service Worker
+    const swBadge = document.getElementById('sw-badge');
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(reg => {
+            swBadge.textContent = 'Service Worker: Aktiv';
+            swBadge.className = 'badge ok';
+
+            // Sofortige Aktivierung neuer Versionen
+            if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            reg.addEventListener('updatefound', () => {
+              const nw = reg.installing;
+              nw && nw.addEventListener('statechange', () => {
+                if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('Neue Version installiert. Reload beim nächsten Start.');
+                }
+              });
+            });
+          })
+          .catch(err => {
+            swBadge.textContent = 'Service Worker: Fehler';
+            swBadge.className = 'badge warn';
+            console.error('SW-Registrierung fehlgeschlagen:', err);
+          });
+      });
+    } else {
+      swBadge.textContent = 'Service Worker: Nicht unterstützt';
+      swBadge.className = 'badge warn';
+    }
+
+    // A2HS Button
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
+
+    // Cache leeren
+    document.getElementById('clearCacheBtn').addEventListener('click', async () => {
+      if (!('caches' in window)) return alert('Cache API nicht verfügbar.');
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+      alert('App-Cache wurde geleert. Starte die Seite neu.');
+      location.reload();
+    });
+  </script>
+</body>
+</html>
