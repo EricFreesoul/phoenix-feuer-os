@@ -1,1671 +1,1599 @@
 <!doctype html>
 <html lang="de" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <title>Phoenix Feuer v1.0 — Mobile Operator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1020" />
-
-  <link rel="manifest" href='data:application/manifest+json,{
-    "name":"Phoenix Feuer v1.0",
-    "short_name":"Feuer v1",
-    "start_url":".",
-    "display":"standalone",
-    "background_color":"#0b1020",
-    "theme_color":"#2563eb",
-    "icons":[{"src":"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>","sizes":"192x192 512x512","type":"image/svg+xml"}]
-  }'>
-
+  <meta charset="utf-8">
+  <title>PHOENIX v11.3 — MO MO MO MONEY!!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
   <style>
     :root{
       --bg:#0b1020; --bg-elev:#121a33; --card:#0f172a; --ink:#e6ebff; --ink-dim:#a9b1d8;
       --brand:#6ea8fe; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --muted:#2a355a;
-      --ring:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.32);
-      --radius:18px; --radius-sm:12px; --space:14px; --tap:48px; --maxw:620px;
+      --ring:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.36);
+      --radius:18px; --radius-sm:12px; --space:14px; --space-lg:20px; --tap:48px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
     }
     [data-theme="light"]{
       --bg:#f5f7ff; --bg-elev:#ffffff; --card:#ffffff; --ink:#0b1020; --ink-dim:#334072; --muted:#e8ecff;
-      --shadow:0 8px 24px rgba(16,24,40,.08);
+      --theme-shadow:0 8px 24px rgba(16,24,40,.08);
     }
-    *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
     html,body{height:100%}
-    html{scroll-behavior:smooth; overscroll-behavior-y:none}
     body{
-      margin:0; font-family:var(--font);
-      background:linear-gradient(180deg,var(--bg) 0%, #0b1330 100%); color:var(--ink);
-      line-height:1.55; letter-spacing:.2px; -webkit-font-smoothing:antialiased;
+      margin:0; font-family:var(--font); background:linear-gradient(180deg,var(--bg) 0%, #0b1330 100%);
+      color:var(--ink); line-height:1.55; letter-spacing:.2px;
     }
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding: env(safe-area-inset-top) var(--space) calc(96px + env(safe-area-inset-bottom)); }
+    .wrap{ max-width:480px; margin:0 auto; padding: env(safe-area-inset-top) var(--space) calc(86px + env(safe-area-inset-bottom)); }
     header.top{
-      position:sticky; top:0; z-index:20;
-      backdrop-filter:saturate(140%) blur(6px);
+      position:sticky; top:0; z-index:20; backdrop-filter:saturate(140%) blur(8px);
       background: color-mix(in oklab, var(--bg) 92%, transparent);
       border-bottom:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      padding:10px calc((100vw - var(--maxw))/2 + var(--space));
+      padding:10px var(--space);
     }
-    @media (prefers-reduced-transparency: reduce){ header.top{ backdrop-filter:none } }
-    .brandline{ display:flex; align-items:center; gap:12px; }
-    .logo{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; font-size:20px; background:#0e1738; box-shadow: var(--shadow) }
-    h1{ font-size: clamp(18px, 4.8vw, 20px); margin:0; letter-spacing:.3px; font-weight:700}
-    .sub{ font-size:12px; color:var(--ink-dim); margin-top:2px }
-    .muted{ color:var(--ink-dim); font-size:13px }
-    .grid{ display:grid; gap:var(--space); margin-top:var(--space) }
-    .card{ 
-      background:var(--card); 
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent); 
-      border-radius:var(--radius); 
-      padding:var(--space); 
+    .brandline{ display:flex; align-items:center; gap:10px; }
+    .logo{ width:32px; height:32px; border-radius:10px; background:
+      radial-gradient(120% 120% at 20% 20%, #3b82f6 0%, #9333ea 50%, #0ea5e9 100%);
       box-shadow: var(--shadow);
     }
-    .card h2{ font-size:16px; margin:0 0 10px 0; letter-spacing:.2px }
-    .row{ display:flex; align-items:center; gap:10px }
-    .split{ display:flex; gap:var(--space) } .split>*{ flex:1 }
-    .kpi{ font: 700 18px var(--mono); letter-spacing:.3px }
-    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
-      background: color-mix(in oklab, var(--muted) 60%, transparent); 
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      font-size:12px; color:var(--ink-dim);
+    h1{ font-size: clamp(18px, 4.8vw, 22px); margin:0; letter-spacing:.4px;}
+    .sub{ font-size:12px; color:var(--ink-dim); margin-top:2px }
+    .grid{ display:grid; gap:var(--space); margin-top:var(--space-lg) }
+    .card{
+      background:var(--card); border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      border-radius:var(--radius); padding:var(--space); box-shadow: var(--shadow);
     }
+    .card h2{ font-size:16px; margin:0 0 8px 0; letter-spacing:.3px }
+    .row{ display:flex; align-items:center; gap:10px; }
+    .muted{ color:var(--ink-dim); font-size:13px }
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:var(--tap);
-      padding:10px 14px; border-radius:14px; 
-      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      background: linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 94%, #1a2550) 0%, var(--bg-elev) 100%);
-      color:var(--ink); font-weight:600; text-decoration:none; cursor:pointer; transition:transform .12s ease;
+      padding:10px 14px; border-radius:14px; border:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      background:linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 94%, #1a2550) 0%, var(--bg-elev) 100%);
+      color:var(--ink); font-weight:600; text-decoration:none; box-shadow: var(--shadow); cursor:pointer;
     }
-    .btn:active{ transform: scale(.98) }
-    .btn:focus-visible{ outline: 3px solid color-mix(in oklab,var(--ring) 60%, transparent); }
-    .btn.ghost{ background:transparent; box-shadow:none }
-    .btn.primary{ background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color:#1e40af; color:#fff }
-    .btn.ok{ background: linear-gradient(180deg, #059669, #047857); border-color:#065f46; color:#fff }
-    .btn.warn{ background: linear-gradient(180deg, #d97706, #b45309); border-color:#92400e; color:#fff }
-    .btn.danger{ background: linear-gradient(180deg, #ef4444, #b91c1c); border-color:#7f1d1d; color:#fff }
+    .btn:active{ transform: translateY(1px) }
+    .btn.primary{ background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color:#1e40af }
+    .btn.ok{ background: linear-gradient(180deg, #059669, #047857); border-color:#065f46 }
+    .btn.warn{ background: linear-gradient(180deg, #d97706, #b45309); border-color:#92400e }
     .btn.block{ width:100% }
-    .check{ width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
-      background:#0b132b; border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent); cursor:pointer;
-    }
-    .check.done{ background:#10b981; border-color:#059669; color:#001a10 }
-    .list{ display:flex; flex-direction:column; gap:10px }
-    .item{ display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px;
-      background: color-mix(in oklab, var(--muted) 35%, transparent);
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-    }
-    .item strong{ font-size:15px }
-    .tag{ font:600 11px var(--mono); padding:.5px 6px; border-radius:999px; background:#0b1838; border:1px solid #1f2d59 }
-    .hide{ display:none !important }
-    .okc{ color:var(--ok) } .warnc{ color:var(--warn) } .danger{ color:var(--danger) }
-
-    nav.tabs{
-      position: fixed; bottom:0; left:0; right:0; z-index:30;
-      background: color-mix(in oklab, var(--bg) 94%, #0a0f22);
-      border-top: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      padding:10px calc((100vw - var(--maxw))/2 + var(--space)) calc(10px + env(safe-area-inset-bottom));
-      backdrop-filter: blur(8px);
-    }
-    .tabbar{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
-      gap:8px; max-width:var(--maxw); margin:0 auto;
-    }
-    .tab[role="tab"]{ min-height:54px; border-radius:14px; 
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      background: linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 90%, #000));
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-dim)
-    }
-    .tab.active{ outline:2px solid var(--ring); color:var(--ink) }
-
-    /* Forms */
+    .btn.ghost{ background:transparent; box-shadow:none }
+    .btn.switch{ min-width:var(--tap) }
     .ctl{ display:flex; flex-direction:column; gap:6px }
     label{ font-size:13px; color:var(--ink-dim) }
     input[type="text"], input[type="url"], input[type="number"], input[type="date"], textarea, select{
       width:100%; min-height:var(--tap); padding:12px 12px; border-radius:12px;
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      border:1px solid color-mix(in oklab, var(--ink) 14%, transparent);
       background:var(--bg-elev); color:var(--ink); font-size:15px; outline:none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    input:focus, textarea:focus, select:focus{ 
-      border-color:var(--ring); 
-      box-shadow: 0 0 0 3px color-mix(in oklab,var(--ring) 25%, transparent);
     }
     textarea{ min-height:96px; resize:vertical }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
-
-    /* Modal */
-    .modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.65); backdrop-filter: blur(4px);
-      display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .18s; z-index:50 }
-    .modal-overlay.active{ opacity:1; pointer-events:auto }
-    .modal-content{ 
-      background:var(--bg-elev); 
-      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      padding:var(--space); border-radius:var(--radius); width:calc(100% - var(--space)*2); max-width:520px;
-      transform:translateY(8px); transition:transform .18s }
-    .modal-overlay.active .modal-content{ transform:translateY(0) }
-
-    /* Progress */
-    .progress-wrap{ display:flex; flex-direction:column; gap:4px }
-    .progress-bar{ width:100%; height:8px; border-radius:999px; 
-      background: color-mix(in oklab,var(--muted) 50%, transparent); 
-      overflow:hidden;
+    input[type="checkbox"]{ width:22px; height:22px; accent-color:#22c55e }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
+      background: color-mix(in oklab, var(--muted) 60%, transparent); border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      font-size:12px; color:var(--ink-dim);
     }
-    .progress-bar-inner{ height:100%; border-radius:999px; transition:width .3s ease }
-
-    /* Manual styles */
-    .manual h3{ margin:10px 0 6px 0; font-size:15px }
-    .manual h4{ margin:8px 0 6px 0; font-size:14px }
-    .callout{
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-      background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
-      border-radius:var(--radius-sm);
-      padding:10px 12px;
+    .kpi{ font: 700 18px var(--mono); letter-spacing:.3px }
+    .list{ display:flex; flex-direction:column; gap:10px }
+    .item{
+      display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px;
+      background: color-mix(in oklab, var(--muted) 35%, transparent);
+      border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
     }
-    .tbl{ width:100%; border-collapse:collapse; font-size:13px }
-    .tbl th,.tbl td{ 
-      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent); 
-      padding:8px 10px; 
-      vertical-align:top;
+    .item strong{ font-size:15px }
+    .check{ width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+      background:#0b132b; border:1px solid color-mix(in oklab, var(--ink) 12%, transparent); cursor:pointer
     }
-    .tbl th{ background: color-mix(in oklab, var(--bg-elev) 70%, transparent); text-align:left; }
-
-    @media (prefers-reduced-motion: reduce){
-      .modal-content, .progress-bar-inner{ transition:none !important }
+    .check.done{ background:#10b981; border-color:#059669 }
+    .tag{ font:600 11px var(--mono); padding:.5px 6px; border-radius:999px; background:#0b1838; border:1px solid #1f2d59 }
+    nav.tabs{
+      position: fixed; bottom:0; left:0; right:0; z-index:30;
+      background: color-mix(in oklab, var(--bg) 94%, #0a0f22);
+      border-top:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      padding:10px calc((100vw - 480px)/2 + var(--space)) calc(10px + env(safe-area-inset-bottom));
     }
-    @media (max-width:380px){ .split{flex-direction:column} .btn{padding:10px 10px} }
+    .tabbar{ display:grid; grid-template-columns: repeat(8,1fr); gap:10px } /* + Drills + Survival */
+    .tab{
+      min-height:54px; border-radius:14px; border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      background: linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 90%, #000));
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-dim)
+    }
+    .tab.active{ outline:2px solid var(--ring); color:var(--ink) }
+    .ic{ font: 700 13px var(--mono) }
+    .row.gap{ gap:12px }
+    .split{ display:flex; gap:10px }
+    .split > *{ flex:1 }
+    .hide{ display:none !important }
+    .danger{ color:var(--danger) }
+    .okc{ color:var(--ok) }
+    .warnc{ color:var(--warn) }
+    .badge{ font:700 20px var(--mono); padding:8px 12px; border-radius:12px; background:#0b1838; border:1px solid #203061; display:inline-block; }
+    .template-box{ background: color-mix(in oklab, var(--bg-elev) 60%, transparent); border: 1px solid var(--muted); border-radius: var(--radius-sm); padding: var(--space); margin-bottom: var(--space); }
+    .template-box pre{ font-family: var(--font); white-space: pre-wrap; word-wrap: break-word; background: var(--bg); padding:10px; border-radius:6px; border:1px solid var(--muted); font-size:14px; line-height:1.6; }
+    @media (max-width:380px){ .btn{ padding:10px 10px } .split{ flex-direction:column } }
+    .roadmap-content h3{ font-size:1.1rem; color:var(--brand); border-bottom:1px solid var(--muted); padding-bottom:6px; margin-top:20px; }
+    .roadmap-content h4{ font-size:1rem; margin:14px 0 6px 0 }
+    .roadmap-content ul, .roadmap-content ol{ padding-left:20px }
+    .roadmap-content li{ margin-bottom:8px }
+    .roadmap-content code{ font:13px var(--mono); background:var(--muted); padding:2px 6px; border-radius:6px }
+    .roadmap-content table{ border-collapse:collapse; width:100%; margin:12px 0 }
+    .roadmap-content th, .roadmap-content td{ border:1px solid var(--muted); padding:8px; font-size:13px; text-align:left }
+    .roadmap-content th{ background:var(--bg-elev) }
+    .roadmap-content strong{ color:var(--warn) }
+    /* Spezifische Helfer für den Guide */
+    .page-sep{
+      text-align:center; border-top:1px solid var(--muted); margin-top:24px; padding-top:12px; font-size:11px;
+    }
+    .roadmap-content pre{
+      font-family: var(--mono); white-space: pre-wrap; word-wrap: break-word; background: var(--bg);
+      padding:10px; border-radius:8px; border:1px solid var(--muted); font-size:13px; line-height:1.6;
+    }
+    .roadmap-content h4 strong, .roadmap-content p strong, .roadmap-content li strong{
+      color: var(--warn); /* HACK/Axiom-Hervorhebung */
+    }
   </style>
 </head>
 <body>
-  <header class="top" role="banner">
+  <header class="top">
     <div class="brandline">
-      <div class="logo" aria-hidden="true">🔥</div>
+      <div class="logo" aria-hidden="true"></div>
       <div>
-        <h1>Phoenix Feuer <span style="font-size:12px; font-family:var(--mono); background:var(--muted); padding:2px 6px; border-radius:6px; vertical-align:middle;">v1.0</span></h1>
-        <div class="sub"><span id="datestamp"></span> · <span id="status" aria-live="polite">bereit</span></div>
+        <h1>PHOENIX v11.3 — MO MO MO MONEY!!</h1>
+        <div class="sub"><span id="datestamp"></span> · <span id="status">bereit</span></div>
       </div>
       <div style="margin-left:auto" class="row">
-        <button id="themeBtn" class="btn" title="Hell/Dunkel umschalten" aria-pressed="true">☀️/🌙</button>
+        <button id="themeBtn" class="btn switch" title="Hell/Dunkel umschalten">☀️/🌙</button>
       </div>
     </div>
   </header>
 
-  <main class="wrap" role="main">
-    <section id="view" aria-live="polite">
-      <div class="muted">Lade Oberfläche…</div>
-    </section>
-  </main>
+  <main class="wrap"><section id="view" class="grid" aria-live="polite"></section></main>
 
-  <nav class="tabs" role="tablist" aria-label="Primäre Navigation">
-    <div class="tabbar"></div>
+  <nav class="tabs" role="navigation" aria-label="Primäre Navigation">
+    <div class="tabbar">
+      <button class="tab active" data-tab="home"><div class="ic">🏠</div><div>Home</div></button>
+      <button class="tab" data-tab="sprint"><div class="ic">⏱️</div><div>Sprint</div></button>
+      <button class="tab" data-tab="audits"><div class="ic">🧭</div><div>Audits</div></button>
+      <button class="tab" data-tab="evidence"><div class="ic">📎</div><div>Evidence</div></button>
+      <button class="tab" data-tab="outreach"><div class="ic">📬</div><div>Outreach</div></button>
+      <button class="tab" data-tab="drills"><div class="ic">📚</div><div>Drills</div></button>
+      <button class="tab" data-tab="survival"><div class="ic">🛡️</div><div>Survival</div></button> <button class="tab" data-tab="roadmap"><div class="ic">🗺️</div><div>Roadmap</div></button>
+    </div>
   </nav>
 
-  <input id="importFile" type="file" accept="application/json" class="hide" />
-  <div id="modal-container" aria-live="polite"></div>
-
-  <audio id="beep" class="hide">
-    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAZGF0YYQAAAAA/////wAAAP///wAAAP///wAAAP///wAAAP///wAAAP///w==" type="audio/wav">
-  </audio>
+  <input id="importFile" type="file" accept="application/json" class="hide">
 
   <script>
-  (() => {
-    // ---- [PATCH] ES5-sichere Polyfills (ersetzt ||Gleich-Syntax) ----
-    window.requestIdleCallback = window.requestIdleCallback || function(cb){ return setTimeout(function(){ cb({ timeRemaining:function(){ return 0; }, didTimeout:true }); }, 1); };
-    window.cancelIdleCallback = window.cancelIdleCallback || function(id){ return clearTimeout(id); };
+    // ============== PHOENIX v11.3 (MO-Plan) ==============
+    (() => {
+      const VERSION = "11.3.0-mo";
+      const STORAGE_KEY = "PHOENIX_V11_STATE_AEON_V2";
+      const el = (sel, root=document) => root.querySelector(sel);
+      const els = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+      const view = el("#view");
+      const tabs = els(".tab");
 
-    // ======================= CORE =======================
-    const APP = { NAME:"Phoenix Feuer", VERSION:"1.0.0-feuer", SCHEMA:5 };
-    const STORAGE_KEY = "PHOENIX_FEUER_V10";
-    const $  = (sel, root) => (root || document).querySelector(sel);
-    const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-    let view = null; // [PATCH] Erst bei init() setzen
-    let wakeLock = null;
+      // ---------- State ----------
+      const state = load() || seed();
 
-    const NAV = [
-      { id:"home",     label:"Home",     icon:"🏠" },
-      { id:"sprint",   label:"Sprint",   icon:"⏱️" },
-      { id:"audits",   label:"Leads",    icon:"🧭" },
-      { id:"evidence", label:"Evidence", icon:"📎" },
-      { id:"outreach", label:"Outreach", icon:"📬" },
-      { id:"finance",  label:"Finanzen", icon:"💶" },
-      { id:"arsenal",  label:"Arsenal",  icon:"🚀" },
-      { id:"roadmap",  label:"Roadmap",  icon:"🗺️" },
-      { id:"doktrin",  label:"Doktrin",  icon:"📘" }
-    ];
-
-    // ---------- DOKTRIN & ARSENAL ----------
-    const MISSION = Object.freeze({
-      PRIMARY: "ZIEL: 01.01.2026 = Selbstständiger SEO-Consultant.",
-      OUTREACH_DAILY_TARGET: 5
-    });
-
-    const KI_ARSENAL = [
-      { id:"P_25", title:"Collector (Evidence 3+1)", category:"Audit", target:"Gemini",
-        prompt:"Rolle: Collector. Analysiere {URL}. Sammle SERP-Snippets (Top-10). Extrahiere 3+1 Evidenzen (3 harte, 1 weiche). Gib Quellen, kurze Risiko-Notiz und Next Step. Format: Markdown mit Abschnitten." },
-      { id:"P_26", title:"Analyst (Executive Summary)", category:"Audit", target:"ChatGPT",
-        prompt:"Rolle: Analyst. Verdichte die gesammelten Evidenzen zu einem Executive Summary für {URL} (≤1 Seite): 1) P0/P1-Funde, 2) Business-Auswirkung, 3) 30-Tage-Plan, 4) Erfolgsmessung. Ton: konkret, knapp." },
-      { id:"P_15", title:"Agent K – Brief-Analyse (Admin-Angst)", category:"Admin", target:"GPT",
-        prompt:"Analysiere [Dateiname/Brief-Inhalt] neutral. Extrahiere: Fristen, Forderungen, Risiken, To-dos, Kommunikationsvorschlag (sachlich). Liefere Checkliste (heute/morgen/diese Woche) und Textbaustein für Antwort." }
-    ];
-
-    // [PATCH] Ersetzt ||= für Kompatibilität
-    function groupBy(arr, key){ return arr.reduce(function(m,x){ m[x[key]] = m[x[key]] || []; m[x[key]].push(x); return m; }, {}); }
-    async function copyToClipboard(text){
-      try{ await navigator.clipboard.writeText(text); setStatus("kopiert!"); }
-      catch(e){
-        const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
-        ta.select(); document.execCommand("copy"); ta.remove(); setStatus("in Zwischenablage (Fallback)");
-      }
-    }
-    function journalPromptUse(entry){
-      state.arsenalJournal = state.arsenalJournal || []; // [PATCH] Ersetzt ||=
-      state.arsenalJournal.unshift({ ...entry, ts:new Date().toISOString() });
-      save();
-    }
-
-    // ---------- State ----------
-    let state = load() || seed();
-    migrateIfNeeded(state);
-    backfill();
-
-    // ---------- Seed / Backfill / Migrate ----------
-    function seed(){
-      const d=todayISO();
-      return {
-        _meta:{version:APP.VERSION, schema:APP.SCHEMA, created:Date.now()},
-        theme:"dark",
-        activeView:"home",
-        lastSaved:Date.now(),
-        daily:{ date:d, mode:"A", buddha:"", log:"", exec:"", outreachToday:0 },
-        home:{ mit:[
-          { id:id(), text:"Mission setzen (Tägliches Protokoll starten)", done:false }
-        ], kpis:{ sprints:0, outreach:0, evidence:0 } },
-        sprint:{ running:false, startedAt:null, endAt:null, durationMin:90, note:"", remainingSec:90*60 },
-        audits:[],
-        evidence:[],
-        outreach:[],
-        finance:{ income:[], expense:[] },
-        legal:{ pfaendungsgrenze:1555.00, hinzuverdienstgrenze:19661.25, kurGrenzeUmsatz:100000, emRenteBasis:800 },
-        compliance:{ maxDailyWorkMin:180, todayWorkMin:0, sprintType:"ARBEIT" },
-        pi:{ targetStartPI:"2025-11-01", selfEmploymentStart:"2026-01-01", targetDischarge:"2029-01-15", phase:"PREP" },
-        statusLog: [],
-        arsenalJournal: []
-      };
-    }
-    // [PATCH] Ersetzt alle ||= und ?. für maximale Kompatibilität
-    function backfill(){
-      state._meta = state._meta || {version:APP.VERSION, schema:APP.SCHEMA};
-      state._meta.version = APP.VERSION;
-      state.theme = state.theme || "dark";
-      state.activeView = state.activeView || "home";
-      state.daily = state.daily || { date:todayISO(), mode:"A", buddha:"", log:"", exec:"", outreachToday:0 };
-      state.home = state.home || {mit:[], kpis:{}};
-      state.home.kpis = Object.assign({ sprints:0, outreach:0, evidence:(state.evidence||[]).length }, state.home.kpis||{});
-      state.sprint = state.sprint || { running:false, startedAt:null, endAt:null, durationMin:90, note:"", remainingSec:90*60 };
-      state.finance = state.finance || { income:[], expense:[] };
-      state.legal = state.legal || { pfaendungsgrenze:1555.00, hinzuverdienstgrenze:19661.25, kurGrenzeUmsatz:100000, emRenteBasis:800 };
-      state.compliance = state.compliance || { maxDailyWorkMin:180, todayWorkMin:0, sprintType:"ARBEIT" };
-      state.pi = state.pi || { targetStartPI:"2025-11-01", selfEmploymentStart:"2026-01-01", targetDischarge:"2029-01-15", phase:"PREP" };
-      state.home.kpis.outreach = (state.daily && state.daily.outreachToday) || 0;
-      state._meta.schema = state._meta.schema || APP.SCHEMA;
-      state.statusLog = state.statusLog || [];
-      state.arsenalJournal = state.arsenalJournal || [];
-    }
-    function migrateIfNeeded(s){
-      try{
-        if(!s || !s._meta || typeof s._meta.schema!=="number") return;
-        if(s._meta.schema<5){
-          s.statusLog = s.statusLog || []; // [PATCH] Ersetzt ||=
-          s.arsenalJournal = s.arsenalJournal || []; // [PATCH] Ersetzt ||=
-          s._meta.schema = 5;
+      // ---------- Seed / Load / Save ----------
+      function seed(){
+        return {
+          version: VERSION,
+          theme: "dark",
+          activeTab: "home",
+          lastSaved: Date.now(),
+          daily: defaultDaily(),
+          home:{
+            mit:[
+              { id:id(), text:"Mission setzen (Tägliches Protokoll starten)", done:false },
+              { id:id(), text:"Ersten 90-Min-Sprint planen (Output-Satz)", done:false },
+              { id:id(), text:"Outreach heute: 20 Kontakte", done:false },
+            ],
+            kpis:{ openAudits:0, evidence:0, sprints:0, outreach:0 }
+          },
+          sprint:{ running:false, startedAt:null, durationMin:90, note:"", remainingSec:0 },
+          audits:[],        // {id, domain, stage, owner, created, gate:{...}, gateScore:number}
+          evidence:[],      // {id, title, url, type, audit, note, ts}
+          outreach:[],      // {id, contact, channel, handle, audit, created, status, due1, due2, notes}
+          inbox:[]
         }
-      }catch(e){ console.warn("Migration skipped:", e); }
-    }
-
-    function load(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return null;
-        return JSON.parse(raw);
-      }catch(e){ console.warn("Load failed (localStorage evtl. blockiert auf file://)", e); return null }
-    }
-    let _tSave=null, _req=0;
-    function save(){
-      state.lastSaved = Date.now();
-      const me = ++_req;
-      const commit = function(){
-        if(me!==_req) return;
-        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); setStatus("gespeichert"); }
-        catch(e){ setStatus("Speicherfehler"); console.warn("Save failed", e); } // [PATCH] catch(e) hinzugefügt
-        setTimeout(function(){ setStatus("bereit"); }, 800);
-      };
-      if('requestIdleCallback' in window){
-        if(_tSave) cancelIdleCallback(_tSave);
-        _tSave = requestIdleCallback(commit, {timeout:400});
-      }else{
-        if(_tSave) clearTimeout(_tSave);
-        _tSave = setTimeout(commit, 200);
       }
-    }
-
-    // ---------- Utils ----------
-    function id(){ return Math.random().toString(36).slice(2,10) }
-    function todayISO(){ return new Date().toISOString().slice(0,10) }
-    function at00(dstr){ return new Date(dstr+"T00:00:00") }
-    function addDays(dstr, n){ const d=at00(dstr); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10) }
-    function escapeHTML(s){ s = String(s || ""); return s.replace(/[&<>"']/g, function(m){ return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]; }) }
-    function setStatus(txt){ var el = $("#status"); if(el) el.textContent = txt; } // [PATCH] Null-Check
-    function fmtEUR(v){ return (Number(v)||0).toLocaleString('de-DE', { style:'currency', currency:'EUR' }); }
-    function vibrate(pat){ if(navigator.vibrate) navigator.vibrate(pat || [60,40,60]); }
-
-    // ======================= NAV / RENDER =======================
-    function renderNav(){
-      const bar = document.querySelector('.tabbar');
-      if (!bar) return; // [PATCH] Null-Check
-      bar.innerHTML = NAV.map(function(n,i){
-        return `
-        <button class="tab ${state.activeView===n.id?'active':''}" role="tab" aria-selected="${state.activeView===n.id}" aria-controls="panel-${n.id}" data-action="navigate" data-view="${n.id}">
-          <div aria-hidden="true">${n.icon}</div><div>${n.label}</div>
-        </button>
-      `}).join('');
-    }
-
-    function render(){
-      var ds = $("#datestamp"); if(ds) ds.textContent = new Intl.DateTimeFormat("de-DE", { dateStyle:"full", timeStyle:"short" }).format(new Date());
-      renderNav();
-      
-      // [PATCH] Sicherstellen, dass view existiert, bevor darauf zugegriffen wird
-      if (!view) {
-          view = $("#view"); // Erneuter Versuch, view zu holen
-          if (!view) {
-              console.error("CRITICAL: #view element not found during render().");
-              return; // Abbruch, wenn #view immer noch nicht da ist
-          }
+      function load(){
+        try{
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if(!raw) return null;
+          const s = JSON.parse(raw);
+          // Backfill / Normalize
+          s.version     = s.version || VERSION;
+          s.theme       = s.theme || "dark";
+          s.activeTab   = s.activeTab || "home";
+          s.daily       = s.daily || defaultDaily();
+          s.home        = s.home || { mit:[], kpis:{} };
+          s.home.kpis   = Object.assign({ openAudits:0, evidence:0, sprints:0, outreach:0 }, s.home.kpis || {});
+          s.audits      = Array.isArray(s.audits)? s.audits : [];
+          s.evidence    = Array.isArray(s.evidence)? s.evidence : [];
+          s.outreach    = Array.isArray(s.outreach)? s.outreach : [];
+          // Derive KPIs
+          s.home.kpis.openAudits = s.audits.length;
+          s.home.kpis.evidence   = s.evidence.length;
+          s.home.kpis.outreach   = s.daily?.outreachToday || 0;
+          return s;
+        }catch(e){ console.warn("Load failed", e); return null }
       }
-      
-      view.innerHTML = `<div class="grid" id="panel-${state.activeView}" role="tabpanel"></div>`;
-      const root = view.firstElementChild;
-      if (!root) return; // [PATCH] Sicherstellen, dass root existiert
-
-      const renderFunc = ({
-        home: renderHome,
-        sprint: renderSprint,
-        audits: renderAudits,
-        evidence: renderEvidence,
-        outreach: renderOutreach,
-        finance: renderFinance,
-        arsenal: renderArsenal,
-        roadmap: renderRoadmap,
-        doktrin: renderManual
-      }[state.activeView] || renderHome);
-      
-      renderFunc(root);
-    }
-
-    // ======================= COMPLIANCE CALC =======================
-    function computeCompliance(){
-      const L = state.legal, F = state.finance;
-      const now = new Date(), y=now.getFullYear(), m=now.getMonth();
-      const sum = function(arr){ return arr.reduce(function(s,x){ return s + (Number(x.amount)||0); }, 0); };
-      const inY = function(arr){ return arr.filter(function(x){ const d=new Date(x.date); return d.getFullYear()===y; }); };
-      const inM = function(arr){ return arr.filter(function(x){ const d=new Date(x.date); return d.getFullYear()===y && d.getMonth()===m; }); };
-
-      const monGew = sum(inM(F.income||[])) - sum(inM(F.expense||[]));
-      const jahUms = sum(inY(F.income||[]));
-      const jahGew = sum(inY(F.income||[])) - sum(inY(F.expense||[]));
-
-      const hvLimit = Number(L.hinzuverdienstgrenze||19661.25);
-      const hvPct = Math.min(100, Math.round((jahUms / hvLimit) * 100));
-      let hvAmpel = "ok"; if(hvPct >= 85 && hvPct < 100) hvAmpel = "warn"; if(hvPct >= 100) hvAmpel = "danger";
-
-      const paceSollMonat = hvLimit / 12;
-      const paceIstMonat = sum(inM(F.income||[]));
-      const paceRestMonat = Math.max(0, paceSollMonat - paceIstMonat);
-
-      const pfg = Number(L.pfaendungsgrenze||1555.00);
-      const pfaendbarAnzeige = Math.max(0, monGew - pfg);
-
-      // [PATCH] Ersetzt ?. für Kompatibilität
-      const complianceState = state.compliance || {};
-      const workUsed = Number(complianceState.todayWorkMin || 0);
-      const workMax = Number(complianceState.maxDailyWorkMin || 180);
-
-      return {
-        monatsGewinn: monGew,
-        jahresGewinn: jahGew,
-        jahresUmsatz: jahUms,
-        hinzuverdienstLimit: hvLimit,
-        hinzuverdienstPct: hvPct,
-        hinzuverdienstAmpel: hvAmpel,
-        paceSollMonat,
-        paceIstMonat,
-        paceRestMonat,
-        pfaendungsgrenze: pfg,
-        pfaendbarAnzeige,
-        workToday: {
-          used: workUsed,
-          max:  workMax
-        }
-      };
-    }
-
-    function ProgressBar(props){
-      const label = props.label, value = props.value, max = props.max, unit = props.unit, theme = props.theme || 'brand';
-      const pct = Math.max(0, Math.min(100, max>0? (value/max*100):0));
-      const clr = theme==='danger' ? 'var(--danger)' : theme==='warn' ? 'var(--warn)' : 'var(--brand)';
-      const tone = pct>=100 ? 'var(--danger)' : pct>=80 ? 'var(--warn)' : 'var(--ink-dim)';
-      return `
-        <div class="progress-wrap" role="group" aria-label="${escapeHTML(label)}">
-          <div class="row" style="justify-content:space-between;font-size:12px">
-            <span style="color:var(--ink-dim)">${label}</span>
-            <span style="font-family:var(--mono);color:${tone}">${(Number(value)||0).toLocaleString('de-DE')} / ${(Number(max)||0).toLocaleString('de-DE')} ${unit||''}</span>
-          </div>
-          <div class="progress-bar" aria-hidden="true"><div class="progress-bar-inner" style="width:${pct}%;background:${clr}"></div></div>
-        </div>`;
-    }
-
-    // ======================= VIEWS =======================
-    function renderHome(root){
-      const comp = computeCompliance();
-
-      const mission = { id:"MISSION_CMD", text: MISSION.PRIMARY, done:false, locked:true };
-      const mitArr = Array.isArray(state.home.mit) ? state.home.mit : [];
-      state.home.mit = [mission, ...mitArr.filter(function(x){ return x.id!=="MISSION_CMD"; })].slice(0,3);
-
-      const daily = document.createElement("div"); daily.className="card";
-      // [PATCH] Ersetzt alle ?.
-      const dailyState = state.daily || {};
-      daily.innerHTML = `
-        <h2>Tägliches Protokoll</h2>
-        <div class="split">
-          <div class="ctl"><label>Datum</label><input id="dDate" type="date" value="${dailyState.date || todayISO()}"></div>
-          <div class="ctl"><label>Woche</label><input type="text" value="" placeholder="auto" disabled></div>
-        </div>
-        <div class="row" style="gap:10px; margin-top:8px">
-          <div class="pill">Modus</div>
-          <label class="row" style="gap:6px"><input type="radio" name="mode" value="A" ${dailyState.mode==="A"?"checked":""}> A: 05:30 Lernen → 09:00 Arbeiten</label>
-        </div>
-        <div class="row" style="gap:10px">
-          <label class="row" style="gap:6px"><input type="radio" name="mode" value="B" ${dailyState.mode==="B"?"checked":""}> B: 05:30 Arbeiten → 09:00 Lernen</label>
-        </div>
-        <div class="row" style="gap:10px; margin-top:8px">
-          <div class="pill">Outreach (System > Emotion): <code class="tag">${dailyState.outreachToday||0}/${MISSION.OUTREACH_DAILY_TARGET}</code></div>
-          <div class="row" style="margin-left:auto; gap:6px">
-            <button class="btn" data-action="outreach-minus" aria-label="Outreach verringern">–</button>
-            <button class="btn ok" data-action="outreach-plus" aria-label="Outreach erhöhen">+</button>
-          </div>
-        </div>
-        <div class="muted" style="margin-top:6px">Ziel: 2×90-Min-Sprints, 5 qualifizierte Kontakte, Follow-ups in 72 h.</div>
-      `;
-
-      const kpis = document.createElement("div"); kpis.className="card";
-      kpis.innerHTML = `
-        <h2>Status • Heute</h2>
-        <div class="row" style="gap:10px">
-          <div class="pill">Version <code class="tag">${APP.VERSION}</code></div>
-          <div class="pill">Tab <code class="tag">${state.activeView}</code></div>
-          <div class="pill">Modus <code class="tag">${dailyState.mode||"A"}</code></div>
-        </div>
-        <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px">
-          <div class="card" style="padding:10px"><div class="muted">Leads</div><div class="kpi">${state.audits.length}</div></div>
-          <div class="card" style="padding:10px"><div class="muted">Beweise</div><div class="kpi">${state.evidence.length}</div></div>
-          <div class="card" style="padding:10px"><div class="muted">Sprints</div><div class="kpi">${state.home.kpis.sprints}</div></div>
-          <div class="card" style="padding:10px"><div class="muted">Outreach</div><div class="kpi">${dailyState.outreachToday||0}/${MISSION.OUTREACH_DAILY_TARGET}</div></div>
-        </div>
-      `;
-
-      const mit = document.createElement("div"); mit.className="card";
-      mit.innerHTML = `<h2>Primär-Direktiven (max. 3)</h2>`;
-      const list = document.createElement("div"); list.className="list";
-      state.home.mit.forEach(function(item){
-        const it = document.createElement("div"); it.className="item";
-        const chk = document.createElement("button"); chk.className="check"+(item.done?" done":""); chk.setAttribute("aria-pressed",!!item.done);
-        chk.textContent = item.done ? "✓" : "";
-        chk.addEventListener('click', function(){ if(item.locked){ vibrate([40,40,40]); return; } item.done=!item.done; save(); render(); });
-        const txt = document.createElement("div"); txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
-        it.append(chk, txt); list.append(it);
-      });
-      const add = document.createElement("div"); add.className="row"; add.style.gap="10px";
-      add.innerHTML = `
-        <div class="ctl" style="flex:1"><label>Neue Direktive</label><input id="mitNew" type="text" inputmode="latin" placeholder="Kurz & messbar (≤ 80 Zeichen)"></div>
-        <button class="btn ok" data-action="mit-add">Hinzufügen</button>`;
-      mit.append(list, document.createElement("div"), add);
-
-      const journal = document.createElement("div"); journal.className="card";
-      journal.innerHTML = `
-        <h2>Buddha-Status & Logbuch</h2>
-        <div class="ctl"><label>Mikrobeobachtungen</label><textarea id="buddha">${escapeHTML(dailyState.buddha||"")}</textarea></div>
-        <div class="ctl"><label>Logbuch (Erkenntnisse, Engpässe)</label><textarea id="log">${escapeHTML(dailyState.log||"")}</textarea></div>
-        <div class="ctl"><label>Executive Summary (≤ 1 Seite)</label><textarea id="exec">${escapeHTML(dailyState.exec||"")}</textarea></div>
-      `;
-
-      const ops = document.createElement("div"); ops.className="card";
-      ops.innerHTML = `
-        <h2>Compliance, Backup & Sicherheit</h2>
-        ${ProgressBar({label:'Arbeitszeit heute', value:comp.workToday.used, max:comp.workToday.max, unit:'Min', theme: comp.workToday.used>=comp.workToday.max?'danger':'brand'})}
-        ${ProgressBar({label:'Hinzuverdienst (Jahr)', value:comp.jahresUmsatz, max:comp.hinzuverdienstLimit, unit:'€',
-          theme: comp.hinzuverdienstAmpel==='danger'?'danger':(comp.hinzuverdienstAmpel==='warn'?'warn':'brand') })}
-        ${ProgressBar({label:'Pfändungsfreigrenze (Monatsgewinn)', value:comp.monatsGewinn, max:comp.pfaendungsgrenze, unit:'€', theme: comp.monatsGewinn>comp.pfaendungsgrenze?'warn':'brand'})}
-        <div class="muted" style="margin-top:6px">Leitplanke pro Monat (≈): <code class="tag">${comp.paceSollMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code> · Ist: <code class="tag">${comp.paceIstMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code> · Rest (≈): <code class="tag">${comp.paceRestMonat.toLocaleString('de-DE',{style:'currency',currency:'EUR'})}</code></div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn block" data-action="export-json">⬇️ Export (klar)</button>
-          <button class="btn block" data-action="export-encrypted">🔐 Export (verschlüsselt)</button>
-        </div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn block" data-action="import-json">⬆️ Import</button>
-          <button class="btn danger block" data-action="factory-reset">⚠️ Werkseinstellungen</button>
-        </div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn block" data-action="request-notify">🔔 Benachrichtigungen</button>
-          <button class="btn block" data-action="toggle-wakelock">💡 Bildschirm an</button>
-        </div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn block" data-action="export-arsenal-journal">🧾 Journal exportieren (CSV)</button>
-        </div>
-        <div id="quota" class="muted" style="margin-top:6px"></div>
-        <div class="muted" style="margin-top:6px">Operative Richtwerte; keine Rechtsberatung. Täglicher Export empfohlen.</div>
-      `;
-
-      const qa = document.createElement("div"); qa.className="card";
-      qa.innerHTML = `
-        <h2>Quick Actions</h2>
-        <div class="split" style="margin-top:8px">
-          <button class="btn primary block" data-action="${state.sprint.running?'pause-sprint':'start-sprint'}">${state.sprint.running?'⏸️ Sprint pausieren':'⏱️ 90-Min-Sprint'}</button>
-          <button class="btn block" data-action="show-modal" data-modal-type="quick-evidence">📎 Beweis sichern</button>
-        </div>
-        <div class="split" style="margin-top:8px">
-          <button class="btn danger block" data-action="case-a01">🚨 PROTOKOLL A-01</button>
-        </div>`;
-
-      root.append(daily, kpis, mit, journal, ops, qa);
-
-      // Bind
-      daily.querySelector("#dDate").onchange = function(e){
-        const newDate = e.target.value;
-        if(state.daily && state.daily.date !== newDate){ // [PATCH] Null-Check
-          state.daily.date = newDate;
-          state.daily.outreachToday = 0;
-          state.compliance.todayWorkMin = 0;
-          save(); render();
-        }
-      };
-      daily.querySelectorAll('input[name="mode"]').forEach(function(r){ r.onchange = function(e){ state.daily.mode = e.target.value; save(); }; });
-      journal.querySelector("#buddha").oninput = function(e){ state.daily.buddha=e.target.value; save(); };
-      journal.querySelector("#log").oninput    = function(e){ state.daily.log=e.target.value; save(); };
-      journal.querySelector("#exec").oninput   = function(e){ state.daily.exec=e.target.value; save(); };
-
-      // Storage quota
-      if(navigator.storage && navigator.storage.estimate){
-        navigator.storage.estimate().then(function({usage, quota}){
-          const pct = quota? Math.round((usage/quota)*100) : 0;
-          var qEl = $("#quota"); if(qEl) qEl.textContent = `Speicher: ${(usage/1e6).toFixed(1)} MB / ${(quota/1e6).toFixed(1)} MB (${pct}%)`;
-        }).catch(function(){});
-      }
-    }
-
-    // ===== Sprint =====
-    let sprintTicker=null, pageHiddenAt=null;
-    function renderSprint(root){
-      const c = document.createElement("div"); c.className="card";
-      const left = remaining();
-      c.innerHTML = `
-        <h2>90-Minuten-Sprint</h2>
-        <div class="split">
-          <div class="ctl"><label>Dauer (Min)</label>
-            <select id="durSel">
-              ${[25,50,90,120].map(function(v){ return `<option ${v==state.sprint.durationMin?'selected':''}>${v}</option>`; }).join('')}
-            </select>
-          </div>
-          <div class="ctl"><label>Status</label><input value="${state.sprint.running?'läuft':'bereit'}" disabled></div>
-          <div class="ctl"><label>Sprint-Typ</label>
-            <select id="stype">
-              <option value="ARBEIT" ${state.compliance.sprintType==="ARBEIT"?"selected":""}>Arbeit</option>
-              <option value="LERNEN" ${state.compliance.sprintType==="LERNEN"?"selected":""}>Lernen</option>
-            </select>
-          </div>
-        </div>
-        <div class="ctl"><label>Ziel</label><textarea id="snote" placeholder="Klarer Output (z. B. 'Summary v1 fertig')">${escapeHTML(state.sprint.note||"")}</textarea></div>
-        <div class="row" style="gap:10px; margin-top:8px">
-          <span class="kpi" id="timerBadge" style="font-size:28px">${fmtTimer(left)}</span>
-          <span class="pill">Rest</span>
-        </div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn primary block" data-action="${state.sprint.running?'pause-sprint':'start-sprint'}">${state.sprint.running?'Pausieren':'Starten'}</button>
-          <button class="btn warn block" data-action="reset-sprint">Zurücksetzen</button>
-        </div>
-        <div class="split" style="margin-top:10px">
-          <button class="btn danger block" data-action="case-p01">🛑 PROTOKOLL P-01 (BURNOUT)</button>
-        </div>
-        <div class="muted" style="margin-top:6px">Tipp: Benachrichtigungen & Bildschirm-an aktivieren.</div>`;
-      root.append(c);
-
-      $("#snote").oninput = function(e){ state.sprint.note=e.target.value; save(); };
-      $("#durSel").onchange = function(e){
-        const val = Number(e.target.value)||90;
-        state.sprint.durationMin = val;
-        if(!state.sprint.running){
-          state.sprint.remainingSec = val*60; save(); render();
-        }else{
-          const rem = Math.max(1, Math.floor((state.sprint.endAt - Date.now())/1000));
-          const total = val*60;
-          state.sprint.endAt = Date.now() + Math.min(rem, total)*1000;
-          save(); render();
-        }
-      };
-      $("#stype").onchange = function(e){ state.compliance.sprintType = e.target.value; save(); };
-
-      startTicker();
-
-      function remaining(){
-        if(state.sprint.running && state.sprint.endAt){
-          return Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000));
-        }
-        return Math.max(0, Math.floor(state.sprint.remainingSec||state.sprint.durationMin*60));
-      }
-      function startTicker(){
-        stopTicker();
-        sprintTicker = setInterval(function(){
-          const b = $("#timerBadge"); if(!b) return stopTicker();
-          const left = (state.sprint.running && state.sprint.endAt) ? Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000))
-                     : Math.max(0, Math.floor(state.sprint.remainingSec||0));
-          b.textContent = fmtTimer(left);
-          if(state.sprint.running && left<=0){
-            state.sprint.running=false; state.sprint.startedAt=null; state.sprint.endAt=null; state.sprint.remainingSec=0;
-            state.home.kpis.sprints += 1;
-            if(state.compliance.sprintType === "ARBEIT"){
-              state.compliance.todayWorkMin = Math.min(
-                Number(state.compliance.todayWorkMin||0) + Number(state.sprint.durationMin||0),
-                Number(state.compliance.maxDailyWorkMin||180)
-              );
-            }
-            save();
-            try{ var beepEl = $("#beep"); if(beepEl) { beepEl.currentTime=0; beepEl.play().catch(function(){}); } }catch(e){}
-            vibrate([100,40,100,40,200]);
-            notify("Sprint beendet – Evidence loggen!");
-            alert("Sprint beendet – Evidence loggen!");
-            render();
-          }
-        }, 500);
-      }
-    }
-    function stopTicker(){ if(sprintTicker){ clearInterval(sprintTicker); sprintTicker=null; } }
-    function fmtTimer(sec){ const m = Math.floor(sec/60).toString().padStart(2,"0"); const s = (sec%60).toString().padStart(2,"0"); return `${m}:${s}`; }
-
-    document.addEventListener("visibilitychange", function(){
-      if(document.hidden){ pageHiddenAt = Date.now(); } else { pageHiddenAt = null; }
-    });
-
-    // ===== Audits =====
-    const GATE_ITEMS = [
-      ["klartext","Klartext-Ton"],
-      ["belege","≥ 2 Belege je Kernbefund"],
-      ["serp","SERP beigefügt"],
-      ["prio","P1/P2/P3 schlüssig"],
-      ["ampel","Ampel begründet"],
-      ["msum","Management-Summary (1 Seite)"],
-      ["plan30","30-Tage-Plan realistisch"],
-      ["ordnung","Dateiordnung korrekt"],
-      ["next","Nächster Schritt klar"],
-      ["mobil","Mobil gut lesbar"],
-      ["fit","Immobilien-Fit"],
-      ["evidence31","Evidence 3+1 erfüllt"]
-    ];
-    function gateScore(g){
-      const total = GATE_ITEMS.length;
-      const ok = GATE_ITEMS.reduce(function(n,item){ var k = item[0]; return n + (g && g[k] ? 1 : 0); }, 0); // [PATCH] Ersetzt ?.
-      return Math.round(100 * ok / total);
-    }
-    function renderGateChecklistHTML(a){
-      const g = a.gate||{};
-      return `<div class="list" style="margin-top:8px">
-        ${GATE_ITEMS.map(function(item){ var key=item[0], label=item[1]; return `
-          <label class="row" style="gap:8px">
-            <input type="checkbox" data-gate="${key}" data-aid="${a.id}" ${g[key]?"checked":""}> <span>${label}</span>
-          </label>`}).join("")}
-        <div class="pill" style="margin-top:8px"><span>Score</span><code class="tag">${a.gateScore||0}</code></div>
-      </div>`;
-    }
-    function renderAudits(root){
-      const make = document.createElement("div"); make.className="card";
-      make.innerHTML = `
-        <h2>Lead anlegen</h2>
-        <div class="split">
-          <div class="ctl"><label>Domain/URL</label><input id="aDomain" type="text" placeholder="kunde-immobilien.de/expose/altbau-92qm" autocapitalize="off" spellcheck="false"></div>
-          <div class="ctl"><label>Status</label>
-            <select id="aStage">
-              ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(s){ return `<option>${s}</option>`; }).join("")}
-            </select>
-          </div>
-        </div>
-        <button class="btn ok block" data-action="audit-add">Lead hinzufügen</button>`;
-      root.append(make);
-
-      const toolbar = document.createElement("div"); toolbar.className="card";
-      toolbar.innerHTML = `
-        <h2>Leads (${state.audits.length})</h2>
-        <div class="split">
-          <div class="ctl"><label>Suche</label><input id="fText" type="text" placeholder="domain, teil..." inputmode="latin" autocapitalize="off"></div>
-          <div class="ctl"><label>Status</label>
-            <select id="fStage">
-              <option value="">(alle)</option>
-              ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(s){ return `<option>${s}</option>`; }).join("")}
-            </select>
-          </div>
-        </div>`;
-      root.append(toolbar);
-
-      const list = document.createElement("div"); list.className="card";
-      const ul = document.createElement("div"); ul.className="list";
-      list.append(ul); root.append(list);
-
-      const renderList = function(){
-        ul.innerHTML = "";
-        const q = (toolbar.querySelector("#fText").value||"").toLowerCase();
-        const st= toolbar.querySelector("#fStage").value;
-        state.audits
-          .filter(function(a){ return (!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st); })
-          .forEach(function(a){
-            const it = document.createElement("div"); it.className="item";
-            const gateOk = (a.gateScore||0)>=98;
-            it.innerHTML = `
-              <div style="flex:1">
-                <strong>${escapeHTML(a.domain)}</strong>
-                <div class="muted">Status: ${a.stage} • seit ${a.created} ${gateOk?`• <span class="okc">Gate ${a.gateScore}</span>`:``}</div>
-                <div class="row" style="gap:6px; margin-top:8px; flex-wrap:wrap">
-                  <button class="btn" data-action="launch-arsenal" data-prompt-id="P_25" data-domain="${a.domain}">🚀 Collector (P-25)</button>
-                  <button class="btn" data-action="launch-arsenal" data-prompt-id="P_26" data-domain="${a.domain}">📊 Analyst (P-26)</button>
-                </div>
-                <details style="margin-top:6px">
-                  <summary>Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}</summary>
-                  ${renderGateChecklistHTML(a)}
-                </details>
-              </div>
-              <select class="btn ghost" data-aid="${a.id}" data-action="audit-stage">
-                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(function(st){ return `<option ${a.stage===st?"selected":""}>${st}</option>`; }).join("")}
-              </select>
-              <button class="btn ghost danger" data-action="delete" data-collection="audits" data-id="${a.id}">✕</button>`;
-            ul.append(it);
-          });
-        list.firstElementChild.innerHTML = `<h2>Leads (${ul.childElementCount})</h2>`;
-      };
-      renderList();
-      toolbar.querySelectorAll("input,select").forEach(function(c){ c.oninput = renderList; });
-
-      ul.addEventListener("change", function(e){
-        const sel = e.target.closest('[data-action="audit-stage"]');
-        if(sel){ const a = state.audits.find(function(x){ return x.id===sel.dataset.aid; }); if(a){ a.stage = sel.value; save(); } }
-        const gchk = e.target.closest('input[type="checkbox"][data-gate]');
-        if(gchk){
-          const a = state.audits.find(function(x){ return x.id===gchk.dataset.aid; });
-          if(a){ 
-            a.gate = a.gate || {}; // [PATCH] Ersetzt ||=
-            a.gate[gchk.dataset.gate] = gchk.checked; 
-            a.gateScore = gateScore(a.gate); 
-            save();
-            const sum = gchk.closest('details'); 
-            if(sum) { var sumEl = sum.querySelector('summary'); if(sumEl) sumEl.innerHTML = `Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}`; }
-          }
-        }
-      });
-    }
-
-    // ===== Evidence =====
-    function renderEvidence(root){
-      const form = document.createElement("div"); form.className="card";
-      form.innerHTML = `
-        <h2>Beweis erfassen (3+1)</h2>
-        <div class="ctl"><label>Titel</label><input id="eTitle" type="text" placeholder="z. B. 'CLS: Layoutsprung (P1)'"></div>
-        <div class="ctl"><label>Link (Drive)</label><input id="eUrl" type="url" placeholder="https://drive.google.com/..."></div>
-        <div class="split">
-          <div class="ctl"><label>Typ</label>
-            <select id="eType">${["CLS_KOLLAPS","H1_ANOMALIE","ALT_BLINDHEIT","CANONICAL_LOSS","BREADCRUMB_VOID","SONSTIGES"].map(function(t){ return `<option>${t}</option>`; }).join("")}</select>
-          </div>
-          <div class="ctl"><label>Lead (Audit)</label><select id="eAudit"></select></div>
-        </div>
-        <div class="ctl"><label>Zitat/Notiz</label><textarea id="eNote" placeholder="{<img src='/cover.jpg'>...}"></textarea></div>
-        <button class="btn ok block" data-action="evidence-add">Beweis speichern</button>
-        <div class="muted" style="margin-top:6px">Dateiname: <code>YYYY-MM-DD_{domain}_M##_Label_v01.jpg</code></div>`;
-      root.append(form);
-
-      const selAudit = form.querySelector("#eAudit");
-      selAudit.innerHTML = state.audits.map(function(a){ return `<option value="${a.id}">${escapeHTML(a.domain)}</option>`; }).join("") || `<option value="">(kein Lead)</option>`;
-
-      if(state._evidenceDraft){
-        const d=state._evidenceDraft;
-        if(d.title) $("#eTitle").value = d.title;
-        if(d.type)  $("#eType").value  = d.type;
-        if(d.note)  $("#eNote").value  = d.note;
-        if(d.auditId && [].slice.call(selAudit.options).some(function(o){ return o.value===d.auditId; })) selAudit.value = d.auditId;
-        setStatus("Evidence vorbefüllt (Arsenal/Drill)");
+      function save(){
+        state.lastSaved = Date.now();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        setStatus("gespeichert");
+        setTimeout(()=> setStatus("bereit"), 800);
       }
 
-      const list = document.createElement("div"); list.className="card";
-      list.innerHTML = `<h2>Beweis-Liste (${state.evidence.length})</h2>`;
-      const ul = document.createElement("div"); ul.className="list";
-      state.evidence.slice(0,50).forEach(function(e){
-        const audit = state.audits.find(function(a){ return a.id===e.audit; });
-        const it = document.createElement("div"); it.className="item";
-        it.innerHTML = `
-          <div style="flex:1">
-            <strong>${escapeHTML(e.title) || '(Kein Titel)'}</strong>
-            <div class="muted">${new Date(e.ts).toLocaleString("de-DE")} • ${e.type} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
-            ${e.url?(`<div class="muted">Link: ${escapeHTML(e.url)}</div>`):""}
-            ${e.note?(`<div class="muted" style="font-family:var(--mono); background:var(--bg); padding:4px 6px; border-radius:6px; margin-top:4px;">${escapeHTML(e.note)}</div>`):""}
-          </div>
-          <button class="btn ghost danger" data-action="delete" data-collection="evidence" data-id="${e.id}">✕</button>`;
-        ul.append(it);
-      });
-      list.append(ul);
-      root.append(list);
-    }
+      // ---------- Utilities ----------
+      function id(){ return Math.random().toString(36).slice(2,10) }
+      function todayISO(){ return new Date().toISOString().slice(0,10); }
+      function at00(dstr){ return new Date(dstr+"T00:00:00"); }
+      function addDays(dstr, days){ const d=at00(dstr); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
+      function humanDate(ts=new Date()){
+        return new Intl.DateTimeFormat("de-DE", { dateStyle:"full", timeStyle:"short" }).format(ts);
+      }
+      function weekOfMO(dstr){
+        const start = new Date("2025-10-17T00:00:00");
+        const d = at00(dstr);
+        const diff = Math.max(0, d - start);
+        const w = Math.floor(diff/(7*24*3600*1000))+1;
+        return Math.max(1, Math.min(11, w));
+      }
+      function escapeHTML(s=""){ return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
+      function setStatus(txt){ el("#status").textContent = txt; }
+      function copyToClipboard(text){
+        if (!navigator.clipboard){ setStatus("Clipboard API fehlt"); return; }
+        navigator.clipboard.writeText(text).then(()=>{ setStatus("kopiert!"); setTimeout(()=> setStatus("bereit"), 800); })
+          .catch(()=> setStatus("Kopieren fehlgeschlagen"));
+      }
 
-    // ===== Outreach =====
-    function renderOutreach(root){
-      const card = document.createElement("div"); card.className="card";
-      card.innerHTML = `
-        <h2>Outreach-Planner (${MISSION.OUTREACH_DAILY_TARGET}/Tag · FU in 72 h)</h2>
-        <div class="split">
-          <div class="ctl"><label>Kontakt</label><input id="oName" type="text" placeholder="z. B. Sabine Keller · ImmoX Berlin" autocomplete="name"></div>
-          <div class="ctl"><label>Kanal</label>
-            <select id="oChannel">${["Email","LinkedIn","Telefon","Formular"].map(function(c){ return `<option>${c}</option>`; }).join("")}</select>
-          </div>
-        </div>
-        <div class="split">
-          <div class="ctl"><label>Adresse/Handle</label><input id="oHandle" type="text" placeholder="mail@domain.tld oder linkedin.com/in/..."></div>
-          <div class="ctl"><label>Lead (optional)</label>
-            <select id="oAudit"><option value="">(frei)</option>${state.audits.map(function(a){ return `<option value="${a.id}">${escapeHTML(a.domain)}</option>`; }).join("")}</select>
-          </div>
-        </div>
-        <div class="ctl"><label>Notiz</label><textarea id="oNote" placeholder="Beleg/CTA in einem Satz"></textarea></div>
-        <button class="btn ok block" data-action="outreach-add">Kontakt eintragen</button>
-        <div class="muted" style="margin-top:6px">Neuer Kontakt → FU1 = +72 h, FU2 = weitere +72 h. Buttons ändern Status.</div>`;
-      root.append(card);
-
-      const bar = document.createElement("div"); bar.className="card";
-      bar.innerHTML = `
-        <h2>Kontakte (${state.outreach.length})</h2>
-        <div class="split">
-          <div class="ctl"><label>Filter</label>
-            <select id="of">
-              <option value="">(alle)</option>
-              <option value="due">Fällig heute/überfällig</option>
-              <option value="sent">Nur gesendet</option>
-              <option value="fu1">Nur FU1 geplant/erledigt</option>
-              <option value="fu2">Nur FU2 geplant/erledigt</option>
-              <option value="done">Erledigt</option>
-              <option value="lost">Verworfen</option>
-            </select>
-          </div>
-          <div class="ctl"><label>Suche</label><input id="oq" type="text" placeholder="Name, Unternehmen, Handle"></div>
-        </div>`;
-      root.append(bar);
-
-      const list = document.createElement("div"); list.className="card";
-      const ul = document.createElement("div"); ul.className="list";
-      list.append(ul); root.append(list);
-
-      const renderList = function(){
-        ul.innerHTML = "";
-        const f = bar.querySelector("#of").value;
-        const q = (bar.querySelector("#oq").value||"").toLowerCase();
-        const today = todayISO();
-        const dueFlag = function(o){
-          const d = (o.status==="SENT"||o.status==="FU1") ? o.due1 : (o.status==="FU2" ? o.due2 : null);
-          if(!d) return "";
-          if(d <= today) return `<span class="tag" style="border-color:#92400e">FÄLLIG</span>`;
-          if(d === addDays(today,1)) return `<span class="tag">morgen</span>`;
-          return `<span class="tag">${d}</span>`;
+      function defaultDaily(){
+        return {
+          date: todayISO(),
+          mode: "A",
+          buddha: "",
+          log: "",
+          exec: "",
+          outreachToday: 0
         };
-        state.outreach
-          .filter(function(o){
-            const txt = (o.contact+" "+(o.handle||"")).toLowerCase();
-            if(q && !txt.includes(q)) return false;
-            if(f==="due"){
-              const d = (o.status==="SENT"||o.status==="FU1")?o.due1:(o.status==="FU2"?o.due2:null);
-              return d && d <= today && !["DONE","LOST"].includes(o.status);
-            }
-            if(f==="sent") return o.status==="SENT";
-            if(f==="fu1")  return ["FU1","SENT"].includes(o.status);
-            if(f==="fu2")  return ["FU2"].includes(o.status);
-            if(f==="done") return o.status==="DONE";
-            if(f==="lost") return o.status==="LOST";
-            return true;
-          })
-          .forEach(function(o){
-            const audit = state.audits.find(function(a){ return a.id===o.audit; });
-            const it = document.createElement("div"); it.className="item";
-            it.innerHTML = `
-              <div style="flex:1">
-                <strong>${escapeHTML(o.contact)}</strong>
-                <div class="muted">${o.channel}${o.handle?(" • "+escapeHTML(o.handle)):""} • ${o.created} • <span class="${o.status==='DONE'?'okc':o.status==='LOST'?'danger':'warnc'}">${o.status}</span> ${dueFlag(o)} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
-                ${o.notes?(`<div class="muted" style="margin-top:4px">${escapeHTML(o.notes)}</div>`):""}
-              </div>
-              <div class="row" style="gap:6px; flex-wrap:wrap">
-                ${actionButtons(o)}
-              </div>`;
-            ul.append(it);
-          });
-        list.firstElementChild.innerHTML = `<h2>Kontakte (${ul.childElementCount})</h2>`;
-      };
-      bar.querySelectorAll("input,select").forEach(function(c){ c.oninput = renderList; });
-      renderList();
+      }
 
-      ul.addEventListener("click",function(e){
-        const b = e.target.closest("button[data-act]"); if(!b) return;
-        const o = state.outreach.find(function(x){ return x.id===b.dataset.id; }); if(!o) return;
-        const act = b.dataset.act;
-        if(act==="FU1"){ o.status="FU1"; if(!o.due1) o.due1 = addDays(todayISO(),3); }
-        if(act==="FU2"){ o.status="FU2"; if(!o.due2) o.due2 = addDays(todayISO(),3); }
-        if(act==="DONE"){ o.status="DONE"; }
-        if(act==="LOST"){ o.status="LOST"; }
-        if(act==="SNOOZE1"){ o.due1 = addDays(o.due1||todayISO(),1); }
-        if(act==="SNOOZE2"){ o.due2 = addDays(o.due2||todayISO(),1); }
-        save(); render();
-      });
-    }
-    function actionButtons(o){
-      const btn = function(label, act, cls){ cls=cls||"btn ghost"; return `<button class="${cls}" data-act="${act}" data-id="${o.id}">${label}</button>`; };
-      if(o.status==="SENT") return btn("FU1 geplant","FU1")+btn("+1 Tag","SNOOZE1");
-      if(o.status==="FU1")  return btn("FU1 erledigt → FU2","FU2")+btn("+1 Tag","SNOOZE1");
-      if(o.status==="FU2")  return btn("Abschluss","DONE")+btn("+1 Tag","SNOOZE2");
-      if(o.status==="DONE") return btn("Erledigt","DONE","btn ok");
-      if(o.status==="LOST") return btn("Verworfen","LOST","btn danger");
-      return btn("Gesendet","SENT")+btn("Verwerfen","LOST","btn warn");
-    }
+      // ---------- Render root ----------
+      function render(){
+        el("#datestamp").textContent = humanDate();
+        els(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === state.activeTab));
+        view.innerHTML = "";
+        // NEUES MODUL 'survival' HINZUGEFÜGT
+        const m = { home: renderHome, sprint: renderSprint, audits: renderAudits, evidence: renderEvidence, outreach: renderOutreach, drills: renderDrills, survival: renderSurvival, roadmap: renderRoadmap };
+        (m[state.activeTab]||renderHome)();
+      }
 
-    // ===== Finance =====
-    function renderFinance(root){
-      const status = computeCompliance();
-      const top = document.createElement("div"); top.className="grid";
-      top.style.gridTemplateColumns = "repeat(auto-fit, minmax(140px, 1fr))";
-      top.innerHTML = `
-        <div class="card" style="text-align:center;"> <p class="muted">Monatsgewinn</p> <p class="kpi" style="font-size:20px;">${fmtEUR(status.monatsGewinn)}</p> </div>
-        <div class="card" style="text-align:center;"> <p class="muted">Jahresgewinn</p> <p class="kpi" style="font-size:20px;">${fmtEUR(status.jahresGewinn)}</p> </div>
-        <div class="card" style="text-align:center;"> <p class="muted">Pfändbar (ca.)</p> <p class="kpi" style="font-size:20px; color:var(--danger);">${fmtEUR(status.pfaendbarAnzeige||0)}</p> </div>`;
-      root.append(top);
-
-      const inc = document.createElement("div"); inc.className="card";
-      inc.innerHTML = `<div class="row" style="justify-content: space-between; margin-bottom:12px;"><h2>Einnahmen</h2><button class="btn primary" data-action="show-modal" data-modal-type="add-income">Neu</button></div>
-      <div class="list">${(state.finance.income||[]).map(function(e){ return `
-        <div class="item">
-          <div><strong>${escapeHTML(e.desc||'—')}</strong><div class="muted">${new Date(e.date).toLocaleDateString('de-DE')}</div></div>
-          <div class="row" style="margin-left:auto;">
-            <span class="kpi" style="font-size:16px; color:var(--ok);">${fmtEUR(e.amount||0)}</span>
-            <button class="btn ghost danger" data-action="delete" data-collection="finance.income" data-id="${e.id}">✕</button>
+      // ---------- HOME ----------
+      function renderHome(){
+        const c = document.createElement("div"); c.className="grid";
+        c.append(cardDailyOps(), cardKPIs(), cardMIT(), cardBuddhaLog(), cardTools(), cardQuickActions(), cardBackup());
+        view.append(c);
+      }
+      function cardDailyOps(){
+        const d = document.createElement("div"); d.className="card";
+        const wk = weekOfMO(state.daily?.date || todayISO());
+        d.innerHTML = `
+          <h2>Tägliches Operations-Protokoll</h2>
+          <div class="split">
+            <div class="ctl"><label>Datum</label><input id="dDate" type="date" value="${state.daily?.date || todayISO()}"></div>
+            <div class="ctl"><label>Woche</label><input type="text" value="${wk} / 11" disabled></div>
           </div>
-        </div>`}).join('') || `<p class="muted" style="text-align:center; padding:12px 0;">Keine Einnahmen erfasst.</p>`}</div>`;
-      root.append(inc);
-
-      const exp = document.createElement("div"); exp.className="card";
-      exp.innerHTML = `<div class="row" style="justify-content: space-between; margin-bottom:12px;"><h2>Ausgaben</h2><button class="btn" data-action="show-modal" data-modal-type="add-expense">Neu</button></div>
-      <div class="list">${(state.finance.expense||[]).map(function(a){ return `
-        <div class="item">
-          <div><strong>${escapeHTML(a.desc||'—')}</strong><div class="muted">${new Date(a.date).toLocaleDateString('de-DE')}</div></div>
-          <div class="row" style="margin-left:auto;">
-            <span class="kpi" style="font-size:16px; color:var(--warn);">${fmtEUR(a.amount||0)}</span>
-            <button class="btn ghost danger" data-action="delete" data-collection="finance.expense" data-id="${a.id}">✕</button>
+          <div class="row gap" style="margin-top:8px">
+            <div class="pill"><span>Modus</span></div>
+            <label class="row" style="gap:6px"><input type="radio" name="mode" value="A" ${state.daily?.mode==="A"?"checked":""}> A: 05:30 Lernen → 09:00 Arbeiten</label>
           </div>
-        </div>`}).join('') || `<p class="muted" style="text-align:center; padding:12px 0;">Keine Ausgaben erfasst.</p>`}</div>`;
-      root.append(exp);
-    }
-
-    // ===== Arsenal =====
-    function renderArsenal(root){
-      const call = document.createElement("div"); call.className="card";
-      call.innerHTML = `
-        <h2>🚀 Arsenal</h2>
-        <div class="callout">
-          Verlierst du den Fokus in Tools? Dann pausiere 12 Stunden das Prompten.
-          <button class="btn danger" data-action="case-t01">PROTOKOLL T-01 (TOOL-FALLE)</button>
-        </div>`;
-      root.append(call);
-
-      const groups = groupBy(KI_ARSENAL, "category");
-      Object.keys(groups).forEach(function(cat){
-        const card = document.createElement("div"); card.className="card";
-        card.innerHTML = `<h2>${escapeHTML(cat)}</h2>`;
+          <div class="row gap">
+            <label class="row" style="gap:6px"><input type="radio" name="mode" value="B" ${state.daily?.mode==="B"?"checked":""}> B: 05:30 Arbeiten → 09:00 Lernen</label>
+          </div>
+          <div class="row gap" style="margin-top:8px">
+            <div class="pill"><span>Outreach heute</span><code class="tag">${state.daily?.outreachToday||0}/20</code></div>
+            <div class="row" style="margin-left:auto; gap:6px">
+              <button class="btn" id="oMinus">–</button>
+              <button class="btn ok" id="oPlus">+</button>
+            </div>
+          </div>
+          <div class="muted" style="margin-top:6px">Ziel: 8×90-Min-Sprints, 20 qualifizierte Kontakte, Follow-ups in 72 h planen.</div>
+        `;
+        d.querySelector("#dDate").onchange = (e)=>{ state.daily.date = e.target.value; save(); render(); };
+        d.querySelectorAll('input[name="mode"]').forEach(r=> r.onchange = (e)=>{ state.daily.mode = e.target.value; save(); });
+        d.querySelector("#oPlus").onclick = ()=>{ state.daily.outreachToday = Math.min(999, (state.daily.outreachToday||0)+1); state.home.kpis.outreach = state.daily.outreachToday; save(); render(); };
+        d.querySelector("#oMinus").onclick = ()=>{ state.daily.outreachToday = Math.max(0, (state.daily.outreachToday||0)-1); state.home.kpis.outreach = state.daily.outreachToday; save(); render(); };
+        return d;
+      }
+      function cardKPIs(){
+        const d = document.createElement("div"); d.className="card";
+        d.innerHTML = `
+          <h2>Status • Heute</h2>
+          <div class="row gap">
+            <div class="pill"><span>Version</span><code class="tag">${state.version}</code></div>
+            <div class="pill"><span>Tab</span><code class="tag">${state.activeTab}</code></div>
+            <div class="pill"><span>Modus</span><code class="tag">${state.daily?.mode||"A"}</code></div>
+          </div>
+          <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px">
+            <div class="card" style="padding:10px"><div class="muted">Leads</div><div class="kpi">${state.audits.length}</div></div>
+            <div class="card" style="padding:10px"><div class="muted">Beweise</div><div class="kpi">${state.evidence.length}</div></div>
+            <div class="card" style="padding:10px"><div class="muted">Sprints</div><div class="kpi">${state.home.kpis.sprints}</div></div>
+            <div class="card" style="padding:10px"><div class="muted">Outreach (heute)</div><div class="kpi">${state.daily?.outreachToday||0}/20</div></div>
+          </div>
+        `;
+        return d;
+      }
+      function cardMIT(){
+        const d = document.createElement("div"); d.className="card";
+        d.innerHTML = `<h2>Primär-Direktiven (max. 3)</h2>`;
         const list = document.createElement("div"); list.className="list";
-        groups[cat].forEach(function(p){
+        state.home.mit.forEach(item=>{
+          const it = document.createElement("div"); it.className="item";
+          const chk = document.createElement("button"); chk.className="check"+(item.done?" done":"");
+          chk.setAttribute("aria-pressed", !!item.done);
+          chk.textContent = item.done ? "✓" : "";
+          chk.onclick = ()=>{ item.done = !item.done; chk.classList.toggle("done", item.done); chk.textContent = item.done?"✓":""; save(); };
+          const txt = document.createElement("div"); txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
+          it.append(chk, txt); list.append(it);
+        });
+        const add = document.createElement("div"); add.className="row gap";
+        add.innerHTML = `
+          <div class="ctl" style="flex:1"><label>Neue Direktive</label><input id="mitNew" type="text" placeholder="Kurz & messbar (max. 80 Zeichen)"></div>
+          <button class="btn ok" id="mitAdd">Hinzufügen</button>`;
+        add.querySelector("#mitAdd").onclick = ()=>{
+          const v = add.querySelector("#mitNew").value.trim(); if(!v) return;
+          if(state.home.mit.length>=3){ state.home.mit.shift(); }
+          state.home.mit.push({id:id(), text:v, done:false}); save(); render();
+        };
+        d.append(list, document.createElement("div"), add);
+        return d;
+      }
+      function cardBuddhaLog(){
+        const d = document.createElement("div"); d.className="card";
+        d.innerHTML = `
+          <h2>Buddha-Status & Logbuch</h2>
+          <div class="ctl"><label>Mikrobeobachtungen</label><textarea id="buddha">${escapeHTML(state.daily?.buddha||"")}</textarea></div>
+          <div class="ctl"><label>Logbuch (Erkenntnisse, Engpässe, Reibungspunkte)</label><textarea id="log">${escapeHTML(state.daily?.log||"")}</textarea></div>
+          <div class="ctl"><label>Executive Summary (≤ 1 Seite)</label><textarea id="exec">${escapeHTML(state.daily?.exec||"")}</textarea></div>
+        `;
+        d.querySelector("#buddha").oninput = (e)=>{ state.daily.buddha=e.target.value; save(); };
+        d.querySelector("#log").oninput = (e)=>{ state.daily.log=e.target.value; save(); };
+        d.querySelector("#exec").oninput = (e)=>{ state.daily.exec=e.target.value; save(); };
+        return d;
+      }
+      function cardTools(){
+        const d = document.createElement("div"); d.className="card";
+        const dt = state.daily?.date || todayISO();
+        d.innerHTML = `
+          <h2>Gerüst & Dateinamen</h2>
+          <div class="split">
+            <div class="ctl"><label>Datum</label><input id="tDate" type="date" value="${dt}"></div>
+            <div class="ctl"><label>Domain</label><input id="tDomain" type="text" placeholder="domain.tld"></div>
+          </div>
+          <div class="row gap" style="margin-top:8px">
+            <button class="btn" id="genPaths">Pfade erzeugen</button>
+            <button class="btn" id="genNames">Dateinamen erzeugen</button>
+          </div>
+          <div class="template-box" style="margin-top:8px">
+            <pre id="pathsOut">(Ausgabe erscheint hier)</pre>
+            <button class="btn ok block copy-btn" data-copy-target="pathsOut">Pfade kopieren</button>
+          </div>
+          <div class="template-box">
+            <pre id="namesOut">(Ausgabe erscheint hier)</pre>
+            <button class="btn ok block copy-btn" data-copy-target="namesOut">Dateinamen kopieren</button>
+          </div>
+        `;
+        d.querySelector("#genPaths").onclick = ()=>{
+          const date = d.querySelector("#tDate").value || dt;
+          const domain = (d.querySelector("#tDomain").value||"domain.tld").toLowerCase();
+          const root = `/SEO_AUDITS/${date}_${domain}/`;
+          const out =
+`${root}
+${root}01_INTake/
+${root}02_Screens/
+${root}03_HTML_Snips/
+${root}04_SERP/
+${root}05_Audit/
+${root}06_Offer/
+${root}07_Templates/
+${root}08_Knowledge/`;
+          el("#pathsOut").textContent = out; setStatus("Pfade generiert");
+        };
+        d.querySelector("#genNames").onclick = ()=>{
+          const date = d.querySelector("#tDate").value || dt;
+          const domain = (d.querySelector("#tDomain").value||"domain.tld").toLowerCase();
+          const names =
+`${date}_${domain}_P1_Mobilmenue_v01.jpg
+${date}_${domain}_head_title_h1_v01.txt
+${date}_${domain}_SERP_marke_v01.jpg
+${date}_${domain}_Executive_Summary_v01.docx`;
+          el("#namesOut").textContent = names; setStatus("Namen generiert");
+        };
+        return d;
+      }
+      function cardQuickActions(){
+        const d = document.createElement("div"); d.className="card";
+        d.innerHTML = `
+          <h2>Quick Actions</h2>
+          <div class="split" style="margin-top:8px">
+            <button class="btn primary block" id="goSprint">⏱️ 90-Min-Sprint</button>
+            <button class="btn block" id="addEvidence">📎 Beweis sichern</button>
+          </div>`;
+        d.querySelector("#goSprint").onclick = ()=>{ state.activeTab="sprint"; startSprint(); save(); render(); };
+        d.querySelector("#addEvidence").onclick = ()=>{ state.activeTab="evidence"; save(); render(); scrollTo(0,0); };
+        return d;
+      }
+      function cardBackup(){
+        const d = document.createElement("div"); d.className="card";
+        d.innerHTML = `
+          <h2>Backup & Transfer</h2>
+          <div class="split">
+            <button class="btn block" id="exportBtn">⬇️ Export JSON</button>
+            <button class="btn block" id="importBtn">⬆️ Import JSON</button>
+          </div>
+          <div class="muted" style="margin-top:8px">Täglich: <code style="font-family:var(--mono)">YYYY-MM-DD_PHOENIX_v11_backup.json</code> → Drive (nicht überschreiben)</div>
+        `;
+        d.querySelector("#exportBtn").onclick = exportJSON;
+        d.querySelector("#importBtn").onclick = ()=> el("#importFile").click();
+        return d;
+      }
+
+      // ---------- SPRINT ----------
+      let tickHandle = null;
+      function renderSprint(){
+        const d = document.createElement("div"); d.className="grid";
+        const head = document.createElement("div"); head.className="card";
+        head.innerHTML = `<h2>90-Minuten-Sprint</h2>
+          <div class="row gap"><span class="muted">Zielnotiz</span></div>
+          <div class="ctl"><textarea id="sprintNote" placeholder="Klarer Output (z. B. 'Summary-v1 fertig')">${escapeHTML(state.sprint.note||"")}</textarea></div>
+          <div class="row gap" style="margin-top:8px">
+            <span class="badge" id="timerBadge">${fmtTimer(state.sprint.remainingSec||state.sprint.durationMin*60)}</span>
+            <span class="pill"><span>Status:</span><code class="tag">${state.sprint.running?"läuft":"bereit"}</code></span>
+          </div>
+          <div class="split" style="margin-top:10px">
+            <button class="btn primary block" id="startBtn">${state.sprint.running?"Fortsetzen":"Starten"}</button>
+            <button class="btn warn block" id="resetBtn">Zurücksetzen</button>
+          </div>`;
+        d.append(head);
+
+        head.querySelector("#sprintNote").oninput = (e)=>{ state.sprint.note = e.target.value; save(); };
+        head.querySelector("#startBtn").onclick = ()=>{ if(!state.sprint.running) startSprint(); save(); render(); };
+        head.querySelector("#resetBtn").onclick = ()=>{ stopSprint(true); save(); render(); };
+        view.append(d);
+      }
+      function startSprint(){
+        state.sprint.running = true;
+        if(!state.sprint.startedAt){ state.sprint.startedAt = Date.now(); state.sprint.remainingSec = state.sprint.durationMin*60; }
+        if(tickHandle) clearInterval(tickHandle);
+        tickHandle = setInterval(()=>{
+          if(state.sprint.remainingSec>0){
+            state.sprint.remainingSec -= 1;
+            const b = el("#timerBadge"); if(b) b.textContent = fmtTimer(state.sprint.remainingSec);
+          }else{
+            stopSprint(false);
+            alert("Sprint beendet – Evidence loggen!");
+            state.home.kpis.sprints += 1;
+            save(); render();
+          }
+        }, 1000);
+      }
+      function stopSprint(reset=false){
+        state.sprint.running = false;
+        clearInterval(tickHandle); tickHandle=null;
+        if(reset){ state.sprint.startedAt=null; state.sprint.remainingSec = state.sprint.durationMin*60; state.sprint.note=""; }
+      }
+      function fmtTimer(sec){
+        const m = Math.floor(sec/60).toString().padStart(2,"0");
+        const s = (sec%60).toString().toString().padStart(2,"0");
+        return `${m}:${s}`;
+      }
+
+      // ---------- AUDITS (+ Gate-Score, Filter) ----------
+      function renderAudits(){
+        const d = document.createElement("div"); d.className="grid";
+
+        // Create
+        const make = document.createElement("div"); make.className="card";
+        make.innerHTML = `
+          <h2>Lead anlegen</h2>
+          <div class="split">
+            <div class="ctl"><label>Domain/URL</label><input id="aDomain" type="text" placeholder="kunde-immobilien.de/expose/altbau-92qm"></div>
+            <div class="ctl"><label>Status</label>
+              <select id="aStage">
+                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(s=>`<option>${s}</option>`).join("")}
+              </select>
+            </div>
+          </div>
+          <button class="btn ok block" id="aAdd">Lead hinzufügen</button>`;
+        make.querySelector("#aAdd").onclick = ()=>{
+          const domain = make.querySelector("#aDomain").value.trim();
+          const stage  = make.querySelector("#aStage").value;
+          if(!domain) return;
+          state.audits.unshift({ id:id(), domain, stage, owner:"Eric", created:todayISO(), gate:{}, gateScore:0 });
+          state.home.kpis.openAudits = state.audits.length; save(); render();
+        };
+        d.append(make);
+
+        // Filter/Search
+        const toolbar = document.createElement("div"); toolbar.className="card";
+        toolbar.innerHTML = `
+          <h2>Leads (${state.audits.length})</h2>
+          <div class="split">
+            <div class="ctl"><label>Suche</label><input id="fText" type="text" placeholder="domain, teil..."></div>
+            <div class="ctl"><label>Status</label>
+              <select id="fStage">
+                <option value="">(alle)</option>
+                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(s=>`<option>${s}</option>`).join("")}
+              </select>
+            </div>
+          </div>`;
+        d.append(toolbar);
+
+        const list = document.createElement("div"); list.className="card";
+        const ul = document.createElement("div"); ul.className="list";
+        const f = ()=> {
+          ul.innerHTML = "";
+          const q = (toolbar.querySelector("#fText").value||"").toLowerCase();
+          const st= toolbar.querySelector("#fStage").value;
+          state.audits
+            .filter(a => (!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st))
+            .forEach(a=>{
+              const it = document.createElement("div"); it.className="item";
+              const gateOk = (a.gateScore||0) >= 98;
+              it.innerHTML = `
+                <div style="flex:1">
+                  <strong>${escapeHTML(a.domain)}</strong>
+                  <div class="muted">Status: ${a.stage} • seit ${a.created} ${gateOk?`• <span class="okc">Gate ${a.gateScore}</span>`:``}</div>
+                  <details style="margin-top:6px">
+                    <summary>Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}</summary>
+                    ${renderGateChecklistHTML(a)}
+                  </details>
+                </div>
+                <select class="btn ghost" data-id="${a.id}">
+                  ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(st=>`<option ${a.stage===st?"selected":""}>${st}</option>`).join("")}
+                </select>
+                <button class="btn ghost danger" data-del="${a.id}">✕</button>`;
+              ul.append(it);
+            });
+          list.innerHTML = `<h2>Leads (${ul.childElementCount})</h2>`;
+          list.append(ul);
+        };
+        toolbar.querySelectorAll("input,select").forEach(c=> c.oninput = f);
+        f();
+        d.append(list);
+
+        view.append(d);
+
+        // Events for list
+        ul.addEventListener("change", (e)=>{
+          const sel = e.target.closest("select.btn.ghost");
+          if(sel){
+            const a = state.audits.find(x=>x.id===sel.dataset.id);
+            if(a){ a.stage = sel.value; save(); }
+          }
+        });
+        ul.addEventListener("click", (e)=>{
+          const del = e.target.closest('button[data-del]');
+          if(del){
+            const id = del.dataset.del;
+            const i = state.audits.findIndex(x=>x.id===id);
+            if(i>-1){ state.audits.splice(i,1); state.home.kpis.openAudits = state.audits.length; save(); render(); }
+          }
+          // Gate checkbox toggles
+          const gchk = e.target.closest('input[type="checkbox"][data-gate]');
+          if(gchk){
+            const [aid,key] = [gchk.dataset.aid, gchk.dataset.gate];
+            const a = state.audits.find(x=>x.id===aid);
+            if(a){
+              a.gate = a.gate||{};
+              a.gate[key] = gchk.checked;
+              a.gateScore = calcGateScore(a.gate);
+              save();
+              const sum = gchk.closest('details').querySelector('summary');
+              if(sum) sum.innerHTML = `Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}`;
+            }
+          }
+        });
+      }
+      const GATE_ITEMS = [
+        ["klartext","Klartext-Ton"],
+        ["belege","≥ 2 Belege je Kernbefund"],
+        ["serp","SERP beigefügt"],
+        ["prio","P1/P2/P3 schlüssig"],
+        ["ampel","Ampel begründet"],
+        ["msum","Management-Summary (1 Seite)"],
+        ["plan30","30-Tage-Plan realistisch"],
+        ["ordnung","Dateiordnung korrekt"],
+        ["next","Nächster Schritt klar"],
+        ["mobil","Mobil gut lesbar"],
+        ["fit","Immobilien-Fit"],
+        ["evidence31","Evidence 3+1 erfüllt"]
+      ];
+      function renderGateChecklistHTML(a){
+        const gate = a.gate||{};
+        return `<div class="list" style="margin-top:8px">
+          ${GATE_ITEMS.map(([key,label])=>`
+            <label class="row" style="gap:8px">
+              <input type="checkbox" data-gate="${key}" data-aid="${a.id}" ${gate[key]?"checked":""}>
+              <span>${label}</span>
+            </label>`).join("")}
+          <div class="pill" style="margin-top:8px"><span>Score</span><code class="tag">${a.gateScore||0}</code></div>
+        </div>`;
+      }
+      function calcGateScore(gate){
+        const total = GATE_ITEMS.length;
+        const ok = GATE_ITEMS.reduce((n,[k])=> n + (gate?.[k]?1:0), 0);
+        return Math.round(100 * ok / total);
+      }
+
+      // ---------- EVIDENCE ----------
+      function renderEvidence(){
+        const d = document.createElement("div"); d.className="grid";
+        const form = document.createElement("div"); form.className="card";
+        form.innerHTML = `
+          <h2>Beweis erfassen (3+1)</h2>
+          <div class="ctl"><label>Titel</label><input id="eTitle" type="text" placeholder="Sabine Keller, Prenzlauer Berg"></div>
+          <div class="ctl"><label>Beweis-Link (Drive)</label><input id="eUrl" type="url" placeholder="https://drive.google.com/..."></div>
+          <div class="split">
+            <div class="ctl"><label>Primärdefekt</label>
+              <select id="eType">
+                ${["CLS_KOLLAPS","H1_ANOMALIE","ALT_BLINDHEIT","CANONICAL_LOSS","BREADCRUMB_VOID","SONSTIGES"].map(t=>`<option>${t}</option>`).join("")}
+              </select>
+            </div>
+            <div class="ctl"><label>Lead (Audit)</label><select id="eAudit"></select></div>
+          </div>
+          <div class="ctl"><label>Code-Zitat (wörtlich)</label><textarea id="eNote" placeholder="{<img src='/cover.jpg'>...}"></textarea></div>
+          <button class="btn ok block" id="eAdd">Beweis speichern</button>
+          <div class="muted" style="margin-top:6px">Dateiname: <code>YYYY-MM-DD_{domain}_M##_Label_v01.jpg</code></div>`;
+        d.append(form);
+
+        // Audit options
+        const selAudit = form.querySelector("#eAudit");
+        selAudit.innerHTML = state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(kein Lead)</option>`;
+
+        // ---- Prefill aus Drills (falls gesetzt) ----
+        if(state._evidenceDraft){
+          const draft = state._evidenceDraft;
+          if(draft.title) form.querySelector("#eTitle").value = draft.title;
+          if(draft.type)  form.querySelector("#eType").value  = draft.type;
+          if(draft.note)  form.querySelector("#eNote").value  = draft.note;
+          if(draft.auditId && [...selAudit.options].some(o=>o.value===draft.auditId)) selAudit.value = draft.auditId;
+          setStatus("Evidence vorbefüllt (Drills)");
+          // Draft behalten bis Speichern oder Wechsel – keine weitere Änderung nötig
+        }
+
+        form.querySelector("#eAdd").onclick = ()=>{
+          const title = form.querySelector("#eTitle").value.trim();
+          const url   = form.querySelector("#eUrl").value.trim();
+          const type  = form.querySelector("#eType").value;
+          const audit = form.querySelector("#eAudit").value || null;
+          const note  = form.querySelector("#eNote").value.trim();
+          if(!title && !note) return;
+          state.evidence.unshift({ id:id(), title, url, type, audit, note, ts:new Date().toISOString() });
+          state.home.kpis.evidence = state.evidence.length;
+          // Draft aufräumen
+          delete state._evidenceDraft;
+          save(); render();
+        };
+
+        const list = document.createElement("div"); list.className="card";
+        list.innerHTML = `<h2>Beweis-Liste (${state.evidence.length})</h2>`;
+        const ul = document.createElement("div"); ul.className="list";
+        state.evidence.slice(0,50).forEach(e=>{
+          const audit = state.audits.find(a=>a.id===e.audit);
           const it = document.createElement("div"); it.className="item";
           it.innerHTML = `
             <div style="flex:1">
-              <strong>${escapeHTML(p.title)}</strong>
-              <div class="muted">Ziel-KI: ${escapeHTML(p.target)} • ID: ${escapeHTML(p.id)}</div>
+              <strong>${escapeHTML(e.title) || '(Kein Titel)'}</strong>
+              <div class="muted">${new Date(e.ts).toLocaleString("de-DE")} • ${e.type} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
+              ${e.url?(`<div class="muted">Link: ${escapeHTML(e.url)}</div>`):""}
+              ${e.note?(`<div class="muted" style="font-family:var(--mono); background:var(--bg); padding:4px 6px; border-radius:6px; margin-top:4px;">${escapeHTML(e.note)}</div>`):""}
             </div>
-            <div class="row" style="gap:6px">
-              <button class="btn primary" data-action="copy-pre-by-id" data-prompt-id="${p.id}">Kopieren</button>
-            </div>`;
-          list.append(it);
+            <button class="btn ghost danger" data-del="${e.id}">✕</button>`;
+          ul.append(it);
         });
-        card.append(list); root.append(card);
-      });
+        list.append(ul);
+        d.append(list);
+        view.append(d);
 
-      const journal = document.createElement("div"); journal.className="card";
-      const last = (state.arsenalJournal||[]).slice(0,20);
-      journal.innerHTML = `
-        <h2>Prompt-Journal</h2>
-        <div class="list">${
-          last.length ? last.map(function(j){ return `
-            <div class="item">
-              <div style="flex:1">
-                <strong>${escapeHTML(j.id)} · ${escapeHTML(j.title||'')}</strong>
-                <div class="muted">${new Date(j.ts).toLocaleString('de-DE')} · ${escapeHTML(j.domain||'-')}</div>
-              </div>
-            </div>`
-          }).join('') : `<p class="muted">Keine Einträge.</p>`
-        }</div>`;
-      root.append(journal);
-    }
+        ul.querySelectorAll('button[data-del]').forEach(b=>{
+          b.onclick = ()=>{
+            const id = b.dataset.del;
+            const i = state.evidence.findIndex(x=>x.id===id);
+            if(i>-1){ state.evidence.splice(i,1); state.home.kpis.evidence = state.evidence.length; save(); render(); }
+          }
+        });
+      }
 
-    // ===== Roadmap =====
-    function renderRoadmap(root){
-      const card = document.createElement("div"); card.className="card";
-      card.innerHTML = `
-        <h2>Projekt-Ziele</h2>
-        <ul>
-          <li>6–10 Audits, Gate ≥ 98</li>
-          <li>3 Pilotkunden, Outreach täglich</li>
-          <li>Evidence 3+1 je Befund, täglicher Export</li>
-        </ul>`;
-      root.append(card);
-
-      const r = document.createElement("div"); r.className="card";
-      r.innerHTML = `
-        <h2>Zeitschienen</h2>
-        <ul>
-          <li>PI-Antrag Ziel: ${escapeHTML(state.pi.targetStartPI)}</li>
-          <li>Start Selbstständigkeit: ${escapeHTML(state.pi.selfEmploymentStart)}</li>
-          <li>Ziel Entschuldung (≈): ${escapeHTML(state.pi.targetDischarge)}</li>
-        </ul>
-        <div class="split" style="margin-top:10px">
-          <button class="btn block" data-action="export-json">📄 Export Status (klar)</button>
-          <button class="btn block" data-action="export-encrypted">🔐 Export (verschlüsselt)</button>
-        </div>`;
-      root.append(r);
-    }
-
-    // ===== Doktrin (Manual) mit AQL =====
-    function renderManual(root){
-      const m = document.createElement("div"); m.className="card manual";
-      m.innerHTML = `
-        <h2>📘 Doktrin — Phoenix Feuer</h2>
-        <p>Dieses Dokument ist deine Referenz. Es fasst Regeln, Ziele und Abläufe in einfachen Sätzen zusammen. Es ist die Basis für ruhige, klare Entscheidungen.</p>
-
-        <h3>Kernregeln (Realität zuerst)</h3>
-        <ul>
-          <li>Halte die Grenzen ein: <strong>&lt; 3 h Arbeit/Tag</strong>, <strong>19.661,25 €</strong> Hinzuverdienst pro Jahr, <strong>1.555,00 €</strong> pfändungsfrei pro Monat.</li>
-          <li>Arbeite in Sprints. Schreibe klare Ziele. Dokumentiere Ergebnisse.</li>
-          <li>Nutze KI bewusst: erst sammeln (P-25), dann bewerten (P-26).</li>
-          <li>Exportiere Daten täglich. Schütze sensible Inhalte mit Passwort.</li>
-        </ul>
-
-        <h3>Notfall-Protokolle</h3>
-        <ul>
-          <li><strong>A-01 Admin-Angst:</strong> Öffne das Dokument, sichere es, nutze <em>Agent K</em> (P-15). Teile To-dos in Heute/Morgen/Woche.</li>
-          <li><strong>P-01 Burnout:</strong> Pause 2 Stunden. Kein Bildschirm. Trinken. Gehen. Atmen.</li>
-          <li><strong>T-01 Tool-Falle:</strong> 12 Stunden kein Prompten. Nur Umsetzen. Eigenes Log.</li>
-        </ul>
-
-        <h3>AQL – Akzeptanzkriterien (müssen grün sein)</h3>
-        <div class="callout">
-          <table class="tbl">
-            <thead><tr><th>ID</th><th>Kriterium</th><th>Nachweis</th></tr></thead>
-            <tbody>
-              <tr><td>AQL-01</td><td>Kaltstart offline. Home, Arsenal, Doktrin rendern fehlerfrei.</td><td>Flugmodus, App öffnen.</td></tr>
-              <tr><td>AQL-02</td><td>Arsenal P-25/P-26 ersetzt {URL} korrekt.</td><td>Lead mit Domain → „kopiert!“</td></tr>
-              <tr><td>AQL-03</td><td>Arbeitszeit-Gate blockiert >3h. Override nur mit Begründung.</td><td>Soft-Block Modal mit Pflichtfeld.</td></tr>
-              <tr><td>AQL-04</td><td>Mission-Slot ist gesperrt.</td><td>Checkbox klick → Vibration.</td></tr>
-              <tr><td>AQL-05</td><td>Outreach-Ziel sichtbar: X/5.</td><td>Home-KPI, Zähler-Buttons.</td></tr>
-              <tr><td>AQL-06</td><td>Protokolle A-01 / P-01 / T-01 öffnen Modal und loggen Eintrag.</td><td>StatusLog-Eintrag vorhanden.</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3>Hinweise</h3>
-        <ul>
-          <li>Exportiere jeden Tag. Prüfe monatlich die Zahlen gegen die Leitplanken.</li>
-          <li>Schreibe kurze Sätze. Trenne Denken und Tun.</li>
-          <li>Wenn du unsicher bist: erst sammeln, dann entscheiden.</li>
-        </ul>
-
-        <p class="muted">Stand: 22.10.2025 · Dies ist die Offline-Master-Referenz. Änderungen zuerst online pflegen, dann hier spiegeln.</p>
-      `;
-      root.append(m);
-    }
-
-    // ======================= MODALS =======================
-    function renderModal(type, payload){
-      payload = payload || {};
-      let inner='';
-      if(type==='quick-evidence') inner = modalEvidenceQuick(payload);
-      if(type==='add-income') inner = modalIncome();
-      if(type==='add-expense') inner = modalExpense();
-      if(type==='export-encrypted') inner = modalExportEncrypted();
-      if(type==='work-cap') inner = `
-        <div class="grid" style="gap:var(--space)">
-          <h2>Arbeitszeit-Limit erreicht</h2>
-          <p class="muted">Du würdest heute die 3-Stunden-Grenze überschreiten. Bitte wähle eine Option.</p>
-          <div class="ctl"><label>Override-Begründung (Pflicht)</label><textarea id="overrideNote" placeholder="Kurz & sachlich (z. B. Abgabe heute, Einmal-Override)"></textarea></div>
+      // ---------- OUTREACH (T+72 h) ----------
+      function renderOutreach(){
+        const d = document.createElement("div"); d.className="grid";
+        const card = document.createElement("div"); card.className="card";
+        card.innerHTML = `
+          <h2>Outreach-Planner (20/Tag, Follow-ups 72 h)</h2>
           <div class="split">
-            <button class="btn" data-action="switch-to-learn">Als Lernen starten</button>
-            <button class="btn warn" data-action="force-once-confirm">Einmalig starten (mit Log)</button>
-            <button class="btn" data-action="close-modal">Abbrechen</button>
+            <div class="ctl"><label>Kontakt (Name/Unternehmen)</label><input id="oName" type="text" placeholder="z. B. Sabine Keller · ImmoX Berlin"></div>
+            <div class="ctl"><label>Kanal</label>
+              <select id="oChannel">
+                ${["Email","LinkedIn","Telefon","Formular"].map(c=>`<option>${c}</option>`).join("")}
+              </select>
+            </div>
           </div>
-        </div>`;
-
-      if(type==='case-a01') inner = `
-        <div class="grid" style="gap:var(--space)">
-          <h2>🚨 PROTOKOLL A-01 — Admin-Angst</h2>
-          <ol style="margin:0; padding-left:18px">
-            <li>Dokument öffnen. Drei ruhige Atemzüge.</li>
-            <li>Fristen und Forderungen markieren. Datei in Drive sichern.</li>
-            <li>Prompt an GPT: <button class="btn primary" data-action="copy-pre-by-id" data-prompt-id="P_15">Agent K (P-15) kopieren</button></li>
-            <li>To-dos ins Log: heute, morgen, diese Woche.</li>
-          </ol>
-          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Schließen</button></div>
-        </div>`;
-
-      if(type==='case-p01') inner = `
-        <div class="grid" style="gap:var(--space)">
-          <h2>🛑 PROTOKOLL P-01 — Burnout</h2>
-          <p>Jetzt 2 Stunden Pause. Kein Bildschirm. Wasser. Spaziergang. Atmung.</p>
-          <p class="muted">Ich erinnere dich nach 2 Stunden.</p>
-          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Okay</button></div>
-        </div>`;
-
-      if(type==='case-t01') inner = `
-        <div class="grid" style="gap:var(--space)">
-          <h2>⚠️ PROTOKOLL T-01 — Tool-Falle</h2>
-          <ol style="margin:0; padding-left:18px">
-            <li>12 Stunden kein Prompten.</li>
-            <li>Nur Google-Recherche und Umsetzen.</li>
-            <li>Kurzer Log-Eintrag: Wodurch kam der Drift?</li>
-          </ol>
-          <div class="row" style="justify-content:flex-end"><button class="btn" data-action="close-modal">Bestätigen</button></div>
-        </div>`;
-
-      $("#modal-container").innerHTML = `
-        <div class="modal-overlay" data-action="close-modal">
-          <div class="modal-content" role="dialog" aria-modal="true">${inner}</div>
-        </div>`;
-      
-      // [PATCH] Ersetzt ?. für Kompatibilität
-      requestAnimationFrame(function(){ 
-        var ov = $(".modal-overlay"); 
-        if(ov) ov.classList.add("active"); 
-      });
-      const first = $("#modal-container input, #modal-container select, #modal-container textarea, #modal-container button");
-      if(first) first.focus({preventScroll:true});
-    }
-    function closeModal(){ 
-      const ov=$(".modal-overlay"); 
-      if(!ov) return; 
-      ov.classList.remove("active"); 
-      setTimeout(function(){ $("#modal-container").innerHTML=''; }, 160); 
-    }
-
-    function modalEvidenceQuick(payload){
-      payload = payload || {};
-      const title = payload.title || '', type = payload.type || 'SONSTIGES', note = payload.note || '', auditId = payload.auditId || null;
-      const auditOpts = (state.audits||[]).map(function(a){ return `<option value="${a.id}" ${auditId===a.id?'selected':''}>${escapeHTML(a.domain)}</option>`; }).join('');
-      return `
-        <form id="form-evidence" class="grid" style="gap:var(--space)">
-          <h2>Evidence (Quick)</h2>
-          <div class="ctl"><label>Titel</label><input name="title" value="${escapeHTML(title)}"></div>
-          <div class="ctl"><label>Typ</label><input name="type" value="${escapeHTML(type)}"></div>
-          <div class="ctl"><label>Audit</label><select name="audit">${auditOpts||'<option value="">(kein Lead)</option>'}</select></div>
-          <div class="ctl"><label>Notiz</label><textarea name="note">${escapeHTML(note)}</textarea></div>
-          <div class="row" style="justify-content:flex-end;gap:8px">
-            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
-            <button class="btn primary">Speichern</button>
+          <div class="split">
+            <div class="ctl"><label>Adresse/Handle</label><input id="oHandle" type="text" placeholder="mail@domain.tld oder linkedin.com/in/..."></div>
+            <div class="ctl"><label>Lead (optional)</label>
+              <select id="oAudit"><option value="">(frei)</option>${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("")}</select>
+            </div>
           </div>
-        </form>`;
-    }
-    function modalIncome(){
-      return `
-        <form id="form-income" class="grid" style="gap:var(--space)">
-          <h2>Einnahme erfassen</h2>
-          <div class="ctl"><label>Betrag (€)</label><input name="betrag" type="number" inputmode="decimal" step="0.01" required></div>
-          <div class="ctl"><label>Beschreibung</label><input name="beschreibung" required></div>
-          <div class="row" style="justify-content:flex-end;gap:8px">
-            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
-            <button class="btn primary">Speichern</button>
-          </div>
-        </form>`;
-    }
-    function modalExpense(){
-      return `
-        <form id="form-expense" class="grid" style="gap:var(--space)">
-          <h2>Ausgabe erfassen</h2>
-          <div class="ctl"><label>Betrag (€)</label><input name="betrag" type="number" inputmode="decimal" step="0.01" required></div>
-          <div class="ctl"><label>Beschreibung</label><input name="beschreibung" required></div>
-          <div class="row" style="justify-content:flex-end;gap:8px">
-            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
-            <button class="btn primary">Speichern</button>
-          </div>
-        </form>`;
-    }
-    function modalExportEncrypted(){
-      return `
-        <form id="form-export-enc" class="grid" style="gap:var(--space)">
-          <h2>Verschlüsselter Export</h2>
-          <div class="ctl"><label>Passwort (AES-GCM, PBKDF2)</label><input name="pw" type="password" minlength="8" required></div>
-          <div class="row" style="justify-content:flex-end;gap:8px">
-            <button type="button" class="btn" data-action="close-modal">Abbrechen</button>
-            <button class="btn primary">Export starten</button>
-          </div>
-          <p class="muted">Hinweis: Passwort sicher notieren. Ohne Passwort keine Wiederherstellung.</p>
-        </form>`;
-    }
+          <div class="ctl"><label>Notiz</label><textarea id="oNote" placeholder="Beleg/CTA in einem Satz"></textarea></div>
+          <button class="btn ok block" id="oAdd">Kontakt eintragen</button>
+          <div class="muted" style="margin-top:6px">Neuer Kontakt → Fälligkeit FU1 = +72 h, FU2 = weitere +72 h. Buttons ändern Status.</div>
+        `;
+        d.append(card);
 
-    // ======================= EVENTS =======================
-    document.body.addEventListener('click', async function(e){
-      const a = e.target.closest('[data-action]'); if(!a) return;
-      const action = a.dataset.action;
-      const targetView = a.dataset.view;
-      const modalType = a.dataset.modalType;
-
-      if(action==='navigate'){ state.activeView = targetView||'home'; save(); render(); return; }
-
-      // Sprint Start/Stop
-      if(action==='start-sprint'){
-        const dur = Number(state.sprint.durationMin||90);
-        const isWork = state.compliance.sprintType === "ARBEIT";
-        const used = Number(state.compliance.todayWorkMin||0);
-        const max  = Number(state.compliance.maxDailyWorkMin||180);
-        if(isWork && (used + dur) > max && !state.sprint.forceOnce){
-          renderModal('work-cap'); return;
-        }
-        delete state.sprint.forceOnce;
-
-        if(!state.sprint.running){
-          if(!state.sprint.remainingSec || state.sprint.remainingSec<=0) state.sprint.remainingSec = (state.sprint.durationMin||90)*60;
-          state.sprint.endAt = Date.now() + state.sprint.remainingSec*1000;
-          state.sprint.running = true; state.sprint.startedAt = Date.now();
-          await ensureWakeLock(true);
+        card.querySelector("#oAdd").onclick = ()=>{
+          const contact = card.querySelector("#oName").value.trim();
+          const channel = card.querySelector("#oChannel").value;
+          const handle  = card.querySelector("#oHandle").value.trim();
+          const audit   = card.querySelector("#oAudit").value || null;
+          const notes   = card.querySelector("#oNote").value.trim();
+          if(!contact) return;
+          const created = todayISO();
+          const due1 = addDays(created, 3);
+          const due2 = addDays(due1, 3);
+          state.outreach.unshift({ id:id(), contact, channel, handle, audit, created, status:"SENT", due1, due2, notes });
+          state.daily.outreachToday = (state.daily.outreachToday||0) + 1;
+          state.home.kpis.outreach = state.daily.outreachToday;
           save(); render();
-        }
-        return;
-      }
-      if(action==='pause-sprint'){
-        if(state.sprint.running){
-          const left = Math.max(0, Math.floor((state.sprint.endAt - Date.now())/1000));
-          state.sprint.remainingSec = left; state.sprint.running=false; state.sprint.endAt=null;
-          await ensureWakeLock(false);
+        };
+
+        // Toolbar / Filters
+        const bar = document.createElement("div"); bar.className="card";
+        bar.innerHTML = `
+          <h2>Kontakte (${state.outreach.length})</h2>
+          <div class="split">
+            <div class="ctl"><label>Filter</label>
+              <select id="of">
+                <option value="">(alle)</option>
+                <option value="due">Fällig heute/überfällig</option>
+                <option value="sent">Nur gesendet</option>
+                <option value="fu1">Nur FU1 geplant/erledigt</option>
+                <option value="fu2">Nur FU2 geplant/erledigt</option>
+                <option value="done">Erledigt</option>
+                <option value="lost">Verworfen</option>
+              </select>
+            </div>
+            <div class="ctl"><label>Suche</label><input id="oq" type="text" placeholder="Name, Unternehmen, Handle"></div>
+          </div>`;
+        d.append(bar);
+
+        // List
+        const list = document.createElement("div"); list.className="card";
+        const ul = document.createElement("div"); ul.className="list";
+        const renderList = ()=>{
+          ul.innerHTML = "";
+          const f = bar.querySelector("#of").value;
+          const q = (bar.querySelector("#oq").value||"").toLowerCase();
+          const today = todayISO();
+          const dueFlag = (o)=>{
+            const due = (o.status==="SENT"||o.status==="FU1") ? o.due1 :
+                        (o.status==="FU2" ? o.due2 : null);
+            if(!due) return "";
+            if(due <= today) return `<span class="tag" style="border-color:#92400e">FÄLLIG</span>`;
+            if(due === addDays(today,1)) return `<span class="tag">morgen</span>`;
+            return `<span class="tag">${due}</span>`;
+          };
+          state.outreach
+            .filter(o=>{
+              const txt = (o.contact+" "+(o.handle||"")).toLowerCase();
+              if(q && !txt.includes(q)) return false;
+              if(f==="due"){
+                const due = (o.status==="SENT"||o.status==="FU1")?o.due1:(o.status==="FU2"?o.due2:null);
+                return due && due <= today && !["DONE","LOST"].includes(o.status);
+              }
+              if(f==="sent") return o.status==="SENT";
+              if(f==="fu1")  return ["FU1","SENT"].includes(o.status);
+              if(f==="fu2")  return ["FU2"].includes(o.status);
+              if(f==="done") return o.status==="DONE";
+              if(f==="lost") return o.status==="LOST";
+              return true;
+            })
+            .forEach(o=>{
+              const audit = state.audits.find(a=>a.id===o.audit);
+              const it = document.createElement("div"); it.className="item";
+              it.innerHTML = `
+                <div style="flex:1">
+                  <strong>${escapeHTML(o.contact)}</strong>
+                  <div class="muted">${o.channel}${o.handle?(" • "+escapeHTML(o.handle)):""} • ${o.created} • <span class="${o.status==='DONE'?'okc':o.status==='LOST'?'danger':'warnc'}">${o.status}</span> ${dueFlag(o)} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
+                  ${o.notes?(`<div class="muted" style="margin-top:4px">${escapeHTML(o.notes)}</div>`):""}
+                </div>
+                <div class="row" style="gap:6px; flex-wrap:wrap">
+                  ${actionButtons(o)}
+                </div>`;
+              ul.append(it);
+            });
+          list.innerHTML = `<h2>Kontakte (${ul.childElementCount})</h2>`;
+          list.append(ul);
+        };
+        bar.querySelectorAll("input,select").forEach(c=> c.oninput = renderList);
+        renderList();
+        d.append(list);
+
+        view.append(d);
+
+        // actions
+        ul.addEventListener("click",(e)=>{
+          const b = e.target.closest("button[data-act]");
+          if(!b) return;
+          const o = state.outreach.find(x=>x.id===b.dataset.id);
+          if(!o) return;
+          const act = b.dataset.act;
+          if(act==="FU1"){ o.status="FU1"; if(!o.due1) o.due1 = addDays(todayISO(),3); }
+          if(act==="FU2"){ o.status="FU2"; if(!o.due2) o.due2 = addDays(todayISO(),3); }
+          if(act==="DONE"){ o.status="DONE"; }
+          if(act==="LOST"){ o.status="LOST"; }
+          if(act==="SNOOZE1"){ o.due1 = addDays(o.due1||todayISO(),1); }
+          if(act==="SNOOZE2"){ o.due2 = addDays(o.due2||todayISO(),1); }
           save(); render();
-        }
-        return;
-      }
-      if(action==='reset-sprint'){
-        state.sprint.running=false; state.sprint.startedAt=null; state.sprint.endAt=null;
-        state.sprint.remainingSec=(state.sprint.durationMin||90)*60;
-        await ensureWakeLock(false);
-        save(); render(); return;
-      }
-
-      // Outreach & Home
-      if(action==='outreach-plus'){ state.daily.outreachToday = Math.min(999, (state.daily.outreachToday||0)+1); state.home.kpis.outreach=state.daily.outreachToday; save(); render(); return; }
-      if(action==='outreach-minus'){ state.daily.outreachToday = Math.max(0, (state.daily.outreachToday||0)-1); state.home.kpis.outreach=state.daily.outreachToday; save(); render(); return; }
-      if(action==='mit-add'){
-        // [PATCH] Ersetzt ?.
-        var mitNewEl = $("#mitNew");
-        const v = (mitNewEl && mitNewEl.value) ? mitNewEl.value.trim() : ""; 
-        if(!v) return;
-        if(state.home.mit.length>=3){ state.home.mit.shift(); }
-        state.home.mit.push({id:id(), text:v, done:false}); save(); render(); return;
-      }
-
-      // Audits + Evidence + Outreach
-      if(action==='audit-add'){
-        const domain = $("#aDomain").value.trim(); const stage = $("#aStage").value;
-        if(!domain) return;
-        state.audits.unshift({ id:id(), domain, stage, owner:"Eric", created:todayISO(), gate:{}, gateScore:0 });
-        save(); render(); return;
-      }
-      if(action==='evidence-add'){
-        const title = $("#eTitle").value.trim();
-        const url   = $("#eUrl").value.trim();
-        const type  = $("#eType").value;
-        const audit = $("#eAudit").value || null;
-        const note  = $("#eNote").value.trim();
-        if(!title && !note) return;
-        state.evidence.unshift({ id:id(), title, url, type, audit, note, ts:new Date().toISOString() });
-        state.home.kpis.evidence = state.evidence.length;
-        delete state._evidenceDraft;
-        save(); render(); return;
-      }
-      if(action==='outreach-add'){
-        const contact = $("#oName").value.trim();
-        const channel = $("#oChannel").value;
-        const handle  = $("#oHandle").value.trim();
-        const audit   = $("#oAudit").value || null;
-        const notes   = $("#oNote").value.trim();
-        if(!contact) return;
-        const created = todayISO();
-        const due1 = addDays(created,3), due2 = addDays(due1,3);
-        state.outreach.unshift({ id:id(), contact, channel, handle, audit, created, status:"SENT", due1, due2, notes });
-        state.daily.outreachToday = (state.daily.outreachToday||0)+1;
-        state.home.kpis.outreach=state.daily.outreachToday;
-        save(); render(); return;
-      }
-
-      // Modals & System
-      if(action==='show-modal'){ renderModal(modalType); return; }
-      if(action==='close-modal'){ if(e.target.closest('.modal-overlay')) closeModal(); return; }
-      if(action==='switch-to-learn'){ state.compliance.sprintType = "LERNEN"; save(); closeModal(); document.querySelector('[data-action="start-sprint"]').click(); return; }
-      if(action==='force-once-confirm'){
-        // [PATCH] Ersetzt ?.
-        var overrideEl = $("#overrideNote");
-        const note = (overrideEl && overrideEl.value) ? overrideEl.value.trim() : "";
-        if(!note){ alert("Bitte kurze Begründung angeben."); return; }
-        state.sprint.forceOnce = true;
-        state.statusLog.push({ ts: Date.now(), code:"OVERRIDE_WORK_CAP", note });
-        save(); closeModal();
-        const startBtn = $('[data-action="start-sprint"]'); if(startBtn) startBtn.click();
-        return;
-      }
-
-      if(action==='delete'){
-        if(confirm('Diesen Eintrag wirklich löschen?')){
-          const path = a.dataset.collection.split('.');
-          if(path.length===2){
-            const bucket = path[0], sub = path[1];
-            state[bucket][sub] = state[bucket][sub].filter(function(x){ return x.id!==a.dataset.id; });
-          }else{
-            const col = path[0];
-            state[col] = state[col].filter(function(x){ return x.id!==a.dataset.id; });
-          }
-          save(); render();
-        }
-        return;
-      }
-
-      if(action==='copy-pre'){
-        const t = document.getElementById(a.dataset.target); if(t){ copyToClipboard(t.textContent||''); }
-        return;
-      }
-      if(action==='prefill-evidence'){
-        const title = a.dataset.title||"", type=a.dataset.type||"SONSTIGES";
-        const noteEl = document.getElementById(a.dataset.note); const note = noteEl? noteEl.textContent : "";
-        const sel = document.getElementById(a.dataset.sel); const auditId = sel? sel.value : null;
-        state._evidenceDraft = { title, type, note, auditId };
-        state.activeView = "evidence"; save(); render(); return;
-      }
-      if(action==='request-notify'){ await ensureNotificationPermission(); return; }
-      if(action==='toggle-wakelock'){ await ensureWakeLock(!wakeLock); return; }
-
-      if(action==='export-json'){ doExportPlain(); return; }
-      if(action==='export-encrypted'){ renderModal('export-encrypted'); return; }
-      if(action==='export-arsenal-journal'){
-        const rows = (state.arsenalJournal||[]).map(function(j){ return [
-          new Date(j.ts).toISOString(), (j.id||''), (j.title||''), (j.domain||'')
-        ]; });
-        const csv = ["ts,id,title,domain"].concat(rows.map(function(r){ return r.map(function(x){ return `"${String(x).replace(/"/g,'""')}"`; }).join(','); })).join("\n");
-        const blob = new Blob([csv], {type:"text/csv"});
-        const aEl = document.createElement("a"); aEl.download = `${todayISO()}_phoenix_arsenal_journal.csv`; aEl.href = URL.createObjectURL(blob); aEl.click();
-        URL.revokeObjectURL(aEl.href);
-        return;
-      }
-      if(action==='factory-reset'){
-        if(confirm("Wirklich alle lokalen Daten löschen? (vorher Export speichern)")){
-          // [PATCH] try...catch für localStorage auf file://
-          try {
-            localStorage.removeItem(STORAGE_KEY); 
-          } catch(e) {
-            console.warn("Konnte localStorage nicht löschen, fahre fort mit reload.", e);
-          }
-          location.reload();
-        }
-        return;
-      }
-
-      // Arsenal Aktionen
-      if(action==='launch-arsenal'){
-        const pid = a.dataset.promptId;
-        const domain = (a.dataset.domain||'').trim();
-        const art = KI_ARSENAL.find(function(x){ return x.id===pid; });
-        if(!art) return setStatus(`P-ID ${pid} nicht gefunden.`);
-        const url = domain ? (domain.startsWith('http')?domain:`https://${domain}`) : '{URL}';
-        const ready = art.prompt.replaceAll("{URL}", url);
-        await copyToClipboard(ready);
-        journalPromptUse({ id: pid, title: art.title, domain });
-        setStatus(`OK: ${art.title} für ${domain||'—'} vorbereitet.`);
-        return;
-      }
-      if(action==='copy-pre-by-id'){
-        const pid = a.dataset.promptId;
-        const art = KI_ARSENAL.find(function(x){ return x.id===pid; });
-        if(!art) return setStatus(`P-ID ${pid} nicht gefunden.`);
-        await copyToClipboard(art.prompt);
-        journalPromptUse({ id: pid, title: art.title, domain: '-' });
-        return;
-      }
-
-      // Protokolle
-      if(action==='case-a01'){ renderModal('case-a01'); state.statusLog.push({ts:Date.now(), code:'A-01'}); save(); return; }
-      if(action==='case-t01'){ renderModal('case-t01'); state.statusLog.push({ts:Date.now(), code:'T-01'}); save(); return; }
-      if(action==='case-p01'){
-        // [PATCH] Ersetzt ?.
-        if(state.sprint && state.sprint.running){ var btn=$('[data-action="pause-sprint"]'); if(btn) btn.click(); }
-        state._p01RemindAt = Date.now() + 2*60*60*1000;
-        notify("P-01 aktiv: 2 h offline. Ich erinnere dich.");
-        state.statusLog.push({ts:Date.now(), code:'P-01'});
-        save(); renderModal('case-p01');
-        setTimeout(function(){ notify("P-01: 2 h sind um. Sanft wieder starten."); }, 2*60*60*1000);
-        return;
-      }
-    });
-
-    // Modal submits
-    document.body.addEventListener('submit', async function(e){
-      const f = e.target; if(!f.id) return;
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(f).entries());
-      if(f.id==='form-evidence'){
-        state.evidence.unshift({
-          id:id(), title:(data.title||'').trim(), type:(data.type||'SONSTIGES').trim(),
-          audit:data.audit||null, note:(data.note||'').trim(), ts:new Date().toISOString()
         });
-        state.home.kpis.evidence = state.evidence.length;
-        save(); render(); closeModal(); return;
       }
-      if(f.id==='form-income' || f.id==='form-expense'){
-        const bucket = f.id==='form-income' ? 'income' : 'expense';
-        state.finance[bucket].unshift({
-          id:id(), date: todayISO(), amount: parseFloat(data.betrag||'0')||0, desc: (data.beschreibung||'').trim()
-        });
-        save(); render(); closeModal(); return;
+      function actionButtons(o){
+        const btn = (label, act, cls="btn ghost")=>`<button class="${cls}" data-act="${act}" data-id="${o.id}">${label}</button>`;
+        if(o.status==="SENT") return btn("FU1 geplant", "FU1") + btn("+1 Tag", "SNOOZE1");
+        if(o.status==="FU1")  return btn("FU1 erledigt → FU2", "FU2") + btn("+1 Tag", "SNOOZE1");
+        if(o.status==="FU2")  return btn("Abschluss", "DONE") + btn("+1 Tag", "SNOOZE2");
+        if(o.status==="DONE") return btn("Erledigt", "DONE", "btn ok");
+        if(o.status==="LOST") return btn("Verworfen", "LOST", "btn danger");
+        return btn("Gesendet", "SENT") + btn("Verwerfen", "LOST","btn warn");
       }
-      if(f.id==='form-export-enc'){
-        const pw = (data.pw||'').trim();
-        if(pw.length<8){ alert("Passwort zu kurz (min. 8)"); return; }
-        await doExportEncrypted(pw);
-        closeModal();
-        return;
-      }
-    });
 
-    // File import
-    var importEl = $("#importFile");
-    if (importEl) importEl.addEventListener("change", function(e){
-      // [PATCH] Ersetzt ?.
-      const file = (e.target.files && e.target.files[0]); if(!file) return;
-      const reader = new FileReader();
-      reader.onload = async function(){
-        try{
-          let data = JSON.parse(String(reader.result));
-          if(data && data.__enc==="AES-GCM"){
-            const pw = prompt("Passwort für verschlüsselten Export:");
-            if(!pw){ alert("Abgebrochen."); return; }
-            data = await decryptExport(data, pw);
+      // ---------- DRILLS (16 ESSENTIELLE MODULE, v3 OMEGA) ----------
+      function renderDrills(){
+        const c = document.createElement("div"); c.className="grid";
+
+        // Globales Setup
+        const g = document.createElement("div"); g.className="card";
+        g.innerHTML = `<h2>Trainingsprotokoll (v3 OMEGA) — Globales Setup</h2>
+          <div class="list">
+            <div class="item"><div><strong>Ziel-Akquise (A52s):</strong><div class="muted">Google: <code>immobilienmakler [Dein Kiez] -site:immoscout24.de</code> → Ziel von Seite 2–3 wählen.</div></div></div>
+            <div class="item"><div><strong>PHOENIX öffnen:</strong><div class="muted">Tab <em>Audits</em> → Zieldomain anlegen → Status <code>NEU</code>.</div></div></div>
+          </div>`;
+        c.append(g);
+
+        // Drill Cards
+        const drills = getDrills();
+        drills.forEach(d => c.append(renderDrillCard(d)));
+
+        view.append(c);
+
+        function renderDrillCard(d){
+          const card = document.createElement("div"); card.className="card";
+          const deviceTag = `<span class="tag">${d.device}</span>`;
+          card.innerHTML = `
+            <h2>${escapeHTML(d.title)} ${deviceTag}</h2>
+            <div class="muted">${escapeHTML(d.subtitle||"")}</div>
+            <details style="margin-top:8px"><summary><strong>Phase A · Audit & Evidenz (${d.device})</strong></summary><div class="list" style="margin-top:8px"></div></details>
+            <details style="margin-top:8px"><summary><strong>Phase B · Consulting & Wertschöpfung</strong></summary>
+              <div class="template-box">
+                <pre id="prompt-${d.id}"></pre>
+                <button class="btn primary block copy-btn" data-copy-target="prompt-${d.id}">KI-Prompt kopieren</button>
+              </div>
+            </details>
+          `;
+
+          // Phase A steps
+          const list = card.querySelector("details .list");
+          d.phaseA.forEach(step=>{
+            const it = document.createElement("div"); it.className="item";
+            it.innerHTML = `<div><strong>${escapeHTML(step.h||"Schritt")}</strong><div class="muted">${escapeHTML(step.t)}</div></div>`;
+            list.append(it);
+          });
+
+          // Prompt
+          card.querySelector(`#prompt-${d.id}`).textContent = d.prompt || "(kein Prompt erforderlich)";
+
+          // Evidence Quick-Log (falls vorhanden)
+          if(d.evidence){
+            const box = document.createElement("div"); box.className="template-box";
+            const selId = `auditSel-${d.id}`;
+            box.innerHTML = `
+              <p><strong>Evidence-Quick-Log</strong></p>
+              <div class="split" style="margin-top:6px">
+                <div class="ctl"><label>Audit verknüpfen</label>
+                  <select id="${selId}">
+                    ${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(kein Lead)</option>`}
+                  </select>
+                </div>
+                <div class="ctl"><label>Primärdefekt</label>
+                  <input type="text" value="${d.evidence.type}" disabled>
+                </div>
+              </div>
+              <pre id="note-${d.id}"></pre>
+              <div class="row gap" style="margin-top:6px">
+                <button class="btn ok block prefill-evidence" 
+                        data-did="${d.id}" 
+                        data-title="${escapeHTML(d.evidence.title)}" 
+                        data-type="${d.evidence.type}" 
+                        data-note-id="note-${d.id}"
+                        data-sel="${selId}">In Evidence vorbefüllen</button>
+              </div>`;
+            card.append(box);
+            // Note-Template (als Text)
+            card.querySelector(`#note-${d.id}`).textContent = d.evidence.note;
           }
-          if(!data || typeof data!=="object"){ alert("Ungültige Datei."); return; }
-          const template = seed();
-          Object.keys(template).forEach(function(k){ if(data.hasOwnProperty(k)) state[k] = data[k]; });
-          migrateIfNeeded(state); backfill(); save(); render();
-        }catch(err){ alert("Import fehlgeschlagen."); console.error(err); }
-      };
-      reader.readAsText(file);
-    });
 
-    // ======================= NOTIFY & WAKE LOCK =======================
-    async function ensureNotificationPermission(){
-      try{
-        if(!("Notification" in window)) { alert("Benachrichtigungen werden nicht unterstützt."); return; }
-        if(Notification.permission==="granted"){ notify("Benachrichtigungen aktiviert."); return; }
-        const res = await Notification.requestPermission();
-        if(res==="granted") notify("Benachrichtigungen aktiviert.");
-      }catch(e){}
-    }
-    function notify(msg){
-      try{
-        if(("Notification" in window) && Notification.permission==="granted"){
-          new Notification("Phoenix Feuer", { body: msg });
-        }
-      }catch(e){}
-    }
-    async function ensureWakeLock(enable){
-      try{
-        if(!('wakeLock' in navigator)) return;
-        if(enable && !wakeLock){
-          wakeLock = await navigator.wakeLock.request('screen');
-          wakeLock.addEventListener('release', function(){ wakeLock=null; });
-          setStatus("Bildschirm bleibt an");
-        }else if(!enable && wakeLock){
-          await wakeLock.release(); wakeLock=null; setStatus("Bildschirm-Timeout wieder aktiv");
-        }
-      }catch(e){ /* meist bei Sperrbildschirm */ }
-    }
+          // Drill 16: Sprint-Notiz-Setter
+          if(d.sprintNote){
+            const box2 = document.createElement("div"); box2.className="template-box";
+            box2.innerHTML = `
+              <p><strong>90-Min-Sprint</strong></p>
+              <pre id="snote-${d.id}"></pre>
+              <button class="btn warn block start-sprint-note" data-note-id="snote-${d.id}">Sprint-Notiz setzen & zum Timer</button>
+            `;
+            card.append(box2);
+            card.querySelector(`#snote-${d.id}`).textContent = d.sprintNote;
+          }
 
-    // ======================= EXPORT (klar & verschlüsselt) =======================
-    function doExportPlain(){
-      try {
+          return card;
+        }
+      }
+
+      function getDrills(){
+        return [
+          {
+            id:"01", device:"A52s", title:"Drill 01 · M1 (CLS) — „Layout-Sprung“-Beweis",
+            subtitle:"Visueller Gesprächsöffner (Video)",
+            phaseA:[
+              {h:"Aufnehmen", t:"Inkognito öffnen → Rekorder starten → Seite 3× neu laden."},
+              {h:"Befund", t:"Sichtbarer Sprung (Banner/Bild) im Fold."},
+              {h:"Sichern", t:"5-Sek.-Clip → Drive (AEON_OPS/BEWEISE) → Link freigeben (Jeder mit Link)."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Visueller Layoutsprung (CLS) – P1-Befund', Typ CLS_KOLLAPS, Note: 'Visueller Beweis (Video). PSI: [Wert]'."}
+            ],
+            prompt:`Gemini 2.5 Pro: Übersetze den Befund „Video zeigt, wie das Cookie-Banner das Logo nach unten stößt.“ in einen 2-Satz-Business-Case für einen Makler. Fokus: Vertrauensverlust auf Mobilgeräten in den ersten 500 ms.`,
+            evidence:{ title:"Visueller Layoutsprung (CLS) – P1-Befund", type:"CLS_KOLLAPS", note:"INTERN: Visueller Beweis (Video). PSI-CLS (falls gemessen): [Wert]." }
+          },
+          {
+            id:"02", device:"A52s", title:"Drill 02 · M2 (LCP) — „Langsamer Held“-Befund",
+            subtitle:"Hero-Bild blockiert First Impression",
+            phaseA:[
+              {h:"Quelltext prüfen", t:"view-source: vor URL, <img> Hero suchen."},
+              {h:"Befund", t:"loading=\"lazy\" beim ersten sichtbaren Bild ODER fehlende width/height (LCP/CLS-Risiko)."},
+              {h:"Sichern", t:"Screenshot view-source → Drive → Link."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'LCP-Blocker / CLS-Risiko (Hero-Bild)', Typ CLS_KOLLAPS, Note mit Code-Zitat."}
+            ],
+            prompt:`ChatGPT-5 Thinking: Erkläre einem Makler, warum loading="lazy" beim ersten sichtbaren Bild (Hero) den „ersten Eindruck“ zerstört und Vertrauen > 2,5 s kostet.`,
+            evidence:{ title:"LCP-Blocker / CLS-Risiko (Hero-Bild)", type:"CLS_KOLLAPS", note:`LCP-Befund (Hero): <img src="..." alt="..." loading="lazy"> (falsches Loading) ODER <img src="..." alt="..."> (width/height fehlen).` }
+          },
+          {
+            id:"03", device:"A52s", title:"Drill 03 · M3 (INP) — „Zäher Klick“-Beweis",
+            subtitle:"Interaktions-Lag > 200 ms",
+            phaseA:[
+              {h:"Aufnehmen", t:"Formular/Filter öffnen → Rekorder starten → auf CTA tippen."},
+              {h:"Befund", t:"Sichtbar verzögerte Reaktion (>200 ms)."},
+              {h:"Sichern", t:"10-Sek.-Clip → Drive → Link."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Interaktions-Verzögerung (INP) – Formular', Typ SONSTIGES, Note mit Kontext (Button/Ort)."}
+            ],
+            prompt:`Autoren-Aufgabe: Formuliere den Frust-Moment: „Kunde klickt 'Anfragen'. Nichts passiert. Er klickt erneut. Abbruch.“ — Positioniere mich als Nutzerversteher.`,
+            evidence:{ title:"Interaktions-Verzögerung (INP) – Formular", type:"SONSTIGES", note:"INP-Befund (Video): Spürbarer Lag bei Klick auf [Button]. Gefühlte Verzögerung > 200 ms." }
+          },
+          {
+            id:"04", device:"A52s", title:"Drill 04 · M7 (Mobile Darstellung) — „P0-Blocker“",
+            subtitle:"Tastatur verdeckt CTA",
+            phaseA:[
+              {h:"Aufnehmen", t:"Kontaktformular → Tastatur öffnen (Fokus ins Feld)."},
+              {h:"Befund", t:"CTA (Senden) verdeckt → Lead unmöglich (P0)."},
+              {h:"Sichern", t:"Video → Drive → Link."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-KONVERSIONSBLOCKER – Tastatur verdeckt CTA', Typ SONSTIGES, Note kurz."}
+            ],
+            prompt:`Kurzargument: Video genügt – P0-Blocker ist selbsterklärend.`,
+            evidence:{ title:"P0-KONVERSIONSBLOCKER – Tastatur verdeckt CTA", type:"SONSTIGES", note:"P0-Befund (Video): Mobile Tastatur überlagert den 'Senden'-Button. Lead-Abbruch erzwungen." }
+          },
+          {
+            id:"05", device:"A52s", title:"Drill 05 · M4 (Index-Status) — „Existenz“-Test",
+            subtitle:"site: Operator zeigt 0 Treffer",
+            phaseA:[
+              {h:"Prüfen", t:"Wichtige Kategorie wählen (z. B. /immobilien/kaufen)."},
+              {h:"Google", t:"site:zieldomain.de/immobilien/kaufen."},
+              {h:"Befund", t:"Keine Ergebnisse (P0). Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-BEFUND – Kategorieseite NICHT INDEXIERT', Typ SONSTIGES, Note kurz."}
+            ],
+            prompt:`Autoren-Aufgabe: „Ihr digitales Schaufenster ('Kaufen') ist für Google unsichtbar – es geht um Existenz, nicht Feinschliff.“`,
+            evidence:{ title:"P0-BEFUND – Kategorieseite 'Kaufen' NICHT INDEXIERT", type:"SONSTIGES", note:"P0-Befund: site:[URL] liefert 0 Ergebnisse. Fundamentale Sichtbarkeit fehlt." }
+          },
+          {
+            id:"06", device:"A52s", title:"Drill 06 · M5 (Canonical-Logik) — „Ranking-Kraft“-Test",
+            subtitle:"Filter-URLs kanonisieren falsch",
+            phaseA:[
+              {h:"Prüfen", t:"Kategorie (URL A) → Filter anwenden (URL B)."},
+              {h:"Quelltext", t:"view-source: URL B → <link rel=\"canonical\" suchen."},
+              {h:"Befund", t:"Self-Canonical auf URL B statt auf A. Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Canonical-Logik gebrochen (Filter-URLs)', Typ CANONICAL_LOSS, Note mit kurzen URLs."}
+            ],
+            prompt:`Business-Satz steht schon in der Note: „Ranking-Kraft verdampft.“`,
+            evidence:{ title:"Canonical-Logik gebrochen (Filter-URLs)", type:"CANONICAL_LOSS", note:"FEHLER: Filter-URL <.../?filter=X> setzt Canonical auf sich selbst statt Hauptkategorie <URL A>. Ranking-Kraft verdampft." }
+          },
+          {
+            id:"07", device:"A52s", title:"Drill 07 · M6 (robots.txt) — „Crawl-Budget“-Test",
+            subtitle:"Blockierte Bilder / harte Disallows",
+            phaseA:[
+              {h:"Öffnen", t:"/robots.txt laden."},
+              {h:"Befund", t:"P0/ P1 Regeln (z. B. Disallow: / oder Disallow: /wp-content/uploads/)."},
+              {h:"Sichern", t:"Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'P1-Fehler (Robots.txt blockiert Bilder)', Typ SONSTIGES, Note kurz."}
+            ],
+            prompt:`Gemini 2.5 Pro: „Erkläre, warum 'Disallow: /wp-content/uploads/' Google 'mit verbundenen Augen' crawlen lässt (Crawl-Budget).“`,
+            evidence:{ title:"P1-Fehler (Robots.txt blockiert Bilder)", type:"SONSTIGES", note:"P1: 'Disallow: /wp-content/uploads/' blockiert Bilder; Crawl-Budget wird vergeudet." }
+          },
+          {
+            id:"08", device:"A52s", title:"Drill 08 · M8 (Breadcrumbs) — „Sackgassen“-Test",
+            subtitle:"Fehlende Breadcrumbs + Related",
+            phaseA:[
+              {h:"Landen", t:"Exposé tief öffnen (SERP)."},
+              {h:"Befund", t:"Keine Breadcrumb-Leiste, keine 'Ähnliche Objekte'."},
+              {h:"Sichern", t:"Screenshot Exposé-Ende → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Nutzerführung: Exposé-Sackgasse', Typ BREADCRUMB_VOID, Note kurz."}
+            ],
+            prompt:`Note ist ausreichend — klare Business-Wirkung.`,
+            evidence:{ title:"Nutzerführung: Exposé-Sackgasse", type:"BREADCRUMB_VOID", note:"BREADCRUMB_VOID: Keine Breadcrumb UND keine Links zu 'Ähnliche Objekte' → Sackgasse." }
+          },
+          {
+            id:"09", device:"A52s", title:"Drill 09 · M11 (H1-Struktur) — „H1-Anomalie“-Test",
+            subtitle:"Doppelte H1 (Logo + Titel)",
+            phaseA:[
+              {h:"Quelltext", t:"view-source: Exposé → <h1> suchen und zählen."},
+              {h:"Befund", t:"≥ 2 H1 vorhanden. Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Strukturfehler (Doppelte H1)', Typ H1_ANOMALIE, Note mit Beispiel."}
+            ],
+            prompt:`ChatGPT-5 Thinking: Metapher „Buch mit zwei Titeln“ – warum schwächt das das Ranking.`,
+            evidence:{ title:"Strukturfehler (Doppelte H1)", type:"H1_ANOMALIE", note:"H1_ANOMALIE: <h1>Logo…</h1> UND <h1>Exposé-Titel…</h1> → Kein klares Thema für Google." }
+          },
+          {
+            id:"10", device:"ThinkPad", title:"Drill 10 · M9 (Rich Snippets) — „SERP-Platz“-Test",
+            subtitle:"Rich Results Test negativ",
+            phaseA:[
+              {h:"Tool", t:"Google Rich Results Test (Smartphone) → URL prüfen."},
+              {h:"Befund", t:"Keine gültigen Elemente (z. B. RealEstateListing). Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Schema.org (Rich Snippet) fehlt', Typ SONSTIGES, Note kurz."}
+            ],
+            prompt:`Gemini 2.5 Pro: Erstelle eine textliche Vorher/Nachher-SERP-Beschreibung (heute vs. mit Rich Snippets: Preis, m², Sterne).`,
+            evidence:{ title:"Schema.org (Rich Snippet) fehlt", type:"SONSTIGES", note:"RRT negativ: Keine RealEstateListing/FAQPage-Daten. CTR-Chance verschenkt." }
+          },
+          {
+            id:"11", device:"A52s", title:"Drill 11 · M10 (Bild-SEO) — „Blinde Bilder“-Test",
+            subtitle:"ALT fehlt im Content-Bild",
+            phaseA:[
+              {h:"Quelltext", t:"view-source: Exposé → <img> im Content suchen."},
+              {h:"Befund", t:"alt-Attribut leer/fehlend. Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'Bild-SEO: ALT-Blindheit', Typ ALT_BLINDHEIT, Note mit Code."}
+            ],
+            prompt:`Business-Satz: Bildersuche-Traffic geht verloren; Accessibility/Verständnis sinken.`,
+            evidence:{ title:"Bild-SEO: ALT-Blindheit", type:"ALT_BLINDHEIT", note:`ALT_BLINDHEIT: <img src=".../grundriss.jpg" alt=""> → Kein ALT-Text, Bildersuche verloren.` }
+          },
+          {
+            id:"12", device:"A52s", title:"Drill 12 · M12/M13 (Legal & Trust) — „P0-CMP“-Blocker",
+            subtitle:"Vollbild-Overlay / Dark Pattern",
+            phaseA:[
+              {h:"Aufnehmen", t:"Inkognito → Rekorder → Landing laden."},
+              {h:"Befund", t:"CMP blockiert Inhalt oder versteckt 'Ablehnen'."},
+              {h:"Sichern", t:"10-Sek.-Clip → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-TRUST-Blocker – CMP blockiert Inhalt', Typ SONSTIGES, Note kurz."}
+            ],
+            prompt:`Autoren-Aufgabe: „Sie zwingen den Kunden, 'Ja' zu sagen, bevor er 'Hallo' sagen kann“ — als P0-Konversionsblocker formulieren.`,
+            evidence:{ title:"P0-TRUST-Blocker – CMP blockiert Inhalt", type:"SONSTIGES", note:"P0: Aggressives CMP blockiert Inhalt/Navigation oder nutzt Dark Pattern. Vertrauen ↓, UX ↓." }
+          },
+          {
+            id:"13", device:"ThinkPad", title:"Drill 13 · M14 (AI Overviews) — „Zukunft“-Test",
+            subtitle:"AIO-Ready Content",
+            phaseA:[
+              {h:"Text wählen", t:"Ratgeberabsatz kopieren (z. B. 'Nebenkosten')."}
+            ],
+            prompt:`Gemini 2.5 Pro: Formatiere den Absatz AIO-ready: H2-Frage, 1–3 Sätze direkte Antwort, Rest logisch. Präsentation: VORHER/NACHHER.`,
+            // kein Evidence-Quick-Log
+          },
+          {
+            id:"14", device:"A52s", title:"Drill 14 · M15 (E-E-A-T) — „Autoritäts“-Test",
+            subtitle:"Anonyme Team-Seite",
+            phaseA:[
+              {h:"Prüfen", t:"Über-uns/Team öffnen."},
+              {h:"Befund", t:"Keine Profile, Namen, Bilder, LinkedIn, Siegel."},
+              {h:"Sichern", t:"Screenshot → Drive."},
+              {h:"PHOENIX Log", t:"Evidence: Titel 'E-E-A-T-Lücke (Autorität fehlt)', Typ SONSTIGES, Note mit YMYL-Hinweis."}
+            ],
+            prompt:`ChatGPT-5 Thinking: Erkläre, warum Immobilien (YMYL) „beweisbare Expertise“ brauchen und anonyme Team-Seiten Vertrauen aktiv senken.`,
+            evidence:{ title:"E-E-A-T-Lücke (Autorität fehlt)", type:"SONSTIGES", note:"E-E-A-T-Mangel: Über-uns anonym; Expertise/Autorität nicht belegt. YMYL-Risiko." }
+          },
+          {
+            id:"15", device:"ThinkPad", title:"Drill 15 · M16 (Executive Dashboard) — „Trusted Advisor“-Loop",
+            subtitle:"Top-3 P0 in eine 1-Seiten-Summary",
+            phaseA:[
+              {h:"Sichten", t:"PHOENIX → Evidence → Top-3 P0 auswählen."}
+            ],
+            prompt:`Gemini 2.5 Pro: „Erstelle eine 1-Seiten-Executive-Summary (M16) für einen Makler. Nutze meine Top-3 P0-Befunde: 
+• P0-KONVERSIONSBLOCKER – CMP verdeckt CTA
+• P0-BEFUND – Kategorieseite 'Kaufen' NICHT INDEXIERT
+• P0-KONVERSIONSBLOCKER – Tastatur verdeckt 'Senden'-Button
+Schreibe 4 Sätze, übersetze Technik in akuten kaufmännischen Lead-Verlust, klare Priorität, Stil respektvoll/dringlich.“`,
+          },
+          {
+            id:"16", device:"A52s", title:"Drill 16 · M-ALL — Der 90-Minuten-AEON-Sprint",
+            subtitle:"Zeitdruck-Simulation (3+ valide Befunde)",
+            phaseA:[
+              {h:"Sprint öffnen", t:"PHOENIX → Tab Sprint."},
+              {h:"Zielnotiz", t:"„Phase 2 Micro-Audits: 5 neue Leads (Seite 3 Google) prüfen. Ziel: 3× P0/P1 sichern (Evidence).“"},
+              {h:"Workflow", t:"view-source Checks (M2/M5/M10/M11) + Usability (M1/M3/M7/M12). Befund → Evidence loggen."}
+            ],
+            prompt:`Kein Prompt nötig – Fokus auf Geschwindigkeit & Sauberkeit.`,
+            sprintNote:"Phase 2 Micro-Audits: 5 neue Leads (Seite 3 Google) prüfen. Ziel: 3× P0/P1-Befunde systemkonform in Evidence sichern."
+          }
+        ];
+      }
+
+      // ---------- NEUE FUNKTION: SURVIVAL GUIDE ----------
+      function renderSurvival() {
+        const d = document.createElement("div"); d.className="grid";
+        const card = document.createElement("div");
+        card.className = "card roadmap-content"; // Nutzt das Styling der Roadmap
+        card.innerHTML = `
+          <h2>🛡️ DER PI-ÜBERLEBENS-GUIDE (PFCP V5.0)</h2>
+          
+          <h3>A) Executive Summary</h3>
+          <p>Dieser Guide ist dein operatives Handbuch (PFCP V5.0), um unter den extremsten legalen Einschränkungen – volle Erwerbsminderungsrente (EMR) und Privatinsolvenz (PI) – ein profitables B2B-Consulting-Business aufzubauen.</p>
+          <p>Die Strategie transformiert deine „Constraints“ (weniger als 3 Stunden Arbeit täglich, 19.661,25 € Jahresgewinn-Deckel, Pfändungsfreigrenzen) von Fesseln in ein chirurgisches Skalpell für maximale Effizienz.</p>
+          <p>Die Kern-Direktive lautet: Compliance (Regeltreue) ist nicht verhandelbar und steht über dem Wachstum.</p>
+          <p>Die zwei entscheidenden Hebel sind:</p>
+          <ol>
+            <li>Die obsessive, minutengenaue Zeiterfassung zum Schutz deiner EMR.</li>
+            <li>Die „40% Notwendigkeits-Reserve“ – eine proaktive Buchhaltungsmethode, um deinen pfändbaren Gewinn legal zu reduzieren, indem 40 % des Betriebsergebnisses als notwendige Rückstellung für zukünftige Investitionen (z.B. KI-Tools) deklariert werden.</li>
+          </ol>
+          <p>Dieses System wird durch eine proaktive Kommunikationsstrategie mit dem Insolvenzverwalter (IV) und die Nutzung steuerlicher Vorteile (100.000 € KUR-Grenze) abgesichert.</p>
+
+          <hr style="border-color:var(--muted); margin: 24px 0;">
+          
+          <h2>B) Erzählende Langfassung (Hauptteil)</h2>
+          <p class="page-sep muted">(SEITE 1)</p>
+          
+          <h3>EINLEITUNG: DEINE SUPERKRAFT IST DEIN LIMIT</h3>
+          <h4>VON CHEFREDAKTEUR SASCHA LOBO</h4>
+          <p>Willkommen in der Realität, Eric.</p>
+          <p>Du bist 44. Du bist in Berlin. Du bist, nach Definition des Staates, "erwerbsgemindert". Du bist, nach Definition des Gesetzes, "insolvent". Für den grauen Verwaltungsapparat bist du eine Akte. Ein Problem. Eine statistische Randnotiz im digitalen Prekariat.</p>
+          <p>Und genau das ist deine verdammte Superkraft.</p>
+          <p>Vergiss die Hochglanz-Artikel über 20-jährige "Gründer", die mit Papas Geld und einem mittelmäßigen SaaS-Tool "die Welt verändern". Das ist Bullshit. Das ist Theater. Die Realität ist brutal, und sie hat dir gerade das beste Trainings-Set der Welt geschenkt: Totale Einschränkung.</p>
+          <p>Disziplin ist Freiheit.</p>
+          <p>Dieses Magazin, diese erste, monumental wichtige Ausgabe, ist kein Ratgeber für Träumer. Es ist ein technisches Handbuch für Überlebenskünstler. Für Operatoren. Für Leute wie dich, die verstanden haben, dass "KI-Business" nicht bedeutet, süße Katzenbilder zu generieren, sondern einen Hebel anzusetzen. Einen Hebel, der so mächtig ist, dass er die Gesetze der Bürokratie zu deinen Gunsten verbiegt.</p>
+          <p>Du willst 19.661 Euro Gewinn. Du hast 3 Stunden am Tag. Du hast kein Kapital. Und du hast zwei der schärfsten Waffen im Arsenal der Menschheit: Google Gemini 2.5 Pro und GPT-5/4o.</p>
+          <p>Du gründest kein Start-up. Du programmierst ein System. Das OMEGA-SYSTEM. Ein Unternehmen unter struktureller Einschränkung.</p>
+          <p>Die meisten Leute scheitern nicht an der Technik. Sie scheitern an der Struktur. Sie ertrinken im Rauschen. Sie haben keine Constraints. Du hast nur Constraints. Du hast den perfekten Sturm.</p>
+          <p>Auf den nächsten 25 Seiten gebe ich dir alles. Keine "Top 5 Listen". Keine "Quick Wins". Ich gebe dir die Architektur. Ich gebe dir die "Mercyless Tricks", die dich nachts wachhalten werden. Ich gebe dir die "Mighty Prompts", die so lang und detailliert sind, dass sie die KI ins Schwitzen bringen. Und ich gebe dir die Anekdoten, die beweisen, dass die verrücktesten Hacks von Leuten kommen, die mit dem Rücken zur Wand stehen.</p>
+          <p>Du wolltest einen Punk mit Intellekt. Was du bekommst, ist ein Schlachtplan.</p>
+          <p>Deine Situation ist kein Bug. Sie ist ein Feature. Sie zwingt dich zur Effizienz. Sie zwingt dich zur Brillanz.</p>
+          <p>Jetzt hör auf zu lesen und fang an zu arbeiten. Die Uhr tickt. Du hast 3 Stunden.</p>
+          
+          <h4>DIE AXIOME DER SOUVERÄNITÄT</h4>
+          <p>Dein gesamtes Handeln basiert auf drei unumstößlichen Regeln:</p>
+          <ul>
+            <li><strong>Axiom 1: Compliance ist nicht verhandelbar. 🛡️</strong><br>Jede Handlung wird zuerst durch den Filter der rechtlichen Konformität (Insolvenzrecht, Sozialrecht) geprüft. Ein Verstoß ist ein sofortiger Missionsabbruch. Compliance steht immer über Wachstum.</li>
+            <li><strong>Axiom 2: Jede Aktion dient der Liquidität. 💰</strong><br>Umsatz ist Eitelkeit, Gewinn ist Verstand, aber Cashflow ist Realität.</li>
+            <li><strong>Axiom 3: Zeit wird gegen Wert getauscht, nicht gegen Geld. 💡</strong><br>Du verkaufst keine Stunden. Du verkaufst Lösungen für Geschäftsprobleme. Dies ist der definitive Bruch mit der „Grasfresser“-Vergangenheit.</li>
+          </ul>
+
+          <p class="page-sep muted">(SEITE 2)</p>
+          <h3>KAPITEL 1: DIE ZEIT-FESTUNG (DER EMR-SCHUTZSCHILD) ⏱️</h3>
+          <p>Dein erstes Schlachtfeld ist die Deutsche Rentenversicherung (DRV). Dein Status als Bezieher der vollen Erwerbsminderungsrente (EMR) ist dein finanzielles Sicherheitsnetz, das deine Grundkosten und Krankenversicherung deckt. Dieses Netz darfst du nicht leichtfertig zerreißen. Es wird durch zwei Limits definiert (Stand 2025).</p>
+          
+          <h4>Limit 1: Das Zeit-Limit (Der &lt;3-Stunden-Käfig)</h4>
+          <p>Die volle EMR basiert auf der medizinischen Annahme, dass du weniger als 3 Stunden pro Tag arbeitsfähig bist. Das ist keine Richtlinie, das ist eine harte, medizinisch begründete Grenze. Wenn die DRV Anlass zur Prüfung hat (z.B. durch einen über Jahre hohen Verdienst) und feststellt, dass du regelmäßig 4, 5 oder 8 Stunden arbeitest, entfällt dein Rentenanspruch rückwirkend.</p>
+          
+          <h4>HACK 1: Der obsessive Zeit-Buchhalter (Dein Schutzschild)</h4>
+          <p>Dein Hack gegen diese Prüfung ist nicht, wenig zu arbeiten, sondern deine Arbeit lückenlos zu dokumentieren. Du musst zum obsessiven Zeit-Buchhalter werden.</p>
+          <ul>
+            <li><strong>Das Werkzeug:</strong> Benutze ein kostenloses Zeiterfassungs-Tool wie Toggl Track oder Clockify. Installiere es auf deinem Android-Phone.</li>
+            <li><strong>Die Disziplin:</strong> Jede einzelne Minute, die du für dein Business arbeitest, wird getrackt.
+              <ul style="padding-left: 15px; margin-top: 8px;">
+                <li>Projekt: SEO-Audit Kunde X -> Task: Keyword-Recherche (15 Min.)</li>
+                <li>Projekt: Prompt-Entwicklung -> Task: Master-Prompt V3 testen (25 Min.)</li>
+                <li>Projekt: Admin -> Task: E-Mail an Insolvenzverwalter (5 Min.)</li>
+              </ul>
+            </li>
+            <li><strong>Die Waffe:</strong> Jeden Sonntag (oder Monatsende) exportierst du den Wochenbericht. Dieser Report muss einen Tagesschnitt von unter 3 Stunden aufweisen (z.B. 14,5 Stunden in einer 7-Tage-Woche). Wenn die DRV jemals anfragt, legst du die lückenlose Dokumentation der letzten 12 Monate vor. Das beweist, dass dein Business innerhalb deiner medizinischen Grenzen operiert.</li>
+          </ul>
+
+          <h4>Limit 2: Das Gewinn-Limit (Der 19.661 €-Deckel)</h4>
+          <p>Als Bezieher einer vollen EMR darfst du (Stand 2025) bis zu 19.661,25 € brutto im Kalenderjahr hinzuverdienen, ohne dass die Rente gekürzt wird. Wichtig: Es zählt das Kalenderjahr, und es zählt dein Gewinn (Einnahmen minus Betriebsausgaben), den du in deiner Einnahmen-Überschuss-Rechnung (EÜR) ermittelst. Das entspricht einem Monatsgewinn von 1.638,44 €.</p>
+
+          <h4>HACK 2: Die proaktive DRV-Meldung (Textbaustein)</h4>
+          <p>Sei transparent. Verletzungen der Mitwirkungspflicht können zur Rückforderung der Rente führen. Melde die Aufnahme deiner Selbstständigkeit unverzüglich (idealerweise vor dem Start) schriftlich an die DRV.</p>
+          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
+          <pre>Sehr geehrte Damen und Herren,
+hiermit informiere ich Sie proaktiv, dass ich ab dem [DEIN STARTDATUM, z.B. 01.01.2026] eine selbstständige, freiberufliche Tätigkeit als Publizist/Content-Stratege aufnehme.
+Ich übe diese Tätigkeit im Umfang von durchschnittlich unter drei Stunden täglich aus. Ein Arbeitszeitprotokoll wird lückenlos geführt. Der prognostizierte Jahres-Hinzuverdienst (Gewinn) liegt bei ≤ 19.661,25 €.</pre>
+
+          <p class="page-sep muted">(SEITE 3)</p>
+          <h3>KAPITEL 2: DIE INSOLVENZ-FESTUNG (OPERATION VERWALTER) 🏛️</h3>
+          <p>Dein zweites Schlachtfeld ist die Privatinsolvenz (PI). Ab Verfahrenseröffnung (voraussichtlich Ende 2025 / Anfang 2026) tritt der Insolvenzverwalter (IV) auf den Plan. Du musst die Regeln so gut kennen, dass du sie als Waffe benutzen kannst.</p>
+          <p><strong>Das Verfahren: Verbraucherinsolvenz</strong></p>
+          <p>Da du (voraussichtlich) als "Verbraucher" (nicht als aktuell Selbstständiger mit hohen Schulden bei Sozialkassen o.ä.) den Antrag stellst, durchläufst du das vereinfachte Verbraucherinsolvenzverfahren. Nach aktueller Gesetzeslage dauert die Entschuldungsphase drei Jahre.</p>
+
+          <h4>HACK 3: Die P-Konto-Festung (Der 1.560 €-Schutzwall)</h4>
+          <p>Das ist nicht verhandelbar. Dein privates Girokonto (auf das du dir deinen Lohn überweist) muss ein Pfändungsschutzkonto (P-Konto) sein.</p>
+          <ul>
+            <li><strong>Warum?</strong> Es schützt deinen monatlichen Grundfreibetrag automatisch vor Pfändungen.</li>
+            <li><strong>Das Limit (Stand 2025):</strong> Der unpfändbare Grundbetrag für Alleinstehende beträgt 1.555,00 € bis 1.559,99 €. Banken runden dies oft auf 1.560,00 € auf.</li>
+            <li><strong>Disziplin:</strong> Alles über diesem Betrag auf dem P-Konto wird an den IV abgeführt. Du musst deine Privatentnahmen also exakt steuern.</li>
+          </ul>
+
+          <h4>HACK 4: Die strikte Kontentrennung (Zwei-Welten-Prinzip)</h4>
+          <p>Du musst deine privaten und geschäftlichen Finanzen strikt trennen.</p>
+          <ul>
+            <li><strong>Konto 1 (Privat):</strong> Dein P-Konto. Hierhin überweist du dir deinen "Lohn" (deine Privatentnahme), idealerweise exakt 1.560,00 €.</li>
+            <li><strong>Konto 2 (Business):</strong> Eröffne ein separates Geschäftskonto (z.B. bei Finom oder Kontist, die oft ohne SCHUFA-Abfrage arbeiten). Alle Einnahmen von Kunden gehen nur hier ein. Alle Betriebsausgaben (Software, Steuern, IV-Abführungen) gehen nur von hier ab.</li>
+          </ul>
+
+          <h4>HACK 5: Die Rechtsform-Falle (Gründe NIEMALS eine UG)</h4>
+          <p>Du startest als Einzelunternehmer / Freiberufler. Gründe niemals während der Insolvenz eine Kapitalgesellschaft (wie eine UG oder GmbH). Deine Geschäftsanteile daran würden sofort zur Insolvenzmasse zählen und vom Insolvenzverwalter verwertet (also verkauft) werden, um die Gläubiger zu bedienen.</p>
+
+          <p class="page-sep muted">(SEITE 4)</p>
+          <h4>HACK 6: Die proaktive Freigabe (§ 35 InsO)</h4>
+          <p>Sobald dein Verfahren eröffnet ist, tritt der IV in deine Rechte ein. Grundsätzlich würden alle neuen Einnahmen aus deiner Selbstständigkeit zur Insolvenzmasse gehören. Das willst du verhindern.</p>
+          <ul>
+            <li><strong>Die Strategie:</strong> Du beantragst sofort und proaktiv schriftlich die „Freigabe der selbstständigen Tätigkeit“ nach § 35 Abs. 2 InsO.</li>
+            <li><strong>Warum?</strong> Mit der Freigabe erhältst du wieder die volle Verfügungsbefugnis über dein Business. Du kannst Verträge schließen und Rechnungen stellen. Bei Dienstleistern ohne Anlagevermögen (wie du) wird diese Freigabe fast immer erteilt, da es im Interesse der Gläubiger liegt, dass du arbeitest.</li>
+          </ul>
+          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
+          <pre>Sehr geehrte/r [Verwalter/in],
+ich beabsichtige, meine freiberufliche Tätigkeit als Content-Stratege (Publizistik/Texter, KI-gestützt) ab [STARTDATUM] fortzuführen. Hiermit beantrage ich die Freigabe nach § 35 Abs. 2 InsO.
+Ich führe ein separates Geschäftskonto, erstelle eine monatliche EÜR und werde den pfändbaren Betrag [...] an die Insolvenzmasse abführen.
+Beigefügt: 12-Monats-Prognose, Kontodaten.</pre>
+
+          <h4>HACK 7: Die „Fiktives Einkommen“-Falle (§ 295a InsO)</h4>
+          <p>Das ist die größte und komplizierteste Bedrohung in der Insolvenz. Die Freigabe nach § 35 entbindet dich nicht von deiner Pflicht, die Gläubiger zu befriedigen.</p>
+          <ul>
+            <li><strong>Die Gefahr:</strong> § 295a InsO verlangt von dir, die Gläubiger so zu stellen, als wärst du in einem angemessenen Angestelltenjob tätig.</li>
+            <li><strong>Das Horrorszenario:</strong> Der IV legt (nach Ermessen) ein "fiktives Einkommen" fest. Er sagt z.B.: „Ein Content-Manager in Berlin verdient 2.500 € netto. Sie müssen den pfändbaren Anteil dieses fiktiven Gehalts (ca. 600-700 €) monatlich an die Masse abführen“.</li>
+            <li><strong>Das Problem:</strong> Du müsstest diesen Betrag zahlen, selbst wenn dein realer Gewinn in einem Monat darunter liegt. Das kann deine Liquidität zerstören.</li>
+            <li><strong>Verteidigung gegen § 295a:</strong>
+              Deine Verteidigung hat zwei Säulen: Proaktive Transparenz und eine bombensichere Buchhaltung.
+              <ul style="padding-left: 15px; margin-top: 8px;">
+                <li><strong>Transparenz:</strong> Lege dem IV einen soliden, aber realistischen (nicht zu optimistischen) Businessplan vor. Führe von Tag 1 an saubere Bücher (EÜR). Zeige mit Zahlen, dass ein langsamer Start zu erwarten ist. Solange glaubhaft ist, dass du dich redlich bemühst, wird ein IV ungern ein fiktives Einkommen festsetzen.</li>
+                <li><strong>Buchhaltung:</strong> Hier kommt der wichtigste Hack des gesamten Systems ins Spiel. Du musst deinen ausgewiesenen, pfändbaren Gewinn legal reduzieren.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <p class="page-sep muted">(SEITE 5)</p>
+          <h3>KAPITEL 3: DER OMEGA-HACK (DER 40%-FINANZ-TRESOR) 💰</h3>
+          <p>Dieses Kapitel ist der Kern des OMEGA-SYSTEMS. Es ist deine Strategie, um die „Fiktives Einkommen“-Falle zu entschärfen und gleichzeitig deine EMR-Gewinngrenze zu managen.</p>
+          <p>Das Grundprinzip: Dein „Gewinn“ (Umsatz minus Ausgaben) ist nicht dein „pfändbarer Gewinn“.</p>
+
+          <h4>HACK 8: Die 40% Notwendigkeits-Reserve (Der „Lobo-Hack“)</h4>
+          <p>Dein IV muss dir deine „notwendigen Betriebsausgaben“ lassen. Ohne sie könntest du das Business nicht betreiben, das (im Idealfall) pfändbares Einkommen für die Gläubiger generiert.</p>
+          <ul>
+            <li><strong>Die Strategie:</strong> Du definierst 40 % deines Betriebsergebnisses (Umsatz) als „Notwendigkeits-Reserve“ (Rückstellung).</li>
+            <li><strong>Die Argumentation (Gegenüber dem IV):</strong> Dieses Geld wird nicht als Gewinn entnommen oder privat verbraucht. Es ist eine zwingend notwendige Rückstellung für zukünftige, überlebenswichtige Betriebsausgaben. Du argumentierst, dass dein Business (KI-Consulting) ohne diese Investitionen in 12 Monaten nicht mehr wettbewerbsfähig wäre.</li>
+            <li><strong>Deine 3 Argumentationslinien (Wähle die passenden):</strong>
+              <ol style="padding-left: 15px; margin-top: 8px;">
+                <li><strong>Argument 1: KI-Tool-Kosten (Rohstoffe):</strong> „Mein Business basiert zu 100% auf KI. Die Premium-Abos (Gemini 2.5 Pro, GPT-5, diverse SEO-Tools) sind meine 'Miete'. Die API-Kosten sind meine 'Rohstoffe'. Ich muss diese Rücklage bilden, um die Lizenzen für das Folgejahr (2026) und unvorhergesehene API-Spitzen zu decken.“.</li>
+                <li><strong>Argument 2: Hardware-Abschreibung (Werkzeug):</strong> „Ich arbeite primär auf einem Android-Phone. Für professionelles B2B-Auditing ist ein Hochleistungs-Laptop (oder ein neues High-End-Smartphone) in 12-18 Monaten zwingend notwendig, um wettbewerbsfähig zu bleiben.“ Du bildest eine Ansparabschreibung (AfA).</li>
+                <li><strong>Argument 3: Marketing & Weiterbildung (Wettbewerbsfähigkeit):</strong> „Um Kunden zu gewinnen, muss ich in 2026 in minimales Marketing (z.B. LinkedIn Premium) und zwingend notwendige Weiterbildung (z.B. neue KI-Zertifikate) investieren, um relevant zu bleiben.“.</li>
+              </ol>
+            </li>
+          </ul>
+          
+          <p class="page-sep muted">(SEITE 6)</p>
+          <p><strong>Beispielrechnung (Anwendung des 40%-Hacks):</strong></p>
+          <pre>Position	Betrag
+Monatsumsatz:	2.100,00 €
+./. Direkte Betriebsausgaben (Software-Abos):	150,00 €
+./. Rückstellung (40% vom Umsatz):	840,00 €
+= Ausgewiesener, pfändbarer Gewinn:	1.110,00 €</pre>
+          <p>Das Ergebnis: Dein ausgewiesener Gewinn (1.110,00 €) liegt weit unter deiner P-Konto-Pfändungsfreigrenze (1.560,00 €). Die 40% (840,00 €) sind investiertes Betriebsvermögen, kein Privatvergnügen. Du musst 0,00 € an die Insolvenzmasse abführen (außer deiner freiwilligen Rate, siehe Hack 9).</p>
+
+          <h4>HACK 9: Das Liquiditäts-Fortress-Protokoll (Operative Umsetzung)</h4>
+          <p>Eine Argumentation ist nutzlos, wenn du das Geld trotzdem ausgibst. Du musst beweisen, dass die 40% wirklich zurückgelegt werden.</p>
+          <ul>
+            <li><strong>Protokollanweisung:</strong> Von jedem Zahlungseingang auf deinem Geschäftskonto (Konto 2) werden sofort 40 % auf ein separates Rücklagen-Unterkonto (z.B. ein Tagesgeldkonto) transferiert. Dieses Geld ist für operative Ausgaben gesperrt.</li>
+            <li><strong>Interne Allokation (Dein geheimer Plan):</strong> Diese 40% sind dein Sicherheitspuffer. Du teilst sie intern wie folgt auf:
+              <ul style="padding-left: 15px; margin-top: 8px;">
+                <li>25 % für Steuervorauszahlungen (Einkommensteuer).</li>
+                <li>10 % für KV-Beiträge (Dein Puffer für das „Tal der Tränen“, siehe Kapitel 5).</li>
+                <li>5 % für die Abführung an die Insolvenzmasse (Deine freiwillige Rate, um guten Willen zu zeigen und § 295a zu bedienen).</li>
+              </ul>
+            </li>
+          </ul>
+          <p>Mit diesem System hast du deine Finanzen wasserdicht abgeschottet. Du bist liquide, zahlst deine zukünftigen Steuern und bedienst sogar proaktiv (aber kontrolliert) die Insolvenzmasse.</p>
+          
+          <p class="page-sep muted">(SEITE 7)</p>
+          <h3>KAPITEL 4: DER STEUER-VORTEIL (DER 100.000 €-HACK) 📊</h3>
+          <p>Das Finanzamt ist dein dritter Kontrolleur, aber im Gegensatz zu DRV und IV bietet es dir massive strategische Vorteile, wenn du als Kleinunternehmer startest.</p>
+
+          <h4>HACK 10: Die KUR-Revolution (Das 100.000 €-Limit)</h4>
+          <p>Du musst als Kleinunternehmer (KUR) nach § 19 UStG starten.</p>
+          <ul>
+            <li><strong>Der Vorteil:</strong> Du musst keine Umsatzsteuer (Mehrwertsteuer) auf deinen Rechnungen ausweisen. Das erspart dir die monatliche USt-Voranmeldung (massiver Bürokratieabbau) und macht dich für Privatkunden 19% günstiger oder erhöht deine Marge bei B2B-Kunden (die die USt eh absetzen).</li>
+            <li><strong>Die NEUE Grenze (Stand 2025):</strong> Vergiss die alte 22.000 €-Grenze. Durch das Jahressteuergesetz 2024 (gültig ab 01.01.2025) liegt die Grenze für das laufende Jahr bei 100.000,00 € Umsatz.</li>
+            <li><strong>Bedingung:</strong> Dein Vorjahresumsatz (in 2024) muss unter 25.000 € gelegen haben. Da du 2025 (oder Jan 2026) neu gründest, lag dein Umsatz 2024 (bzw. 2025) bei 0 €. Du erfüllst die Bedingung.</li>
+            <li><strong>Dein Spielraum:</strong> Dieses 100.000 €-Limit gibt dir einen gigantischen operativen Spielraum. Es ist weit mehr als dein EMR-Gewinn-Deckel (19.661 €). Du kannst also hohe Umsätze fahren, solange du durch deine (realen) Betriebsausgaben und die (strategische) 40%-Reserve deinen Gewinn unter 19.661 € hältst.</li>
+          </ul>
+          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
+          <p>Jede Rechnung muss folgenden Satz enthalten:</p>
+          <pre>Kein Ausweis von Umsatzsteuer gem. § 19 UStG (Kleinunternehmerregelung).</pre>
+
+          <h4>HACK 11: Der Freiberufler-Status (Keine Gewerbesteuer)</h4>
+          <p>Wenn du dich beim Finanzamt anmeldest (Fragebogen zur steuerlichen Erfassung), strebe den Status als Freiberufler an.</p>
+          <ul>
+            <li><strong>Argumentation:</strong> Deine Tätigkeit als „Content-Stratege“ ist eine publizistische, schriftstellerische oder unterrichtende Tätigkeit.</li>
+            <li><strong>Vorteil:</strong> Wenn das Finanzamt dich als Freiberufler anerkennt (statt als Gewerbetreibenden), musst du kein Gewerbe anmelden und zahlst keine Gewerbesteuer. Das spart Geld und Bürokratie. (Vorsicht: Reine Marketing-Agenturleistungen oder Handel können eine Gewerbepflicht auslösen).</li>
+          </ul>
+          
+          <p class="page-sep muted">(SEITE 8)</p>
+          <h3>KAPITEL 5: DER EXIT-PLAN (DAS „TAL DER TRÄNEN“) 🚀</h3>
+          <p>Dein Ziel ist die volle unternehmerische Unabhängigkeit. Das bedeutet, du musst mittelfristig den geordneten Ausstieg aus der EMR planen. Dieser Ausstieg ist der finanziell gefährlichste Moment deiner gesamten Operation.</p>
+          <p><strong>Der Plan: Phase 3 (Skalierung)</strong></p>
+          <p>Die Unterlagen empfehlen, den Ausstieg zu planen, sobald dein Business stabil über ~40.000,00 € Jahresgewinn (nicht Umsatz!) abwirft. In diesem Moment verzichtest du freiwillig und formlos schriftlich auf deine EMR.</p>
+          <p><strong>Die Gefahr: Das „Tal der Tränen“</strong></p>
+          <p>Sobald du auf die Rente verzichtest, schlägt deine Liquidität doppelt ein:</p>
+          <ul>
+            <li><strong>Einnahme bricht weg:</strong> Deine Rente (z.B. 800 €) fällt auf 0 €.</li>
+            <li><strong>Kosten explodieren:</strong> Du fällst aus der günstigen Krankenversicherung der Rentner (KVdR). Du musst dich als Selbstständiger freiwillig gesetzlich versichern.</li>
+            <li>Selbst wenn dein Gewinn anfangs niedrig ist, gibt es einen Mindestbeitrag (basierend auf ca. 1.248 € fiktivem Einkommen 2025). Das bedeutet: Deine KV+PV-Kosten springen von fast nichts auf mindestens 210,00 € bis 250,00 € pro Monat.</li>
+            <li><strong>Das Loch:</strong> 800 € (Rente weg) + 250 € (KV neu) = 1.050,00 € (oder mehr), die dir jeden Monat fehlen.</li>
+          </ul>
+
+          <h4>HACK 12: Die 3.600 €-Puffer-Rücklage (Deine Brücke)</h4>
+          <p>Du darfst in dieses Tal nicht unvorbereitet stürzen.</p>
+          <ul>
+            <li><strong>Die Strategie:</strong> Du musst bevor du die Rente kündigst, eine zweckgebundene Rücklage (einen Notgroschen) von mindestens 3.600,00 € gebildet haben.</li>
+            <li><strong>Warum 3.600 €?</strong> Das deckt die Liquiditätslücke von ca. 1.050 € für mindestens drei Monate ab. Dieser Puffer gibt dir die Luft, um deine Einnahmen auf das neue Level zu heben, ohne sofort zahlungsunfähig zu werden.</li>
+            <li><strong>Woher kommt das Geld?</strong> Aus deiner 40% Notwendigkeits-Reserve (Kapitel 3), genauer gesagt aus den „10 % für Kranken- und Pflegeversicherungsbeiträge“.</li>
+          </ul>
+
+          <p class="page-sep muted">(SEITE 9)</p>
+          <h4>HACK 13: Der KSK-Hack (Nach dem Exit)</h4>
+          <p>Sobald du kein EMR-Rentner mehr bist, öffnet sich eine neue Tür: die Künstlersozialkasse (KSK).</p>
+          <ul>
+            <li><strong>Was ist das?</strong> Die KSK ist eine Art "Arbeitgeber" für künstlerische und publizistische Freiberufler (wozu Texter und Content-Strategen oft zählen).</li>
+            <li><strong>Der Vorteil:</strong> Wenn du aufgenommen wirst, übernimmt die KSK die Hälfte (den "Arbeitgeberanteil") deiner Sozialversicherungsbeiträge (KV, Pflegeversicherung und Rentenversicherung).</li>
+            <li><strong>Das Timing:</strong> Während des EMR-Bezugs (Phase 1) kannst du nicht in die KSK, da du über die KVdR pflichtversichert bist. Aber nach dem Ausstieg aus der Rente ist der Antrag bei der KSK dein nächster strategischer Schritt, um deine Fixkosten massiv zu senken.</li>
+          </ul>
+
+          <p class="page-sep muted">(SEITE 10)</p>
+          <h3>KAPITEL 6: DIE OPERATIONS-HACKS (DAS &lt;3-STUNDEN-SYSTEM) ⚙️</h3>
+          <p>Strategie ist wertlos ohne exzellente Ausführung. Dein 3-Stunden-Limit zwingt dich zu einer Effizienz, die normale Selbstständige nie lernen müssen. Du darfst keine Minute verschwenden.</p>
+
+          <h4>HACK 14: Der Insolvenzverwalter-Simulator (Das Sparring)</h4>
+          <p>Dein größtes mentales Risiko ist die Angst vor dem Insolvenzverwalter und die Verteidigung deiner 40%-Reserve. Du musst dieses Gespräch trainieren, bevor es stattfindet.</p>
+          <ul>
+            <li><strong>Das Werkzeug:</strong> ChatGPT-4o.</li>
+            <li><strong>Der Prompt:</strong> Du nutzt einen "Insolvenzverwalter-Simulator"-Prompt.</li>
+            <li><strong>Das Rollenspiel:</strong> Du befiehlst der KI, die Rolle eines extrem kritischen, misstrauischen und überarbeiteten IV (z.B. „Herr Dr. Bieling“) einzunehmen. Dein Ziel: Deine 40%-Reserve (840 €) aggressiv in Frage zu stellen.</li>
+            <li><strong>Beispiel-Fragen der KI:</strong> „Warum brauchen Sie 840 € für 'KI'? Beweisen Sie die Notwendigkeit! Warum kaufen Sie die Hardware nicht gebraucht? Warum ist das 'notwendig' und kein 'Luxus'? “</li>
+            <li><strong>Der Nutzen:</strong> Du spielst deine Argumentation (aus Kapitel 3) durch und findest die Schwachstellen in deiner Logik, bevor es zum echten Gespräch kommt.</li>
+          </ul>
+          
+          <p class="page-sep muted">(SEITE 11)</p>
+          <h4>HACK 15: Der „Admin-Angst“-Hack (Briefe digitalisieren)</h4>
+          <p>Ein offizieller Brief von der Rente, dem IV oder dem Finanzamt kann mentalen Druck erzeugen und zur Prokrastination führen.</p>
+          <ul>
+            <li><strong>Das Werkzeug:</strong> Dein Android-Smartphone und Google Drive.</li>
+            <li><strong>Der Workflow:</strong>
+              <ol style="padding-left: 15px; margin-top: 8px;">
+                <li>Nimm das Smartphone.</li>
+                <li>Scanne das Dokument sofort mit der Google Drive App.</li>
+                <li>Speichere es im richtigen Ordner (z.B. 04_VERWALTUNG).</li>
+                <li>Öffne Gemini (oder eine andere KI).</li>
+              </ol>
+            </li>
+            <li><strong>Der Prompt:</strong> "Fasse den Inhalt von [Dateiname] in 3 einfachen Stichpunkten zusammen und liste alle erforderlichen Aktionen oder Fristen auf."</li>
+            <li><strong>Der Nutzen:</strong> Du entfernst die emotionale Barriere. Die KI gibt dir eine neutrale Zusammenfassung und eine klare To-Do-Liste. Du trägst die Aktion (z.B. "Frist: 10.11.2025") in dein Tages-Dashboard ein. Das Problem ist von einer Bedrohung zu einer Aufgabe geworden.</li>
+          </ul>
+
+          <h4>HACK 16: Das Mobile-Kommandozentrum (Dein Alleinstellungsmerkmal)</h4>
+          <p>Dein Constraint, primär mit einem Android-Phone zu arbeiten, ist kein Nachteil. Es ist dein Alleinstellungsmerkmal.</p>
+          <ul>
+            <li><strong>Deine Nische:</strong> "Mobile-First SEO-Auditing."</li>
+            <li><strong>Dein Pitch (Extern):</strong> "Die meisten SEO-Agenturen prüfen am Desktop. Aber 80% Ihrer Kunden kommen über Mobile. Ich auditiere ausschließlich aus der Mobile-Perspektive. Ich finde Fehler, die andere übersehen.".</li>
+            <li><strong>Deine Werkzeuge (Intern):</strong> Termux (für Python-Scripte), Google Gemini & ChatGPT Apps, Google Sheets, Markdown-Editor, PageSpeed Insights im Browser.</li>
+          </ul>
+          
+          <p class="page-sep muted">(SEITE 12)</p>
+          <h4>HACK 17: Der „Share-Sheet-Blitzkrieg“ (5-Minuten-Marketing)</h4>
+          <p>Das ist dein &lt;3-Stunden-Hack in Reinform. Du arbeitest nicht am Schreibtisch, du arbeitest im Gehen.</p>
+          <p><strong>Der Workflow:</strong></p>
+          <ol>
+            <li><strong>Browser (Chrome auf Android):</strong> Du findest einen hochinteressanten Artikel (z.B. über ein neues Google-Update).</li>
+            <li><strong>Android „Teilen“-Button:</strong> Du drückst „Teilen“.</li>
+            <li><strong>Wähle „Gemini“:</strong> Der Artikel wird direkt an Gemini übergeben.</li>
+            <li><strong>Prompt an Gemini (Voice-Input):</strong> "Zfssg. (Zusammenfassung) diesen Artikel in 5 Bullet-Points. Identifiziere das größte Risiko für B2B-Kunden.".</li>
+            <li><strong>Gemini-Output (Text):</strong> Gemini liefert dir die 5 Bullet-Points.</li>
+            <li><strong>Kopieren:</strong> Du kopierst die 5 Bullet-Points.</li>
+            <li><strong>Wechsle zu ChatGPT App:</strong> Du öffnest die ChatGPT App.</li>
+            <li><strong>Einfügen & Prompt (Voice-Input):</strong> "Handle als LinkedIn-Top-Voice. Formuliere 3 provokante LinkedIn-Posts basierend auf diesen 5 Bullet-Points. Benutze Emojis und eine starke Call-to-Action.".</li>
+            <li><strong>ChatGPT-Output:</strong> Du erhältst 3 fertige Posts.</li>
+            <li><strong>Kopieren & Posten:</strong> Du postest einen davon direkt auf LinkedIn.</li>
+          </ol>
+          <p><strong>Zeitaufwand:</strong> 5 Minuten.</p>
+          <p><strong>Ergebnis:</strong> High-Quality-Marketing, das dein Expertenwissen beweist, während du auf die U-Bahn wartest.</p>
+
+          <h4>HACK 18: Die Wendepunkt-Narrative (Dein stärkstes Kapital)</h4>
+          <p>Deine persönliche und berufliche Vergangenheit – die „Grasfresser“-Phase als Billigtexter auf Plattformen – ist kein Makel. Sie ist dein wertvollstes Alleinstellungsmerkmal.</p>
+          <ul>
+            <li><strong>Das Re-Framing:</strong> Diese Phase wird strategisch umgedeutet. Sie ist der Beweis für deine extreme Resilienz, Disziplin und Fähigkeit, unter Druck hohe Qualität zu liefern. Du hast 450+ Projekte abgeschlossen.</li>
+            <li><strong>Deine Story (Extern):</strong> In deiner externen Kommunikation (z.B. „Über Mich“-Seite) framest du deinen Neustart als bewussten „Wendepunkt“.</li>
+            <li><strong>Beispiel-Narrativ:</strong> „Nach über 450 Textprojekten habe ich gelernt, was funktioniert – und was nicht. Ich habe mich entschieden, nicht mehr nur Worte zu liefern, sondern strategischen Wert. Mein Fokus ist nicht mehr Volumen, sondern das Ergebnis.“.</li>
+          </ul>
+
+          <p class="page-sep muted">(SEITE 13)</p>
+          <h3>KAPITEL 7: DER TAKTISCHE FAHRPLAN (JAHR 1) 🗺️</h3>
+          <p>Strategie muss terminiert werden. Dein 12-Monats-Plan ist in Phasen unterteilt, die deine Einnahmen, die EMR-Grenze und die PI-Abführungen ausbalancieren.</p>
+
+          <h4>Phase 1: Stabilisierung (Monat 1-3 | z.B. Jan 2026 – Mär 2026)</h4>
+          <ul>
+            <li><strong>Ziel:</strong> System etablieren, erste Kunden gewinnen, Compliance sicherstellen.</li>
+            <li><strong>Aktionen:</strong> Alle Hacks (Zeiterfassung, Konten, § 35-Antrag) umsetzen. Erste Aufträge über Freelance-Plattformen (Upwork, Fiverr) und "Quick Win"-Pakete (z.B. 250 €) generieren.</li>
+            <li><strong>Finanz-Ziel:</strong> Gewinn bewusst unter ~1.600 € / Monat halten. Du willst unter der EMR-Grenze und der Pfändungsfreigrenze bleiben.</li>
+          </ul>
+
+          <h4>Phase 2: Wachstum (Monat 4-6 | z.B. Apr 2026 – Jun 2026)</h4>
+          <ul>
+            <li><strong>Ziel:</strong> Höher positionieren, weg von Kleinstjobs, hin zu Retainern.</li>
+            <li><strong>Aktionen:</strong> Interne Stundensätze auf 100 € anheben. Fokus auf höherpreisige Pakete (z.B. "Autorität" für 2.800 €) und monatliche Retainer (900 € - 2.500 €).</li>
+            <li><strong>Finanz-Ziel:</strong> Umsatz steigern (3.000 € - 6.400 € / Monat). Dein Gewinn nähert sich jetzt der 1.638 €-Grenze. Du beginnst, die 40%-Reserve (Kapitel 3) aktiv zu nutzen, um den pfändbaren Gewinn zu steuern.</li>
+          </ul>
+
+          <h4>Phase 3: Skalierung (Monat 7-12 | z.B. Jul 2026 – Dez 2026)</h4>
+          <ul>
+            <li><strong>Ziel:</strong> Als Premium-Stratege etablieren. Den EMR-Ausstieg vorbereiten.</li>
+            <li><strong>Aktionen:</strong> Fokus auf Premium-Consulting und Workshops (z.B. 1.800 €). Die 3.600 €-Puffer-Rücklage (Kapitel 5) wird durch die 40%-Reserve final gefüllt.</li>
+            <li><strong>Finanz-Ziel:</strong> Umsatz auf 4.000 € - 8.000 € / Monat steigern. Dein Gewinn übersteigt nun bewusst die EMR-Grenze von 19.661 €. Du nimmst Rentenkürzungen in Kauf (oder verzichtest freiwillig), weil dein Business-Einkommen (abzüglich der 1.050 € "Tal der Tränen"-Kosten) nun höher ist als das Einkommen mit Rente.</li>
+          </ul>
+          
+          <p class="page-sep muted">(SEITE 14)</p>
+          <h3>ABSCHLUSS: DEIN COMMITMENT</h3>
+          <p>Du hast es bis hierher geschafft. Du hast die Architektur. Das OMEGA-SYSTEM.</p>
+          <p>Du hast die legalen Hacks, um die Bürokratie mit ihren eigenen Waffen zu schlagen – nicht mit Lügen, sondern mit Struktur (die 40%-Reserve).</p>
+          <p>Du hast die Synergie-Workflows (den Blitzkrieg), die dein 3-Stunden-Limit in eine Waffe verwandeln.</p>
+          <p>Und du hast die Simulatoren, um dich mental auf den Widerstand vorzubereiten.</p>
+          <p>„Disziplin ist Freiheit“ ist nicht mehr nur ein Slogan. Es ist dein Businessplan.</p>
+          <p>Das hier, diese 15 Seiten, ist dein Nullpunkt. Dein Startkapital ist nicht "0". Dein Startkapital ist dieser Plan.</p>
+          <p>Jetzt geh raus und bau dein System. Nicht mit Glück. Mit Struktur.</p>
+          <p>Wir lesen uns in 12 Monaten. Mit 19.661 Euro mehr auf dem P-Konto.</p>
+
+          <p class="page-sep muted">(SEITE 15)</p>
+          <p class="muted" style="text-align:center;">[Ende des operativen Dokuments PFCP V5.0]</p>
+        `;
+        d.append(card);
+        view.append(d);
+      }
+
+      // ---------- ROADMAP (Projektplan integriert) ----------
+      function renderRoadmap(){
+        const d = document.createElement("div"); d.className="grid";
+        const card = document.createElement("div"); card.className="card roadmap-content";
+        card.innerHTML = `
+<h2>PROJEKT: MO MO MO MONEY!! 🎄💶💶💚🧘🏻‍♂️</h2>
+<p><strong>Spezifikation:</strong> Ultra-strukturiertes Masterdokument zur taktischen Selbstverwirklichung als SEO-Consultant<br>
+<strong>Status:</strong> Aktiv · Operator: Eric · Zeitraum: 17.10.2025 – 01.01.2026<br>
+<strong>Endziel:</strong> Verifizierte, tragfähige Selbstständigkeit (SEO-Auditing, B2B Immobilien), Android-gesteuert (A52s), Drive-Sync, standardisierte Artefakte.</p>
+
+<h3>I. TÄGLICHES OPERATIONS-PROTOKOLL</h3>
+<ul>
+<li>📅 <strong>Datum:</strong> [TT.MM.JJJJ] · 📆 <strong>Woche:</strong> [X / 11]</li>
+<li>🔀 <strong>Tagesmodus</strong>: A (05:30 Lernen → 09:00 Arbeiten) · B (05:30 Arbeiten → 09:00 Lernen) — 8×90-Min-Sprints</li>
+<li>🎯 <strong>Primär-Direktiven (max. 3)</strong> — messbar, handlungsleitend</li>
+<li>🧘🏻‍♂️ <strong>Buddha-Status</strong> · 📓 <strong>Logbuch</strong></li>
+</ul>
+
+<h4>Executive Summary (≤ 1 Seite)</h4>
+<ul>
+<li>Bis 2026-01-01: 6 Audits (3 BE, 3 BB); Zielkorridor 8–10; ≥ 2 Pilot-Angebote, Stretch ≥ 3 Deals.</li>
+<li>12 h/Tag; bis 01.11 Smartphone-first, ab 01.11 Laptop-unterstützt.</li>
+<li>Gemini = Collector · ChatGPT = Analyst. Evidence 3+1. Gate ≥ 98/100.</li>
+<li>A/B/C-Muster, MVP, Follow-ups 72 h, PHOENIX als Steuerpult.</li>
+</ul>
+
+<h3>2) Persönliche Parameter → Kapazitätsabgleich</h3>
+<p>(vollständig wie in deinem Dokument – komprimiert in der App-UI umgesetzt)</p>
+
+<h3>3) Ziele & KPIs (SMART)</h3>
+<p>6 Audits · Gate ≥ 98 · ≥ 3 Piloten · 20 Kontakte/Tag · Evidence ≥ 2 + SERP je Befund · 8 Sprints/Tag · täglicher JSON-Export</p>
+
+<h3>4) Scope & Non-Scope</h3>
+<p>Leistungspaket S/M/L, USPs (SEO + Stil), AISEO, Workstreams, kein Rechtsrat/Deep-Dev/Bezahl-Tools.</p>
+
+<h3>II. MISSIONSHUB · KP1–KP3 (Smartphone-First)</h3>
+<p>System-Initialisierung · Lernarchitektur (CURRICULUM_V1.pdf) · Wissens-Sprint (Woche_01/…)</p>
+
+<h3>III. STÖRFALL-PROTOKOLLE</h3>
+<p>P01 Burnout · B01 Buddha · A01 Admin-Angst · T01 Tool-Falle — jeweils mit klarer Reaktion</p>
+
+<h3>10-Tage-Start-Sprint</h3>
+<p>Tag 1–10: Cockpit → Gerüst → SERP-Collector → 90-Min-Run → Evidence 3+1 → Summary → Outreach 20/Tag → Gate → Quick-Audit → Review</p>
+
+<h3>90-Tage-Roadmap</h3>
+<p>Phasen A–D (bis 2026-01-01), Meilensteine M1–M5</p>
+
+<h3>DoD</h3>
+<p>Artefakte komplett, Gate ≥ 98, ≥ 6 Audits (Ziel 8–10), ≥ 3 Piloten, Outreach läuft, PHOENIX als Steuerpult im Einsatz.</p>
+`;
+        d.append(card); view.append(d);
+      }
+
+      // ---------- Backup ----------
+      function exportJSON(){
         const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
         const a = document.createElement("a"); const d = todayISO();
-        a.download = `${d}_phoenix_feuer_v10_backup.json`; a.href = URL.createObjectURL(blob); a.click();
+        a.download = `${d}_PHOENIX_v11_backup.json`; a.href = URL.createObjectURL(blob); a.click();
         URL.revokeObjectURL(a.href);
-      } catch(e) {
-        alert("Export fehlgeschlagen: " + e.message);
       }
-    }
 
-    async function doExportEncrypted(password){
-      try {
-        const enc = await encryptExport(state, password);
-        const blob = new Blob([JSON.stringify(enc, null, 2)], {type:"application/json"});
-        const a = document.createElement("a"); const d = todayISO();
-        a.download = `${d}_phoenix_feuer_v10_backup.enc.json`; a.href = URL.createObjectURL(blob); a.click();
-        URL.revokeObjectURL(a.href);
-      } catch(e) {
-        alert("Verschlüsselter Export fehlgeschlagen: " + e.message);
-      }
-    }
-
-    // WebCrypto helpers
-    async function deriveKey(pw, salt){
-      const enc = new TextEncoder();
-      const keyMat = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
-      return crypto.subtle.deriveKey(
-        {name:"PBKDF2", salt, iterations:120000, hash:"SHA-256"},
-        keyMat, {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]
-      );
-    }
-    function toB64(arr){ return btoa(String.fromCharCode.apply(null, new Uint8Array(arr))); }
-    function fromB64(b64){ return Uint8Array.from(atob(b64), function(c){ return c.charCodeAt(0); }); }
-
-    async function encryptExport(obj, pw){
-      const enc = new TextEncoder();
-      const salt = crypto.getRandomValues(new Uint8Array(16));
-      const iv   = crypto.getRandomValues(new Uint8Array(12));
-      const key  = await deriveKey(pw, salt);
-      const data = enc.encode(JSON.stringify(obj));
-      const ct   = await crypto.subtle.encrypt({name:"AES-GCM", iv}, key, data);
-      return { __enc:"AES-GCM", v:1, salt:toB64(salt), iv:toB64(iv), ct:toB64(ct) };
-    }
-    async function decryptExport(pkg, pw){
-      const dec = new TextDecoder();
-      const salt = fromB64(pkg.salt), iv = fromB64(pkg.iv), ct = fromB64(pkg.ct);
-      const key = await deriveKey(pw, salt);
-      const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv}, key, ct);
-      return JSON.parse(dec.decode(plain));
-    }
-
-    // ======================= [PATCH] ROBUSTE INIT-LOGIK =======================
-    function setTheme(mode){
-      document.documentElement.setAttribute("data-theme", mode);
-      state.theme = mode; 
-      save();
-    }
-
-    function init(){
-      try{
-        view = $("#view"); // [PATCH] View-Element hier holen
-        if (!view) {
-            console.error("SCHWERER FEHLER: #view konnte nicht gefunden werden.");
-            document.body.innerHTML = '<h1 style="color:red;padding:20px;">Startfehler: #view fehlt.</h1>';
-            return;
-        }
-
+      // ---------- Init ----------
+      document.addEventListener("DOMContentLoaded", ()=>{
+        // Theme
         setTheme(state.theme || "dark");
+        el("#themeBtn").onclick = ()=> setTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
+        function setTheme(mode){ document.documentElement.setAttribute("data-theme", mode); state.theme = mode; save(); }
 
-        const tBtn = $("#themeBtn");
-        if (tBtn) tBtn.onclick = function(){ setTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark"); };
+        // Tabs
+        tabs.forEach(t=>{ t.onclick = ()=>{ state.activeTab = t.dataset.tab; save(); render(); } });
 
-        renderNav();
+        // Copy (delegation) + Drills-Actions
+        el("main.wrap").addEventListener('click', e => {
+          const btnCopy = e.target.closest('.copy-btn');
+          if (btnCopy){
+            const targetId = btnCopy.dataset.copyTarget;
+            const targetElement = el(`#${targetId}`, view);
+            if (targetElement) copyToClipboard(targetElement.textContent);
+            return;
+          }
+          const prefill = e.target.closest('.prefill-evidence');
+          if (prefill){
+            const title = prefill.dataset.title || "";
+            const type  = prefill.dataset.type || "SONSTIGES";
+            const noteEl= el(`#${prefill.dataset.noteId}`, view);
+            const note  = noteEl ? noteEl.textContent : "";
+            const sel   = el(`#${prefill.dataset.sel}`, view);
+            const auditId = sel ? sel.value : null;
+            state._evidenceDraft = { title, type, note, auditId };
+            state.activeTab = "evidence";
+            save(); render();
+            return;
+          }
+          const sprintSet = e.target.closest('.start-sprint-note');
+          if(sprintSet){
+            const noteId = sprintSet.dataset.noteId;
+            const noteEl = el(`#${noteId}`, view);
+            state.sprint.note = noteEl ? noteEl.textContent : "90-Min-Sprint";
+            state.activeTab = "sprint";
+            save(); render();
+            return;
+          }
+        });
 
-        // PWA Service Worker (nur bei http/https)
-        if ('serviceWorker' in navigator && (location.protocol === 'http:' || location.protocol === 'https:')){
-          const swCode = `
-            const CACHE = 'feuer-v10-${APP.VERSION}';
-            self.addEventListener('install', e=>{ self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c=> c.addAll(['./']))); });
-            self.addEventListener('activate', e=>{
-              e.waitUntil(caches.keys().then(keys=> Promise.all(keys.filter(k=> k.startsWith('feuer-v10-') && k!==CACHE).map(k=> caches.delete(k)))));
-              self.clients.claim();
-            });
-            self.addEventListener('fetch', e=>{
-              const req = e.request;
-              if(req.method!=='GET'){ return; }
-              e.respondWith(
-                caches.match(req).then(hit => {
-                  const net = fetch(req).then(res=>{
-                    if(res && res.ok){ caches.open(CACHE).then(c=> c.put(req, res.clone())).catch(()=>{}); }
-                    return res;
-                  }).catch(()=> hit || caches.match('./'));
-                  return hit || net;
-                })
-              );
-            });
-          `;
-          const swBlob = new Blob([swCode], {type:'text/javascript'});
-          const swUrl  = URL.createObjectURL(swBlob);
-          navigator.serviceWorker.register(swUrl).catch(function(e){ console.warn("SW-Registrierung fehlgeschlagen", e); });
-        }
+        // Import (robust, normalisiert)
+        el("#importFile").addEventListener("change", (e)=>{
+          const file = e.target.files?.[0]; if(!file) return;
+          const reader = new FileReader();
+          reader.onload = ()=> {
+            try{
+              const data = JSON.parse(reader.result);
+              const template = seed(); Object.keys(template).forEach(k=>{
+                if(data.hasOwnProperty(k)) state[k] = data[k];
+              });
+              if(!state.daily) state.daily = defaultDaily();
+              state.home.kpis.openAudits = (state.audits||[]).length;
+              state.home.kpis.evidence   = (state.evidence||[]).length;
+              state.home.kpis.outreach   = state.daily?.outreachToday||0;
+              save(); render();
+            }catch(err){ alert("Import fehlgeschlagen: ungültige Datei."); }
+          };
+          reader.readAsText(file);
+        });
 
-        if (navigator.storage && navigator.storage.persist){ navigator.storage.persist().catch(function(){}); }
-
-        if (state._p01RemindAt && Date.now() >= state._p01RemindAt){
-          notify("P-01: 2 h sind um. Sanft wieder starten.");
-          delete state._p01RemindAt; save();
-        }
-
-        render(); // Haupt-Render-Aufruf
-      }catch(err){
-        console.error("Fehler bei init():", err);
-        if (view){ // view sollte jetzt definiert sein
-          view.innerHTML = `<div class="card" style="margin:20px;"><h2>Fehler beim Start</h2><p class="muted" style="color:var(--danger);">${escapeHTML(String(err.message||err))}</p><pre style="font-size:10px;color:var(--ink-dim);">${escapeHTML(err.stack || '')}</pre></div>`;
-        }
-        setStatus("Init-Fehler");
-      }
-    }
-
-    // Robuste Startlogik: Warten, bis der DOM bereit ist, oder sofort starten.
-    if (document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', init, { once:true });
-    } else {
-      // Verzögert init() leicht, um sicherzustellen, dass die WebView "atmen" kann
-      setTimeout(init, 0);
-    }
-    
-  })();
+        render();
+      });
+    })();
   </script>
 </body>
 </html>
