@@ -1,1599 +1,1552 @@
 <!doctype html>
 <html lang="de" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <title>PHOENIX v11.3 — MO MO MO MONEY!!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f172a">
-  <style>
-    :root{
-      --bg:#0b1020; --bg-elev:#121a33; --card:#0f172a; --ink:#e6ebff; --ink-dim:#a9b1d8;
-      --brand:#6ea8fe; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --muted:#2a355a;
-      --ring:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.36);
-      --radius:18px; --radius-sm:12px; --space:14px; --space-lg:20px; --tap:48px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-    }
-    [data-theme="light"]{
-      --bg:#f5f7ff; --bg-elev:#ffffff; --card:#ffffff; --ink:#0b1020; --ink-dim:#334072; --muted:#e8ecff;
-      --theme-shadow:0 8px 24px rgba(16,24,40,.08);
-    }
-    *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:var(--font); background:linear-gradient(180deg,var(--bg) 0%, #0b1330 100%);
-      color:var(--ink); line-height:1.55; letter-spacing:.2px;
-    }
-    .wrap{ max-width:480px; margin:0 auto; padding: env(safe-area-inset-top) var(--space) calc(86px + env(safe-area-inset-bottom)); }
-    header.top{
-      position:sticky; top:0; z-index:20; backdrop-filter:saturate(140%) blur(8px);
-      background: color-mix(in oklab, var(--bg) 92%, transparent);
-      border-bottom:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      padding:10px var(--space);
-    }
-    .brandline{ display:flex; align-items:center; gap:10px; }
-    .logo{ width:32px; height:32px; border-radius:10px; background:
-      radial-gradient(120% 120% at 20% 20%, #3b82f6 0%, #9333ea 50%, #0ea5e9 100%);
-      box-shadow: var(--shadow);
-    }
-    h1{ font-size: clamp(18px, 4.8vw, 22px); margin:0; letter-spacing:.4px;}
-    .sub{ font-size:12px; color:var(--ink-dim); margin-top:2px }
-    .grid{ display:grid; gap:var(--space); margin-top:var(--space-lg) }
-    .card{
-      background:var(--card); border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      border-radius:var(--radius); padding:var(--space); box-shadow: var(--shadow);
-    }
-    .card h2{ font-size:16px; margin:0 0 8px 0; letter-spacing:.3px }
-    .row{ display:flex; align-items:center; gap:10px; }
-    .muted{ color:var(--ink-dim); font-size:13px }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:var(--tap);
-      padding:10px 14px; border-radius:14px; border:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      background:linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 94%, #1a2550) 0%, var(--bg-elev) 100%);
-      color:var(--ink); font-weight:600; text-decoration:none; box-shadow: var(--shadow); cursor:pointer;
-    }
-    .btn:active{ transform: translateY(1px) }
-    .btn.primary{ background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color:#1e40af }
-    .btn.ok{ background: linear-gradient(180deg, #059669, #047857); border-color:#065f46 }
-    .btn.warn{ background: linear-gradient(180deg, #d97706, #b45309); border-color:#92400e }
-    .btn.block{ width:100% }
-    .btn.ghost{ background:transparent; box-shadow:none }
-    .btn.switch{ min-width:var(--tap) }
-    .ctl{ display:flex; flex-direction:column; gap:6px }
-    label{ font-size:13px; color:var(--ink-dim) }
-    input[type="text"], input[type="url"], input[type="number"], input[type="date"], textarea, select{
-      width:100%; min-height:var(--tap); padding:12px 12px; border-radius:12px;
-      border:1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-      background:var(--bg-elev); color:var(--ink); font-size:15px; outline:none;
-    }
-    textarea{ min-height:96px; resize:vertical }
-    input[type="checkbox"]{ width:22px; height:22px; accent-color:#22c55e }
-    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
-      background: color-mix(in oklab, var(--muted) 60%, transparent); border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      font-size:12px; color:var(--ink-dim);
-    }
-    .kpi{ font: 700 18px var(--mono); letter-spacing:.3px }
-    .list{ display:flex; flex-direction:column; gap:10px }
-    .item{
-      display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px;
-      background: color-mix(in oklab, var(--muted) 35%, transparent);
-      border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-    }
-    .item strong{ font-size:15px }
-    .check{ width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
-      background:#0b132b; border:1px solid color-mix(in oklab, var(--ink) 12%, transparent); cursor:pointer
-    }
-    .check.done{ background:#10b981; border-color:#059669 }
-    .tag{ font:600 11px var(--mono); padding:.5px 6px; border-radius:999px; background:#0b1838; border:1px solid #1f2d59 }
-    nav.tabs{
-      position: fixed; bottom:0; left:0; right:0; z-index:30;
-      background: color-mix(in oklab, var(--bg) 94%, #0a0f22);
-      border-top:1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      padding:10px calc((100vw - 480px)/2 + var(--space)) calc(10px + env(safe-area-inset-bottom));
-    }
-    .tabbar{ display:grid; grid-template-columns: repeat(8,1fr); gap:10px } /* + Drills + Survival */
-    .tab{
-      min-height:54px; border-radius:14px; border:1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      background: linear-gradient(180deg, var(--bg-elev), color-mix(in oklab, var(--bg-elev) 90%, #000));
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; font-size:11px; color:var(--ink-dim)
-    }
-    .tab.active{ outline:2px solid var(--ring); color:var(--ink) }
-    .ic{ font: 700 13px var(--mono) }
-    .row.gap{ gap:12px }
-    .split{ display:flex; gap:10px }
-    .split > *{ flex:1 }
-    .hide{ display:none !important }
-    .danger{ color:var(--danger) }
-    .okc{ color:var(--ok) }
-    .warnc{ color:var(--warn) }
-    .badge{ font:700 20px var(--mono); padding:8px 12px; border-radius:12px; background:#0b1838; border:1px solid #203061; display:inline-block; }
-    .template-box{ background: color-mix(in oklab, var(--bg-elev) 60%, transparent); border: 1px solid var(--muted); border-radius: var(--radius-sm); padding: var(--space); margin-bottom: var(--space); }
-    .template-box pre{ font-family: var(--font); white-space: pre-wrap; word-wrap: break-word; background: var(--bg); padding:10px; border-radius:6px; border:1px solid var(--muted); font-size:14px; line-height:1.6; }
-    @media (max-width:380px){ .btn{ padding:10px 10px } .split{ flex-direction:column } }
-    .roadmap-content h3{ font-size:1.1rem; color:var(--brand); border-bottom:1px solid var(--muted); padding-bottom:6px; margin-top:20px; }
-    .roadmap-content h4{ font-size:1rem; margin:14px 0 6px 0 }
-    .roadmap-content ul, .roadmap-content ol{ padding-left:20px }
-    .roadmap-content li{ margin-bottom:8px }
-    .roadmap-content code{ font:13px var(--mono); background:var(--muted); padding:2px 6px; border-radius:6px }
-    .roadmap-content table{ border-collapse:collapse; width:100%; margin:12px 0 }
-    .roadmap-content th, .roadmap-content td{ border:1px solid var(--muted); padding:8px; font-size:13px; text-align:left }
-    .roadmap-content th{ background:var(--bg-elev) }
-    .roadmap-content strong{ color:var(--warn) }
-    /* Spezifische Helfer für den Guide */
-    .page-sep{
-      text-align:center; border-top:1px solid var(--muted); margin-top:24px; padding-top:12px; font-size:11px;
-    }
-    .roadmap-content pre{
-      font-family: var(--mono); white-space: pre-wrap; word-wrap: break-word; background: var(--bg);
-      padding:10px; border-radius:8px; border:1px solid var(--muted); font-size:13px; line-height:1.6;
-    }
-    .roadmap-content h4 strong, .roadmap-content p strong, .roadmap-content li strong{
-      color: var(--warn); /* HACK/Axiom-Hervorhebung */
-    }
-  </style>
+<meta charset="utf-8">
+<title>🦅PHOENIX v12 — DISZIPLIN IST FREIHEIT🗽</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<style>
+:root{ --bg:#0b1020; --bg-elev:#121a33; --card:#0f172a; --ink:#e6ebff; --ink-dim:#a9b1d8; --brand:#6ea8fe; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185; --muted:#2a355a; --ring:#3b82f6; --shadow:0 8px 24px rgba(0,0,0,.36); --radius:18px; --radius-sm:12px; --space:14px; --space-lg:20px; --tap:48px; --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; }
+[data-theme="light"]{ --bg:#f5f7ff; --bg-elev:#ffffff; --card:#ffffff; --ink:#0b1020; --ink-dim:#334072; --muted:#e8ecff; --theme-shadow:0 8px 24px rgba(16,24,40,.08); }
+*{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+html,body{height:100%}
+body{ margin:0; font-family:var(--font); background:linear-gradient(180deg,var(--bg) 0%, #0b1330 100%); color:var(--ink); line-height:1.55; letter-spacing:.2px; }
+.wrap{max-width:480px;margin:0 auto;padding:env(safe-area-inset-top) var(--space) calc(86px + env(safe-area-inset-bottom));}
+header.top{ position:sticky;top:0;z-index:20; backdrop-filter:saturate(140%) blur(8px); background: color-mix(in oklab, var(--bg) 92%, transparent); border-bottom:1px solid color-mix(in oklab, var(--ink) 12%, transparent); padding:10px var(--space); }
+.brandline{display:flex;align-items:center;gap:10px;}
+.logo{ width:32px;height:32px;border-radius:10px; background:radial-gradient(120% 120% at 20% 20%, #3b82f6 0%, #9333ea 50%, #0ea5e9 100%); box-shadow:var(--shadow); }
+h1{font-size:clamp(18px,4.8vw,22px);margin:0;letter-spacing:.4px;}
+.sub{font-size:12px;color:var(--ink-dim);margin-top:2px}
+.grid{display:grid;gap:var(--space);margin-top:var(--space-lg)}
+.card{ background:var(--card); border:1px solid color-mix(in oklab, var(--ink) 10%, transparent); border-radius:var(--radius); padding:var(--space); box-shadow:var(--shadow); }
+.card h2{font-size:16px;margin:0 0 8px 0;letter-spacing:.3px}
+.row{display:flex;align-items:center;gap:10px}
+.muted{color:var(--ink-dim);font-size:13px}
+.btn{ display:inline-flex;align-items:center;justify-content:center;gap:8px; min-height:var(--tap);padding:10px 14px; border-radius:14px; border:1px solid color-mix(in oklab, var(--ink) 12%, transparent); background:linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 94%, #1a2550) 0%, var(--bg-elev) 100%); color:var(--ink);font-weight:600;text-decoration:none;box-shadow:var(--shadow);cursor:pointer; }
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:linear-gradient(180deg,#2563eb,#1d4ed8);border-color:#1e40af}
+.btn.ok{background:linear-gradient(180deg,#059669,#047857);border-color:#065f46}
+.btn.warn{background:linear-gradient(180deg,#d97706,#b45309);border-color:#92400e}
+.btn.block{width:100%}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn.switch{min-width:var(--tap)}
+.ctl{display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;color:var(--ink-dim)}
+input[type="text"],input[type="url"],input[type="number"],input[type="date"],textarea,select{ width:100%;min-height:var(--tap);padding:12px; border-radius:12px; border:1px solid color-mix(in oklab, var(--ink) 14%, transparent); background:var(--bg-elev); color:var(--ink);font-size:15px;outline:none; }
+textarea{min-height:96px;resize:vertical}
+input[type="checkbox"]{width:20px;height:20px;accent-color:#22c55e;cursor:pointer}
+.pill{ display:inline-flex;align-items:center;gap:8px; padding:6px 10px;border-radius:999px; background:color-mix(in oklab,var(--muted) 60%,transparent); border:1px solid color-mix(in oklab,var(--ink) 10%,transparent); font-size:12px;color:var(--ink-dim); }
+.kpi{font:700 18px var(--mono);letter-spacing:.3px}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{ display:flex;align-items:flex-start;gap:12px; padding:10px;border-radius:12px; background:color-mix(in oklab,var(--muted) 35%,transparent); border:1px solid color-mix(in oklab,var(--ink) 10%,transparent); }
+.item strong{font-size:15px}
+.check{ width:24px;height:24px;border-radius:8px; display:grid;place-items:center; background:#0b132b; border:1px solid color-mix(in oklab,var(--ink) 12%,transparent); cursor:pointer; flex-shrink:0; font-size:14px; }
+.check.done{background:#10b981;border-color:#059669;color:#020817}
+.tag{ font:600 11px var(--mono); padding:.5px 6px;border-radius:999px; background:#0b1838;border:1px solid #1f2d59; }
+nav.tabs{ position:fixed;bottom:0;left:0;right:0;z-index:30; background:color-mix(in oklab,var(--bg) 94%,#0a0f22); border-top:1px solid color-mix(in oklab,var(--ink) 12%,transparent); padding:10px calc((100vw - 480px)/2 + var(--space)) calc(10px + env(safe-area-inset-bottom)); }
+.tabbar{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.tab{ min-height:54px;border-radius:14px; border:1px solid color-mix(in oklab,var(--ink) 10%,transparent); background:linear-gradient(180deg,var(--bg-elev),color-mix(in oklab,var(--bg-elev) 90%,#000)); display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px; font-size:11px;color:var(--ink-dim); cursor:pointer; }
+.tab.active{outline:2px solid var(--ring);color:var(--ink)}
+.ic{font:700 13px var(--mono)}
+.split{display:flex;gap:10px}
+.split > *{flex:1}
+.gap{gap:12px}
+.hide{display:none!important}
+.danger{color:var(--danger)}
+.okc{color:var(--ok)}
+.warnc{color:var(--warn)}
+.badge{ font:700 20px var(--mono); padding:8px 12px;border-radius:12px; background:#0b1838;border:1px solid #203061; display:inline-block; }
+.template-box{ background:color-mix(in oklab,var(--bg-elev) 60%,transparent); border:1px solid var(--muted); border-radius:var(--radius-sm); padding:var(--space); margin-top:var(--space); font-size:13px; }
+.template-box pre{ font-family:var(--mono); white-space:pre-wrap;word-wrap:break-word; background:var(--bg); padding:10px;border-radius:8px; border:1px solid var(--muted); font-size:13px;line-height:1.6; }
+.roadmap-content h3{ font-size:1.1rem;color:var(--brand); border-bottom:1px solid var(--muted); padding-bottom:6px;margin-top:20px; }
+.roadmap-content h4{font-size:1rem;margin:14px 0 6px 0}
+.roadmap-content ul,.roadmap-content ol{padding-left:20px}
+.roadmap-content li{margin-bottom:6px}
+.roadmap-content strong{color:var(--warn)}
+.roadmap-content code{ font:13px var(--mono); background:var(--muted); padding:2px 6px;border-radius:6px; }
+.roadmap-content table{ border-collapse:collapse;width:100%;margin:12px 0; font-size:12px; }
+.roadmap-content th,.roadmap-content td{ border:1px solid var(--muted); padding:6px 5px;text-align:left; }
+.roadmap-content th{background:var(--bg-elev)}
+@media (max-width:380px){ .btn{padding:10px 10px} .split{flex-direction:column} }
+</style>
 </head>
 <body>
-  <header class="top">
-    <div class="brandline">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <h1>PHOENIX v11.3 — MO MO MO MONEY!!</h1>
-        <div class="sub"><span id="datestamp"></span> · <span id="status">bereit</span></div>
-      </div>
-      <div style="margin-left:auto" class="row">
-        <button id="themeBtn" class="btn switch" title="Hell/Dunkel umschalten">☀️/🌙</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap"><section id="view" class="grid" aria-live="polite"></section></main>
-
-  <nav class="tabs" role="navigation" aria-label="Primäre Navigation">
-    <div class="tabbar">
-      <button class="tab active" data-tab="home"><div class="ic">🏠</div><div>Home</div></button>
-      <button class="tab" data-tab="sprint"><div class="ic">⏱️</div><div>Sprint</div></button>
-      <button class="tab" data-tab="audits"><div class="ic">🧭</div><div>Audits</div></button>
-      <button class="tab" data-tab="evidence"><div class="ic">📎</div><div>Evidence</div></button>
-      <button class="tab" data-tab="outreach"><div class="ic">📬</div><div>Outreach</div></button>
-      <button class="tab" data-tab="drills"><div class="ic">📚</div><div>Drills</div></button>
-      <button class="tab" data-tab="survival"><div class="ic">🛡️</div><div>Survival</div></button> <button class="tab" data-tab="roadmap"><div class="ic">🗺️</div><div>Roadmap</div></button>
-    </div>
-  </nav>
-
-  <input id="importFile" type="file" accept="application/json" class="hide">
-
-  <script>
-    // ============== PHOENIX v11.3 (MO-Plan) ==============
-    (() => {
-      const VERSION = "11.3.0-mo";
-      const STORAGE_KEY = "PHOENIX_V11_STATE_AEON_V2";
-      const el = (sel, root=document) => root.querySelector(sel);
-      const els = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-      const view = el("#view");
-      const tabs = els(".tab");
-
-      // ---------- State ----------
-      const state = load() || seed();
-
-      // ---------- Seed / Load / Save ----------
-      function seed(){
-        return {
-          version: VERSION,
-          theme: "dark",
-          activeTab: "home",
-          lastSaved: Date.now(),
-          daily: defaultDaily(),
-          home:{
-            mit:[
-              { id:id(), text:"Mission setzen (Tägliches Protokoll starten)", done:false },
-              { id:id(), text:"Ersten 90-Min-Sprint planen (Output-Satz)", done:false },
-              { id:id(), text:"Outreach heute: 20 Kontakte", done:false },
-            ],
-            kpis:{ openAudits:0, evidence:0, sprints:0, outreach:0 }
-          },
-          sprint:{ running:false, startedAt:null, durationMin:90, note:"", remainingSec:0 },
-          audits:[],        // {id, domain, stage, owner, created, gate:{...}, gateScore:number}
-          evidence:[],      // {id, title, url, type, audit, note, ts}
-          outreach:[],      // {id, contact, channel, handle, audit, created, status, due1, due2, notes}
-          inbox:[]
-        }
-      }
-      function load(){
-        try{
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if(!raw) return null;
-          const s = JSON.parse(raw);
-          // Backfill / Normalize
-          s.version     = s.version || VERSION;
-          s.theme       = s.theme || "dark";
-          s.activeTab   = s.activeTab || "home";
-          s.daily       = s.daily || defaultDaily();
-          s.home        = s.home || { mit:[], kpis:{} };
-          s.home.kpis   = Object.assign({ openAudits:0, evidence:0, sprints:0, outreach:0 }, s.home.kpis || {});
-          s.audits      = Array.isArray(s.audits)? s.audits : [];
-          s.evidence    = Array.isArray(s.evidence)? s.evidence : [];
-          s.outreach    = Array.isArray(s.outreach)? s.outreach : [];
-          // Derive KPIs
-          s.home.kpis.openAudits = s.audits.length;
-          s.home.kpis.evidence   = s.evidence.length;
-          s.home.kpis.outreach   = s.daily?.outreachToday || 0;
-          return s;
-        }catch(e){ console.warn("Load failed", e); return null }
-      }
-      function save(){
-        state.lastSaved = Date.now();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        setStatus("gespeichert");
-        setTimeout(()=> setStatus("bereit"), 800);
-      }
-
-      // ---------- Utilities ----------
-      function id(){ return Math.random().toString(36).slice(2,10) }
-      function todayISO(){ return new Date().toISOString().slice(0,10); }
-      function at00(dstr){ return new Date(dstr+"T00:00:00"); }
-      function addDays(dstr, days){ const d=at00(dstr); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
-      function humanDate(ts=new Date()){
-        return new Intl.DateTimeFormat("de-DE", { dateStyle:"full", timeStyle:"short" }).format(ts);
-      }
-      function weekOfMO(dstr){
-        const start = new Date("2025-10-17T00:00:00");
-        const d = at00(dstr);
-        const diff = Math.max(0, d - start);
-        const w = Math.floor(diff/(7*24*3600*1000))+1;
-        return Math.max(1, Math.min(11, w));
-      }
-      function escapeHTML(s=""){ return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
-      function setStatus(txt){ el("#status").textContent = txt; }
-      function copyToClipboard(text){
-        if (!navigator.clipboard){ setStatus("Clipboard API fehlt"); return; }
-        navigator.clipboard.writeText(text).then(()=>{ setStatus("kopiert!"); setTimeout(()=> setStatus("bereit"), 800); })
-          .catch(()=> setStatus("Kopieren fehlgeschlagen"));
-      }
-
-      function defaultDaily(){
-        return {
-          date: todayISO(),
-          mode: "A",
-          buddha: "",
-          log: "",
-          exec: "",
-          outreachToday: 0
-        };
-      }
-
-      // ---------- Render root ----------
-      function render(){
-        el("#datestamp").textContent = humanDate();
-        els(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === state.activeTab));
-        view.innerHTML = "";
-        // NEUES MODUL 'survival' HINZUGEFÜGT
-        const m = { home: renderHome, sprint: renderSprint, audits: renderAudits, evidence: renderEvidence, outreach: renderOutreach, drills: renderDrills, survival: renderSurvival, roadmap: renderRoadmap };
-        (m[state.activeTab]||renderHome)();
-      }
-
-      // ---------- HOME ----------
-      function renderHome(){
-        const c = document.createElement("div"); c.className="grid";
-        c.append(cardDailyOps(), cardKPIs(), cardMIT(), cardBuddhaLog(), cardTools(), cardQuickActions(), cardBackup());
-        view.append(c);
-      }
-      function cardDailyOps(){
-        const d = document.createElement("div"); d.className="card";
-        const wk = weekOfMO(state.daily?.date || todayISO());
-        d.innerHTML = `
-          <h2>Tägliches Operations-Protokoll</h2>
-          <div class="split">
-            <div class="ctl"><label>Datum</label><input id="dDate" type="date" value="${state.daily?.date || todayISO()}"></div>
-            <div class="ctl"><label>Woche</label><input type="text" value="${wk} / 11" disabled></div>
-          </div>
-          <div class="row gap" style="margin-top:8px">
-            <div class="pill"><span>Modus</span></div>
-            <label class="row" style="gap:6px"><input type="radio" name="mode" value="A" ${state.daily?.mode==="A"?"checked":""}> A: 05:30 Lernen → 09:00 Arbeiten</label>
-          </div>
-          <div class="row gap">
-            <label class="row" style="gap:6px"><input type="radio" name="mode" value="B" ${state.daily?.mode==="B"?"checked":""}> B: 05:30 Arbeiten → 09:00 Lernen</label>
-          </div>
-          <div class="row gap" style="margin-top:8px">
-            <div class="pill"><span>Outreach heute</span><code class="tag">${state.daily?.outreachToday||0}/20</code></div>
-            <div class="row" style="margin-left:auto; gap:6px">
-              <button class="btn" id="oMinus">–</button>
-              <button class="btn ok" id="oPlus">+</button>
-            </div>
-          </div>
-          <div class="muted" style="margin-top:6px">Ziel: 8×90-Min-Sprints, 20 qualifizierte Kontakte, Follow-ups in 72 h planen.</div>
-        `;
-        d.querySelector("#dDate").onchange = (e)=>{ state.daily.date = e.target.value; save(); render(); };
-        d.querySelectorAll('input[name="mode"]').forEach(r=> r.onchange = (e)=>{ state.daily.mode = e.target.value; save(); });
-        d.querySelector("#oPlus").onclick = ()=>{ state.daily.outreachToday = Math.min(999, (state.daily.outreachToday||0)+1); state.home.kpis.outreach = state.daily.outreachToday; save(); render(); };
-        d.querySelector("#oMinus").onclick = ()=>{ state.daily.outreachToday = Math.max(0, (state.daily.outreachToday||0)-1); state.home.kpis.outreach = state.daily.outreachToday; save(); render(); };
-        return d;
-      }
-      function cardKPIs(){
-        const d = document.createElement("div"); d.className="card";
-        d.innerHTML = `
-          <h2>Status • Heute</h2>
-          <div class="row gap">
-            <div class="pill"><span>Version</span><code class="tag">${state.version}</code></div>
-            <div class="pill"><span>Tab</span><code class="tag">${state.activeTab}</code></div>
-            <div class="pill"><span>Modus</span><code class="tag">${state.daily?.mode||"A"}</code></div>
-          </div>
-          <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px">
-            <div class="card" style="padding:10px"><div class="muted">Leads</div><div class="kpi">${state.audits.length}</div></div>
-            <div class="card" style="padding:10px"><div class="muted">Beweise</div><div class="kpi">${state.evidence.length}</div></div>
-            <div class="card" style="padding:10px"><div class="muted">Sprints</div><div class="kpi">${state.home.kpis.sprints}</div></div>
-            <div class="card" style="padding:10px"><div class="muted">Outreach (heute)</div><div class="kpi">${state.daily?.outreachToday||0}/20</div></div>
-          </div>
-        `;
-        return d;
-      }
-      function cardMIT(){
-        const d = document.createElement("div"); d.className="card";
-        d.innerHTML = `<h2>Primär-Direktiven (max. 3)</h2>`;
-        const list = document.createElement("div"); list.className="list";
-        state.home.mit.forEach(item=>{
-          const it = document.createElement("div"); it.className="item";
-          const chk = document.createElement("button"); chk.className="check"+(item.done?" done":"");
-          chk.setAttribute("aria-pressed", !!item.done);
-          chk.textContent = item.done ? "✓" : "";
-          chk.onclick = ()=>{ item.done = !item.done; chk.classList.toggle("done", item.done); chk.textContent = item.done?"✓":""; save(); };
-          const txt = document.createElement("div"); txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
-          it.append(chk, txt); list.append(it);
-        });
-        const add = document.createElement("div"); add.className="row gap";
-        add.innerHTML = `
-          <div class="ctl" style="flex:1"><label>Neue Direktive</label><input id="mitNew" type="text" placeholder="Kurz & messbar (max. 80 Zeichen)"></div>
-          <button class="btn ok" id="mitAdd">Hinzufügen</button>`;
-        add.querySelector("#mitAdd").onclick = ()=>{
-          const v = add.querySelector("#mitNew").value.trim(); if(!v) return;
-          if(state.home.mit.length>=3){ state.home.mit.shift(); }
-          state.home.mit.push({id:id(), text:v, done:false}); save(); render();
-        };
-        d.append(list, document.createElement("div"), add);
-        return d;
-      }
-      function cardBuddhaLog(){
-        const d = document.createElement("div"); d.className="card";
-        d.innerHTML = `
-          <h2>Buddha-Status & Logbuch</h2>
-          <div class="ctl"><label>Mikrobeobachtungen</label><textarea id="buddha">${escapeHTML(state.daily?.buddha||"")}</textarea></div>
-          <div class="ctl"><label>Logbuch (Erkenntnisse, Engpässe, Reibungspunkte)</label><textarea id="log">${escapeHTML(state.daily?.log||"")}</textarea></div>
-          <div class="ctl"><label>Executive Summary (≤ 1 Seite)</label><textarea id="exec">${escapeHTML(state.daily?.exec||"")}</textarea></div>
-        `;
-        d.querySelector("#buddha").oninput = (e)=>{ state.daily.buddha=e.target.value; save(); };
-        d.querySelector("#log").oninput = (e)=>{ state.daily.log=e.target.value; save(); };
-        d.querySelector("#exec").oninput = (e)=>{ state.daily.exec=e.target.value; save(); };
-        return d;
-      }
-      function cardTools(){
-        const d = document.createElement("div"); d.className="card";
-        const dt = state.daily?.date || todayISO();
-        d.innerHTML = `
-          <h2>Gerüst & Dateinamen</h2>
-          <div class="split">
-            <div class="ctl"><label>Datum</label><input id="tDate" type="date" value="${dt}"></div>
-            <div class="ctl"><label>Domain</label><input id="tDomain" type="text" placeholder="domain.tld"></div>
-          </div>
-          <div class="row gap" style="margin-top:8px">
-            <button class="btn" id="genPaths">Pfade erzeugen</button>
-            <button class="btn" id="genNames">Dateinamen erzeugen</button>
-          </div>
-          <div class="template-box" style="margin-top:8px">
-            <pre id="pathsOut">(Ausgabe erscheint hier)</pre>
-            <button class="btn ok block copy-btn" data-copy-target="pathsOut">Pfade kopieren</button>
-          </div>
-          <div class="template-box">
-            <pre id="namesOut">(Ausgabe erscheint hier)</pre>
-            <button class="btn ok block copy-btn" data-copy-target="namesOut">Dateinamen kopieren</button>
-          </div>
-        `;
-        d.querySelector("#genPaths").onclick = ()=>{
-          const date = d.querySelector("#tDate").value || dt;
-          const domain = (d.querySelector("#tDomain").value||"domain.tld").toLowerCase();
-          const root = `/SEO_AUDITS/${date}_${domain}/`;
-          const out =
-`${root}
-${root}01_INTake/
-${root}02_Screens/
-${root}03_HTML_Snips/
-${root}04_SERP/
-${root}05_Audit/
-${root}06_Offer/
-${root}07_Templates/
-${root}08_Knowledge/`;
-          el("#pathsOut").textContent = out; setStatus("Pfade generiert");
-        };
-        d.querySelector("#genNames").onclick = ()=>{
-          const date = d.querySelector("#tDate").value || dt;
-          const domain = (d.querySelector("#tDomain").value||"domain.tld").toLowerCase();
-          const names =
-`${date}_${domain}_P1_Mobilmenue_v01.jpg
-${date}_${domain}_head_title_h1_v01.txt
-${date}_${domain}_SERP_marke_v01.jpg
-${date}_${domain}_Executive_Summary_v01.docx`;
-          el("#namesOut").textContent = names; setStatus("Namen generiert");
-        };
-        return d;
-      }
-      function cardQuickActions(){
-        const d = document.createElement("div"); d.className="card";
-        d.innerHTML = `
-          <h2>Quick Actions</h2>
-          <div class="split" style="margin-top:8px">
-            <button class="btn primary block" id="goSprint">⏱️ 90-Min-Sprint</button>
-            <button class="btn block" id="addEvidence">📎 Beweis sichern</button>
-          </div>`;
-        d.querySelector("#goSprint").onclick = ()=>{ state.activeTab="sprint"; startSprint(); save(); render(); };
-        d.querySelector("#addEvidence").onclick = ()=>{ state.activeTab="evidence"; save(); render(); scrollTo(0,0); };
-        return d;
-      }
-      function cardBackup(){
-        const d = document.createElement("div"); d.className="card";
-        d.innerHTML = `
-          <h2>Backup & Transfer</h2>
-          <div class="split">
-            <button class="btn block" id="exportBtn">⬇️ Export JSON</button>
-            <button class="btn block" id="importBtn">⬆️ Import JSON</button>
-          </div>
-          <div class="muted" style="margin-top:8px">Täglich: <code style="font-family:var(--mono)">YYYY-MM-DD_PHOENIX_v11_backup.json</code> → Drive (nicht überschreiben)</div>
-        `;
-        d.querySelector("#exportBtn").onclick = exportJSON;
-        d.querySelector("#importBtn").onclick = ()=> el("#importFile").click();
-        return d;
-      }
-
-      // ---------- SPRINT ----------
-      let tickHandle = null;
-      function renderSprint(){
-        const d = document.createElement("div"); d.className="grid";
-        const head = document.createElement("div"); head.className="card";
-        head.innerHTML = `<h2>90-Minuten-Sprint</h2>
-          <div class="row gap"><span class="muted">Zielnotiz</span></div>
-          <div class="ctl"><textarea id="sprintNote" placeholder="Klarer Output (z. B. 'Summary-v1 fertig')">${escapeHTML(state.sprint.note||"")}</textarea></div>
-          <div class="row gap" style="margin-top:8px">
-            <span class="badge" id="timerBadge">${fmtTimer(state.sprint.remainingSec||state.sprint.durationMin*60)}</span>
-            <span class="pill"><span>Status:</span><code class="tag">${state.sprint.running?"läuft":"bereit"}</code></span>
-          </div>
-          <div class="split" style="margin-top:10px">
-            <button class="btn primary block" id="startBtn">${state.sprint.running?"Fortsetzen":"Starten"}</button>
-            <button class="btn warn block" id="resetBtn">Zurücksetzen</button>
-          </div>`;
-        d.append(head);
-
-        head.querySelector("#sprintNote").oninput = (e)=>{ state.sprint.note = e.target.value; save(); };
-        head.querySelector("#startBtn").onclick = ()=>{ if(!state.sprint.running) startSprint(); save(); render(); };
-        head.querySelector("#resetBtn").onclick = ()=>{ stopSprint(true); save(); render(); };
-        view.append(d);
-      }
-      function startSprint(){
-        state.sprint.running = true;
-        if(!state.sprint.startedAt){ state.sprint.startedAt = Date.now(); state.sprint.remainingSec = state.sprint.durationMin*60; }
-        if(tickHandle) clearInterval(tickHandle);
-        tickHandle = setInterval(()=>{
-          if(state.sprint.remainingSec>0){
-            state.sprint.remainingSec -= 1;
-            const b = el("#timerBadge"); if(b) b.textContent = fmtTimer(state.sprint.remainingSec);
-          }else{
-            stopSprint(false);
-            alert("Sprint beendet – Evidence loggen!");
-            state.home.kpis.sprints += 1;
-            save(); render();
-          }
-        }, 1000);
-      }
-      function stopSprint(reset=false){
-        state.sprint.running = false;
-        clearInterval(tickHandle); tickHandle=null;
-        if(reset){ state.sprint.startedAt=null; state.sprint.remainingSec = state.sprint.durationMin*60; state.sprint.note=""; }
-      }
-      function fmtTimer(sec){
-        const m = Math.floor(sec/60).toString().padStart(2,"0");
-        const s = (sec%60).toString().toString().padStart(2,"0");
-        return `${m}:${s}`;
-      }
-
-      // ---------- AUDITS (+ Gate-Score, Filter) ----------
-      function renderAudits(){
-        const d = document.createElement("div"); d.className="grid";
-
-        // Create
-        const make = document.createElement("div"); make.className="card";
-        make.innerHTML = `
-          <h2>Lead anlegen</h2>
-          <div class="split">
-            <div class="ctl"><label>Domain/URL</label><input id="aDomain" type="text" placeholder="kunde-immobilien.de/expose/altbau-92qm"></div>
-            <div class="ctl"><label>Status</label>
-              <select id="aStage">
-                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(s=>`<option>${s}</option>`).join("")}
-              </select>
-            </div>
-          </div>
-          <button class="btn ok block" id="aAdd">Lead hinzufügen</button>`;
-        make.querySelector("#aAdd").onclick = ()=>{
-          const domain = make.querySelector("#aDomain").value.trim();
-          const stage  = make.querySelector("#aStage").value;
-          if(!domain) return;
-          state.audits.unshift({ id:id(), domain, stage, owner:"Eric", created:todayISO(), gate:{}, gateScore:0 });
-          state.home.kpis.openAudits = state.audits.length; save(); render();
-        };
-        d.append(make);
-
-        // Filter/Search
-        const toolbar = document.createElement("div"); toolbar.className="card";
-        toolbar.innerHTML = `
-          <h2>Leads (${state.audits.length})</h2>
-          <div class="split">
-            <div class="ctl"><label>Suche</label><input id="fText" type="text" placeholder="domain, teil..."></div>
-            <div class="ctl"><label>Status</label>
-              <select id="fStage">
-                <option value="">(alle)</option>
-                ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(s=>`<option>${s}</option>`).join("")}
-              </select>
-            </div>
-          </div>`;
-        d.append(toolbar);
-
-        const list = document.createElement("div"); list.className="card";
-        const ul = document.createElement("div"); ul.className="list";
-        const f = ()=> {
-          ul.innerHTML = "";
-          const q = (toolbar.querySelector("#fText").value||"").toLowerCase();
-          const st= toolbar.querySelector("#fStage").value;
-          state.audits
-            .filter(a => (!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st))
-            .forEach(a=>{
-              const it = document.createElement("div"); it.className="item";
-              const gateOk = (a.gateScore||0) >= 98;
-              it.innerHTML = `
-                <div style="flex:1">
-                  <strong>${escapeHTML(a.domain)}</strong>
-                  <div class="muted">Status: ${a.stage} • seit ${a.created} ${gateOk?`• <span class="okc">Gate ${a.gateScore}</span>`:``}</div>
-                  <details style="margin-top:6px">
-                    <summary>Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}</summary>
-                    ${renderGateChecklistHTML(a)}
-                  </details>
-                </div>
-                <select class="btn ghost" data-id="${a.id}">
-                  ${["NEU","AUDIT","ENTWURF","GESENDET","T+5","POSITIV","TERMIN","DEAL","VERWORFEN"].map(st=>`<option ${a.stage===st?"selected":""}>${st}</option>`).join("")}
-                </select>
-                <button class="btn ghost danger" data-del="${a.id}">✕</button>`;
-              ul.append(it);
-            });
-          list.innerHTML = `<h2>Leads (${ul.childElementCount})</h2>`;
-          list.append(ul);
-        };
-        toolbar.querySelectorAll("input,select").forEach(c=> c.oninput = f);
-        f();
-        d.append(list);
-
-        view.append(d);
-
-        // Events for list
-        ul.addEventListener("change", (e)=>{
-          const sel = e.target.closest("select.btn.ghost");
-          if(sel){
-            const a = state.audits.find(x=>x.id===sel.dataset.id);
-            if(a){ a.stage = sel.value; save(); }
-          }
-        });
-        ul.addEventListener("click", (e)=>{
-          const del = e.target.closest('button[data-del]');
-          if(del){
-            const id = del.dataset.del;
-            const i = state.audits.findIndex(x=>x.id===id);
-            if(i>-1){ state.audits.splice(i,1); state.home.kpis.openAudits = state.audits.length; save(); render(); }
-          }
-          // Gate checkbox toggles
-          const gchk = e.target.closest('input[type="checkbox"][data-gate]');
-          if(gchk){
-            const [aid,key] = [gchk.dataset.aid, gchk.dataset.gate];
-            const a = state.audits.find(x=>x.id===aid);
-            if(a){
-              a.gate = a.gate||{};
-              a.gate[key] = gchk.checked;
-              a.gateScore = calcGateScore(a.gate);
-              save();
-              const sum = gchk.closest('details').querySelector('summary');
-              if(sum) sum.innerHTML = `Gate-Check (≥ 98) — aktuell: ${a.gateScore||0}`;
-            }
-          }
-        });
-      }
-      const GATE_ITEMS = [
-        ["klartext","Klartext-Ton"],
-        ["belege","≥ 2 Belege je Kernbefund"],
-        ["serp","SERP beigefügt"],
-        ["prio","P1/P2/P3 schlüssig"],
-        ["ampel","Ampel begründet"],
-        ["msum","Management-Summary (1 Seite)"],
-        ["plan30","30-Tage-Plan realistisch"],
-        ["ordnung","Dateiordnung korrekt"],
-        ["next","Nächster Schritt klar"],
-        ["mobil","Mobil gut lesbar"],
-        ["fit","Immobilien-Fit"],
-        ["evidence31","Evidence 3+1 erfüllt"]
-      ];
-      function renderGateChecklistHTML(a){
-        const gate = a.gate||{};
-        return `<div class="list" style="margin-top:8px">
-          ${GATE_ITEMS.map(([key,label])=>`
-            <label class="row" style="gap:8px">
-              <input type="checkbox" data-gate="${key}" data-aid="${a.id}" ${gate[key]?"checked":""}>
-              <span>${label}</span>
-            </label>`).join("")}
-          <div class="pill" style="margin-top:8px"><span>Score</span><code class="tag">${a.gateScore||0}</code></div>
-        </div>`;
-      }
-      function calcGateScore(gate){
-        const total = GATE_ITEMS.length;
-        const ok = GATE_ITEMS.reduce((n,[k])=> n + (gate?.[k]?1:0), 0);
-        return Math.round(100 * ok / total);
-      }
-
-      // ---------- EVIDENCE ----------
-      function renderEvidence(){
-        const d = document.createElement("div"); d.className="grid";
-        const form = document.createElement("div"); form.className="card";
-        form.innerHTML = `
-          <h2>Beweis erfassen (3+1)</h2>
-          <div class="ctl"><label>Titel</label><input id="eTitle" type="text" placeholder="Sabine Keller, Prenzlauer Berg"></div>
-          <div class="ctl"><label>Beweis-Link (Drive)</label><input id="eUrl" type="url" placeholder="https://drive.google.com/..."></div>
-          <div class="split">
-            <div class="ctl"><label>Primärdefekt</label>
-              <select id="eType">
-                ${["CLS_KOLLAPS","H1_ANOMALIE","ALT_BLINDHEIT","CANONICAL_LOSS","BREADCRUMB_VOID","SONSTIGES"].map(t=>`<option>${t}</option>`).join("")}
-              </select>
-            </div>
-            <div class="ctl"><label>Lead (Audit)</label><select id="eAudit"></select></div>
-          </div>
-          <div class="ctl"><label>Code-Zitat (wörtlich)</label><textarea id="eNote" placeholder="{<img src='/cover.jpg'>...}"></textarea></div>
-          <button class="btn ok block" id="eAdd">Beweis speichern</button>
-          <div class="muted" style="margin-top:6px">Dateiname: <code>YYYY-MM-DD_{domain}_M##_Label_v01.jpg</code></div>`;
-        d.append(form);
-
-        // Audit options
-        const selAudit = form.querySelector("#eAudit");
-        selAudit.innerHTML = state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(kein Lead)</option>`;
-
-        // ---- Prefill aus Drills (falls gesetzt) ----
-        if(state._evidenceDraft){
-          const draft = state._evidenceDraft;
-          if(draft.title) form.querySelector("#eTitle").value = draft.title;
-          if(draft.type)  form.querySelector("#eType").value  = draft.type;
-          if(draft.note)  form.querySelector("#eNote").value  = draft.note;
-          if(draft.auditId && [...selAudit.options].some(o=>o.value===draft.auditId)) selAudit.value = draft.auditId;
-          setStatus("Evidence vorbefüllt (Drills)");
-          // Draft behalten bis Speichern oder Wechsel – keine weitere Änderung nötig
-        }
-
-        form.querySelector("#eAdd").onclick = ()=>{
-          const title = form.querySelector("#eTitle").value.trim();
-          const url   = form.querySelector("#eUrl").value.trim();
-          const type  = form.querySelector("#eType").value;
-          const audit = form.querySelector("#eAudit").value || null;
-          const note  = form.querySelector("#eNote").value.trim();
-          if(!title && !note) return;
-          state.evidence.unshift({ id:id(), title, url, type, audit, note, ts:new Date().toISOString() });
-          state.home.kpis.evidence = state.evidence.length;
-          // Draft aufräumen
-          delete state._evidenceDraft;
-          save(); render();
-        };
-
-        const list = document.createElement("div"); list.className="card";
-        list.innerHTML = `<h2>Beweis-Liste (${state.evidence.length})</h2>`;
-        const ul = document.createElement("div"); ul.className="list";
-        state.evidence.slice(0,50).forEach(e=>{
-          const audit = state.audits.find(a=>a.id===e.audit);
-          const it = document.createElement("div"); it.className="item";
-          it.innerHTML = `
-            <div style="flex:1">
-              <strong>${escapeHTML(e.title) || '(Kein Titel)'}</strong>
-              <div class="muted">${new Date(e.ts).toLocaleString("de-DE")} • ${e.type} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
-              ${e.url?(`<div class="muted">Link: ${escapeHTML(e.url)}</div>`):""}
-              ${e.note?(`<div class="muted" style="font-family:var(--mono); background:var(--bg); padding:4px 6px; border-radius:6px; margin-top:4px;">${escapeHTML(e.note)}</div>`):""}
-            </div>
-            <button class="btn ghost danger" data-del="${e.id}">✕</button>`;
-          ul.append(it);
-        });
-        list.append(ul);
-        d.append(list);
-        view.append(d);
-
-        ul.querySelectorAll('button[data-del]').forEach(b=>{
-          b.onclick = ()=>{
-            const id = b.dataset.del;
-            const i = state.evidence.findIndex(x=>x.id===id);
-            if(i>-1){ state.evidence.splice(i,1); state.home.kpis.evidence = state.evidence.length; save(); render(); }
-          }
-        });
-      }
-
-      // ---------- OUTREACH (T+72 h) ----------
-      function renderOutreach(){
-        const d = document.createElement("div"); d.className="grid";
-        const card = document.createElement("div"); card.className="card";
-        card.innerHTML = `
-          <h2>Outreach-Planner (20/Tag, Follow-ups 72 h)</h2>
-          <div class="split">
-            <div class="ctl"><label>Kontakt (Name/Unternehmen)</label><input id="oName" type="text" placeholder="z. B. Sabine Keller · ImmoX Berlin"></div>
-            <div class="ctl"><label>Kanal</label>
-              <select id="oChannel">
-                ${["Email","LinkedIn","Telefon","Formular"].map(c=>`<option>${c}</option>`).join("")}
-              </select>
-            </div>
-          </div>
-          <div class="split">
-            <div class="ctl"><label>Adresse/Handle</label><input id="oHandle" type="text" placeholder="mail@domain.tld oder linkedin.com/in/..."></div>
-            <div class="ctl"><label>Lead (optional)</label>
-              <select id="oAudit"><option value="">(frei)</option>${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("")}</select>
-            </div>
-          </div>
-          <div class="ctl"><label>Notiz</label><textarea id="oNote" placeholder="Beleg/CTA in einem Satz"></textarea></div>
-          <button class="btn ok block" id="oAdd">Kontakt eintragen</button>
-          <div class="muted" style="margin-top:6px">Neuer Kontakt → Fälligkeit FU1 = +72 h, FU2 = weitere +72 h. Buttons ändern Status.</div>
-        `;
-        d.append(card);
-
-        card.querySelector("#oAdd").onclick = ()=>{
-          const contact = card.querySelector("#oName").value.trim();
-          const channel = card.querySelector("#oChannel").value;
-          const handle  = card.querySelector("#oHandle").value.trim();
-          const audit   = card.querySelector("#oAudit").value || null;
-          const notes   = card.querySelector("#oNote").value.trim();
-          if(!contact) return;
-          const created = todayISO();
-          const due1 = addDays(created, 3);
-          const due2 = addDays(due1, 3);
-          state.outreach.unshift({ id:id(), contact, channel, handle, audit, created, status:"SENT", due1, due2, notes });
-          state.daily.outreachToday = (state.daily.outreachToday||0) + 1;
-          state.home.kpis.outreach = state.daily.outreachToday;
-          save(); render();
-        };
-
-        // Toolbar / Filters
-        const bar = document.createElement("div"); bar.className="card";
-        bar.innerHTML = `
-          <h2>Kontakte (${state.outreach.length})</h2>
-          <div class="split">
-            <div class="ctl"><label>Filter</label>
-              <select id="of">
-                <option value="">(alle)</option>
-                <option value="due">Fällig heute/überfällig</option>
-                <option value="sent">Nur gesendet</option>
-                <option value="fu1">Nur FU1 geplant/erledigt</option>
-                <option value="fu2">Nur FU2 geplant/erledigt</option>
-                <option value="done">Erledigt</option>
-                <option value="lost">Verworfen</option>
-              </select>
-            </div>
-            <div class="ctl"><label>Suche</label><input id="oq" type="text" placeholder="Name, Unternehmen, Handle"></div>
-          </div>`;
-        d.append(bar);
-
-        // List
-        const list = document.createElement("div"); list.className="card";
-        const ul = document.createElement("div"); ul.className="list";
-        const renderList = ()=>{
-          ul.innerHTML = "";
-          const f = bar.querySelector("#of").value;
-          const q = (bar.querySelector("#oq").value||"").toLowerCase();
-          const today = todayISO();
-          const dueFlag = (o)=>{
-            const due = (o.status==="SENT"||o.status==="FU1") ? o.due1 :
-                        (o.status==="FU2" ? o.due2 : null);
-            if(!due) return "";
-            if(due <= today) return `<span class="tag" style="border-color:#92400e">FÄLLIG</span>`;
-            if(due === addDays(today,1)) return `<span class="tag">morgen</span>`;
-            return `<span class="tag">${due}</span>`;
-          };
-          state.outreach
-            .filter(o=>{
-              const txt = (o.contact+" "+(o.handle||"")).toLowerCase();
-              if(q && !txt.includes(q)) return false;
-              if(f==="due"){
-                const due = (o.status==="SENT"||o.status==="FU1")?o.due1:(o.status==="FU2"?o.due2:null);
-                return due && due <= today && !["DONE","LOST"].includes(o.status);
-              }
-              if(f==="sent") return o.status==="SENT";
-              if(f==="fu1")  return ["FU1","SENT"].includes(o.status);
-              if(f==="fu2")  return ["FU2"].includes(o.status);
-              if(f==="done") return o.status==="DONE";
-              if(f==="lost") return o.status==="LOST";
-              return true;
-            })
-            .forEach(o=>{
-              const audit = state.audits.find(a=>a.id===o.audit);
-              const it = document.createElement("div"); it.className="item";
-              it.innerHTML = `
-                <div style="flex:1">
-                  <strong>${escapeHTML(o.contact)}</strong>
-                  <div class="muted">${o.channel}${o.handle?(" • "+escapeHTML(o.handle)):""} • ${o.created} • <span class="${o.status==='DONE'?'okc':o.status==='LOST'?'danger':'warnc'}">${o.status}</span> ${dueFlag(o)} ${audit?("• "+escapeHTML(audit.domain)):""}</div>
-                  ${o.notes?(`<div class="muted" style="margin-top:4px">${escapeHTML(o.notes)}</div>`):""}
-                </div>
-                <div class="row" style="gap:6px; flex-wrap:wrap">
-                  ${actionButtons(o)}
-                </div>`;
-              ul.append(it);
-            });
-          list.innerHTML = `<h2>Kontakte (${ul.childElementCount})</h2>`;
-          list.append(ul);
-        };
-        bar.querySelectorAll("input,select").forEach(c=> c.oninput = renderList);
-        renderList();
-        d.append(list);
-
-        view.append(d);
-
-        // actions
-        ul.addEventListener("click",(e)=>{
-          const b = e.target.closest("button[data-act]");
-          if(!b) return;
-          const o = state.outreach.find(x=>x.id===b.dataset.id);
-          if(!o) return;
-          const act = b.dataset.act;
-          if(act==="FU1"){ o.status="FU1"; if(!o.due1) o.due1 = addDays(todayISO(),3); }
-          if(act==="FU2"){ o.status="FU2"; if(!o.due2) o.due2 = addDays(todayISO(),3); }
-          if(act==="DONE"){ o.status="DONE"; }
-          if(act==="LOST"){ o.status="LOST"; }
-          if(act==="SNOOZE1"){ o.due1 = addDays(o.due1||todayISO(),1); }
-          if(act==="SNOOZE2"){ o.due2 = addDays(o.due2||todayISO(),1); }
-          save(); render();
-        });
-      }
-      function actionButtons(o){
-        const btn = (label, act, cls="btn ghost")=>`<button class="${cls}" data-act="${act}" data-id="${o.id}">${label}</button>`;
-        if(o.status==="SENT") return btn("FU1 geplant", "FU1") + btn("+1 Tag", "SNOOZE1");
-        if(o.status==="FU1")  return btn("FU1 erledigt → FU2", "FU2") + btn("+1 Tag", "SNOOZE1");
-        if(o.status==="FU2")  return btn("Abschluss", "DONE") + btn("+1 Tag", "SNOOZE2");
-        if(o.status==="DONE") return btn("Erledigt", "DONE", "btn ok");
-        if(o.status==="LOST") return btn("Verworfen", "LOST", "btn danger");
-        return btn("Gesendet", "SENT") + btn("Verwerfen", "LOST","btn warn");
-      }
-
-      // ---------- DRILLS (16 ESSENTIELLE MODULE, v3 OMEGA) ----------
-      function renderDrills(){
-        const c = document.createElement("div"); c.className="grid";
-
-        // Globales Setup
-        const g = document.createElement("div"); g.className="card";
-        g.innerHTML = `<h2>Trainingsprotokoll (v3 OMEGA) — Globales Setup</h2>
-          <div class="list">
-            <div class="item"><div><strong>Ziel-Akquise (A52s):</strong><div class="muted">Google: <code>immobilienmakler [Dein Kiez] -site:immoscout24.de</code> → Ziel von Seite 2–3 wählen.</div></div></div>
-            <div class="item"><div><strong>PHOENIX öffnen:</strong><div class="muted">Tab <em>Audits</em> → Zieldomain anlegen → Status <code>NEU</code>.</div></div></div>
-          </div>`;
-        c.append(g);
-
-        // Drill Cards
-        const drills = getDrills();
-        drills.forEach(d => c.append(renderDrillCard(d)));
-
-        view.append(c);
-
-        function renderDrillCard(d){
-          const card = document.createElement("div"); card.className="card";
-          const deviceTag = `<span class="tag">${d.device}</span>`;
-          card.innerHTML = `
-            <h2>${escapeHTML(d.title)} ${deviceTag}</h2>
-            <div class="muted">${escapeHTML(d.subtitle||"")}</div>
-            <details style="margin-top:8px"><summary><strong>Phase A · Audit & Evidenz (${d.device})</strong></summary><div class="list" style="margin-top:8px"></div></details>
-            <details style="margin-top:8px"><summary><strong>Phase B · Consulting & Wertschöpfung</strong></summary>
-              <div class="template-box">
-                <pre id="prompt-${d.id}"></pre>
-                <button class="btn primary block copy-btn" data-copy-target="prompt-${d.id}">KI-Prompt kopieren</button>
-              </div>
-            </details>
-          `;
-
-          // Phase A steps
-          const list = card.querySelector("details .list");
-          d.phaseA.forEach(step=>{
-            const it = document.createElement("div"); it.className="item";
-            it.innerHTML = `<div><strong>${escapeHTML(step.h||"Schritt")}</strong><div class="muted">${escapeHTML(step.t)}</div></div>`;
-            list.append(it);
-          });
-
-          // Prompt
-          card.querySelector(`#prompt-${d.id}`).textContent = d.prompt || "(kein Prompt erforderlich)";
-
-          // Evidence Quick-Log (falls vorhanden)
-          if(d.evidence){
-            const box = document.createElement("div"); box.className="template-box";
-            const selId = `auditSel-${d.id}`;
-            box.innerHTML = `
-              <p><strong>Evidence-Quick-Log</strong></p>
-              <div class="split" style="margin-top:6px">
-                <div class="ctl"><label>Audit verknüpfen</label>
-                  <select id="${selId}">
-                    ${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(kein Lead)</option>`}
-                  </select>
-                </div>
-                <div class="ctl"><label>Primärdefekt</label>
-                  <input type="text" value="${d.evidence.type}" disabled>
-                </div>
-              </div>
-              <pre id="note-${d.id}"></pre>
-              <div class="row gap" style="margin-top:6px">
-                <button class="btn ok block prefill-evidence" 
-                        data-did="${d.id}" 
-                        data-title="${escapeHTML(d.evidence.title)}" 
-                        data-type="${d.evidence.type}" 
-                        data-note-id="note-${d.id}"
-                        data-sel="${selId}">In Evidence vorbefüllen</button>
-              </div>`;
-            card.append(box);
-            // Note-Template (als Text)
-            card.querySelector(`#note-${d.id}`).textContent = d.evidence.note;
-          }
-
-          // Drill 16: Sprint-Notiz-Setter
-          if(d.sprintNote){
-            const box2 = document.createElement("div"); box2.className="template-box";
-            box2.innerHTML = `
-              <p><strong>90-Min-Sprint</strong></p>
-              <pre id="snote-${d.id}"></pre>
-              <button class="btn warn block start-sprint-note" data-note-id="snote-${d.id}">Sprint-Notiz setzen & zum Timer</button>
-            `;
-            card.append(box2);
-            card.querySelector(`#snote-${d.id}`).textContent = d.sprintNote;
-          }
-
-          return card;
-        }
-      }
-
-      function getDrills(){
-        return [
-          {
-            id:"01", device:"A52s", title:"Drill 01 · M1 (CLS) — „Layout-Sprung“-Beweis",
-            subtitle:"Visueller Gesprächsöffner (Video)",
-            phaseA:[
-              {h:"Aufnehmen", t:"Inkognito öffnen → Rekorder starten → Seite 3× neu laden."},
-              {h:"Befund", t:"Sichtbarer Sprung (Banner/Bild) im Fold."},
-              {h:"Sichern", t:"5-Sek.-Clip → Drive (AEON_OPS/BEWEISE) → Link freigeben (Jeder mit Link)."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Visueller Layoutsprung (CLS) – P1-Befund', Typ CLS_KOLLAPS, Note: 'Visueller Beweis (Video). PSI: [Wert]'."}
-            ],
-            prompt:`Gemini 2.5 Pro: Übersetze den Befund „Video zeigt, wie das Cookie-Banner das Logo nach unten stößt.“ in einen 2-Satz-Business-Case für einen Makler. Fokus: Vertrauensverlust auf Mobilgeräten in den ersten 500 ms.`,
-            evidence:{ title:"Visueller Layoutsprung (CLS) – P1-Befund", type:"CLS_KOLLAPS", note:"INTERN: Visueller Beweis (Video). PSI-CLS (falls gemessen): [Wert]." }
-          },
-          {
-            id:"02", device:"A52s", title:"Drill 02 · M2 (LCP) — „Langsamer Held“-Befund",
-            subtitle:"Hero-Bild blockiert First Impression",
-            phaseA:[
-              {h:"Quelltext prüfen", t:"view-source: vor URL, <img> Hero suchen."},
-              {h:"Befund", t:"loading=\"lazy\" beim ersten sichtbaren Bild ODER fehlende width/height (LCP/CLS-Risiko)."},
-              {h:"Sichern", t:"Screenshot view-source → Drive → Link."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'LCP-Blocker / CLS-Risiko (Hero-Bild)', Typ CLS_KOLLAPS, Note mit Code-Zitat."}
-            ],
-            prompt:`ChatGPT-5 Thinking: Erkläre einem Makler, warum loading="lazy" beim ersten sichtbaren Bild (Hero) den „ersten Eindruck“ zerstört und Vertrauen > 2,5 s kostet.`,
-            evidence:{ title:"LCP-Blocker / CLS-Risiko (Hero-Bild)", type:"CLS_KOLLAPS", note:`LCP-Befund (Hero): <img src="..." alt="..." loading="lazy"> (falsches Loading) ODER <img src="..." alt="..."> (width/height fehlen).` }
-          },
-          {
-            id:"03", device:"A52s", title:"Drill 03 · M3 (INP) — „Zäher Klick“-Beweis",
-            subtitle:"Interaktions-Lag > 200 ms",
-            phaseA:[
-              {h:"Aufnehmen", t:"Formular/Filter öffnen → Rekorder starten → auf CTA tippen."},
-              {h:"Befund", t:"Sichtbar verzögerte Reaktion (>200 ms)."},
-              {h:"Sichern", t:"10-Sek.-Clip → Drive → Link."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Interaktions-Verzögerung (INP) – Formular', Typ SONSTIGES, Note mit Kontext (Button/Ort)."}
-            ],
-            prompt:`Autoren-Aufgabe: Formuliere den Frust-Moment: „Kunde klickt 'Anfragen'. Nichts passiert. Er klickt erneut. Abbruch.“ — Positioniere mich als Nutzerversteher.`,
-            evidence:{ title:"Interaktions-Verzögerung (INP) – Formular", type:"SONSTIGES", note:"INP-Befund (Video): Spürbarer Lag bei Klick auf [Button]. Gefühlte Verzögerung > 200 ms." }
-          },
-          {
-            id:"04", device:"A52s", title:"Drill 04 · M7 (Mobile Darstellung) — „P0-Blocker“",
-            subtitle:"Tastatur verdeckt CTA",
-            phaseA:[
-              {h:"Aufnehmen", t:"Kontaktformular → Tastatur öffnen (Fokus ins Feld)."},
-              {h:"Befund", t:"CTA (Senden) verdeckt → Lead unmöglich (P0)."},
-              {h:"Sichern", t:"Video → Drive → Link."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-KONVERSIONSBLOCKER – Tastatur verdeckt CTA', Typ SONSTIGES, Note kurz."}
-            ],
-            prompt:`Kurzargument: Video genügt – P0-Blocker ist selbsterklärend.`,
-            evidence:{ title:"P0-KONVERSIONSBLOCKER – Tastatur verdeckt CTA", type:"SONSTIGES", note:"P0-Befund (Video): Mobile Tastatur überlagert den 'Senden'-Button. Lead-Abbruch erzwungen." }
-          },
-          {
-            id:"05", device:"A52s", title:"Drill 05 · M4 (Index-Status) — „Existenz“-Test",
-            subtitle:"site: Operator zeigt 0 Treffer",
-            phaseA:[
-              {h:"Prüfen", t:"Wichtige Kategorie wählen (z. B. /immobilien/kaufen)."},
-              {h:"Google", t:"site:zieldomain.de/immobilien/kaufen."},
-              {h:"Befund", t:"Keine Ergebnisse (P0). Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-BEFUND – Kategorieseite NICHT INDEXIERT', Typ SONSTIGES, Note kurz."}
-            ],
-            prompt:`Autoren-Aufgabe: „Ihr digitales Schaufenster ('Kaufen') ist für Google unsichtbar – es geht um Existenz, nicht Feinschliff.“`,
-            evidence:{ title:"P0-BEFUND – Kategorieseite 'Kaufen' NICHT INDEXIERT", type:"SONSTIGES", note:"P0-Befund: site:[URL] liefert 0 Ergebnisse. Fundamentale Sichtbarkeit fehlt." }
-          },
-          {
-            id:"06", device:"A52s", title:"Drill 06 · M5 (Canonical-Logik) — „Ranking-Kraft“-Test",
-            subtitle:"Filter-URLs kanonisieren falsch",
-            phaseA:[
-              {h:"Prüfen", t:"Kategorie (URL A) → Filter anwenden (URL B)."},
-              {h:"Quelltext", t:"view-source: URL B → <link rel=\"canonical\" suchen."},
-              {h:"Befund", t:"Self-Canonical auf URL B statt auf A. Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Canonical-Logik gebrochen (Filter-URLs)', Typ CANONICAL_LOSS, Note mit kurzen URLs."}
-            ],
-            prompt:`Business-Satz steht schon in der Note: „Ranking-Kraft verdampft.“`,
-            evidence:{ title:"Canonical-Logik gebrochen (Filter-URLs)", type:"CANONICAL_LOSS", note:"FEHLER: Filter-URL <.../?filter=X> setzt Canonical auf sich selbst statt Hauptkategorie <URL A>. Ranking-Kraft verdampft." }
-          },
-          {
-            id:"07", device:"A52s", title:"Drill 07 · M6 (robots.txt) — „Crawl-Budget“-Test",
-            subtitle:"Blockierte Bilder / harte Disallows",
-            phaseA:[
-              {h:"Öffnen", t:"/robots.txt laden."},
-              {h:"Befund", t:"P0/ P1 Regeln (z. B. Disallow: / oder Disallow: /wp-content/uploads/)."},
-              {h:"Sichern", t:"Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'P1-Fehler (Robots.txt blockiert Bilder)', Typ SONSTIGES, Note kurz."}
-            ],
-            prompt:`Gemini 2.5 Pro: „Erkläre, warum 'Disallow: /wp-content/uploads/' Google 'mit verbundenen Augen' crawlen lässt (Crawl-Budget).“`,
-            evidence:{ title:"P1-Fehler (Robots.txt blockiert Bilder)", type:"SONSTIGES", note:"P1: 'Disallow: /wp-content/uploads/' blockiert Bilder; Crawl-Budget wird vergeudet." }
-          },
-          {
-            id:"08", device:"A52s", title:"Drill 08 · M8 (Breadcrumbs) — „Sackgassen“-Test",
-            subtitle:"Fehlende Breadcrumbs + Related",
-            phaseA:[
-              {h:"Landen", t:"Exposé tief öffnen (SERP)."},
-              {h:"Befund", t:"Keine Breadcrumb-Leiste, keine 'Ähnliche Objekte'."},
-              {h:"Sichern", t:"Screenshot Exposé-Ende → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Nutzerführung: Exposé-Sackgasse', Typ BREADCRUMB_VOID, Note kurz."}
-            ],
-            prompt:`Note ist ausreichend — klare Business-Wirkung.`,
-            evidence:{ title:"Nutzerführung: Exposé-Sackgasse", type:"BREADCRUMB_VOID", note:"BREADCRUMB_VOID: Keine Breadcrumb UND keine Links zu 'Ähnliche Objekte' → Sackgasse." }
-          },
-          {
-            id:"09", device:"A52s", title:"Drill 09 · M11 (H1-Struktur) — „H1-Anomalie“-Test",
-            subtitle:"Doppelte H1 (Logo + Titel)",
-            phaseA:[
-              {h:"Quelltext", t:"view-source: Exposé → <h1> suchen und zählen."},
-              {h:"Befund", t:"≥ 2 H1 vorhanden. Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Strukturfehler (Doppelte H1)', Typ H1_ANOMALIE, Note mit Beispiel."}
-            ],
-            prompt:`ChatGPT-5 Thinking: Metapher „Buch mit zwei Titeln“ – warum schwächt das das Ranking.`,
-            evidence:{ title:"Strukturfehler (Doppelte H1)", type:"H1_ANOMALIE", note:"H1_ANOMALIE: <h1>Logo…</h1> UND <h1>Exposé-Titel…</h1> → Kein klares Thema für Google." }
-          },
-          {
-            id:"10", device:"ThinkPad", title:"Drill 10 · M9 (Rich Snippets) — „SERP-Platz“-Test",
-            subtitle:"Rich Results Test negativ",
-            phaseA:[
-              {h:"Tool", t:"Google Rich Results Test (Smartphone) → URL prüfen."},
-              {h:"Befund", t:"Keine gültigen Elemente (z. B. RealEstateListing). Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Schema.org (Rich Snippet) fehlt', Typ SONSTIGES, Note kurz."}
-            ],
-            prompt:`Gemini 2.5 Pro: Erstelle eine textliche Vorher/Nachher-SERP-Beschreibung (heute vs. mit Rich Snippets: Preis, m², Sterne).`,
-            evidence:{ title:"Schema.org (Rich Snippet) fehlt", type:"SONSTIGES", note:"RRT negativ: Keine RealEstateListing/FAQPage-Daten. CTR-Chance verschenkt." }
-          },
-          {
-            id:"11", device:"A52s", title:"Drill 11 · M10 (Bild-SEO) — „Blinde Bilder“-Test",
-            subtitle:"ALT fehlt im Content-Bild",
-            phaseA:[
-              {h:"Quelltext", t:"view-source: Exposé → <img> im Content suchen."},
-              {h:"Befund", t:"alt-Attribut leer/fehlend. Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'Bild-SEO: ALT-Blindheit', Typ ALT_BLINDHEIT, Note mit Code."}
-            ],
-            prompt:`Business-Satz: Bildersuche-Traffic geht verloren; Accessibility/Verständnis sinken.`,
-            evidence:{ title:"Bild-SEO: ALT-Blindheit", type:"ALT_BLINDHEIT", note:`ALT_BLINDHEIT: <img src=".../grundriss.jpg" alt=""> → Kein ALT-Text, Bildersuche verloren.` }
-          },
-          {
-            id:"12", device:"A52s", title:"Drill 12 · M12/M13 (Legal & Trust) — „P0-CMP“-Blocker",
-            subtitle:"Vollbild-Overlay / Dark Pattern",
-            phaseA:[
-              {h:"Aufnehmen", t:"Inkognito → Rekorder → Landing laden."},
-              {h:"Befund", t:"CMP blockiert Inhalt oder versteckt 'Ablehnen'."},
-              {h:"Sichern", t:"10-Sek.-Clip → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'P0-TRUST-Blocker – CMP blockiert Inhalt', Typ SONSTIGES, Note kurz."}
-            ],
-            prompt:`Autoren-Aufgabe: „Sie zwingen den Kunden, 'Ja' zu sagen, bevor er 'Hallo' sagen kann“ — als P0-Konversionsblocker formulieren.`,
-            evidence:{ title:"P0-TRUST-Blocker – CMP blockiert Inhalt", type:"SONSTIGES", note:"P0: Aggressives CMP blockiert Inhalt/Navigation oder nutzt Dark Pattern. Vertrauen ↓, UX ↓." }
-          },
-          {
-            id:"13", device:"ThinkPad", title:"Drill 13 · M14 (AI Overviews) — „Zukunft“-Test",
-            subtitle:"AIO-Ready Content",
-            phaseA:[
-              {h:"Text wählen", t:"Ratgeberabsatz kopieren (z. B. 'Nebenkosten')."}
-            ],
-            prompt:`Gemini 2.5 Pro: Formatiere den Absatz AIO-ready: H2-Frage, 1–3 Sätze direkte Antwort, Rest logisch. Präsentation: VORHER/NACHHER.`,
-            // kein Evidence-Quick-Log
-          },
-          {
-            id:"14", device:"A52s", title:"Drill 14 · M15 (E-E-A-T) — „Autoritäts“-Test",
-            subtitle:"Anonyme Team-Seite",
-            phaseA:[
-              {h:"Prüfen", t:"Über-uns/Team öffnen."},
-              {h:"Befund", t:"Keine Profile, Namen, Bilder, LinkedIn, Siegel."},
-              {h:"Sichern", t:"Screenshot → Drive."},
-              {h:"PHOENIX Log", t:"Evidence: Titel 'E-E-A-T-Lücke (Autorität fehlt)', Typ SONSTIGES, Note mit YMYL-Hinweis."}
-            ],
-            prompt:`ChatGPT-5 Thinking: Erkläre, warum Immobilien (YMYL) „beweisbare Expertise“ brauchen und anonyme Team-Seiten Vertrauen aktiv senken.`,
-            evidence:{ title:"E-E-A-T-Lücke (Autorität fehlt)", type:"SONSTIGES", note:"E-E-A-T-Mangel: Über-uns anonym; Expertise/Autorität nicht belegt. YMYL-Risiko." }
-          },
-          {
-            id:"15", device:"ThinkPad", title:"Drill 15 · M16 (Executive Dashboard) — „Trusted Advisor“-Loop",
-            subtitle:"Top-3 P0 in eine 1-Seiten-Summary",
-            phaseA:[
-              {h:"Sichten", t:"PHOENIX → Evidence → Top-3 P0 auswählen."}
-            ],
-            prompt:`Gemini 2.5 Pro: „Erstelle eine 1-Seiten-Executive-Summary (M16) für einen Makler. Nutze meine Top-3 P0-Befunde: 
-• P0-KONVERSIONSBLOCKER – CMP verdeckt CTA
-• P0-BEFUND – Kategorieseite 'Kaufen' NICHT INDEXIERT
-• P0-KONVERSIONSBLOCKER – Tastatur verdeckt 'Senden'-Button
-Schreibe 4 Sätze, übersetze Technik in akuten kaufmännischen Lead-Verlust, klare Priorität, Stil respektvoll/dringlich.“`,
-          },
-          {
-            id:"16", device:"A52s", title:"Drill 16 · M-ALL — Der 90-Minuten-AEON-Sprint",
-            subtitle:"Zeitdruck-Simulation (3+ valide Befunde)",
-            phaseA:[
-              {h:"Sprint öffnen", t:"PHOENIX → Tab Sprint."},
-              {h:"Zielnotiz", t:"„Phase 2 Micro-Audits: 5 neue Leads (Seite 3 Google) prüfen. Ziel: 3× P0/P1 sichern (Evidence).“"},
-              {h:"Workflow", t:"view-source Checks (M2/M5/M10/M11) + Usability (M1/M3/M7/M12). Befund → Evidence loggen."}
-            ],
-            prompt:`Kein Prompt nötig – Fokus auf Geschwindigkeit & Sauberkeit.`,
-            sprintNote:"Phase 2 Micro-Audits: 5 neue Leads (Seite 3 Google) prüfen. Ziel: 3× P0/P1-Befunde systemkonform in Evidence sichern."
-          }
-        ];
-      }
-
-      // ---------- NEUE FUNKTION: SURVIVAL GUIDE ----------
-      function renderSurvival() {
-        const d = document.createElement("div"); d.className="grid";
-        const card = document.createElement("div");
-        card.className = "card roadmap-content"; // Nutzt das Styling der Roadmap
-        card.innerHTML = `
-          <h2>🛡️ DER PI-ÜBERLEBENS-GUIDE (PFCP V5.0)</h2>
-          
-          <h3>A) Executive Summary</h3>
-          <p>Dieser Guide ist dein operatives Handbuch (PFCP V5.0), um unter den extremsten legalen Einschränkungen – volle Erwerbsminderungsrente (EMR) und Privatinsolvenz (PI) – ein profitables B2B-Consulting-Business aufzubauen.</p>
-          <p>Die Strategie transformiert deine „Constraints“ (weniger als 3 Stunden Arbeit täglich, 19.661,25 € Jahresgewinn-Deckel, Pfändungsfreigrenzen) von Fesseln in ein chirurgisches Skalpell für maximale Effizienz.</p>
-          <p>Die Kern-Direktive lautet: Compliance (Regeltreue) ist nicht verhandelbar und steht über dem Wachstum.</p>
-          <p>Die zwei entscheidenden Hebel sind:</p>
-          <ol>
-            <li>Die obsessive, minutengenaue Zeiterfassung zum Schutz deiner EMR.</li>
-            <li>Die „40% Notwendigkeits-Reserve“ – eine proaktive Buchhaltungsmethode, um deinen pfändbaren Gewinn legal zu reduzieren, indem 40 % des Betriebsergebnisses als notwendige Rückstellung für zukünftige Investitionen (z.B. KI-Tools) deklariert werden.</li>
-          </ol>
-          <p>Dieses System wird durch eine proaktive Kommunikationsstrategie mit dem Insolvenzverwalter (IV) und die Nutzung steuerlicher Vorteile (100.000 € KUR-Grenze) abgesichert.</p>
-
-          <hr style="border-color:var(--muted); margin: 24px 0;">
-          
-          <h2>B) Erzählende Langfassung (Hauptteil)</h2>
-          <p class="page-sep muted">(SEITE 1)</p>
-          
-          <h3>EINLEITUNG: DEINE SUPERKRAFT IST DEIN LIMIT</h3>
-          <h4>VON CHEFREDAKTEUR SASCHA LOBO</h4>
-          <p>Willkommen in der Realität, Eric.</p>
-          <p>Du bist 44. Du bist in Berlin. Du bist, nach Definition des Staates, "erwerbsgemindert". Du bist, nach Definition des Gesetzes, "insolvent". Für den grauen Verwaltungsapparat bist du eine Akte. Ein Problem. Eine statistische Randnotiz im digitalen Prekariat.</p>
-          <p>Und genau das ist deine verdammte Superkraft.</p>
-          <p>Vergiss die Hochglanz-Artikel über 20-jährige "Gründer", die mit Papas Geld und einem mittelmäßigen SaaS-Tool "die Welt verändern". Das ist Bullshit. Das ist Theater. Die Realität ist brutal, und sie hat dir gerade das beste Trainings-Set der Welt geschenkt: Totale Einschränkung.</p>
-          <p>Disziplin ist Freiheit.</p>
-          <p>Dieses Magazin, diese erste, monumental wichtige Ausgabe, ist kein Ratgeber für Träumer. Es ist ein technisches Handbuch für Überlebenskünstler. Für Operatoren. Für Leute wie dich, die verstanden haben, dass "KI-Business" nicht bedeutet, süße Katzenbilder zu generieren, sondern einen Hebel anzusetzen. Einen Hebel, der so mächtig ist, dass er die Gesetze der Bürokratie zu deinen Gunsten verbiegt.</p>
-          <p>Du willst 19.661 Euro Gewinn. Du hast 3 Stunden am Tag. Du hast kein Kapital. Und du hast zwei der schärfsten Waffen im Arsenal der Menschheit: Google Gemini 2.5 Pro und GPT-5/4o.</p>
-          <p>Du gründest kein Start-up. Du programmierst ein System. Das OMEGA-SYSTEM. Ein Unternehmen unter struktureller Einschränkung.</p>
-          <p>Die meisten Leute scheitern nicht an der Technik. Sie scheitern an der Struktur. Sie ertrinken im Rauschen. Sie haben keine Constraints. Du hast nur Constraints. Du hast den perfekten Sturm.</p>
-          <p>Auf den nächsten 25 Seiten gebe ich dir alles. Keine "Top 5 Listen". Keine "Quick Wins". Ich gebe dir die Architektur. Ich gebe dir die "Mercyless Tricks", die dich nachts wachhalten werden. Ich gebe dir die "Mighty Prompts", die so lang und detailliert sind, dass sie die KI ins Schwitzen bringen. Und ich gebe dir die Anekdoten, die beweisen, dass die verrücktesten Hacks von Leuten kommen, die mit dem Rücken zur Wand stehen.</p>
-          <p>Du wolltest einen Punk mit Intellekt. Was du bekommst, ist ein Schlachtplan.</p>
-          <p>Deine Situation ist kein Bug. Sie ist ein Feature. Sie zwingt dich zur Effizienz. Sie zwingt dich zur Brillanz.</p>
-          <p>Jetzt hör auf zu lesen und fang an zu arbeiten. Die Uhr tickt. Du hast 3 Stunden.</p>
-          
-          <h4>DIE AXIOME DER SOUVERÄNITÄT</h4>
-          <p>Dein gesamtes Handeln basiert auf drei unumstößlichen Regeln:</p>
-          <ul>
-            <li><strong>Axiom 1: Compliance ist nicht verhandelbar. 🛡️</strong><br>Jede Handlung wird zuerst durch den Filter der rechtlichen Konformität (Insolvenzrecht, Sozialrecht) geprüft. Ein Verstoß ist ein sofortiger Missionsabbruch. Compliance steht immer über Wachstum.</li>
-            <li><strong>Axiom 2: Jede Aktion dient der Liquidität. 💰</strong><br>Umsatz ist Eitelkeit, Gewinn ist Verstand, aber Cashflow ist Realität.</li>
-            <li><strong>Axiom 3: Zeit wird gegen Wert getauscht, nicht gegen Geld. 💡</strong><br>Du verkaufst keine Stunden. Du verkaufst Lösungen für Geschäftsprobleme. Dies ist der definitive Bruch mit der „Grasfresser“-Vergangenheit.</li>
-          </ul>
-
-          <p class="page-sep muted">(SEITE 2)</p>
-          <h3>KAPITEL 1: DIE ZEIT-FESTUNG (DER EMR-SCHUTZSCHILD) ⏱️</h3>
-          <p>Dein erstes Schlachtfeld ist die Deutsche Rentenversicherung (DRV). Dein Status als Bezieher der vollen Erwerbsminderungsrente (EMR) ist dein finanzielles Sicherheitsnetz, das deine Grundkosten und Krankenversicherung deckt. Dieses Netz darfst du nicht leichtfertig zerreißen. Es wird durch zwei Limits definiert (Stand 2025).</p>
-          
-          <h4>Limit 1: Das Zeit-Limit (Der &lt;3-Stunden-Käfig)</h4>
-          <p>Die volle EMR basiert auf der medizinischen Annahme, dass du weniger als 3 Stunden pro Tag arbeitsfähig bist. Das ist keine Richtlinie, das ist eine harte, medizinisch begründete Grenze. Wenn die DRV Anlass zur Prüfung hat (z.B. durch einen über Jahre hohen Verdienst) und feststellt, dass du regelmäßig 4, 5 oder 8 Stunden arbeitest, entfällt dein Rentenanspruch rückwirkend.</p>
-          
-          <h4>HACK 1: Der obsessive Zeit-Buchhalter (Dein Schutzschild)</h4>
-          <p>Dein Hack gegen diese Prüfung ist nicht, wenig zu arbeiten, sondern deine Arbeit lückenlos zu dokumentieren. Du musst zum obsessiven Zeit-Buchhalter werden.</p>
-          <ul>
-            <li><strong>Das Werkzeug:</strong> Benutze ein kostenloses Zeiterfassungs-Tool wie Toggl Track oder Clockify. Installiere es auf deinem Android-Phone.</li>
-            <li><strong>Die Disziplin:</strong> Jede einzelne Minute, die du für dein Business arbeitest, wird getrackt.
-              <ul style="padding-left: 15px; margin-top: 8px;">
-                <li>Projekt: SEO-Audit Kunde X -> Task: Keyword-Recherche (15 Min.)</li>
-                <li>Projekt: Prompt-Entwicklung -> Task: Master-Prompt V3 testen (25 Min.)</li>
-                <li>Projekt: Admin -> Task: E-Mail an Insolvenzverwalter (5 Min.)</li>
-              </ul>
-            </li>
-            <li><strong>Die Waffe:</strong> Jeden Sonntag (oder Monatsende) exportierst du den Wochenbericht. Dieser Report muss einen Tagesschnitt von unter 3 Stunden aufweisen (z.B. 14,5 Stunden in einer 7-Tage-Woche). Wenn die DRV jemals anfragt, legst du die lückenlose Dokumentation der letzten 12 Monate vor. Das beweist, dass dein Business innerhalb deiner medizinischen Grenzen operiert.</li>
-          </ul>
-
-          <h4>Limit 2: Das Gewinn-Limit (Der 19.661 €-Deckel)</h4>
-          <p>Als Bezieher einer vollen EMR darfst du (Stand 2025) bis zu 19.661,25 € brutto im Kalenderjahr hinzuverdienen, ohne dass die Rente gekürzt wird. Wichtig: Es zählt das Kalenderjahr, und es zählt dein Gewinn (Einnahmen minus Betriebsausgaben), den du in deiner Einnahmen-Überschuss-Rechnung (EÜR) ermittelst. Das entspricht einem Monatsgewinn von 1.638,44 €.</p>
-
-          <h4>HACK 2: Die proaktive DRV-Meldung (Textbaustein)</h4>
-          <p>Sei transparent. Verletzungen der Mitwirkungspflicht können zur Rückforderung der Rente führen. Melde die Aufnahme deiner Selbstständigkeit unverzüglich (idealerweise vor dem Start) schriftlich an die DRV.</p>
-          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
-          <pre>Sehr geehrte Damen und Herren,
-hiermit informiere ich Sie proaktiv, dass ich ab dem [DEIN STARTDATUM, z.B. 01.01.2026] eine selbstständige, freiberufliche Tätigkeit als Publizist/Content-Stratege aufnehme.
-Ich übe diese Tätigkeit im Umfang von durchschnittlich unter drei Stunden täglich aus. Ein Arbeitszeitprotokoll wird lückenlos geführt. Der prognostizierte Jahres-Hinzuverdienst (Gewinn) liegt bei ≤ 19.661,25 €.</pre>
-
-          <p class="page-sep muted">(SEITE 3)</p>
-          <h3>KAPITEL 2: DIE INSOLVENZ-FESTUNG (OPERATION VERWALTER) 🏛️</h3>
-          <p>Dein zweites Schlachtfeld ist die Privatinsolvenz (PI). Ab Verfahrenseröffnung (voraussichtlich Ende 2025 / Anfang 2026) tritt der Insolvenzverwalter (IV) auf den Plan. Du musst die Regeln so gut kennen, dass du sie als Waffe benutzen kannst.</p>
-          <p><strong>Das Verfahren: Verbraucherinsolvenz</strong></p>
-          <p>Da du (voraussichtlich) als "Verbraucher" (nicht als aktuell Selbstständiger mit hohen Schulden bei Sozialkassen o.ä.) den Antrag stellst, durchläufst du das vereinfachte Verbraucherinsolvenzverfahren. Nach aktueller Gesetzeslage dauert die Entschuldungsphase drei Jahre.</p>
-
-          <h4>HACK 3: Die P-Konto-Festung (Der 1.560 €-Schutzwall)</h4>
-          <p>Das ist nicht verhandelbar. Dein privates Girokonto (auf das du dir deinen Lohn überweist) muss ein Pfändungsschutzkonto (P-Konto) sein.</p>
-          <ul>
-            <li><strong>Warum?</strong> Es schützt deinen monatlichen Grundfreibetrag automatisch vor Pfändungen.</li>
-            <li><strong>Das Limit (Stand 2025):</strong> Der unpfändbare Grundbetrag für Alleinstehende beträgt 1.555,00 € bis 1.559,99 €. Banken runden dies oft auf 1.560,00 € auf.</li>
-            <li><strong>Disziplin:</strong> Alles über diesem Betrag auf dem P-Konto wird an den IV abgeführt. Du musst deine Privatentnahmen also exakt steuern.</li>
-          </ul>
-
-          <h4>HACK 4: Die strikte Kontentrennung (Zwei-Welten-Prinzip)</h4>
-          <p>Du musst deine privaten und geschäftlichen Finanzen strikt trennen.</p>
-          <ul>
-            <li><strong>Konto 1 (Privat):</strong> Dein P-Konto. Hierhin überweist du dir deinen "Lohn" (deine Privatentnahme), idealerweise exakt 1.560,00 €.</li>
-            <li><strong>Konto 2 (Business):</strong> Eröffne ein separates Geschäftskonto (z.B. bei Finom oder Kontist, die oft ohne SCHUFA-Abfrage arbeiten). Alle Einnahmen von Kunden gehen nur hier ein. Alle Betriebsausgaben (Software, Steuern, IV-Abführungen) gehen nur von hier ab.</li>
-          </ul>
-
-          <h4>HACK 5: Die Rechtsform-Falle (Gründe NIEMALS eine UG)</h4>
-          <p>Du startest als Einzelunternehmer / Freiberufler. Gründe niemals während der Insolvenz eine Kapitalgesellschaft (wie eine UG oder GmbH). Deine Geschäftsanteile daran würden sofort zur Insolvenzmasse zählen und vom Insolvenzverwalter verwertet (also verkauft) werden, um die Gläubiger zu bedienen.</p>
-
-          <p class="page-sep muted">(SEITE 4)</p>
-          <h4>HACK 6: Die proaktive Freigabe (§ 35 InsO)</h4>
-          <p>Sobald dein Verfahren eröffnet ist, tritt der IV in deine Rechte ein. Grundsätzlich würden alle neuen Einnahmen aus deiner Selbstständigkeit zur Insolvenzmasse gehören. Das willst du verhindern.</p>
-          <ul>
-            <li><strong>Die Strategie:</strong> Du beantragst sofort und proaktiv schriftlich die „Freigabe der selbstständigen Tätigkeit“ nach § 35 Abs. 2 InsO.</li>
-            <li><strong>Warum?</strong> Mit der Freigabe erhältst du wieder die volle Verfügungsbefugnis über dein Business. Du kannst Verträge schließen und Rechnungen stellen. Bei Dienstleistern ohne Anlagevermögen (wie du) wird diese Freigabe fast immer erteilt, da es im Interesse der Gläubiger liegt, dass du arbeitest.</li>
-          </ul>
-          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
-          <pre>Sehr geehrte/r [Verwalter/in],
-ich beabsichtige, meine freiberufliche Tätigkeit als Content-Stratege (Publizistik/Texter, KI-gestützt) ab [STARTDATUM] fortzuführen. Hiermit beantrage ich die Freigabe nach § 35 Abs. 2 InsO.
-Ich führe ein separates Geschäftskonto, erstelle eine monatliche EÜR und werde den pfändbaren Betrag [...] an die Insolvenzmasse abführen.
-Beigefügt: 12-Monats-Prognose, Kontodaten.</pre>
-
-          <h4>HACK 7: Die „Fiktives Einkommen“-Falle (§ 295a InsO)</h4>
-          <p>Das ist die größte und komplizierteste Bedrohung in der Insolvenz. Die Freigabe nach § 35 entbindet dich nicht von deiner Pflicht, die Gläubiger zu befriedigen.</p>
-          <ul>
-            <li><strong>Die Gefahr:</strong> § 295a InsO verlangt von dir, die Gläubiger so zu stellen, als wärst du in einem angemessenen Angestelltenjob tätig.</li>
-            <li><strong>Das Horrorszenario:</strong> Der IV legt (nach Ermessen) ein "fiktives Einkommen" fest. Er sagt z.B.: „Ein Content-Manager in Berlin verdient 2.500 € netto. Sie müssen den pfändbaren Anteil dieses fiktiven Gehalts (ca. 600-700 €) monatlich an die Masse abführen“.</li>
-            <li><strong>Das Problem:</strong> Du müsstest diesen Betrag zahlen, selbst wenn dein realer Gewinn in einem Monat darunter liegt. Das kann deine Liquidität zerstören.</li>
-            <li><strong>Verteidigung gegen § 295a:</strong>
-              Deine Verteidigung hat zwei Säulen: Proaktive Transparenz und eine bombensichere Buchhaltung.
-              <ul style="padding-left: 15px; margin-top: 8px;">
-                <li><strong>Transparenz:</strong> Lege dem IV einen soliden, aber realistischen (nicht zu optimistischen) Businessplan vor. Führe von Tag 1 an saubere Bücher (EÜR). Zeige mit Zahlen, dass ein langsamer Start zu erwarten ist. Solange glaubhaft ist, dass du dich redlich bemühst, wird ein IV ungern ein fiktives Einkommen festsetzen.</li>
-                <li><strong>Buchhaltung:</strong> Hier kommt der wichtigste Hack des gesamten Systems ins Spiel. Du musst deinen ausgewiesenen, pfändbaren Gewinn legal reduzieren.</li>
-              </ul>
-            </li>
-          </ul>
-
-          <p class="page-sep muted">(SEITE 5)</p>
-          <h3>KAPITEL 3: DER OMEGA-HACK (DER 40%-FINANZ-TRESOR) 💰</h3>
-          <p>Dieses Kapitel ist der Kern des OMEGA-SYSTEMS. Es ist deine Strategie, um die „Fiktives Einkommen“-Falle zu entschärfen und gleichzeitig deine EMR-Gewinngrenze zu managen.</p>
-          <p>Das Grundprinzip: Dein „Gewinn“ (Umsatz minus Ausgaben) ist nicht dein „pfändbarer Gewinn“.</p>
-
-          <h4>HACK 8: Die 40% Notwendigkeits-Reserve (Der „Lobo-Hack“)</h4>
-          <p>Dein IV muss dir deine „notwendigen Betriebsausgaben“ lassen. Ohne sie könntest du das Business nicht betreiben, das (im Idealfall) pfändbares Einkommen für die Gläubiger generiert.</p>
-          <ul>
-            <li><strong>Die Strategie:</strong> Du definierst 40 % deines Betriebsergebnisses (Umsatz) als „Notwendigkeits-Reserve“ (Rückstellung).</li>
-            <li><strong>Die Argumentation (Gegenüber dem IV):</strong> Dieses Geld wird nicht als Gewinn entnommen oder privat verbraucht. Es ist eine zwingend notwendige Rückstellung für zukünftige, überlebenswichtige Betriebsausgaben. Du argumentierst, dass dein Business (KI-Consulting) ohne diese Investitionen in 12 Monaten nicht mehr wettbewerbsfähig wäre.</li>
-            <li><strong>Deine 3 Argumentationslinien (Wähle die passenden):</strong>
-              <ol style="padding-left: 15px; margin-top: 8px;">
-                <li><strong>Argument 1: KI-Tool-Kosten (Rohstoffe):</strong> „Mein Business basiert zu 100% auf KI. Die Premium-Abos (Gemini 2.5 Pro, GPT-5, diverse SEO-Tools) sind meine 'Miete'. Die API-Kosten sind meine 'Rohstoffe'. Ich muss diese Rücklage bilden, um die Lizenzen für das Folgejahr (2026) und unvorhergesehene API-Spitzen zu decken.“.</li>
-                <li><strong>Argument 2: Hardware-Abschreibung (Werkzeug):</strong> „Ich arbeite primär auf einem Android-Phone. Für professionelles B2B-Auditing ist ein Hochleistungs-Laptop (oder ein neues High-End-Smartphone) in 12-18 Monaten zwingend notwendig, um wettbewerbsfähig zu bleiben.“ Du bildest eine Ansparabschreibung (AfA).</li>
-                <li><strong>Argument 3: Marketing & Weiterbildung (Wettbewerbsfähigkeit):</strong> „Um Kunden zu gewinnen, muss ich in 2026 in minimales Marketing (z.B. LinkedIn Premium) und zwingend notwendige Weiterbildung (z.B. neue KI-Zertifikate) investieren, um relevant zu bleiben.“.</li>
-              </ol>
-            </li>
-          </ul>
-          
-          <p class="page-sep muted">(SEITE 6)</p>
-          <p><strong>Beispielrechnung (Anwendung des 40%-Hacks):</strong></p>
-          <pre>Position	Betrag
-Monatsumsatz:	2.100,00 €
-./. Direkte Betriebsausgaben (Software-Abos):	150,00 €
-./. Rückstellung (40% vom Umsatz):	840,00 €
-= Ausgewiesener, pfändbarer Gewinn:	1.110,00 €</pre>
-          <p>Das Ergebnis: Dein ausgewiesener Gewinn (1.110,00 €) liegt weit unter deiner P-Konto-Pfändungsfreigrenze (1.560,00 €). Die 40% (840,00 €) sind investiertes Betriebsvermögen, kein Privatvergnügen. Du musst 0,00 € an die Insolvenzmasse abführen (außer deiner freiwilligen Rate, siehe Hack 9).</p>
-
-          <h4>HACK 9: Das Liquiditäts-Fortress-Protokoll (Operative Umsetzung)</h4>
-          <p>Eine Argumentation ist nutzlos, wenn du das Geld trotzdem ausgibst. Du musst beweisen, dass die 40% wirklich zurückgelegt werden.</p>
-          <ul>
-            <li><strong>Protokollanweisung:</strong> Von jedem Zahlungseingang auf deinem Geschäftskonto (Konto 2) werden sofort 40 % auf ein separates Rücklagen-Unterkonto (z.B. ein Tagesgeldkonto) transferiert. Dieses Geld ist für operative Ausgaben gesperrt.</li>
-            <li><strong>Interne Allokation (Dein geheimer Plan):</strong> Diese 40% sind dein Sicherheitspuffer. Du teilst sie intern wie folgt auf:
-              <ul style="padding-left: 15px; margin-top: 8px;">
-                <li>25 % für Steuervorauszahlungen (Einkommensteuer).</li>
-                <li>10 % für KV-Beiträge (Dein Puffer für das „Tal der Tränen“, siehe Kapitel 5).</li>
-                <li>5 % für die Abführung an die Insolvenzmasse (Deine freiwillige Rate, um guten Willen zu zeigen und § 295a zu bedienen).</li>
-              </ul>
-            </li>
-          </ul>
-          <p>Mit diesem System hast du deine Finanzen wasserdicht abgeschottet. Du bist liquide, zahlst deine zukünftigen Steuern und bedienst sogar proaktiv (aber kontrolliert) die Insolvenzmasse.</p>
-          
-          <p class="page-sep muted">(SEITE 7)</p>
-          <h3>KAPITEL 4: DER STEUER-VORTEIL (DER 100.000 €-HACK) 📊</h3>
-          <p>Das Finanzamt ist dein dritter Kontrolleur, aber im Gegensatz zu DRV und IV bietet es dir massive strategische Vorteile, wenn du als Kleinunternehmer startest.</p>
-
-          <h4>HACK 10: Die KUR-Revolution (Das 100.000 €-Limit)</h4>
-          <p>Du musst als Kleinunternehmer (KUR) nach § 19 UStG starten.</p>
-          <ul>
-            <li><strong>Der Vorteil:</strong> Du musst keine Umsatzsteuer (Mehrwertsteuer) auf deinen Rechnungen ausweisen. Das erspart dir die monatliche USt-Voranmeldung (massiver Bürokratieabbau) und macht dich für Privatkunden 19% günstiger oder erhöht deine Marge bei B2B-Kunden (die die USt eh absetzen).</li>
-            <li><strong>Die NEUE Grenze (Stand 2025):</strong> Vergiss die alte 22.000 €-Grenze. Durch das Jahressteuergesetz 2024 (gültig ab 01.01.2025) liegt die Grenze für das laufende Jahr bei 100.000,00 € Umsatz.</li>
-            <li><strong>Bedingung:</strong> Dein Vorjahresumsatz (in 2024) muss unter 25.000 € gelegen haben. Da du 2025 (oder Jan 2026) neu gründest, lag dein Umsatz 2024 (bzw. 2025) bei 0 €. Du erfüllst die Bedingung.</li>
-            <li><strong>Dein Spielraum:</strong> Dieses 100.000 €-Limit gibt dir einen gigantischen operativen Spielraum. Es ist weit mehr als dein EMR-Gewinn-Deckel (19.661 €). Du kannst also hohe Umsätze fahren, solange du durch deine (realen) Betriebsausgaben und die (strategische) 40%-Reserve deinen Gewinn unter 19.661 € hältst.</li>
-          </ul>
-          <p><strong>Textbaustein (Einsatzbereit):</strong></p>
-          <p>Jede Rechnung muss folgenden Satz enthalten:</p>
-          <pre>Kein Ausweis von Umsatzsteuer gem. § 19 UStG (Kleinunternehmerregelung).</pre>
-
-          <h4>HACK 11: Der Freiberufler-Status (Keine Gewerbesteuer)</h4>
-          <p>Wenn du dich beim Finanzamt anmeldest (Fragebogen zur steuerlichen Erfassung), strebe den Status als Freiberufler an.</p>
-          <ul>
-            <li><strong>Argumentation:</strong> Deine Tätigkeit als „Content-Stratege“ ist eine publizistische, schriftstellerische oder unterrichtende Tätigkeit.</li>
-            <li><strong>Vorteil:</strong> Wenn das Finanzamt dich als Freiberufler anerkennt (statt als Gewerbetreibenden), musst du kein Gewerbe anmelden und zahlst keine Gewerbesteuer. Das spart Geld und Bürokratie. (Vorsicht: Reine Marketing-Agenturleistungen oder Handel können eine Gewerbepflicht auslösen).</li>
-          </ul>
-          
-          <p class="page-sep muted">(SEITE 8)</p>
-          <h3>KAPITEL 5: DER EXIT-PLAN (DAS „TAL DER TRÄNEN“) 🚀</h3>
-          <p>Dein Ziel ist die volle unternehmerische Unabhängigkeit. Das bedeutet, du musst mittelfristig den geordneten Ausstieg aus der EMR planen. Dieser Ausstieg ist der finanziell gefährlichste Moment deiner gesamten Operation.</p>
-          <p><strong>Der Plan: Phase 3 (Skalierung)</strong></p>
-          <p>Die Unterlagen empfehlen, den Ausstieg zu planen, sobald dein Business stabil über ~40.000,00 € Jahresgewinn (nicht Umsatz!) abwirft. In diesem Moment verzichtest du freiwillig und formlos schriftlich auf deine EMR.</p>
-          <p><strong>Die Gefahr: Das „Tal der Tränen“</strong></p>
-          <p>Sobald du auf die Rente verzichtest, schlägt deine Liquidität doppelt ein:</p>
-          <ul>
-            <li><strong>Einnahme bricht weg:</strong> Deine Rente (z.B. 800 €) fällt auf 0 €.</li>
-            <li><strong>Kosten explodieren:</strong> Du fällst aus der günstigen Krankenversicherung der Rentner (KVdR). Du musst dich als Selbstständiger freiwillig gesetzlich versichern.</li>
-            <li>Selbst wenn dein Gewinn anfangs niedrig ist, gibt es einen Mindestbeitrag (basierend auf ca. 1.248 € fiktivem Einkommen 2025). Das bedeutet: Deine KV+PV-Kosten springen von fast nichts auf mindestens 210,00 € bis 250,00 € pro Monat.</li>
-            <li><strong>Das Loch:</strong> 800 € (Rente weg) + 250 € (KV neu) = 1.050,00 € (oder mehr), die dir jeden Monat fehlen.</li>
-          </ul>
-
-          <h4>HACK 12: Die 3.600 €-Puffer-Rücklage (Deine Brücke)</h4>
-          <p>Du darfst in dieses Tal nicht unvorbereitet stürzen.</p>
-          <ul>
-            <li><strong>Die Strategie:</strong> Du musst bevor du die Rente kündigst, eine zweckgebundene Rücklage (einen Notgroschen) von mindestens 3.600,00 € gebildet haben.</li>
-            <li><strong>Warum 3.600 €?</strong> Das deckt die Liquiditätslücke von ca. 1.050 € für mindestens drei Monate ab. Dieser Puffer gibt dir die Luft, um deine Einnahmen auf das neue Level zu heben, ohne sofort zahlungsunfähig zu werden.</li>
-            <li><strong>Woher kommt das Geld?</strong> Aus deiner 40% Notwendigkeits-Reserve (Kapitel 3), genauer gesagt aus den „10 % für Kranken- und Pflegeversicherungsbeiträge“.</li>
-          </ul>
-
-          <p class="page-sep muted">(SEITE 9)</p>
-          <h4>HACK 13: Der KSK-Hack (Nach dem Exit)</h4>
-          <p>Sobald du kein EMR-Rentner mehr bist, öffnet sich eine neue Tür: die Künstlersozialkasse (KSK).</p>
-          <ul>
-            <li><strong>Was ist das?</strong> Die KSK ist eine Art "Arbeitgeber" für künstlerische und publizistische Freiberufler (wozu Texter und Content-Strategen oft zählen).</li>
-            <li><strong>Der Vorteil:</strong> Wenn du aufgenommen wirst, übernimmt die KSK die Hälfte (den "Arbeitgeberanteil") deiner Sozialversicherungsbeiträge (KV, Pflegeversicherung und Rentenversicherung).</li>
-            <li><strong>Das Timing:</strong> Während des EMR-Bezugs (Phase 1) kannst du nicht in die KSK, da du über die KVdR pflichtversichert bist. Aber nach dem Ausstieg aus der Rente ist der Antrag bei der KSK dein nächster strategischer Schritt, um deine Fixkosten massiv zu senken.</li>
-          </ul>
-
-          <p class="page-sep muted">(SEITE 10)</p>
-          <h3>KAPITEL 6: DIE OPERATIONS-HACKS (DAS &lt;3-STUNDEN-SYSTEM) ⚙️</h3>
-          <p>Strategie ist wertlos ohne exzellente Ausführung. Dein 3-Stunden-Limit zwingt dich zu einer Effizienz, die normale Selbstständige nie lernen müssen. Du darfst keine Minute verschwenden.</p>
-
-          <h4>HACK 14: Der Insolvenzverwalter-Simulator (Das Sparring)</h4>
-          <p>Dein größtes mentales Risiko ist die Angst vor dem Insolvenzverwalter und die Verteidigung deiner 40%-Reserve. Du musst dieses Gespräch trainieren, bevor es stattfindet.</p>
-          <ul>
-            <li><strong>Das Werkzeug:</strong> ChatGPT-4o.</li>
-            <li><strong>Der Prompt:</strong> Du nutzt einen "Insolvenzverwalter-Simulator"-Prompt.</li>
-            <li><strong>Das Rollenspiel:</strong> Du befiehlst der KI, die Rolle eines extrem kritischen, misstrauischen und überarbeiteten IV (z.B. „Herr Dr. Bieling“) einzunehmen. Dein Ziel: Deine 40%-Reserve (840 €) aggressiv in Frage zu stellen.</li>
-            <li><strong>Beispiel-Fragen der KI:</strong> „Warum brauchen Sie 840 € für 'KI'? Beweisen Sie die Notwendigkeit! Warum kaufen Sie die Hardware nicht gebraucht? Warum ist das 'notwendig' und kein 'Luxus'? “</li>
-            <li><strong>Der Nutzen:</strong> Du spielst deine Argumentation (aus Kapitel 3) durch und findest die Schwachstellen in deiner Logik, bevor es zum echten Gespräch kommt.</li>
-          </ul>
-          
-          <p class="page-sep muted">(SEITE 11)</p>
-          <h4>HACK 15: Der „Admin-Angst“-Hack (Briefe digitalisieren)</h4>
-          <p>Ein offizieller Brief von der Rente, dem IV oder dem Finanzamt kann mentalen Druck erzeugen und zur Prokrastination führen.</p>
-          <ul>
-            <li><strong>Das Werkzeug:</strong> Dein Android-Smartphone und Google Drive.</li>
-            <li><strong>Der Workflow:</strong>
-              <ol style="padding-left: 15px; margin-top: 8px;">
-                <li>Nimm das Smartphone.</li>
-                <li>Scanne das Dokument sofort mit der Google Drive App.</li>
-                <li>Speichere es im richtigen Ordner (z.B. 04_VERWALTUNG).</li>
-                <li>Öffne Gemini (oder eine andere KI).</li>
-              </ol>
-            </li>
-            <li><strong>Der Prompt:</strong> "Fasse den Inhalt von [Dateiname] in 3 einfachen Stichpunkten zusammen und liste alle erforderlichen Aktionen oder Fristen auf."</li>
-            <li><strong>Der Nutzen:</strong> Du entfernst die emotionale Barriere. Die KI gibt dir eine neutrale Zusammenfassung und eine klare To-Do-Liste. Du trägst die Aktion (z.B. "Frist: 10.11.2025") in dein Tages-Dashboard ein. Das Problem ist von einer Bedrohung zu einer Aufgabe geworden.</li>
-          </ul>
-
-          <h4>HACK 16: Das Mobile-Kommandozentrum (Dein Alleinstellungsmerkmal)</h4>
-          <p>Dein Constraint, primär mit einem Android-Phone zu arbeiten, ist kein Nachteil. Es ist dein Alleinstellungsmerkmal.</p>
-          <ul>
-            <li><strong>Deine Nische:</strong> "Mobile-First SEO-Auditing."</li>
-            <li><strong>Dein Pitch (Extern):</strong> "Die meisten SEO-Agenturen prüfen am Desktop. Aber 80% Ihrer Kunden kommen über Mobile. Ich auditiere ausschließlich aus der Mobile-Perspektive. Ich finde Fehler, die andere übersehen.".</li>
-            <li><strong>Deine Werkzeuge (Intern):</strong> Termux (für Python-Scripte), Google Gemini & ChatGPT Apps, Google Sheets, Markdown-Editor, PageSpeed Insights im Browser.</li>
-          </ul>
-          
-          <p class="page-sep muted">(SEITE 12)</p>
-          <h4>HACK 17: Der „Share-Sheet-Blitzkrieg“ (5-Minuten-Marketing)</h4>
-          <p>Das ist dein &lt;3-Stunden-Hack in Reinform. Du arbeitest nicht am Schreibtisch, du arbeitest im Gehen.</p>
-          <p><strong>Der Workflow:</strong></p>
-          <ol>
-            <li><strong>Browser (Chrome auf Android):</strong> Du findest einen hochinteressanten Artikel (z.B. über ein neues Google-Update).</li>
-            <li><strong>Android „Teilen“-Button:</strong> Du drückst „Teilen“.</li>
-            <li><strong>Wähle „Gemini“:</strong> Der Artikel wird direkt an Gemini übergeben.</li>
-            <li><strong>Prompt an Gemini (Voice-Input):</strong> "Zfssg. (Zusammenfassung) diesen Artikel in 5 Bullet-Points. Identifiziere das größte Risiko für B2B-Kunden.".</li>
-            <li><strong>Gemini-Output (Text):</strong> Gemini liefert dir die 5 Bullet-Points.</li>
-            <li><strong>Kopieren:</strong> Du kopierst die 5 Bullet-Points.</li>
-            <li><strong>Wechsle zu ChatGPT App:</strong> Du öffnest die ChatGPT App.</li>
-            <li><strong>Einfügen & Prompt (Voice-Input):</strong> "Handle als LinkedIn-Top-Voice. Formuliere 3 provokante LinkedIn-Posts basierend auf diesen 5 Bullet-Points. Benutze Emojis und eine starke Call-to-Action.".</li>
-            <li><strong>ChatGPT-Output:</strong> Du erhältst 3 fertige Posts.</li>
-            <li><strong>Kopieren & Posten:</strong> Du postest einen davon direkt auf LinkedIn.</li>
-          </ol>
-          <p><strong>Zeitaufwand:</strong> 5 Minuten.</p>
-          <p><strong>Ergebnis:</strong> High-Quality-Marketing, das dein Expertenwissen beweist, während du auf die U-Bahn wartest.</p>
-
-          <h4>HACK 18: Die Wendepunkt-Narrative (Dein stärkstes Kapital)</h4>
-          <p>Deine persönliche und berufliche Vergangenheit – die „Grasfresser“-Phase als Billigtexter auf Plattformen – ist kein Makel. Sie ist dein wertvollstes Alleinstellungsmerkmal.</p>
-          <ul>
-            <li><strong>Das Re-Framing:</strong> Diese Phase wird strategisch umgedeutet. Sie ist der Beweis für deine extreme Resilienz, Disziplin und Fähigkeit, unter Druck hohe Qualität zu liefern. Du hast 450+ Projekte abgeschlossen.</li>
-            <li><strong>Deine Story (Extern):</strong> In deiner externen Kommunikation (z.B. „Über Mich“-Seite) framest du deinen Neustart als bewussten „Wendepunkt“.</li>
-            <li><strong>Beispiel-Narrativ:</strong> „Nach über 450 Textprojekten habe ich gelernt, was funktioniert – und was nicht. Ich habe mich entschieden, nicht mehr nur Worte zu liefern, sondern strategischen Wert. Mein Fokus ist nicht mehr Volumen, sondern das Ergebnis.“.</li>
-          </ul>
-
-          <p class="page-sep muted">(SEITE 13)</p>
-          <h3>KAPITEL 7: DER TAKTISCHE FAHRPLAN (JAHR 1) 🗺️</h3>
-          <p>Strategie muss terminiert werden. Dein 12-Monats-Plan ist in Phasen unterteilt, die deine Einnahmen, die EMR-Grenze und die PI-Abführungen ausbalancieren.</p>
-
-          <h4>Phase 1: Stabilisierung (Monat 1-3 | z.B. Jan 2026 – Mär 2026)</h4>
-          <ul>
-            <li><strong>Ziel:</strong> System etablieren, erste Kunden gewinnen, Compliance sicherstellen.</li>
-            <li><strong>Aktionen:</strong> Alle Hacks (Zeiterfassung, Konten, § 35-Antrag) umsetzen. Erste Aufträge über Freelance-Plattformen (Upwork, Fiverr) und "Quick Win"-Pakete (z.B. 250 €) generieren.</li>
-            <li><strong>Finanz-Ziel:</strong> Gewinn bewusst unter ~1.600 € / Monat halten. Du willst unter der EMR-Grenze und der Pfändungsfreigrenze bleiben.</li>
-          </ul>
-
-          <h4>Phase 2: Wachstum (Monat 4-6 | z.B. Apr 2026 – Jun 2026)</h4>
-          <ul>
-            <li><strong>Ziel:</strong> Höher positionieren, weg von Kleinstjobs, hin zu Retainern.</li>
-            <li><strong>Aktionen:</strong> Interne Stundensätze auf 100 € anheben. Fokus auf höherpreisige Pakete (z.B. "Autorität" für 2.800 €) und monatliche Retainer (900 € - 2.500 €).</li>
-            <li><strong>Finanz-Ziel:</strong> Umsatz steigern (3.000 € - 6.400 € / Monat). Dein Gewinn nähert sich jetzt der 1.638 €-Grenze. Du beginnst, die 40%-Reserve (Kapitel 3) aktiv zu nutzen, um den pfändbaren Gewinn zu steuern.</li>
-          </ul>
-
-          <h4>Phase 3: Skalierung (Monat 7-12 | z.B. Jul 2026 – Dez 2026)</h4>
-          <ul>
-            <li><strong>Ziel:</strong> Als Premium-Stratege etablieren. Den EMR-Ausstieg vorbereiten.</li>
-            <li><strong>Aktionen:</strong> Fokus auf Premium-Consulting und Workshops (z.B. 1.800 €). Die 3.600 €-Puffer-Rücklage (Kapitel 5) wird durch die 40%-Reserve final gefüllt.</li>
-            <li><strong>Finanz-Ziel:</strong> Umsatz auf 4.000 € - 8.000 € / Monat steigern. Dein Gewinn übersteigt nun bewusst die EMR-Grenze von 19.661 €. Du nimmst Rentenkürzungen in Kauf (oder verzichtest freiwillig), weil dein Business-Einkommen (abzüglich der 1.050 € "Tal der Tränen"-Kosten) nun höher ist als das Einkommen mit Rente.</li>
-          </ul>
-          
-          <p class="page-sep muted">(SEITE 14)</p>
-          <h3>ABSCHLUSS: DEIN COMMITMENT</h3>
-          <p>Du hast es bis hierher geschafft. Du hast die Architektur. Das OMEGA-SYSTEM.</p>
-          <p>Du hast die legalen Hacks, um die Bürokratie mit ihren eigenen Waffen zu schlagen – nicht mit Lügen, sondern mit Struktur (die 40%-Reserve).</p>
-          <p>Du hast die Synergie-Workflows (den Blitzkrieg), die dein 3-Stunden-Limit in eine Waffe verwandeln.</p>
-          <p>Und du hast die Simulatoren, um dich mental auf den Widerstand vorzubereiten.</p>
-          <p>„Disziplin ist Freiheit“ ist nicht mehr nur ein Slogan. Es ist dein Businessplan.</p>
-          <p>Das hier, diese 15 Seiten, ist dein Nullpunkt. Dein Startkapital ist nicht "0". Dein Startkapital ist dieser Plan.</p>
-          <p>Jetzt geh raus und bau dein System. Nicht mit Glück. Mit Struktur.</p>
-          <p>Wir lesen uns in 12 Monaten. Mit 19.661 Euro mehr auf dem P-Konto.</p>
-
-          <p class="page-sep muted">(SEITE 15)</p>
-          <p class="muted" style="text-align:center;">[Ende des operativen Dokuments PFCP V5.0]</p>
-        `;
-        d.append(card);
-        view.append(d);
-      }
-
-      // ---------- ROADMAP (Projektplan integriert) ----------
-      function renderRoadmap(){
-        const d = document.createElement("div"); d.className="grid";
-        const card = document.createElement("div"); card.className="card roadmap-content";
-        card.innerHTML = `
-<h2>PROJEKT: MO MO MO MONEY!! 🎄💶💶💚🧘🏻‍♂️</h2>
-<p><strong>Spezifikation:</strong> Ultra-strukturiertes Masterdokument zur taktischen Selbstverwirklichung als SEO-Consultant<br>
-<strong>Status:</strong> Aktiv · Operator: Eric · Zeitraum: 17.10.2025 – 01.01.2026<br>
-<strong>Endziel:</strong> Verifizierte, tragfähige Selbstständigkeit (SEO-Auditing, B2B Immobilien), Android-gesteuert (A52s), Drive-Sync, standardisierte Artefakte.</p>
-
-<h3>I. TÄGLICHES OPERATIONS-PROTOKOLL</h3>
-<ul>
-<li>📅 <strong>Datum:</strong> [TT.MM.JJJJ] · 📆 <strong>Woche:</strong> [X / 11]</li>
-<li>🔀 <strong>Tagesmodus</strong>: A (05:30 Lernen → 09:00 Arbeiten) · B (05:30 Arbeiten → 09:00 Lernen) — 8×90-Min-Sprints</li>
-<li>🎯 <strong>Primär-Direktiven (max. 3)</strong> — messbar, handlungsleitend</li>
-<li>🧘🏻‍♂️ <strong>Buddha-Status</strong> · 📓 <strong>Logbuch</strong></li>
-</ul>
-
-<h4>Executive Summary (≤ 1 Seite)</h4>
-<ul>
-<li>Bis 2026-01-01: 6 Audits (3 BE, 3 BB); Zielkorridor 8–10; ≥ 2 Pilot-Angebote, Stretch ≥ 3 Deals.</li>
-<li>12 h/Tag; bis 01.11 Smartphone-first, ab 01.11 Laptop-unterstützt.</li>
-<li>Gemini = Collector · ChatGPT = Analyst. Evidence 3+1. Gate ≥ 98/100.</li>
-<li>A/B/C-Muster, MVP, Follow-ups 72 h, PHOENIX als Steuerpult.</li>
-</ul>
-
-<h3>2) Persönliche Parameter → Kapazitätsabgleich</h3>
-<p>(vollständig wie in deinem Dokument – komprimiert in der App-UI umgesetzt)</p>
-
-<h3>3) Ziele & KPIs (SMART)</h3>
-<p>6 Audits · Gate ≥ 98 · ≥ 3 Piloten · 20 Kontakte/Tag · Evidence ≥ 2 + SERP je Befund · 8 Sprints/Tag · täglicher JSON-Export</p>
-
-<h3>4) Scope & Non-Scope</h3>
-<p>Leistungspaket S/M/L, USPs (SEO + Stil), AISEO, Workstreams, kein Rechtsrat/Deep-Dev/Bezahl-Tools.</p>
-
-<h3>II. MISSIONSHUB · KP1–KP3 (Smartphone-First)</h3>
-<p>System-Initialisierung · Lernarchitektur (CURRICULUM_V1.pdf) · Wissens-Sprint (Woche_01/…)</p>
-
-<h3>III. STÖRFALL-PROTOKOLLE</h3>
-<p>P01 Burnout · B01 Buddha · A01 Admin-Angst · T01 Tool-Falle — jeweils mit klarer Reaktion</p>
-
-<h3>10-Tage-Start-Sprint</h3>
-<p>Tag 1–10: Cockpit → Gerüst → SERP-Collector → 90-Min-Run → Evidence 3+1 → Summary → Outreach 20/Tag → Gate → Quick-Audit → Review</p>
-
-<h3>90-Tage-Roadmap</h3>
-<p>Phasen A–D (bis 2026-01-01), Meilensteine M1–M5</p>
-
-<h3>DoD</h3>
-<p>Artefakte komplett, Gate ≥ 98, ≥ 6 Audits (Ziel 8–10), ≥ 3 Piloten, Outreach läuft, PHOENIX als Steuerpult im Einsatz.</p>
+<header class="top">
+<div class="brandline">
+<div class="logo" aria-hidden="true"></div>
+<div>
+<h1>🦅PHOENIX v12 — DISZIPLIN IST FREIHEIT🗽</h1>
+<div class="sub">
+<span id="datestamp"></span> · <span id="status">bereit</span> · <span id="phoenixRange"></span>
+</div>
+</div>
+<div style="margin-left:auto" class="row">
+<button id="themeBtn" class="btn switch" title="Hell/Dunkel umschalten">☀️/🌙</button>
+</div>
+</div>
+</header>
+<main class="wrap">
+<section id="view" class="grid" aria-live="polite"></section>
+</main>
+<nav class="tabs" role="navigation" aria-label="Primäre Navigation">
+<div class="tabbar">
+<button class="tab active" data-tab="home"><div class="ic">🏠</div><div>Home</div></button>
+<button class="tab" data-tab="sprint"><div class="ic">⏱️</div><div>Sprint</div></button>
+<button class="tab" data-tab="audits"><div class="ic">🧭</div><div>Audits</div></button>
+<button class="tab" data-tab="evidence"><div class="ic">📎</div><div>Evidence</div></button>
+<button class="tab" data-tab="outreach"><div class="ic">📬</div><div>Explor.</div></button>
+<button class="tab" data-tab="drills"><div class="ic">📚</div><div>Drills</div></button>
+<button class="tab" data-tab="survival"><div class="ic">🛡️</div><div>80 Tage</div></button>
+</div>
+</nav>
+<input id="importFile" type="file" accept="application/json" class="hide">
+<script>
+(() => {
+const VERSION = "12.0-omega";
+const STORAGE_KEY = "PHOENIX_V12_STATE_OMEGA";
+const PHOENIX_START = "2025-11-07";
+const PHOENIX_END = "2026-01-31";
+const el = (sel, root=document) => root.querySelector(sel);
+const els = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+const view = el("#view");
+const tabs = els(".tab");
+const importFile = el("#importFile");
+const themeBtn = el("#themeBtn");
+const state = load() || seed();
+initTheme();
+bindNav();
+bindImport();
+bindGlobalClicks();
+render();
+// ---------- Seed / Load / Save ----------
+function seed(){
+return {
+version: VERSION,
+theme: "dark",
+activeTab: "home",
+lastSaved: Date.now(),
+daily: defaultDaily(),
+phoenix: defaultPhoenix(),
+home:{
+mit:[
+{id:id(),text:"Rote Linie heute bewusst bestätigen",done:false},
+{id:id(),text:"Zeitjournal für heute eintragen (≤ 3h arbeitsähnlich)",done:false},
+{id:id(),text:"Tag-X-Paket kurz sichten (Survival-Tab)",done:false}
+],
+kpis:{
+trainingAudits:0,
+evidence:0,
+sprints:0,
+explorations:0
+}
+},
+sprint:{
+running:false,
+startedAt:null,
+durationMin:90,
+note:"",
+remainingSec:90*60
+},
+audits:[], // Übungs-Audits (nur intern)
+evidence:[], // Interne Beweise
+outreach:[], // Explorationskontakte mit Startklausel
+inbox:[]
+};
+}
+function defaultDaily(){
+const today = todayISO();
+return {
+date: today,
+mode: "A",
+outreachToday: 0,
+buddha: "",
+log: "",
+exec: "",
+activeMinutes: 0 // arbeitsähnliche Minuten (Limit 180)
+};
+}
+function defaultPhoenix(){
+return {
+start: PHOENIX_START,
+end: PHOENIX_END,
+redlineConfirmed: false,
+piPrepared: false,
+pKonto: false,
+businessAccountCold: false,
+drvNoticeSent: false,
+ltaPrepared: false,
+zeitjournalStable: false,
+tagXPackageDraft: false,
+internalAuditsReady: false,
+explorationsPrepared: false
+};
+}
+function load(){
+try{
+const raw = localStorage.getItem(STORAGE_KEY);
+if(!raw) return null;
+const s = JSON.parse(raw);
+s.version = s.version || VERSION;
+s.theme = s.theme || "dark";
+s.activeTab = s.activeTab || "home";
+s.daily = s.daily || defaultDaily();
+s.phoenix = Object.assign(defaultPhoenix(), s.phoenix || {});
+s.home = s.home || {mit:[],kpis:{}};
+s.home.kpis = Object.assign({ trainingAudits:0, evidence:0, sprints:0, explorations:0 }, s.home.kpis || {});
+s.audits = Array.isArray(s.audits) ? s.audits : [];
+s.evidence = Array.isArray(s.evidence) ? s.evidence : [];
+s.outreach = Array.isArray(s.outreach) ? s.outreach : [];
+s.home.kpis.trainingAudits = s.audits.length;
+s.home.kpis.evidence = s.evidence.length;
+s.home.kpis.explorations = s.outreach.length;
+return s;
+}catch(e){
+console.warn("Load failed", e);
+return null;
+}
+}
+function save(){
+state.lastSaved = Date.now();
+try{
+localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+setStatus("gespeichert");
+setTimeout(()=>setStatus("bereit"), 700);
+}catch(e){
+setStatus("Speicherfehler");
+}
+}
+// ---------- Utilities ----------
+function id(){return Math.random().toString(36).slice(2,10);}
+function todayISO(){return new Date().toISOString().slice(0,10);}
+function at00(dstr){return new Date(dstr+"T00:00:00");}
+function addDays(dstr,days){
+const d = at00(dstr);
+d.setDate(d.getDate()+days);
+return d.toISOString().slice(0,10);
+}
+function humanDate(ts=new Date()){
+return new Intl.DateTimeFormat("de-DE",{dateStyle:"full",timeStyle:"short"}).format(ts);
+}
+function clamp(v,min,max){return v<min?min:(v>max?max:v);}
+function escapeHTML(s=""){
+return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+}
+function setStatus(txt){el("#status").textContent = txt;}
+function copyToClipboard(text){
+if(!navigator.clipboard){
+setStatus("Clipboard nicht verfügbar");
+return;
+}
+navigator.clipboard.writeText(text)
+.then(()=>{
+setStatus("kopiert");
+setTimeout(()=>setStatus("bereit"),600);
+})
+.catch(()=>{
+setStatus("Kopieren fehlgeschlagen");
+});
+}
+function phoenixDayInfo(){
+const start = at00(PHOENIX_START);
+const end = at00(PHOENIX_END);
+const now = at00(todayISO());
+const total = Math.round((end - start)/(1000*60*60*24)) + 1;
+const passed = clamp(Math.round((now - start)/(1000*60*60*24)) + 1, 0, total);
+const left = clamp(total - passed, 0, total);
+return {total,passed,left};
+}
+// ---------- Init Bindings ----------
+function initTheme(){
+document.documentElement.dataset.theme = state.theme === "light" ? "light" : "dark";
+if(themeBtn){
+themeBtn.onclick = () => {
+state.theme = (state.theme === "dark") ? "light" : "dark";
+document.documentElement.dataset.theme = state.theme;
+save();
+};
+}
+}
+function bindNav(){
+tabs.forEach(t=>{
+t.addEventListener("click",()=>{
+const tab = t.dataset.tab;
+state.activeTab = tab;
+save();
+render();
+});
+});
+}
+function bindImport(){
+if(!importFile) return;
+importFile.addEventListener("change",(e)=>{
+const file = e.target.files[0];
+if(!file) return;
+const reader = new FileReader();
+reader.onload = ev => {
+try{
+const data = JSON.parse(ev.target.result);
+const merged = Object.assign(seed(), data);
+merged.version = VERSION;
+localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+setStatus("Import ok");
+location.reload();
+}catch(err){
+console.error(err);
+setStatus("Import ungültig");
+}
+};
+reader.readAsText(file);
+});
+}
+function bindGlobalClicks(){
+document.addEventListener("click",(e)=>{
+const copyBtn = e.target.closest(".copy-btn");
+if(copyBtn){
+const idTarget = copyBtn.dataset.copyTarget;
+const src = idTarget && el("#"+idTarget);
+if(src){
+const txt = src.textContent || src.value || "";
+copyToClipboard(txt);
+}
+}
+const pf = e.target.closest(".prefill-evidence");
+if(pf){
+const noteId = pf.dataset.noteId;
+const selId = pf.dataset.sel;
+const title = pf.dataset.title || "";
+const type = pf.dataset.type || "";
+const noteEl = noteId ? el("#"+noteId) : null;
+const selEl = selId ? el("#"+selId) : null;
+const auditId = selEl ? selEl.value || null : null;
+state._evidenceDraft = { title, type, note: noteEl ? noteEl.textContent.trim() : "", auditId };
+state.activeTab = "evidence";
+save();
+render();
+}
+const sbtn = e.target.closest(".start-sprint-note");
+if(sbtn){
+const nid = sbtn.dataset.noteId;
+const src = nid ? el("#"+nid) : null;
+if(src){
+state.sprint.note = src.textContent.trim();
+}
+state.activeTab = "sprint";
+save();
+render();
+}
+});
+}
+// ---------- Export ----------
+function exportJSON(){
+const blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+const a = document.createElement("a");
+const d = todayISO();
+a.href = URL.createObjectURL(blob);
+a.download = `${d}_PHOENIX_v12_backup.json`;
+document.body.appendChild(a);
+a.click();
+a.remove();
+URL.revokeObjectURL(a.href);
+setStatus("Export erstellt");
+}
+// ---------- Render Root ----------
+function render(){
+el("#datestamp").textContent = humanDate();
+const info = phoenixDayInfo();
+el("#phoenixRange").textContent = (info.passed <= 0) ? `Start am ${PHOENIX_START}` : (info.left <= 0 ? `80 Tage Fenster erreicht` : `Tag ${info.passed} von ${info.total} · ${info.left} Tage bis 31.01.2026`);
+tabs.forEach(t=>t.classList.toggle("active", t.dataset.tab === state.activeTab));
+view.innerHTML = "";
+const map = {
+home:renderHome,
+sprint:renderSprint,
+audits:renderAudits,
+evidence:renderEvidence,
+outreach:renderOutreach,
+drills:renderDrills,
+survival:renderSurvival
+};
+(map[state.activeTab] || renderHome)();
+}
+// ---------- HOME ----------
+function renderHome(){
+const c = document.createElement("div");
+c.className = "grid";
+c.append(
+cardPhoenixStatus(),
+cardDailyOps(),
+cardKPIs(),
+cardMIT(),
+cardBuddhaLog(),
+cardTools(),
+cardQuickActions(),
+cardBackup()
+);
+view.append(c);
+}
+function cardPhoenixStatus(){
+const {total,passed,left} = phoenixDayInfo();
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `
+<h2>PROJEKT PHOENIX · 80-Tage-Fenster</h2>
+<div class="row gap">
+<div class="pill"><span>Zeitraum</span><code class="tag">${PHOENIX_START} → ${PHOENIX_END}</code></div>
+<div class="pill"><span>Tag</span><code class="tag">${passed>0?passed:0}/${total}</code></div>
+<div class="pill"><span>Rest</span><code class="tag">${left>=0?left:0} Tage</code></div>
+</div>
+<div class="muted" style="margin-top:6px">
+Dieses Interface ist auf einen Zweck geeicht: In 80 Tagen das Trio aus PI-Start, DRV-Testungsantrag und prüffähigem Geschäftsmodell insolvenzfest, DRV-konform und produktionsbereit aufsetzen – ohne verbotene Selbstständigkeit, ohne Umsatz, ohne Doppelbotschaften.
+</div>
+<div class="list" style="margin-top:10px">
+<div class="item">
+<div class="check ${state.phoenix.redlineConfirmed?'done':''}" data-toggle-phoenix="redlineConfirmed">${state.phoenix.redlineConfirmed?'✓':''}</div>
+<div>
+<strong>Rote Linie bestätigt</strong>
+<div class="muted">Bis Freigabe: keine Rechnungen, keine Kundengelder, keine faktische Beratung gegen Entgelt, kein aktiver ELSTER-Start, nur Vorbereitung.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${state.phoenix.piPrepared?'done':''}" data-toggle-phoenix="piPrepared">${state.phoenix.piPrepared?'✓':''}</div>
+<div>
+<strong>PI-Antrag vorbereitet (Verbraucher, nicht Selbstständiger)</strong>
+<div class="muted">Unterlagen, §305-Bescheinigung, Gläubigerliste, Vermögensverzeichnis prüffähig vorbereitet.</div>
+</div>
+</div>
+</div>
 `;
-        d.append(card); view.append(d);
-      }
+d.addEventListener("click", e=>{
+const box = e.target.closest(".check[data-toggle-phoenix]");
+if(!box) return;
+const key = box.dataset.togglePhoenix;
+state.phoenix[key] = !state.phoenix[key];
+save();
+render();
+});
+return d;
+}
+function cardDailyOps(){
+const d = document.createElement("div");
+const day = state.daily?.date || todayISO();
+const activeMin = state.daily?.activeMinutes || 0;
+const over = activeMin > 180;
+d.className = "card";
+d.innerHTML = `
+<h2>Tägliches Schutz-Protokoll</h2>
+<div class="split">
+<div class="ctl">
+<label>Datum</label>
+<input id="dDate" type="date" value="${day}">
+</div>
+<div class="ctl">
+<label>Arbeitsähnliche Zeit (Minuten)</label>
+<input id="dActive" type="number" min="0" step="5" value="${activeMin}">
+</div>
+</div>
+<div class="row gap" style="margin-top:8px">
+<div class="pill">
+<span>Limit</span>
+<code class="tag" style="color:${over?'#fb7185':'#22c55e'}">${activeMin}/180 Min</code>
+</div>
+<div class="pill">
+<span>Regel</span>
+<code class="tag">&lt;= 3 Std. arbeitsähnliche Tätigkeiten/Tag</code>
+</div>
+</div>
+<div class="row gap" style="margin-top:6px">
+<label class="row" style="gap:6px">
+<input type="radio" name="mode" value="A" ${state.daily.mode==="A"?"checked":""}>
+<span>Modus A: Fokus Lernen & Dokumentation</span>
+</label>
+</div>
+<div class="row gap">
+<label class="row" style="gap:6px">
+<input type="radio" name="mode" value="B" ${state.daily.mode==="B"?"checked":""}>
+<span>Modus B: Fokus interne Übungs-Audits & Templates</span>
+</label>
+</div>
+<div class="muted" style="margin-top:6px">
+Zähl hier nur Tätigkeiten, die wie Arbeit aussehen (Audits, Konzepte, Schreiben). Freizeit, Regeneration, Lesen ohne Leistungsdruck trennst du klar.
+</div>
+`;
+d.querySelector("#dDate").onchange = e => {
+state.daily.date = e.target.value || todayISO();
+save();
+render();
+};
+d.querySelector("#dActive").onchange = e => {
+const v = parseInt(e.target.value || "0",10);
+state.daily.activeMinutes = clamp(isNaN(v)?0:v,0,600);
+save();
+render();
+};
+d.querySelectorAll('input[name="mode"]').forEach(r=>{
+r.onchange = ev => {
+state.daily.mode = ev.target.value;
+save();
+};
+});
+return d;
+}
+function cardKPIs(){
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `
+<h2>Status · Heute</h2>
+<div class="row gap">
+<div class="pill"><span>Version</span><code class="tag">${state.version}</code></div>
+<div class="pill"><span>Tab</span><code class="tag">${state.activeTab}</code></div>
+<div class="pill"><span>Modus</span><code class="tag">${state.daily.mode || "A"}</code></div>
+</div>
+<div class="grid" style="grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+<div class="card" style="padding:8px">
+<div class="muted">Übungs-Audits</div>
+<div class="kpi">${state.audits.length}</div>
+</div>
+<div class="card" style="padding:8px">
+<div class="muted">Evidence intern</div>
+<div class="kpi">${state.evidence.length}</div>
+</div>
+<div class="card" style="padding:8px">
+<div class="muted">Sprints</div>
+<div class="kpi">${state.home.kpis.sprints||0}</div>
+</div>
+<div class="card" style="padding:8px">
+<div class="muted">Explorationskontakte</div>
+<div class="kpi">${state.outreach.length}</div>
+</div>
+</div>
+<div class="muted" style="margin-top:6px">
+Alles hier bleibt kalt: Training, Konzept, Vorbereitung. Umsatz, Rechnungen und echte Projekte starten erst nach schriftlicher Freigabe durch Insolvenzverwalter/ Gericht.
+</div>
+`;
+return d;
+}
+function cardMIT(){
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `<h2>Primär-Direktiven (max. 3)</h2>`;
+const list = document.createElement("div");
+list.className = "list";
+state.home.mit.forEach(item=>{
+const it = document.createElement("div");
+it.className = "item";
+const chk = document.createElement("div");
+chk.className = "check"+(item.done?" done":"");
+chk.textContent = item.done ? "✓" : "";
+chk.onclick = ()=>{
+item.done = !item.done;
+save();
+render();
+};
+const txt = document.createElement("div");
+txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
+it.append(chk,txt);
+list.append(it);
+});
+const add = document.createElement("div");
+add.className = "row gap";
+add.innerHTML = `
+<div class="ctl" style="flex:1">
+<label>Neue Direktive</label>
+<input id="mitNew" type="text" maxlength="80" placeholder="Kurz, klar, prüffähig">
+</div>
+<button class="btn ok" id="mitAdd">+</button>
+`;
+add.querySelector("#mitAdd").onclick = ()=>{
+const v = add.querySelector("#mitNew").value.trim();
+if(!v) return;
+if(state.home.mit.length>=3) state.home.mit.shift();
+state.home.mit.push({id:id(),text:v,done:false});
+save();
+render();
+};
+d.append(list,add);
+return d;
+}
+function cardBuddhaLog(){
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `
+<h2>Logbuch & Executive Snapshot</h2>
+<div class="ctl">
+<label>Belastungsnotizen (körperlich/mental, neutral)</label>
+<textarea id="buddha">${escapeHTML(state.daily.buddha || "")}</textarea>
+</div>
+<div class="ctl">
+<label>Log (Was genau getan? Nur Fakten.)</label>
+<textarea id="log">${escapeHTML(state.daily.log || "")}</textarea>
+</div>
+<div class="ctl">
+<label>Executive Summary (max. 1 Seite für DRV/IV erklärbar)</label>
+<textarea id="exec">${escapeHTML(state.daily.exec || "")}</textarea>
+</div>
+<div class="muted" style="margin-top:4px">
+Dieses Log schützt dich: Es zeigt, dass du begrenzt, dokumentiert und transparent vorgehst.
+</div>
+`;
+d.querySelector("#buddha").oninput = e => {state.daily.buddha=e.target.value;save();};
+d.querySelector("#log").oninput = e => {state.daily.log=e.target.value;save();};
+d.querySelector("#exec").oninput = e => {state.daily.exec=e.target.value;save();};
+return d;
+}
+function cardTools(){
+const d = document.createElement("div");
+const dt = state.daily.date || todayISO();
+d.className = "card";
+d.innerHTML = `<h2>Datei- & Ordnergerüst (intern)</h2>
+<div class="split">
+<div class="ctl">
+<label>Datum</label>
+<input id="tDate" type="date" value="${dt}">
+</div>
+<div class="ctl">
+<label>Übungsdomain</label>
+<input id="tDomain" type="text" placeholder="example-immobilien.de">
+</div>
+</div>
+<div class="row gap" style="margin-top:8px">
+<button class="btn" id="genPaths">Ordnerstruktur</button>
+<button class="btn" id="genNames">Dateinamen</button>
+</div>
+<div class="template-box">
+<pre id="pathsOut">(Ausgabe erscheint hier)</pre>
+<button class="btn ok block copy-btn" data-copy-target="pathsOut">Pfade kopieren</button>
+</div>
+<div class="template-box">
+<pre id="namesOut">(Ausgabe erscheint hier)</pre>
+<button class="btn ok block copy-btn" data-copy-target="namesOut">Dateinamen kopieren</button>
+</div>
+<div class="muted" style="margin-top:4px">
+Hinweis: Nur für interne Übungsfälle in den 80 Tagen. Keine echten Kundendaten ohne Freigabe.
+</div>`;
+d.querySelector("#genPaths").onclick = ()=>{
+const date = d.querySelector("#tDate").value || dt;
+const domain = (d.querySelector("#tDomain").value || "domain.tld").toLowerCase();
+const root = `/PHOENIX_MFA/${date}_${domain}/`;
+const out = `${root}
+${root}01_ZEITJOURNAL/
+${root}02_TEST_AUDITS/
+${root}03_SCREENSHOTS/
+${root}04_HTML_SNIPS/
+${root}05_SERP/
+${root}06_REPORT_TEMPLATES/
+${root}07_TAGX_PAKET/
+${root}08_RECHT_DOKU/`;
+el("#pathsOut").textContent = out;
+setStatus("Pfade generiert");
+};
+d.querySelector("#genNames").onclick = ()=>{
+const date = d.querySelector("#tDate").value || dt;
+const domain = (d.querySelector("#tDomain").value || "domain.tld").toLowerCase();
+const out = `${date}_${domain}_MFA_AUDIT_TEMPLATE_v01.docx
+${date}_${domain}_EXEC_SUMMARY_TEST_v01.docx
+${date}_${domain}_P0P1_CHECKLISTE_v01.xlsx
+${date}_${domain}_TAGX_FREIGABE_PAKET_v01.pdf`;
+el("#namesOut").textContent = out;
+setStatus("Dateinamen generiert");
+};
+return d;
+}
+function cardQuickActions(){
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `<h2>Quick Actions (legal safe)</h2>
+<div class="split" style="margin-top:6px">
+<button class="btn primary block" id="qaSprint">⏱️ 90-Min-Trainingssprint</button>
+<button class="btn block" id="qaSurvival">🛡️ 80-Tage-Plan öffnen</button>
+</div>
+<div class="muted" style="margin-top:6px">
+Nutze Sprints nur für interne Übungs-Audits, Konzeptbau, Tag-X-Dokumente. Kein echter Kundenservice, kein Geldfluss.
+</div>`;
+d.querySelector("#qaSprint").onclick = ()=>{
+state.activeTab = "sprint";
+save();
+render();
+};
+d.querySelector("#qaSurvival").onclick = ()=>{
+state.activeTab = "survival";
+save();
+render();
+};
+return d;
+}
+function cardBackup(){
+const d = document.createElement("div");
+d.className = "card";
+d.innerHTML = `<h2>Backup</h2>
+<div class="split">
+<button class="btn block" id="exportBtn">⬇️ Export JSON</button>
+<button class="btn block" id="importBtn">⬆️ Import JSON</button>
+</div>
+<div class="muted" style="margin-top:6px">
+Sicher jeden Stand lokal: <code>YYYY-MM-DD_PHOENIX_v12_backup.json</code>.
+</div>`;
+d.querySelector("#exportBtn").onclick = exportJSON;
+d.querySelector("#importBtn").onclick = ()=>importFile.click();
+return d;
+}
+// ---------- SPRINT ----------
+let tickHandle = null;
+function renderSprint(){
+const d = document.createElement("div");
+d.className = "grid";
+const active = state.sprint;
+const remaining = active.remainingSec || active.durationMin*60;
+const overRisk = (state.daily.activeMinutes || 0) + active.durationMin > 180;
+const card = document.createElement("div");
+card.className = "card";
+card.innerHTML = `
+<h2>90-Minuten-Trainingssprint</h2>
+<div class="muted">
+Zählt als arbeitsähnliche Belastung.
+Maximal 2 Sprints pro Tag, damit du klar unter 3 Stunden bleibst.
+</div>
+<div class="ctl" style="margin-top:6px">
+<label>Ziel (konkret)</label>
+<textarea id="snote" placeholder="z. B. 'MFA-Checkliste v1 fertigstellen, nur Testdomain'">${escapeHTML(active.note || "")}</textarea>
+</div>
+<div class="row gap" style="margin-top:8px">
+<span class="badge" id="timerBadge">${fmtTimer(remaining)}</span>
+<span class="pill">
+<span>Status</span>
+<code class="tag">${active.running?"läuft":"bereit"}</code>
+</span>
+<span class="pill" style="color:${overRisk?'#fb7185':'#22c55e'}">
+<span>Nach Sprint:</span>
+<code class="tag">${(state.daily.activeMinutes||0)+active.durationMin}/180 Min</code>
+</span>
+</div>
+<div class="split" style="margin-top:10px">
+<button class="btn primary block" id="startBtn">${active.running?"Weiterlaufen":"Starten"}</button>
+<button class="btn warn block" id="resetBtn">Reset</button>
+</div>
+`;
+d.append(card);
+view.append(d);
 
-      // ---------- Backup ----------
-      function exportJSON(){
-        const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
-        const a = document.createElement("a"); const d = todayISO();
-        a.download = `${d}_PHOENIX_v11_backup.json`; a.href = URL.createObjectURL(blob); a.click();
-        URL.revokeObjectURL(a.href);
-      }
+card.querySelector("#snote").oninput = e => {
+state.sprint.note = e.target.value;
+save();
+};
+card.querySelector("#startBtn").onclick = ()=>{
+if(!state.sprint.running){
+const nextTotal = (state.daily.activeMinutes || 0) + state.sprint.durationMin;
+if(nextTotal > 180){
+const ok = confirm("Warnung: Dieser Sprint würde dein 3h-Limit überschreiten. Nur fortsetzen, wenn du die Konsequenzen bewusst dokumentierst.");
+if(!ok) return;
+}
+startSprint();
+}
+};
+card.querySelector("#resetBtn").onclick = ()=>{
+stopSprint(true);
+save();
+render();
+};
+}
+function startSprint(){
+if(state.sprint.running) return;
+state.sprint.running = true;
+if(!state.sprint.startedAt){
+state.sprint.startedAt = Date.now();
+state.sprint.remainingSec = state.sprint.durationMin * 60;
+}
+if(tickHandle) clearInterval(tickHandle);
+tickHandle = setInterval(()=>{
+if(state.sprint.remainingSec > 0){
+state.sprint.remainingSec -= 1;
+const b = el("#timerBadge");
+if(b) b.textContent = fmtTimer(state.sprint.remainingSec);
+}else{
+stopSprint(false);
+alert("Sprint beendet – Ergebnis im Log sichern.");
+state.home.kpis.sprints = (state.home.kpis.sprints || 0) + 1;
+state.daily.activeMinutes = (state.daily.activeMinutes || 0) + state.sprint.durationMin;
+save();
+render();
+}
+},1000);
+save();
+render();
+}
+function stopSprint(reset){
+state.sprint.running = false;
+if(tickHandle){clearInterval(tickHandle);tickHandle=null;}
+if(reset){
+state.sprint.startedAt = null;
+state.sprint.remainingSec = state.sprint.durationMin * 60;
+state.sprint.note = "";
+}
+}
+function fmtTimer(sec){
+const s = Math.max(0,sec|0);
+const mPart = Math.floor(s/60).toString().padStart(2,"0");
+const sPart = (s%60).toString().padStart(2,"0");
+return `${mPart}:${sPart}`;
+}
+// ---------- AUDITS (nur intern, kalt) ----------
+const GATE_ITEMS = [
+["klartext","Klarer, verstehbarer Befund"],
+["belege","Mind. 2 harte Belege je Kernpunkt"],
+["serp","SERP/Screens dokumentiert"],
+["prio","P0/P1/P2 sauber begründet"],
+["struktur","Struktur & Dateinamen konsistent"],
+["exec","Executive Summary vorhanden"],
+["mobil","Mobilansicht beachtet"],
+["legal","Keine realen Kundendaten, kein Vertrag"]
+];
+function renderAudits(){
+const wrap = document.createElement("div");
+wrap.className = "grid";
+const make = document.createElement("div");
+make.className = "card";
+make.innerHTML = `
+<h2>Übungs-Audit anlegen (kalt)</h2>
+<div class="muted">
+Nur Test- oder Wettbewerbsdomains, keine aktiven Bestandskunden.
+Zweck: Skillaufbau & Tag-X-Portfolio – ohne Umsatz, ohne Verpflichtung.
+</div>
+<div class="split" style="margin-top:8px">
+<div class="ctl">
+<label>Domain/URL (Testfall)</label>
+<input id="aDomain" type="text" placeholder="z. B. beispiel-immobilien.de">
+</div>
+<div class="ctl">
+<label>Status</label>
+<select id="aStage">
+${["NEU","IN_ARBEIT","ENTWURF","FERTIG_INTERNAL"].map(s=>`<option>${s}</option>`).join("")}
+</select>
+</div>
+</div>
+<button class="btn ok block" id="aAdd" style="margin-top:8px">Übungs-Audit speichern</button>
+`;
+make.querySelector("#aAdd").onclick = ()=>{
+const domain = make.querySelector("#aDomain").value.trim();
+const stage = make.querySelector("#aStage").value;
+if(!domain) return;
+state.audits.unshift({
+id:id(),
+domain,
+stage,
+owner:"Eric",
+created:todayISO(),
+gate:{},
+gateScore:0
+});
+state.home.kpis.trainingAudits = state.audits.length;
+save();
+render();
+};
+wrap.append(make);
 
-      // ---------- Init ----------
-      document.addEventListener("DOMContentLoaded", ()=>{
-        // Theme
-        setTheme(state.theme || "dark");
-        el("#themeBtn").onclick = ()=> setTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
-        function setTheme(mode){ document.documentElement.setAttribute("data-theme", mode); state.theme = mode; save(); }
+const filterCard = document.createElement("div");
+filterCard.className = "card";
+filterCard.innerHTML = `
+<h2>Übungs-Audits (${state.audits.length})</h2>
+<div class="split">
+<div class="ctl">
+<label>Suche</label>
+<input id="fText" type="text" placeholder="Domain">
+</div>
+<div class="ctl">
+<label>Status</label>
+<select id="fStage">
+<option value="">(alle)</option>
+${["NEU","IN_ARBEIT","ENTWURF","FERTIG_INTERNAL"].map(s=>`<option value="${s}">${s}</option>`).join("")}
+</select>
+</div>
+</div>
+`;
+wrap.append(filterCard);
 
-        // Tabs
-        tabs.forEach(t=>{ t.onclick = ()=>{ state.activeTab = t.dataset.tab; save(); render(); } });
+const listCard = document.createElement("div");
+listCard.className = "card";
+const ul = document.createElement("div");
+ul.className = "list";
 
-        // Copy (delegation) + Drills-Actions
-        el("main.wrap").addEventListener('click', e => {
-          const btnCopy = e.target.closest('.copy-btn');
-          if (btnCopy){
-            const targetId = btnCopy.dataset.copyTarget;
-            const targetElement = el(`#${targetId}`, view);
-            if (targetElement) copyToClipboard(targetElement.textContent);
-            return;
-          }
-          const prefill = e.target.closest('.prefill-evidence');
-          if (prefill){
-            const title = prefill.dataset.title || "";
-            const type  = prefill.dataset.type || "SONSTIGES";
-            const noteEl= el(`#${prefill.dataset.noteId}`, view);
-            const note  = noteEl ? noteEl.textContent : "";
-            const sel   = el(`#${prefill.dataset.sel}`, view);
-            const auditId = sel ? sel.value : null;
-            state._evidenceDraft = { title, type, note, auditId };
-            state.activeTab = "evidence";
-            save(); render();
-            return;
-          }
-          const sprintSet = e.target.closest('.start-sprint-note');
-          if(sprintSet){
-            const noteId = sprintSet.dataset.noteId;
-            const noteEl = el(`#${noteId}`, view);
-            state.sprint.note = noteEl ? noteEl.textContent : "90-Min-Sprint";
-            state.activeTab = "sprint";
-            save(); render();
-            return;
-          }
-        });
+const applyFilter = ()=>{
+ul.innerHTML = "";
+const q = (filterCard.querySelector("#fText").value || "").toLowerCase();
+const st = filterCard.querySelector("#fStage").value;
+state.audits
+.filter(a=>(!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st))
+.forEach(a=>{
+const it = document.createElement("div");
+it.className = "item";
+const gateOK = (a.gateScore||0) >= 90;
+it.innerHTML = `
+<div style="flex:1">
+<strong>${escapeHTML(a.domain)}</strong>
+<div class="muted">
+Status: ${a.stage} • seit ${a.created}
+${gateOK ? `• <span class="okc">Gate ${a.gateScore}</span>` : ""}
+</div>
+<details style="margin-top:4px">
+<summary>Gate-Check (intern, Ziel ≥ 90)</summary>
+${renderGateChecklistHTML(a)}
+</details>
+</div>
+<div class="ctl" style="width:110px">
+<label>Stage</label>
+<select class="auditStage" data-id="${a.id}">
+${["NEU","IN_ARBEIT","ENTWURF","FERTIG_INTERNAL"].map(s=>`<option ${a.stage===s?"selected":""}>${s}</option>`).join("")}
+</select>
+</div>
+<button class="btn ghost danger" data-del="${a.id}">✕</button>
+`;
+ul.append(it);
+});
+listCard.innerHTML = `<h2>Übungs-Audits (${ul.childElementCount})</h2>`;
+listCard.append(ul);
+};
 
-        // Import (robust, normalisiert)
-        el("#importFile").addEventListener("change", (e)=>{
-          const file = e.target.files?.[0]; if(!file) return;
-          const reader = new FileReader();
-          reader.onload = ()=> {
-            try{
-              const data = JSON.parse(reader.result);
-              const template = seed(); Object.keys(template).forEach(k=>{
-                if(data.hasOwnProperty(k)) state[k] = data[k];
-              });
-              if(!state.daily) state.daily = defaultDaily();
-              state.home.kpis.openAudits = (state.audits||[]).length;
-              state.home.kpis.evidence   = (state.evidence||[]).length;
-              state.home.kpis.outreach   = state.daily?.outreachToday||0;
-              save(); render();
-            }catch(err){ alert("Import fehlgeschlagen: ungültige Datei."); }
-          };
-          reader.readAsText(file);
-        });
+filterCard.querySelectorAll("input,select").forEach(n=>n.oninput = applyFilter);
+applyFilter();
 
-        render();
-      });
-    })();
-  </script>
+ul.addEventListener("change", e=>{
+const sel = e.target.closest(".auditStage");
+if(sel){
+const a = state.audits.find(x=>x.id===sel.dataset.id);
+if(a){
+a.stage = sel.value;
+save();
+}
+}
+});
+ul.addEventListener("click", e=>{
+const del = e.target.closest("button[data-del]");
+if(del){
+const idd = del.dataset.del;
+const i = state.audits.findIndex(x=>x.id===idd);
+if(i>-1){
+state.audits.splice(i,1);
+state.home.kpis.trainingAudits = state.audits.length;
+save();
+render();
+}
+}
+const gateChk = e.target.closest('input[type="checkbox"][data-gate]');
+if(gateChk){
+const aid = gateChk.dataset.aid;
+const key = gateChk.dataset.gate;
+const a = state.audits.find(x=>x.id===aid);
+if(a){
+a.gate = a.gate || {};
+a.gate[key] = !!gateChk.checked;
+a.gateScore = calcGateScore(a.gate);
+save();
+const det = gateChk.closest("details");
+if(det){
+const sum = det.querySelector("summary");
+if(sum) sum.innerHTML = `Gate-Check (intern, Ziel ≥ 90) — aktuell: ${a.gateScore}`;
+}
+}
+}
+});
+
+wrap.append(listCard);
+view.append(wrap);
+}
+function renderGateChecklistHTML(a){
+const gate = a.gate || {};
+return `<div class="list" style="margin-top:6px">
+${GATE_ITEMS.map(([key,label])=>
+`<label class="row" style="gap:6px">
+<input type="checkbox" data-gate="${key}" data-aid="${a.id}" ${gate[key]?"checked":""}>
+<span>${label}</span>
+</label>`
+).join("")}
+<div class="pill" style="margin-top:6px">
+<span>Score</span>
+<code class="tag">${a.gateScore||0}</code>
+</div>
+</div>`;
+}
+function calcGateScore(gate){
+const total = GATE_ITEMS.length;
+const ok = GATE_ITEMS.reduce((n,[k])=> n + (gate[k]?1:0), 0);
+return Math.round(100*ok/total);
+}
+// ---------- EVIDENCE (intern) ----------
+function renderEvidence(){
+const wrap = document.createElement("div");
+wrap.className = "grid";
+const form = document.createElement("div");
+form.className = "card";
+form.innerHTML = `
+<h2>Evidence (intern · 3+1 System)</h2>
+<div class="muted">
+Hier landen nur Beweise aus Übungs-Audits.
+Keine sensiblen Echtdaten. Nutze neutrale Beispiele oder geschwärzte Screens.
+</div>
+<div class="ctl" style="margin-top:6px">
+<label>Titel</label>
+<input id="eTitle" type="text" placeholder="z. B. 'P0-KONVERSIONSBLOCKER – CTA unter Keyboard (Test)'">
+</div>
+<div class="ctl">
+<label>Speicherort (Drive/Ordner, optional)</label>
+<input id="eUrl" type="url" placeholder="https://... (lokal/Drive)">
+</div>
+<div class="split">
+<div class="ctl">
+<label>Typ</label>
+<select id="eType">
+${["P0","P1","P2","TECH","UX","LEGAL","SONSTIGES"].map(t=>`<option>${t}</option>`).join("")}
+</select>
+</div>
+<div class="ctl">
+<label>Übungs-Audit</label>
+<select id="eAudit">
+${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(optional)</option>`}
+</select>
+</div>
+</div>
+<div class="ctl">
+<label>Notiz (Codezitat / Kontext)</label>
+<textarea id="eNote" placeholder="Kurz, prüffreundlich, ohne Übertreibung."></textarea>
+</div>
+<button class="btn ok block" id="eAdd">Evidence speichern</button>
+`;
+wrap.append(form);
+
+if(state._evidenceDraft){
+const d = state._evidenceDraft;
+if(d.title) form.querySelector("#eTitle").value = d.title;
+if(d.type) form.querySelector("#eType").value = d.type;
+if(d.note) form.querySelector("#eNote").value = d.note;
+if(d.auditId && form.querySelector(`#eAudit option[value="${d.auditId}"]`)){
+form.querySelector("#eAudit").value = d.auditId;
+}
+}
+
+form.querySelector("#eAdd").onclick = ()=>{
+const title = form.querySelector("#eTitle").value.trim();
+const url = form.querySelector("#eUrl").value.trim();
+const type = form.querySelector("#eType").value;
+const audit = form.querySelector("#eAudit").value || null;
+const note = form.querySelector("#eNote").value.trim();
+if(!title && !note) return;
+state.evidence.unshift({
+id:id(),
+title,
+url,
+type,
+audit,
+note,
+ts:new Date().toISOString()
+});
+state.home.kpis.evidence = state.evidence.length;
+delete state._evidenceDraft;
+save();
+render();
+};
+
+const list = document.createElement("div");
+list.className = "card";
+list.innerHTML = `<h2>Evidence-Liste (${state.evidence.length})</h2>`;
+const ul = document.createElement("div");
+ul.className = "list";
+state.evidence.slice(0,80).forEach(ev=>{
+const audit = state.audits.find(a=>a.id===ev.audit);
+const it = document.createElement("div");
+it.className = "item";
+it.innerHTML = `
+<div style="flex:1">
+<strong>${escapeHTML(ev.title || "(ohne Titel)")}</strong>
+<div class="muted">
+${new Date(ev.ts).toLocaleString("de-DE")}
+• ${ev.type}
+${audit ? " • "+escapeHTML(audit.domain) : ""}
+</div>
+${ev.url ? `<div class="muted">Ablage: ${escapeHTML(ev.url)}</div>` : ""}
+${ev.note ? `<div class="muted" style="margin-top:4px;font-family:var(--mono);">${escapeHTML(ev.note)}</div>` : ""}
+</div>
+<button class="btn ghost danger" data-del="${ev.id}">✕</button>
+`;
+ul.append(it);
+});
+list.append(ul);
+wrap.append(list);
+
+ul.addEventListener("click",e=>{
+const del = e.target.closest("button[data-del]");
+if(!del) return;
+const idd = del.dataset.del;
+const i = state.evidence.findIndex(x=>x.id===idd);
+if(i>-1){
+state.evidence.splice(i,1);
+state.home.kpis.evidence = state.evidence.length;
+save();
+render();
+}
+});
+
+view.append(wrap);
+}
+// ---------- OUTREACH (Exploration, Startklausel) ----------
+function renderOutreach(){
+const wrap = document.createElement("div");
+wrap.className = "grid";
+const card = document.createElement("div");
+card.className = "card";
+card.innerHTML = `
+<h2>Explorationskontakte (vorläufig, ohne Umsatz)</h2>
+<div class="muted">
+Zulässig: wenige, klar kommunizierte Vorgespräche mit Startklausel
+(<em>Leistung &amp; Zahlung erst ab Freigabe/Startdatum</em>).
+Unzulässig: jetzt schon leisten, abrechnen oder verbindlich zusagen.
+</div>
+<div class="split" style="margin-top:8px">
+<div class="ctl">
+<label>Kontakt</label>
+<input id="oName" type="text" placeholder="z. B. ImmoX GmbH · Ansprechpartner">
+</div>
+<div class="ctl">
+<label>Kanal</label>
+<select id="oChannel">
+<option>Email</option>
+<option>LinkedIn</option>
+<option>Telefon</option>
+<option>Sonstiges</option>
+</select>
+</div>
+</div>
+<div class="ctl">
+<label>Adresse/Handle</label>
+<input id="oHandle" type="text" placeholder="mail@... oder Profil-URL">
+</div>
+<div class="ctl">
+<label>Notiz (Startklausel / Kontext)</label>
+<textarea id="oNote" placeholder="Kurz: Hinweis auf rechtliche Neuordnung, Start frühestens Feb/März 2026, vorbehaltlich Freigabe."></textarea>
+</div>
+<button class="btn ok block" id="oAdd">Explorationskontakt speichern</button>
+<div class="template-box">
+<strong>Startklausel (Copy-Paste, anpassen):</strong>
+<pre id="startklausel">
+Ich befinde mich in einer rechtlichen und gesundheitlichen Neuordnungsphase (u. a. laufendes Renten- und Insolvenzverfahren).
+Daher kann ich Ihnen aktuell nur einen möglichen Start ab Februar/März 2026 anbieten – vorbehaltlich der schriftlichen Freigabe
+meiner selbstständigen Tätigkeit durch das Insolvenzgericht/den Insolvenzverwalter. Bis dahin bleiben alle Absprachen unverbindlich
+und dienen ausschließlich der Vorbereitung (Ziele, Zugänge, Scope). Eine operative Umsetzung oder Rechnungsstellung findet vorher nicht statt.</pre>
+<button class="btn block copy-btn" data-copy-target="startklausel">Startklausel kopieren</button>
+</div>
+`;
+wrap.append(card);
+card.querySelector("#oAdd").onclick = ()=>{
+const contact = card.querySelector("#oName").value.trim();
+const channel = card.querySelector("#oChannel").value;
+const handle = card.querySelector("#oHandle").value.trim();
+const notes = card.querySelector("#oNote").value.trim();
+if(!contact) return;
+const created = todayISO();
+state.outreach.unshift({
+id:id(),
+contact,
+channel,
+handle,
+audit:null,
+created,
+status:"EXPLORATION",
+notes:notes
+});
+state.home.kpis.explorations = state.outreach.length;
+state.daily.outreachToday = (state.daily.outreachToday||0)+1;
+save();
+render();
+};
+
+const list = document.createElement("div");
+list.className = "card";
+list.innerHTML = `<h2>Liste Explorationskontakte (${state.outreach.length})</h2>`;
+const ul = document.createElement("div");
+ul.className = "list";
+state.outreach.forEach(o=>{
+const it = document.createElement("div");
+it.className = "item";
+it.innerHTML = `
+<div style="flex:1">
+<strong>${escapeHTML(o.contact)}</strong>
+<div class="muted">
+${o.channel}${o.handle?" • "+escapeHTML(o.handle):""}
+• ${o.created}
+• <span class="warnc">${o.status}</span>
+</div>
+${o.notes?`<div class="muted" style="margin-top:4px">${escapeHTML(o.notes)}</div>`:""}
+</div>
+<div class="row" style="gap:6px;flex-wrap:wrap">
+<button class="btn ghost ok" data-act="READY" data-id="${o.id}">Bereit ab Tag X</button>
+<button class="btn ghost danger" data-act="DEL" data-id="${o.id}">✕</button>
+</div>
+`;
+ul.append(it);
+});
+list.append(ul);
+wrap.append(list);
+
+ul.addEventListener("click",e=>{
+const b = e.target.closest("button[data-act]");
+if(!b) return;
+const act = b.dataset.act;
+const idd = b.dataset.id;
+const o = state.outreach.find(x=>x.id===idd);
+if(!o) return;
+if(act==="READY") o.status = "TAG_X_BEREIT";
+if(act==="DEL"){
+const i = state.outreach.findIndex(x=>x.id===idd);
+if(i>-1) state.outreach.splice(i,1);
+}
+state.home.kpis.explorations = state.outreach.length;
+save();
+render();
+});
+
+view.append(wrap);
+}
+// ---------- DRILLS (Mobile-First SEO, kalt) ----------
+function renderDrills(){
+const c = document.createElement("div");
+c.className = "grid";
+const intro = document.createElement("div");
+intro.className = "card";
+intro.innerHTML = `
+<h2>Drills · Mobile-First SEO (Phoenix-Style)</h2>
+<div class="muted">
+Hier trainierst du präzise, reproduzierbare Befunde für Immobilienseiten.
+Alles bleibt intern. Ziel: Bis Tag 80 liegen 3–5 sauber dokumentierte Übungs-Audits vor,
+die dein Geschäftsmodell für IV und DRV verständlich machen.
+</div>
+`;
+c.append(intro);
+
+const drills = getDrills();
+drills.forEach(d=>{
+const card = document.createElement("div");
+card.className = "card";
+card.innerHTML = `
+<h2>${escapeHTML(d.title)}</h2>
+<div class="muted">${escapeHTML(d.subtitle || "")}</div>
+<details style="margin-top:6px">
+<summary><strong>Phase A · Beobachtung & Sicherung</strong></summary>
+<div class="list" style="margin-top:6px">
+${d.phaseA.map(step=>`
+<div class="item">
+<div>
+<strong>${escapeHTML(step.h)}</strong>
+<div class="muted">${escapeHTML(step.t)}</div>
+</div>
+</div>`).join("")}
+</div>
+</details>
+${d.prompt ? `
+<details style="margin-top:6px">
+<summary><strong>Phase B · KI-Prompt (intern)</strong></summary>
+<div class="template-box">
+<pre id="prompt-${d.id}">${escapeHTML(d.prompt)}</pre>
+<button class="btn primary block copy-btn" data-copy-target="prompt-${d.id}">Prompt kopieren</button>
+</div>
+</details>` : ""}
+${d.evidence ? `
+<div class="template-box">
+<strong>Evidence-Template</strong>
+<pre id="note-${d.id}">${escapeHTML(d.evidence.note)}</pre>
+<div class="split" style="margin-top:6px">
+<div class="ctl">
+<label>Übungs-Audit zuordnen</label>
+<select id="auditSel-${d.id}">
+${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("") || `<option value="">(später)</option>`}
+</select>
+</div>
+</div>
+<button
+class="btn ok block prefill-evidence"
+data-did="${d.id}"
+data-title="${escapeHTML(d.evidence.title)}"
+data-type="${escapeHTML(d.evidence.type)}"
+data-note-id="note-${d.id}"
+data-sel="auditSel-${d.id}"
+>In Evidence vorbefüllen</button>
+</div>` : ""}
+${d.sprintNote ? `
+<div class="template-box">
+<strong>90-Minuten-Drill</strong>
+<pre id="snote-${d.id}">${escapeHTML(d.sprintNote)}</pre>
+<button class="btn warn block start-sprint-note" data-note-id="snote-${d.id}">Als Sprint-Ziel setzen</button>
+</div>` : ""}
+`;
+c.append(card);
+});
+
+view.append(c);
+}
+function getDrills(){
+return [
+{
+id:"01",
+title:"Drill 01 · P0-Blocker erkennen (CTA vs. Keyboard)",
+subtitle:"Finde Fälle, in denen die mobile Tastatur den Senden-Button verdeckt.",
+phaseA:[
+{h:"Testseite wählen",t:"Exposé oder Kontaktformular einer Test-/Wettbewerbsseite auf Mobil öffnen."},
+{h:"Tastatur auslösen",t:"In ein Eingabfeld tippen und prüfen, ob CTA sichtbar bleibt."},
+{h:"Dokumentation",t:"Screenshot/Screenrecord sichern, ohne Kundennamen prominent."}
+],
+prompt:"Erkläre einem Immobilienanbieter auf 3–4 Sätzen, warum ein verdeckter 'Senden'-Button ein harter P0-Fehler ist (Lead-Verlust, Frust, Abbruch).",
+evidence:{
+title:"P0-KONVERSIONSBLOCKER – CTA verdeckt (Testfall)",
+type:"P0",
+note:"P0: Mobile Tastatur überlagert den CTA. Anfrage praktisch nicht abschickbar. Schwere direkte Auswirkung auf Leads."
+},
+sprintNote:"In 90 Minuten: 3 Testseiten prüfen, je 1 P0/P1-Fall dokumentieren (nur intern)."
+},
+{
+id:"02",
+title:"Drill 02 · LCP & Hero-Bild",
+subtitle:"Finde träges Hero-Bild als Conversion-Bremse.",
+phaseA:[
+{h:"Ladezeit beobachten",t:"Startseite/Exposé mobil laden, Fokus auf erstes Bild."},
+{h:"Quelltext ansehen",t:"Hero-Bild suchen; prüfen, ob width/height und loading sinnvoll gesetzt sind."},
+{h:"Befund notieren",t:"Kurz: 'Hero-Bild blockiert schnelle Wahrnehmung, Risiko für Absprung'."}
+],
+prompt:"Formuliere einen sachlichen Hinweis: Ein zu spätes Hero-Bild kostet Vertrauen in den ersten 2–3 Sekunden.",
+evidence:{
+title:"LCP-Risiko Hero-Bild (Testfall)",
+type:"P1",
+note:"Langsame Hero-Auslieferung auf Mobil, fehlende Dimensionen/loading-Fehler. Potenzieller Einfluss auf Wahrnehmung und Core Web Vitals."
+}
+},
+{
+id:"03",
+title:"Drill 03 · H1-Struktur",
+subtitle:"Doppelte H1 oder fehlende klare Überschrift.",
+phaseA:[
+{h:"HTML prüfen",t:"view-source oder DevTools, H1-Suchlauf."},
+{h:"Anomalie dokumentieren",t:"Z. B. Logo als H1 + Exposé-Titel als H1."}
+],
+prompt:"Erkläre knapp, warum eine Seite nur ein klares Thema als H1 führen sollte.",
+evidence:{
+title:"Strukturfehler H1 (Testfall)",
+type:"TECH",
+note:"Mehrere H1-Elemente stören die thematische Klarheit. Empfehlung: eine Leitüberschrift je Seite."
+}
+},
+{
+id:"04",
+title:"Drill 04 · Breadcrumbs & Sackgassen",
+subtitle:"Fehlende Orientierung auf Exposé-Seiten.",
+phaseA:[
+{h:"Exposé prüfen",t:"Nach oben/nach unten scrollen: gibt es Breadcrumbs oder Links zu ähnlichen Objekten?"},
+{h:"Sackgasse markieren",t:"Wenn nein: 'Sackgasse' notieren."}
+],
+evidence:{
+title:"Nutzerführungsschwäche (Sackgasse, Testfall)",
+type:"UX",
+note:"Kein klarer Rückweg, keine Alternativen. Risiko: frühere Abbrüche."
+}
+}
+];
+}
+// ---------- SURVIVAL (80-Tage-Plan, Bausteine) ----------
+function renderSurvival(){
+const d = document.createElement("div");
+d.className = "grid";
+const card = document.createElement("div");
+card.className = "card roadmap-content";
+const p = state.phoenix;
+
+const info = phoenixDayInfo();
+const tag = info.passed<=0
+? "Vorbereitungsphase – Fenster startet am 07.11.2025."
+: (info.left<=0
+? "Fenster abgeschlossen – prüfe, ob alle Manifest-Punkte erfüllt sind."
+: `Wir befinden uns an Tag ${info.passed} von ${info.total}. Jeder Tag zählt.`);
+
+card.innerHTML = `
+<h2>PROJEKT PHOENIX v12 · 80-Tage-Operationsplan</h2>
+<p class="muted">
+Dieses Modul ist deine verbindliche Roadmap für den Zeitraum
+<code>${PHOENIX_START}</code> bis <code>${PHOENIX_END}</code>.
+Ziel: Du gehst als Nichtselbstständiger sauber in die PI, steuerst die DRV proaktiv
+und baust parallel ein prüffähiges, mobil-fokussiertes SEO-Audit-Modell auf,
+das mit 3–&lt;6 Stunden/Tag tragfähig ist – sobald es rechtlich freigegeben wurde.
+Bis zum 31.01.2026 ist der Antrag auf Testung der Anhebung des seit 2013 festgestellten 3-Stunden-Leistungsbildes auf ein 3–6-Stunden-Leistungsbild/Tag gestellt,
+die Testphase ist als ca. sechsmonatiger Prozess eingeplant,
+und alle drei Prozesse (PI, DRV-Testung, Existenzgründung) werden aufeinander abgestimmt, damit nach Ende der PI die Feststellung unbegrenzter Leistungsfähigkeit vorbereitet ist.
+</p>
+<p><strong>Status:</strong> ${escapeHTML(tag)}</p>
+
+<h3>Baustein 1 · FUNDAMENT (InsO · rote Linie)</h3>
+<p>
+Bis zur ausdrücklichen Freigabe deiner selbstständigen Tätigkeit durch den Insolvenzverwalter (§ 35 Abs. 2 InsO)
+gilt eine harte rote Linie:
+</p>
+<ul>
+<li>Keine faktische Selbstständigkeit: keine laufende Beratung, keine Audit-Leistung für echte Kunden.</li>
+<li>Keine Rechnungen, keine Anzahlungen, keine Barhonorare, keine versteckten „Testhonorare“.</li>
+<li>Keine aktive Gewerbeanmeldung, kein Absenden des Fragebogens zur steuerlichen Erfassung.</li>
+<li>Nur Vorbereitung: Lernen, Übungs-Audits, Templates, Tag-X-Unterlagen; die Existenzgründung wird erst einen Tag nach schriftlicher Freigabe der selbstständigen Tätigkeit durch den Insolvenzverwalter offiziell gestartet, um eine Regelinsolvenz zu vermeiden.</li>
+</ul>
+<div class="list">
+<div class="item">
+<div class="check ${p.pKonto?'done':''}" data-flag="pKonto">${p.pKonto?'✓':''}</div>
+<div>
+<strong>P-Konto aktiv</strong>
+<div class="muted">Privates Konto als Pfändungsschutzkonto führen. Miet- &amp; Lebenshaltung gesichert.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${p.businessAccountCold?'done':''}" data-flag="businessAccountCold">${p.businessAccountCold?'✓':''}</div>
+<div>
+<strong>Geschäftskonto „kalt“ eröffnet</strong>
+<div class="muted">Eigenes Konto ohne Dispo, nur mit Testbeträgen. Keine Kundengelder in den 80 Tagen.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${p.piPrepared?'done':''}" data-flag="piPrepared">${p.piPrepared?'✓':''}</div>
+<div>
+<strong>PI-Antrag vorbereitet (Verbraucherinsolvenz)</strong>
+<div class="muted">§ 305 InsO-Bescheinigung, Gläubigerliste, Vermögensverzeichnis, EM-Rente vollständig erfasst.</div>
+</div>
+</div>
+</div>
+
+<h3>Baustein 2 · KOMPASS (DRV · Transparenz & Leistungsbild)</h3>
+<p>
+Du reduzierst das Risiko des „12-Stunden-Paradoxons“, indem du deine Aktivitäten begrenzt,
+dokumentierst und die DRV aktiv einbindest, um die Anhebung des Leistungsbildes und später die Feststellung unbegrenzter Leistungsfähigkeit vorzubereiten.
+</p>
+<ul>
+<li>Max. 3 Stunden/Tag arbeitsähnliche Tätigkeiten; alles darüber klar markieren, nicht verharmlosen.</li>
+<li>Lückenloses Zeitjournal: Tätigkeiten, Pausen, Symptome, keine Dramatisierung, keine Hero-Story.</li>
+<li>Kontrollierte Mitteilung an die DRV: vorbereitende Tätigkeiten (bis 3 Std.), Antrag auf Leistungen zur Teilhabe bzw. Testung zur Anhebung des Leistungsbildes von 3 auf 3–6 Stunden/Tag bis spätestens 31.01.2026.</li>
+</ul>
+<div class="list">
+<div class="item">
+<div class="check ${p.zeitjournalStable?'done':''}" data-flag="zeitjournalStable">${p.zeitjournalStable?'✓':''}</div>
+<div>
+<strong>ZEITJOURNAL stabil geführt</strong>
+<div class="muted">Mindestens 30 Tage dokumentiert: Datum, Dauer, Art der Tätigkeit, Belastung.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${p.drvNoticeSent?'done':''}" data-flag="drvNoticeSent">${p.drvNoticeSent?'✓':''}</div>
+<div>
+<strong>DRV informiert</strong>
+<div class="muted">Mitteilung: vorbereitende Tätigkeiten (bis 3 Std.), geplanter Test zur Anhebung des Leistungsbildes, keine heimliche Vollzeit.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${p.ltaPrepared?'done':''}" data-flag="ltaPrepared">${p.ltaPrepared?'✓':''}</div>
+<div>
+<strong>LTA-/Reha-/Testungsunterlagen vorbereitet/gestellt</strong>
+<div class="muted">Ziel: offizielles Leistungsbild 3–&lt;6 Std. für 2026 als Zwischenschritt und Vorbereitung der Feststellung unbegrenzter Leistungsfähigkeit nach Ende der PI.</div>
+</div>
+</div>
+</div>
+
+<h3>Baustein 3 · TRIEBWERK (Business kalt · Mobile-First Audit)</h3>
+<p>
+In den 80 Tagen entsteht ein schlankes Produkt:
+ein standardisierter, mobilfokussierter SEO-Audit für Immobilienseiten,
+der später mit 3–&lt;6 Std./Tag bedient werden kann.
+Jetzt aber nur als Blaupause.
+</p>
+<ul>
+<li>Standard-Checkliste (P0/P1/P2) für Mobil-Fehler (Formulare, LCP, H1, Breadcrumbs, Trust).</li>
+<li>Vorlagen: 1-seitige Management-Summary, technischer Appendix, Angebotsentwurf mit Startklausel.</li>
+<li>3–5 vollständige Übungs-Audits auf Test-/Wettbewerbsseiten (intern, ohne Pitch).</li>
+</ul>
+<div class="list">
+<div class="item">
+<div class="check ${p.internalAuditsReady?'done':''}" data-flag="internalAuditsReady">${p.internalAuditsReady?'✓':''}</div>
+<div>
+<strong>Übungs-Audits fertig</strong>
+<div class="muted">Mindestens 3 saubere Test-Audits im Audits-Tab, inkl. Evidence und Executive Summary.</div>
+</div>
+</div>
+<div class="item">
+<div class="check ${p.explorationsPrepared?'done':''}" data-flag="explorationsPrepared">${p.explorationsPrepared?'✓':''}</div>
+<div>
+<strong>Explorationskontakte vorbereitet</strong>
+<div class="muted">1–2 passende Kontakte mit dokumentierter Startklausel, kein Vertrag, kein Geldfluss.</div>
+</div>
+</div>
+</div>
+
+<h3>Baustein 4 · TAG X (Freigabe-Paket für den Insolvenzverwalter)</h3>
+<p>
+Wenn das Verfahren eröffnet ist und der Insolvenzverwalter bestellt wird,
+legst du am ersten Tag ein komplettes, ruhiges Paket vor.
+</p>
+<ul>
+<li>Anschreiben mit Bitte um Freigabe der selbstständigen Tätigkeit (§ 35 Abs. 2 InsO), mit klarem Hinweis, dass der Start der Existenzgründung erst einen Tag nach schriftlicher Freigabe erfolgt.</li>
+<li>Skizze deines Geschäftsmodells (Mobile-First Audits, solo, geringe Fixkosten, klare Trennung der Konten).</li>
+<li>Vorschlag einer fairen Abführungsregelung auf Basis eines realistischen Teilzeitgehalts.</li>
+<li>Beifügen: DRV-/Testungs-/LTA-Unterlagen, Übungs-Audits als Kompetenznachweis.</li>
+</ul>
+<div class="list">
+<div class="item">
+<div class="check ${p.tagXPackageDraft?'done':''}" data-flag="tagXPackageDraft">${p.tagXPackageDraft?'✓':''}</div>
+<div>
+<strong>TAG-X-Paket als PDF-Entwurf</strong>
+<div class="muted">Im Filesystem vorbereitet (Survival-Checkliste verwenden), versandfertig ab Bestellung des IV.</div>
+</div>
+</div>
+</div>
+
+<h3>80-Tage-Manifest · Checkliste (Zielstatus 31.01.2026)</h3>
+<table>
+<thead>
+<tr>
+<th>Bereich</th>
+<th>Ziel</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InsO</td>
+<td>PI-Antrag als Nichtselbstständiger eingereicht, P-Konto aktiv, Geschäftskonto kalt, keine verbotene Tätigkeit.</td>
+<td>${p.piPrepared && p.pKonto && p.businessAccountCold ? "✅" : "…"}
+</td>
+</tr>
+<tr>
+<td>DRV</td>
+<td>Zeitjournal, DRV-Mitteilung, LTA/Reha-/Testungs-Prozess zur Anhebung auf 3–&lt;6 Std. angestoßen.</td>
+<td>${p.zeitjournalStable && p.drvNoticeSent && p.ltaPrepared ? "✅" : "…"}
+</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>MFA-Produkt, Checklisten, Templates, 3–5 Übungs-Audits.</td>
+<td>${p.internalAuditsReady ? "✅" : "…"}
+</td>
+</tr>
+<tr>
+<td>TAG X</td>
+<td>Freigabe-Antrag &amp; Abführungsmodell fertig, Paket druckreif.</td>
+<td>${p.tagXPackageDraft ? "✅" : "…"}
+</td>
+</tr>
+</tbody>
+</table>
+<p class="muted">
+Wenn diese vier Blöcke erfüllt sind, bist du für Insolvenzverwalter und DRV kein Risiko,
+sondern ein strukturierter Fall mit klarer Perspektive:
+transparent, dokumentiert, ökonomisch sinnvoll.
+</p>
+`;
+
+card.addEventListener("click",e=>{
+const box = e.target.closest(".check[data-flag]");
+if(!box) return;
+const key = box.dataset.flag;
+state.phoenix[key] = !state.phoenix[key];
+save();
+render();
+});
+
+d.append(card);
+view.append(d);
+}
+})();
+</script>
 </body>
 </html>
