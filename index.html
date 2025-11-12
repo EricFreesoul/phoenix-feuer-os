@@ -11,7 +11,7 @@
       --bg-elev:#050816;
       --card:#0b1020;
       --ink:#e5e7ff;
-      --ink-dim:#9ca3c9;
+      --ink-dim:#cbd5ff;
       --brand:#60a5fa;
       --ok:#22c55e;
       --warn:#facc15;
@@ -71,7 +71,7 @@
       font-weight:650;
     }
     .sub{
-      font-size:11px;
+      font-size:13px;
       color:var(--ink-dim);
       margin-top:2px;
       display:flex;
@@ -96,7 +96,7 @@
     }
     .row{display:flex;align-items:center;gap:8px}
     .row.wrap{flex-wrap:wrap}
-    .muted{color:var(--ink-dim);font-size:12px}
+    .muted{color:var(--ink-dim);font-size:13px}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:6px;
       min-height:var(--tap);
@@ -106,7 +106,7 @@
       background:linear-gradient(180deg,color-mix(in oklab,var(--bg-elev) 84%,#1d2438) 0%,var(--bg-elev) 100%);
       color:var(--ink);
       font-weight:600;
-      font-size:11px;
+      font-size:13px;
       cursor:pointer;
       box-shadow:var(--shadow);
     }
@@ -117,9 +117,9 @@
     .btn.danger{background:linear-gradient(180deg,#fb7185,#e11d48);border-color:#be123c;color:#fef2f2}
     .btn.ghost{background:transparent;box-shadow:none}
     .btn.block{width:100%}
-    .btn.switch{min-width:var(--tap);font-size:13px}
+    .btn.switch{min-width:var(--tap);font-size:14px}
     .ctl{display:flex;flex-direction:column;gap:4px}
-    label{font-size:10.5px;color:var(--ink-dim)}
+    label{font-size:12px;color:var(--ink-dim)}
     input[type="text"],input[type="url"],input[type="number"],input[type="date"],textarea,select{
       width:100%;
       min-height:var(--tap);
@@ -128,7 +128,7 @@
       border:1px solid color-mix(in oklab,var(--ink) 14%,transparent);
       background:var(--bg-elev);
       color:var(--ink);
-      font-size:12.5px;
+      font-size:14px;
       outline:none;
     }
     textarea{min-height:92px;resize:vertical}
@@ -139,7 +139,7 @@
       border-radius:999px;
       background:color-mix(in oklab,var(--muted) 70%,transparent);
       border:1px solid rgba(148,163,253,.16);
-      font-size:10px;
+      font-size:12px;
       color:var(--ink-dim);
     }
     .kpi{font:700 17px var(--mono);letter-spacing:.25px}
@@ -162,11 +162,11 @@
     .check.done{background:#22c55e;border-color:#16a34a;color:#020817}
     .check.danger{background:color-mix(in oklab,var(--danger) 30%,transparent);border-color:var(--danger);color:#111827}
     .tag{
-      font:600 9.5px var(--mono);
-      padding:2px 6px;border-radius:999px;
+      font:600 12px var(--mono);
+      padding:4px 8px;border-radius:999px;
       background:#020817;
       border:1px solid #1d2a4d;
-      color:#9ca3c9;
+      color:var(--ink-dim);
     }
     .badge{
       font:700 17px var(--mono);
@@ -213,19 +213,20 @@
       border:1px solid rgba(75,85,99,.85);
       background:linear-gradient(180deg,var(--bg-elev),color-mix(in oklab,var(--bg-elev) 90%,#000));
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-      font-size:9.5px;
+      font-size:12px;
       color:var(--ink-dim);
       cursor:pointer;
     }
+    .tab:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
     .tab.active{outline:2px solid var(--ring);color:var(--ink);border-color:var(--ring)}
-    .ic{font:700 12px var(--mono)}
+    .ic{font:700 14px var(--mono)}
     .template-box{
       margin-top:var(--space);
       padding:var(--space);
       border-radius:var(--radius-sm);
       background:color-mix(in oklab,var(--bg-elev) 70%,transparent);
       border:1px solid rgba(75,85,99,.7);
-      font-size:11px;
+      font-size:13px;
     }
     .template-box pre{
       margin-top:6px;
@@ -234,7 +235,7 @@
       background:#020817;
       border:1px solid #111827;
       font-family:var(--mono);
-      font-size:10.5px;
+      font-size:12px;
       white-space:pre-wrap;
       word-wrap:break-word;
     }
@@ -245,8 +246,8 @@
       padding-bottom:4px;
       border-bottom:1px solid rgba(75,85,99,.9);
     }
-    .roadmap-content p{font-size:11.5px}
-    .roadmap-content ul{padding-left:16px;font-size:11px}
+    .roadmap-content p{font-size:13px}
+    .roadmap-content ul{padding-left:16px;font-size:13px}
     .roadmap-content li{margin-bottom:3px}
     @media (max-width:420px){
       .wrap{max-width:100%}
@@ -266,7 +267,7 @@
         <span>·</span>
         <span id="datestamp"></span>
         <span>·</span>
-        <span id="status">bereit</span>
+        <span id="status" role="status" aria-live="polite" aria-atomic="true">bereit</span>
       </div>
     </div>
     <div style="margin-left:auto" class="row">
@@ -276,7 +277,7 @@
 </header>
 
 <main class="wrap">
-  <section id="view" class="grid" aria-live="polite"></section>
+  <section id="view" class="grid" role="tabpanel" tabindex="0" aria-live="polite" aria-labelledby="tab-generator"></section>
 </main>
 
 <div id="updateNotice" class="update-notice" hidden>
@@ -285,14 +286,14 @@
 </div>
 
 <nav class="tabs" role="navigation" aria-label="Primäre Navigation">
-  <div class="tabbar">
-    <button class="tab" data-tab="home"><div class="ic">🏠</div><div>Home</div></button>
-    <button class="tab" data-tab="fokus"><div class="ic">⏱️</div><div>Fokus</div></button>
-    <button class="tab" data-tab="prototypen"><div class="ic">🧭</div><div>Prototypen</div></button>
-    <button class="tab" data-tab="evidence"><div class="ic">📎</div><div>Evidence</div></button>
-    <button class="tab" data-tab="outreach"><div class="ic">📬</div><div>Explor.</div></button>
-    <button class="tab" data-tab="manifest"><div class="ic">🦅</div><div>Manifest</div></button>
-    <button class="tab active" data-tab="generator"><div class="ic">⚡</div><div>Generator</div></button>
+  <div class="tabbar" role="tablist" aria-orientation="horizontal">
+    <button class="tab" id="tab-home" type="button" role="tab" data-tab="home" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🏠</div><div>Home</div></button>
+    <button class="tab" id="tab-fokus" type="button" role="tab" data-tab="fokus" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">⏱️</div><div>Fokus</div></button>
+    <button class="tab" id="tab-prototypen" type="button" role="tab" data-tab="prototypen" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🧭</div><div>Prototypen</div></button>
+    <button class="tab" id="tab-evidence" type="button" role="tab" data-tab="evidence" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">📎</div><div>Evidence</div></button>
+    <button class="tab" id="tab-outreach" type="button" role="tab" data-tab="outreach" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">📬</div><div>Explor.</div></button>
+    <button class="tab" id="tab-manifest" type="button" role="tab" data-tab="manifest" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🦅</div><div>Manifest</div></button>
+    <button class="tab active" id="tab-generator" type="button" role="tab" data-tab="generator" aria-controls="view" aria-selected="true" tabindex="0"><div class="ic">⚡</div><div>Generator</div></button>
   </div>
 </nav>
 
@@ -321,6 +322,7 @@
   let sprintTimer = null;
   let swWaitingWorker = null;
   let state = loadState() || seedState();
+  let rovingFocusTab = null;
 
   initServiceWorker();
   initTheme();
@@ -508,7 +510,12 @@
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[m]));
   }
-  function setStatus(t){el("#status").textContent = t;}
+  function setStatus(t){
+    const statusEl = el("#status");
+    if(!statusEl) return;
+    statusEl.textContent = "";
+    requestAnimationFrame(()=>{statusEl.textContent = t;});
+  }
   function copyToClipboard(text){
     if(!navigator.clipboard){setStatus("Clipboard nicht verfügbar");return;}
     navigator.clipboard.writeText(text)
@@ -600,13 +607,89 @@
   }
 
   function bindNav(){
-    tabs.forEach(t=>{
-      t.addEventListener("click",()=>{
-        state.activeTab = t.dataset.tab;
-        saveState();
-        render();
+    const tabList = el(".tabbar");
+    if(tabList){
+      tabList.setAttribute("role","tablist");
+      tabList.setAttribute("aria-orientation","horizontal");
+    }
+
+    rovingFocusTab = tabs.find(tab => tab.dataset.tab === state.activeTab) || tabs[0] || null;
+
+    const focusTab = tab => {
+      if(!tab) return;
+      rovingFocusTab = tab;
+      updateTabState();
+      tab.focus();
+    };
+
+    const activateTab = tab => {
+      if(!tab) return;
+      const target = tab.dataset.tab;
+      if(!target || target === state.activeTab) {
+        focusTab(tab);
+        return;
+      }
+      state.activeTab = target;
+      saveState();
+      render();
+      focusTab(tab);
+    };
+
+    const handleKeydown = event => {
+      const currentTab = event.currentTarget;
+      const key = event.key;
+      const currentIndex = tabs.indexOf(currentTab);
+      if(currentIndex < 0) return;
+
+      const moveFocus = newIndex => {
+        const target = tabs[(newIndex + tabs.length) % tabs.length];
+        focusTab(target);
+      };
+
+      switch(key){
+        case "ArrowRight":
+        case "ArrowDown":
+          event.preventDefault();
+          moveFocus(currentIndex + 1);
+          break;
+        case "ArrowLeft":
+        case "ArrowUp":
+          event.preventDefault();
+          moveFocus(currentIndex - 1);
+          break;
+        case "Home":
+          event.preventDefault();
+          moveFocus(0);
+          break;
+        case "End":
+          event.preventDefault();
+          moveFocus(tabs.length - 1);
+          break;
+        case "Enter":
+        case " ":
+          event.preventDefault();
+          activateTab(currentTab);
+          break;
+      }
+    };
+
+    tabs.forEach((tab, index)=>{
+      if(!tab.id){
+        tab.id = `tab-${tab.dataset.tab || index}`;
+      }
+      tab.setAttribute("role","tab");
+      tab.setAttribute("aria-controls","view");
+      tab.addEventListener("click",()=>activateTab(tab));
+      tab.addEventListener("keydown",handleKeydown);
+      tab.addEventListener("focus",()=>{
+        if(rovingFocusTab !== tab){
+          rovingFocusTab = tab;
+          updateTabState();
+        }
       });
     });
+
+    updateTabState();
   }
 
   function bindImport(){
@@ -674,6 +757,29 @@
 
   // ---------- ROOT RENDER ----------
 
+  function updateTabState(){
+    const activeTab = tabs.find(tab => tab.dataset.tab === state.activeTab) || null;
+    if(!rovingFocusTab || !tabs.includes(rovingFocusTab)){
+      rovingFocusTab = activeTab || tabs[0] || null;
+    }
+
+    tabs.forEach(tab => {
+      const isActive = tab === activeTab;
+      const isFocusTarget = tab === rovingFocusTab;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      tab.tabIndex = isFocusTarget ? 0 : -1;
+    });
+
+    if(view){
+      if(activeTab){
+        view.setAttribute("aria-labelledby", activeTab.id);
+      }else{
+        view.removeAttribute("aria-labelledby");
+      }
+    }
+  }
+
   function render(){
     const now = new Intl.DateTimeFormat("de-DE",{dateStyle:"full",timeStyle:"short"}).format(new Date());
     el("#datestamp").textContent = now;
@@ -686,7 +792,7 @@
             ? `Tag ${info.total} · Fenster abgeschlossen`
             : `Tag ${info.passed}/${info.total} · noch ${info.left}`);
 
-    tabs.forEach(t=>t.classList.toggle("active", t.dataset.tab === state.activeTab));
+    updateTabState();
     view.innerHTML = "";
 
     const map = {
@@ -1491,7 +1597,7 @@ ${date}_${dom}_TAGX_PAKET_ENTWURF_v01.pdf`;
             · ${a ? escapeHTML(a.domain) : "kein Prototyp verknüpft"}
           </div>
           ${ev.url?`<div class="muted">Ablage: ${escapeHTML(ev.url)}</div>`:""}
-          ${ev.note?`<div class="muted" style="margin-top:3px;font-family:var(--mono);font-size:10px">${escapeHTML(ev.note)}</div>`:""}
+          ${ev.note?`<div class="muted" style="margin-top:3px;font-family:var(--mono);font-size:12px">${escapeHTML(ev.note)}</div>`:""}
         </div>
         <button class="btn ghost danger" data-del="${ev.id}">✕</button>
       `;
