@@ -1529,7 +1529,7 @@ Monatsumsatz:	2.100,00 €
       }
 
       // ---------- Init ----------
-      document.addEventListener("DOMContentLoaded", ()=>{
+      function init(){
         // Theme
         setTheme(state.theme || "dark");
         el("#themeBtn").onclick = ()=> setTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
@@ -1592,7 +1592,13 @@ Monatsumsatz:	2.100,00 €
         });
 
         render();
-      });
+      }
+
+      if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", init);
+      }else{
+        init();
+      }
     })();
   </script>
 </body>
