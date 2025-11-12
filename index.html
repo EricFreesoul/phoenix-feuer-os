@@ -176,6 +176,30 @@
       border:1px solid #1f2937;
       display:inline-block;
     }
+    .update-notice{
+      position:fixed;
+      left:50%;
+      bottom:calc(82px + env(safe-area-inset-bottom));
+      transform:translateX(-50%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:var(--radius);
+      border:1px solid rgba(148,163,253,.28);
+      background:color-mix(in oklab,var(--bg-elev) 94%,#0b1020);
+      box-shadow:var(--shadow);
+      z-index:60;
+      max-width:calc(100% - 2*var(--space));
+    }
+    .update-notice[hidden]{display:none;}
+    .update-notice span{
+      font-size:12px;
+      color:var(--ink);
+    }
+    @media (max-width:420px){
+      .update-notice{flex-direction:column;align-items:stretch;text-align:center;}
+    }
     nav.tabs{
       position:fixed;bottom:0;left:0;right:0;z-index:50;
       background:color-mix(in oklab,var(--bg) 94%,#020817);
@@ -255,6 +279,11 @@
   <section id="view" class="grid" aria-live="polite"></section>
 </main>
 
+<div id="updateNotice" class="update-notice" hidden>
+  <span id="updateText">Neue Version verfügbar.</span>
+  <button id="updateReload" class="btn primary">Neu laden</button>
+</div>
+
 <nav class="tabs" role="navigation" aria-label="Primäre Navigation">
   <div class="tabbar">
     <button class="tab" data-tab="home"><div class="ic">🏠</div><div>Home</div></button>
@@ -285,10 +314,15 @@
   const tabs      = els(".tab");
   const importEl  = el("#importFile");
   const themeBtn  = el("#themeBtn");
+  const updateNotice    = el("#updateNotice");
+  const updateText      = el("#updateText");
+  const updateReloadBtn = el("#updateReload");
 
   let sprintTimer = null;
+  let swWaitingWorker = null;
   let state = loadState() || seedState();
 
+  initServiceWorker();
   initTheme();
   bindNav();
   bindImport();
@@ -296,6 +330,65 @@
   render();
 
   // ---------- STATE ----------
+
+  function initServiceWorker(){
+    if (!('serviceWorker' in navigator)) return;
+
+    navigator.serviceWorker.addEventListener("message", handleServiceWorkerMessage);
+
+    navigator.serviceWorker.register("sw.js")
+      .then((registration) => {
+        if (registration.waiting) {
+          swWaitingWorker = registration.waiting;
+          requestServiceWorkerVersion(registration.waiting);
+        }
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          if (!newWorker) return;
+          swWaitingWorker = newWorker;
+          newWorker.addEventListener("statechange", () => {
+            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+              requestServiceWorkerVersion(newWorker);
+            }
+          });
+        });
+      })
+      .catch((err) => console.error("Service Worker registration fehlgeschlagen:", err));
+
+    if (navigator.serviceWorker.controller) {
+      requestServiceWorkerVersion();
+    }
+
+    if (updateReloadBtn) {
+      updateReloadBtn.addEventListener("click", () => {
+        if (swWaitingWorker && typeof swWaitingWorker.postMessage === "function") {
+          swWaitingWorker.postMessage({ type: "SKIP_WAITING" });
+        } else if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ type: "SKIP_WAITING" });
+        }
+        window.location.reload();
+      });
+    }
+  }
+
+  function requestServiceWorkerVersion(target){
+    const recipient = target || (navigator.serviceWorker && navigator.serviceWorker.controller);
+    if (recipient && typeof recipient.postMessage === "function") {
+      recipient.postMessage({ type: "REQUEST_VERSION" });
+    }
+  }
+
+  function handleServiceWorkerMessage(event){
+    const data = event.data;
+    if (!data || data.type !== "SW_VERSION") return;
+    if (data.updated) showUpdateNotice(data.version);
+  }
+
+  function showUpdateNotice(version){
+    if (!updateNotice || !updateText) return;
+    updateText.textContent = `Version ${version} verfügbar — neu laden, um sie zu aktivieren.`;
+    updateNotice.removeAttribute("hidden");
+  }
 
   function seedState(){
     return {
