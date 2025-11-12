@@ -80,4 +80,4 @@ Die App liefert Vorlagen und Checklisten, die an rechtliche Leitplanken angelehn
 
 ---
 
-Für Fragen oder Beiträge erstelle gerne Issues bzw. Pull Requests im Repository.
+Für Fragen oder Beiträge erstelle gerne Issues bzw. Pull Requests im Repository. 
