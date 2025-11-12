@@ -275,6 +275,14 @@
 
   const VERSION      = "12.2-omega-final";
   const STORAGE_KEY  = "PHOENIX_V12_STATE_OMEGA";
+  const STORAGE_WARN_THRESHOLD = 4 * 1024 * 1024; // 4 MB
+  const LEGACY_STORAGE_KEYS = [
+    "PHOENIX_V12_STATE",
+    "PHOENIX_STATE_V11",
+    "PHOENIX_STATE"
+  ];
+  const EXEC_SAFE_RE = /(intern|prototype|prototyp|vorbereitung|ohne einnahmen|minibetrieb|mini-betrieb|keine rechnung)/;
+  const KNOWN_TABS = new Set(["home","fokus","prototypen","evidence","outreach","manifest","generator"]);
   const PHOENIX_START = "2025-11-07";
   const PHOENIX_END   = "2026-01-31";
 
@@ -288,6 +296,9 @@
 
   let sprintTimer = null;
   let state = loadState() || seedState();
+  state.meta = normalizeMeta(state.meta, false);
+  state.guardFlags = normalizeGuardFlags(state.guardFlags, false);
+  applyGuards(state.daily);
 
   initTheme();
   bindNav();
@@ -339,7 +350,9 @@
       },
       audits: [],   // Prototypen / Übungs-Audits
       evidence: [], // interne Evidence
-      outreach: []  // Explorationskontakte mit Startklausel
+      outreach: [], // Explorationskontakte mit Startklausel
+      guardFlags: defaultGuardState(),
+      meta: defaultMeta()
     };
   }
 
@@ -352,55 +365,514 @@
       execLog:"",              // IV/InsO-Perspektive (keine verdeckte Vollselbst.)
       factsLog:"",             // neutrale Tätigkeitsliste
       buddhaNote:"",           // nur privat, kein Extern-Export
-      outreachToday:0
+      outreachToday:0,
+      flags: defaultDailyFlags()
+    };
+  }
+
+  function defaultDailyFlags(){
+    return {
+      longShiftNoExhaustion:false,
+      execLogRisk:false
+    };
+  }
+
+  function defaultGuardState(){
+    return {
+      daily: defaultDailyFlags(),
+      messages: [],
+      lastChecked: null
+    };
+  }
+
+  function defaultMeta(){
+    return {
+      storage: {
+        sizeBytes: 0,
+        nearLimit: false,
+        lastWarningAt: null
+      }
     };
   }
 
   function loadState(){
+    const stored = readStoredState();
+    if(!stored.raw) return null;
     try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return null;
-      const s = JSON.parse(raw);
+      const parsed = JSON.parse(stored.raw);
+      const migrated = migrateState(parsed);
+      const normalized = normalizeState(migrated, {strict:false});
 
-      s.version    = s.version || VERSION;
-      s.theme      = s.theme || "dark";
-      s.activeTab  = s.activeTab || "generator";
+      normalized.guardFlags.daily = computeDailyFlags(normalized.daily);
+      normalized.guardFlags.messages = guardMessagesFromFlags(normalized.guardFlags.daily);
+      normalized.guardFlags.lastChecked = Date.now();
 
-      s.daily      = s.daily || defaultDaily();
-      s.logbook    = Array.isArray(s.logbook) ? s.logbook : [];
+      normalized.version = VERSION;
 
-      s.phoenix    = Object.assign(seedState().phoenix, s.phoenix || {});
+      // Update storage metadata based on persisted payload size
+      let payload = JSON.stringify(normalized);
+      let sizeBytes = new Blob([payload]).size;
+      normalized.meta.storage.sizeBytes = sizeBytes;
+      normalized.meta.storage.nearLimit = sizeBytes >= STORAGE_WARN_THRESHOLD;
+      if(normalized.meta.storage.nearLimit && !normalized.meta.storage.lastWarningAt){
+        normalized.meta.storage.lastWarningAt = Date.now();
+      }else if(!normalized.meta.storage.nearLimit){
+        normalized.meta.storage.lastWarningAt = null;
+      }
 
-      s.finances   = s.finances || {entries:[]};
-      s.finances.entries = Array.isArray(s.finances.entries) ? s.finances.entries : [];
+      // persist migrated data under current key if necessary
+      if(stored.key && stored.key !== STORAGE_KEY){
+        try{
+          // refresh size metadata after potential timestamp updates
+          payload = JSON.stringify(normalized);
+          sizeBytes = new Blob([payload]).size;
+          normalized.meta.storage.sizeBytes = sizeBytes;
+          localStorage.setItem(STORAGE_KEY, payload);
+        }catch(writeErr){
+          console.warn("Migration write failed", writeErr);
+        }
+      }
 
-      s.home       = s.home || {mit:[],kpis:{}};
-      s.home.mit   = Array.isArray(s.home.mit) ? s.home.mit : [];
-      s.home.kpis  = Object.assign({sprints:0}, s.home.kpis || {});
-
-      s.sprint     = Object.assign(seedState().sprint, s.sprint || {});
-
-      s.audits     = Array.isArray(s.audits) ? s.audits : [];
-      s.evidence   = Array.isArray(s.evidence) ? s.evidence : [];
-      s.outreach   = Array.isArray(s.outreach) ? s.outreach : [];
-
-      return s;
+      return normalized;
     }catch(e){
       console.warn("Load failed", e);
       return null;
     }
   }
 
-  function saveState(){
+  function readStoredState(){
+    const keys = [STORAGE_KEY, ...LEGACY_STORAGE_KEYS];
+    for(const key of keys){
+      try{
+        const raw = localStorage.getItem(key);
+        if(raw){
+          return {raw, key};
+        }
+      }catch(err){
+        console.warn("Storage read failed", err);
+      }
+    }
+    return {raw:null, key:null};
+  }
+
+  function migrateState(candidate){
+    if(!isPlainObject(candidate)) return candidate;
+    const clone = Object.assign({}, candidate);
+
+    if(isPlainObject(clone.logbook) && !Array.isArray(clone.logbook)){
+      clone.logbook = Object.values(clone.logbook);
+    }
+    if(clone.finances && isPlainObject(clone.finances) && isPlainObject(clone.finances.entries) && !Array.isArray(clone.finances.entries)){
+      clone.finances.entries = Object.values(clone.finances.entries);
+    }
+    if(clone.daily && typeof clone.daily === "string"){
+      try{
+        clone.daily = JSON.parse(clone.daily);
+      }catch(_){
+        // ignore malformed legacy daily blobs
+      }
+    }
+    if(Array.isArray(clone.logbook)){
+      clone.logbook = clone.logbook.map(entry=>{
+        if(isPlainObject(entry) && typeof entry.flags === "undefined"){
+          return Object.assign({}, entry, {flags: defaultDailyFlags()});
+        }
+        return entry;
+      });
+    }
+    if(isPlainObject(clone.daily) && typeof clone.daily.flags === "undefined"){
+      clone.daily = Object.assign({}, clone.daily, {flags: defaultDailyFlags()});
+    }
+    return clone;
+  }
+
+  function normalizeState(candidate, opts={}){
+    const strict = !!opts.strict;
+    if(!isPlainObject(candidate)){
+      if(strict) throw new Error("State muss ein Objekt sein.");
+      return seedState();
+    }
+
+    const base = seedState();
+    if(strict && typeof candidate.theme !== "undefined" && candidate.theme !== "dark" && candidate.theme !== "light"){
+      throw new Error("theme muss 'dark' oder 'light' sein.");
+    }
+    const theme = candidate.theme === "light" ? "light" : base.theme;
+    const tabCandidate = typeof candidate.activeTab === "string" ? candidate.activeTab : base.activeTab;
+    if(strict && typeof candidate.activeTab !== "undefined" && !KNOWN_TABS.has(tabCandidate)){
+      throw new Error("activeTab unbekannt.");
+    }
+    const out = {
+      version: VERSION,
+      theme,
+      activeTab: KNOWN_TABS.has(tabCandidate) ? tabCandidate : base.activeTab,
+      lastSaved: asNumber(candidate.lastSaved, base.lastSaved, strict, "lastSaved"),
+      phoenix: normalizePhoenix(candidate.phoenix, strict),
+      daily: normalizeDaily(candidate.daily, strict),
+      logbook: normalizeLogbook(candidate.logbook, strict),
+      finances: normalizeFinances(candidate.finances, strict),
+      home: normalizeHome(candidate.home, strict),
+      sprint: normalizeSprint(candidate.sprint, strict),
+      audits: normalizeAudits(candidate.audits, strict),
+      evidence: normalizeEvidence(candidate.evidence, strict),
+      outreach: normalizeOutreach(candidate.outreach, strict),
+      guardFlags: normalizeGuardFlags(candidate.guardFlags, strict),
+      meta: normalizeMeta(candidate.meta, strict)
+    };
+
+    // ensure derived fields
+    out.guardFlags.daily = computeDailyFlags(out.daily);
+    out.guardFlags.messages = guardMessagesFromFlags(out.guardFlags.daily);
+    out.guardFlags.lastChecked = Date.now();
+
+    return out;
+  }
+
+  function normalizePhoenix(value, strict){
+    const base = seedState().phoenix;
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("phoenix muss ein Objekt sein.");
+      return Object.assign({}, base);
+    }
+    const routeCandidate = typeof value.targetRoute === "string" ? value.targetRoute : base.targetRoute;
+    if(strict && routeCandidate !== "A" && routeCandidate !== "B"){
+      throw new Error("phoenix.targetRoute muss 'A' oder 'B' sein.");
+    }
+    return {
+      start: asString(value.start, base.start, strict, "phoenix.start"),
+      end: asString(value.end, base.end, strict, "phoenix.end"),
+      targetRoute: routeCandidate === "B" ? "B" : "A",
+      pKonto: asBoolean(value.pKonto, base.pKonto, strict, "phoenix.pKonto"),
+      businessAccountCold: asBoolean(value.businessAccountCold, base.businessAccountCold, strict, "phoenix.businessAccountCold"),
+      piPrepared: asBoolean(value.piPrepared, base.piPrepared, strict, "phoenix.piPrepared"),
+      drvNoticeSent: asBoolean(value.drvNoticeSent, base.drvNoticeSent, strict, "phoenix.drvNoticeSent"),
+      ltaPrepared: asBoolean(value.ltaPrepared, base.ltaPrepared, strict, "phoenix.ltaPrepared"),
+      zeitjournalStable: asBoolean(value.zeitjournalStable, base.zeitjournalStable, strict, "phoenix.zeitjournalStable"),
+      tagXPackageDraft: asBoolean(value.tagXPackageDraft, base.tagXPackageDraft, strict, "phoenix.tagXPackageDraft"),
+      routeDecisionNote: asString(value.routeDecisionNote, base.routeDecisionNote, strict, "phoenix.routeDecisionNote")
+    };
+  }
+
+  function normalizeDaily(value, strict){
+    const base = defaultDaily((isPlainObject(value) && typeof value.date === "string") ? value.date : undefined);
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("daily muss ein Objekt sein.");
+      base.flags = computeDailyFlags(base);
+      return base;
+    }
+    const out = Object.assign({}, base);
+    out.date = asString(value.date, base.date, strict, "daily.date");
+    const modeCandidate = typeof value.mode === "string" ? value.mode : base.mode;
+    if(strict && modeCandidate !== "A" && modeCandidate !== "B"){
+      throw new Error("daily.mode muss 'A' oder 'B' sein.");
+    }
+    out.mode = modeCandidate === "B" ? "B" : "A";
+    out.activeMinutes = clamp(asNumber(value.activeMinutes, base.activeMinutes, strict, "daily.activeMinutes"), 0, 600);
+    out.healthLog = asString(value.healthLog, base.healthLog, strict, "daily.healthLog");
+    out.execLog = asString(value.execLog, base.execLog, strict, "daily.execLog");
+    out.factsLog = asString(value.factsLog, base.factsLog, strict, "daily.factsLog");
+    out.buddhaNote = asString(value.buddhaNote, base.buddhaNote, strict, "daily.buddhaNote");
+    out.outreachToday = clamp(asNumber(value.outreachToday, base.outreachToday, strict, "daily.outreachToday"), 0, 9999);
+    out.flags = normalizeDailyFlags(value.flags, strict);
+    const computed = computeDailyFlags(out);
+    out.flags = Object.assign({}, out.flags, computed);
+    return out;
+  }
+
+  function normalizeDailyFlags(value, strict){
+    const base = defaultDailyFlags();
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("daily.flags muss ein Objekt sein.");
+      return base;
+    }
+    return {
+      longShiftNoExhaustion: !!value.longShiftNoExhaustion,
+      execLogRisk: !!value.execLogRisk
+    };
+  }
+
+  function normalizeLogbook(value, strict){
+    const out = [];
+    if(Array.isArray(value)){
+      value.forEach((entry, idx)=>{
+        if(!isPlainObject(entry)){
+          if(strict) throw new Error(`logbook[${idx}] muss ein Objekt sein.`);
+          return;
+        }
+        out.push(normalizeDaily(entry, strict));
+      });
+      return out;
+    }
+    if(isPlainObject(value)){
+      Object.values(value).forEach(entry=>{
+        if(isPlainObject(entry)) out.push(normalizeDaily(entry, strict));
+        else if(strict) throw new Error("logbook Einträge müssen Objekte sein.");
+      });
+      return out;
+    }
+    if(strict && typeof value !== "undefined") throw new Error("logbook muss ein Array sein.");
+    return out;
+  }
+
+  function normalizeFinances(value, strict){
+    const base = {entries: []};
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("finances muss ein Objekt sein.");
+      return base;
+    }
+    const entriesSource = Array.isArray(value.entries)
+      ? value.entries
+      : (isPlainObject(value.entries) ? Object.values(value.entries) : []);
+    const entries = [];
+    entriesSource.forEach((entry, idx)=>{
+      if(!isPlainObject(entry)){
+        if(strict) throw new Error(`finances.entries[${idx}] muss ein Objekt sein.`);
+        return;
+      }
+      const date = asString(entry.date, todayISO(), strict, `finances.entries[${idx}].date`);
+      const yearFallback = date ? date.slice(0,4) : todayISO().slice(0,4);
+      const typeCandidate = typeof entry.type === "string" ? entry.type : undefined;
+      if(strict && typeCandidate && typeCandidate !== "EIN" && typeCandidate !== "AUS"){
+        throw new Error(`finances.entries[${idx}].type muss 'EIN' oder 'AUS' sein.`);
+      }
+      const normalized = {
+        id: asString(entry.id, id(), strict, `finances.entries[${idx}].id`),
+        date,
+        year: asString(entry.year, yearFallback, strict, `finances.entries[${idx}].year`),
+        type: typeCandidate === "AUS" ? "AUS" : "EIN",
+        amount: Number.isFinite(Number(entry.amount)) ? Number(entry.amount) : asNumber(entry.amount, 0, strict, `finances.entries[${idx}].amount`),
+        note: asString(entry.note, "", strict, `finances.entries[${idx}].note`),
+        cat: asString(entry.cat, "", strict, `finances.entries[${idx}].cat`)
+      };
+      entries.push(normalized);
+    });
+    return {entries};
+  }
+
+  function normalizeHome(value, strict){
+    const base = seedState().home;
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("home muss ein Objekt sein.");
+      return {
+        mit: base.mit.map((item, idx)=>normalizeMitItem(item, idx, strict)),
+        kpis: {sprints: base.kpis.sprints}
+      };
+    }
+    const mitSource = Array.isArray(value.mit)
+      ? value.mit
+      : (isPlainObject(value.mit) ? Object.values(value.mit) : base.mit);
+    const mit = mitSource.map((item, idx)=>normalizeMitItem(item, idx, strict));
+    const kpisSource = isPlainObject(value.kpis) ? value.kpis : {};
+    const kpis = {
+      sprints: clamp(asNumber(kpisSource.sprints, base.kpis.sprints, strict, "home.kpis.sprints"), 0, 9999)
+    };
+    return {mit, kpis};
+  }
+
+  function normalizeMitItem(value, idx, strict){
+    if(!isPlainObject(value)){
+      if(strict) throw new Error(`home.mit[${idx}] muss ein Objekt sein.`);
+      return {
+        id: id(),
+        text: "",
+        done: false
+      };
+    }
+    return {
+      id: asString(value.id, id(), strict, `home.mit[${idx}].id`),
+      text: asString(value.text, "", strict, `home.mit[${idx}].text`),
+      done: !!value.done
+    };
+  }
+
+  function normalizeSprint(value, strict){
+    const base = seedState().sprint;
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("sprint muss ein Objekt sein.");
+      return Object.assign({}, base);
+    }
+    return {
+      running: !!value.running,
+      startedAt: typeof value.startedAt === "string" ? value.startedAt : null,
+      durationMin: clamp(asNumber(value.durationMin, base.durationMin, strict, "sprint.durationMin"), 1, 600),
+      remainingSec: clamp(asNumber(value.remainingSec, base.remainingSec, strict, "sprint.remainingSec"), 0, 600*60),
+      note: asString(value.note, base.note, strict, "sprint.note"),
+      buddhaPauseBefore: !!value.buddhaPauseBefore
+    };
+  }
+
+  function normalizeAudits(value, strict){
+    const out = [];
+    const stages = ["NEU","IN_ARBEIT","ENTWURF","FERTIG_INTERNAL"];
+    if(Array.isArray(value)){
+      value.forEach((entry, idx)=>{
+        if(!isPlainObject(entry)){
+          if(strict) throw new Error(`audits[${idx}] muss ein Objekt sein.`);
+          return;
+        }
+        const gateSource = isPlainObject(entry.gate) ? entry.gate : {};
+        const gate = {};
+        Object.keys(gateSource).forEach(k=>{gate[k]=!!gateSource[k];});
+        const stageCandidate = typeof entry.stage === "string" ? entry.stage : undefined;
+        if(strict && stageCandidate && !stages.includes(stageCandidate)){
+          throw new Error(`audits[${idx}].stage ungültig.`);
+        }
+        out.push({
+          id: asString(entry.id, id(), strict, `audits[${idx}].id`),
+          domain: asString(entry.domain, "", strict, `audits[${idx}].domain`),
+          stage: stages.includes(stageCandidate) ? stageCandidate : "NEU",
+          created: asString(entry.created, todayISO(), strict, `audits[${idx}].created`),
+          gate,
+          gateScore: clamp(asNumber(entry.gateScore, 0, strict, `audits[${idx}].gateScore`), 0, 100)
+        });
+      });
+      return out;
+    }
+    if(strict && typeof value !== "undefined") throw new Error("audits muss ein Array sein.");
+    return out;
+  }
+
+  function normalizeEvidence(value, strict){
+    const out = [];
+    if(Array.isArray(value)){
+      value.forEach((entry, idx)=>{
+        if(!isPlainObject(entry)){
+          if(strict) throw new Error(`evidence[${idx}] muss ein Objekt sein.`);
+          return;
+        }
+        out.push({
+          id: asString(entry.id, id(), strict, `evidence[${idx}].id`),
+          title: asString(entry.title, "", strict, `evidence[${idx}].title`),
+          url: asString(entry.url, "", strict, `evidence[${idx}].url`),
+          type: asString(entry.type, "P0", strict, `evidence[${idx}].type`),
+          auditId: entry.auditId ? asString(entry.auditId, "", strict, `evidence[${idx}].auditId`) : null,
+          note: asString(entry.note, "", strict, `evidence[${idx}].note`),
+          ts: asString(entry.ts, new Date().toISOString(), strict, `evidence[${idx}].ts`)
+        });
+      });
+      return out;
+    }
+    if(strict && typeof value !== "undefined") throw new Error("evidence muss ein Array sein.");
+    return out;
+  }
+
+  function normalizeOutreach(value, strict){
+    const out = [];
+    if(Array.isArray(value)){
+      value.forEach((entry, idx)=>{
+        if(!isPlainObject(entry)){
+          if(strict) throw new Error(`outreach[${idx}] muss ein Objekt sein.`);
+          return;
+        }
+        const contact = typeof entry.contact === "string" ? entry.contact : entry.name;
+        const notes = typeof entry.notes === "string" ? entry.notes : entry.note;
+        out.push({
+          id: asString(entry.id, id(), strict, `outreach[${idx}].id`),
+          contact: asString(contact, "", strict, `outreach[${idx}].contact`),
+          channel: asString(entry.channel, "", strict, `outreach[${idx}].channel`),
+          handle: asString(entry.handle, "", strict, `outreach[${idx}].handle`),
+          notes: asString(notes, "", strict, `outreach[${idx}].notes`),
+          created: asString(entry.created, todayISO(), strict, `outreach[${idx}].created`),
+          status: asString(entry.status, "EXPLORATION", strict, `outreach[${idx}].status`)
+        });
+      });
+      return out;
+    }
+    if(strict && typeof value !== "undefined") throw new Error("outreach muss ein Array sein.");
+    return out;
+  }
+
+  function normalizeGuardFlags(value, strict){
+    const base = defaultGuardState();
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("guardFlags muss ein Objekt sein.");
+      return base;
+    }
+    const daily = isPlainObject(value.daily) ? {
+      longShiftNoExhaustion: !!value.daily.longShiftNoExhaustion,
+      execLogRisk: !!value.daily.execLogRisk
+    } : defaultDailyFlags();
+    const messages = Array.isArray(value.messages) ? value.messages.filter(v=>typeof v === "string") : [];
+    return {
+      daily,
+      messages,
+      lastChecked: typeof value.lastChecked === "number" ? value.lastChecked : null
+    };
+  }
+
+  function normalizeMeta(value, strict){
+    const base = defaultMeta();
+    if(!isPlainObject(value)){
+      if(strict && typeof value !== "undefined") throw new Error("meta muss ein Objekt sein.");
+      return base;
+    }
+    const storage = isPlainObject(value.storage) ? value.storage : {};
+    return {
+      storage: {
+        sizeBytes: clamp(asNumber(storage.sizeBytes, base.storage.sizeBytes, strict, "meta.storage.sizeBytes"), 0, Number.MAX_SAFE_INTEGER),
+        nearLimit: !!storage.nearLimit,
+        lastWarningAt: typeof storage.lastWarningAt === "number" ? storage.lastWarningAt : null
+      }
+    };
+  }
+
+  function isPlainObject(value){
+    return !!value && typeof value === "object" && !Array.isArray(value);
+  }
+
+  function asString(value, fallback, strict, path){
+    if(typeof value === "string") return value;
+    if(strict) throw new Error(`${path} muss eine Zeichenkette sein.`);
+    return fallback;
+  }
+
+  function asNumber(value, fallback, strict, path){
+    if(typeof value === "number" && !Number.isNaN(value)) return value;
+    if(typeof value === "string" && value.trim() !== "" && !Number.isNaN(Number(value))) return Number(value);
+    if(strict) throw new Error(`${path} muss eine Zahl sein.`);
+    return fallback;
+  }
+
+  function asBoolean(value, fallback, strict, path){
+    if(typeof value === "boolean") return value;
+    if(strict) throw new Error(`${path} muss ein Boolescher Wert sein.`);
+    return fallback;
+  }
+
+  function saveState(options = {}){
+    const opts = options || {};
     applyGuards(state.daily);
     state.lastSaved = Date.now();
     try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      setStatus("gespeichert");
-      setTimeout(()=>setStatus("bereit"),600);
+      state.meta = normalizeMeta(state.meta, false);
+      state.guardFlags = normalizeGuardFlags(state.guardFlags, false);
+      state.guardFlags.daily = computeDailyFlags(state.daily);
+      state.guardFlags.messages = guardMessagesFromFlags(state.guardFlags.daily);
+      state.guardFlags.lastChecked = Date.now();
+
+      let payload = JSON.stringify(state);
+      let sizeBytes = new Blob([payload]).size;
+      state.meta.storage.sizeBytes = sizeBytes;
+      state.meta.storage.nearLimit = sizeBytes >= STORAGE_WARN_THRESHOLD;
+      state.meta.storage.lastWarningAt = state.meta.storage.nearLimit ? Date.now() : null;
+
+      payload = JSON.stringify(state);
+      sizeBytes = new Blob([payload]).size;
+      state.meta.storage.sizeBytes = sizeBytes;
+
+      localStorage.setItem(STORAGE_KEY, payload);
+
+      if(state.meta.storage.nearLimit){
+        setStatus("Warnung: Speicher fast voll (~4 MB). Bitte Backup/Archiv prüfen.");
+      } else if(!opts.skipStatus){
+        setStatus("gespeichert");
+        setTimeout(()=>setStatus("bereit"),600);
+      }
     }catch(e){
       console.warn("Save failed", e);
-      setStatus("Speicherfehler");
+      if(!opts.skipStatus){
+        setStatus("Speicherfehler");
+      }
     }
   }
 
@@ -449,20 +921,57 @@
   // ---------- COMPLIANCE GUARDS ----------
 
   function applyGuards(d){
+    if(!d || typeof d !== "object") return;
+    const flags = computeDailyFlags(d);
+    const mergedFlags = Object.assign({}, defaultDailyFlags(), d.flags || {}, flags);
+    d.flags = mergedFlags;
+
+    if(state){
+      state.guardFlags = normalizeGuardFlags(state.guardFlags, false);
+      state.guardFlags.daily = Object.assign({}, flags);
+      state.guardFlags.messages = guardMessagesFromFlags(flags);
+      state.guardFlags.lastChecked = Date.now();
+
+      if(Array.isArray(state.logbook)){
+        const entry = state.logbook.find(l=>l && l.date === d.date);
+        if(entry){
+          entry.flags = Object.assign({}, entry.flags || {}, flags);
+        }
+      }
+    }
+  }
+
+  function computeDailyFlags(d){
+    const base = defaultDailyFlags();
+    if(!d || typeof d !== "object") return base;
     const health = (d.healthLog || "").toLowerCase();
     const exec   = (d.execLog || "").toLowerCase();
-    const mins   = d.activeMinutes || 0;
+    const mins   = Number(d.activeMinutes) || 0;
+    return {
+      longShiftNoExhaustion: mins > 180 && !health.includes("erschöpf"),
+      execLogRisk: !!exec && !EXEC_SAFE_RE.test(exec)
+    };
+  }
 
-    if(mins > 180 && !health.includes("erschöpf")){
-      setStatus("Warnung: >3h ohne Erschöpfungsprotokoll (DRV-Risiko prüfen).");
+  function guardMessagesFromFlags(flags){
+    const msgs = [];
+    if(flags.longShiftNoExhaustion){
+      msgs.push(">3h aktiv ohne Erschöpfungsprotokoll – DRV-Risiko prüfen.");
     }
-    if(exec && !exec.match(/intern|prototype|prototyp|vorbereitung|ohne einnahmen|minibetrieb|mini-betrieb|keine rechnung/)){
-      setStatus("Hinweis: Executive-Log schärfen (kein Eindruck verdeckter Vollselbstständigkeit).");
+    if(flags.execLogRisk){
+      msgs.push("Executive-Log ohne klare Abgrenzung – Formulierungen schärfen.");
     }
+    return msgs;
   }
 
   function evaluateGlobalWarnings(){
     const out = [];
+    const guardMsgs = (state.guardFlags && Array.isArray(state.guardFlags.messages)) ? state.guardFlags.messages : [];
+    guardMsgs.forEach(text=>out.push({lvl:"warn",text}));
+
+    if(state.meta && state.meta.storage && state.meta.storage.nearLimit){
+      out.push({lvl:"warn",text:"localStorage fast voll (~4 MB) – Backup erstellen und alte Daten prüfen."});
+    }
     // Zeitjournal-Tage
     const daysSet = new Set(state.logbook.map(l=>l.date));
     if(daysSet.size < 30){
@@ -525,11 +1034,18 @@
       reader.onload = ev=>{
         try{
           const data = JSON.parse(ev.target.result);
-          const merged = Object.assign(seedState(), data);
-          merged.version = VERSION;
-          state = merged;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          setStatus("Import ok");
+          const migrated = migrateState(data);
+          const normalized = normalizeState(migrated, {strict:true});
+          state = normalized;
+          state.meta = normalizeMeta(state.meta, false);
+          state.guardFlags = normalizeGuardFlags(state.guardFlags, false);
+          applyGuards(state.daily);
+          saveState({skipStatus:true});
+          if(state.meta && state.meta.storage && state.meta.storage.nearLimit){
+            setStatus("Import ok · Speicher fast voll (~4 MB)");
+          }else{
+            setStatus("Import ok");
+          }
           location.reload();
         }catch(err){
           console.error(err);
@@ -559,6 +1075,7 @@
   function archiveCurrentDaily(){
     const cur = state.daily;
     if(!cur || !cur.date) return;
+    applyGuards(cur);
     const idx = state.logbook.findIndex(l=>l.date === cur.date);
     const clone = JSON.parse(JSON.stringify(cur));
     if(idx > -1) state.logbook[idx] = clone;
