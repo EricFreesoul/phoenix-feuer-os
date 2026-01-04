@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang=“de“ data-theme=“dark“>
+<html lang="de" data-theme="dark">
 <head>
-  <meta charset=“utf-8“>
+  <meta charset="utf-8">
   <title>🦅 PHOENIX v12.9 — DISZIPLIN IST FREIHEIT</title>
-  <meta name=“viewport“ content=“width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover“>
-  <meta name=“theme-color“ content=“#0f172a“>
-  <meta name=“color-scheme“ content=“dark light“>
-  <meta name=“description“ content=“PROJEKT PHOENIX – Dein Operationsplan. Kein Start-up. Eine verdammte Symphonie des kontrollierten Chaos.“>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="PROJEKT PHOENIX – Dein Operationsplan. Kein Start-up. Eine verdammte Symphonie des kontrollierten Chaos.">
   
   <!-- Preload kritische Ressourcen -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
        PHOENIX v12.9 OMEGA 🔥 — POWA APP
        ══════════════════════════════════════════════════════════════════════════
        
-       „Du bist gezwungen, genial zu sein.“
+       "Du bist gezwungen, genial zu sein."
        
        PROJEKT PHOENIX – EXEKUTIONSPLAN
        Zeithorizont: 01.01.2026 – Q1/2029
@@ -94,9 +94,9 @@
       --radius-full: 9999px;
       
       /* === Typography === */
-      --font: -apple-system, BlinkMacSystemFont, ‚Segoe UI‘, system-ui, sans-serif;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       --font-display: var(--font);
-      --mono: ‚SF Mono‘, ‚Fira Code‘, ‚JetBrains Mono‘, ui-monospace, monospace;
+      --mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
       
       /* === Motion: Lebendig, nicht hektisch === */
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -110,7 +110,7 @@
     }
 
     /* === Light Theme: Für die seltenen sonnigen Tage === */
-    [data-theme=“light“] {
+    [data-theme="light"] {
       --bg-void: #f8fafc;
       --bg: #f1f5f9;
       --bg-elev: #ffffff;
@@ -380,7 +380,7 @@
     }
 
     .nav-tab::before {
-      Content: ‚‘;
+      Content: '';
       Position: absolute;
       Inset: 0;
       Background: var(--brand-gradient);
@@ -503,7 +503,7 @@
     }
 
     .lobo-quote::before {
-      Content: ‚“‘;
+      Content: '"';
       Font-size: 1.5rem;
       Position: absolute;
       Left: var(--space-sm);
@@ -1243,33 +1243,33 @@
 </head>
 
 <body>
-  <div id=“app“>
+  <div id="app">
     <!-- ═══════════════════════════════════════════════════════════════════
          HEADER
          ═══════════════════════════════════════════════════════════════════ 
-    <header class=“header“>
-      <div class=“header-inner“>
-        <div class=“logo“ aria-hidden=“true“>🦅</div>
-        <div class=“brand“>
-          <div class=“brand-row“>
-            <span class=“brand-name“>PHOENIX</span>
-            <span class=“brand-badge“>POWA</span>
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo" aria-hidden="true">🦅</div>
+        <div class="brand">
+          <div class="brand-row">
+            <span class="brand-name">PHOENIX</span>
+            <span class="brand-badge">POWA</span>
           </div>
-          <div class=“brand-version“>
+          <div class="brand-version">
             <span>v12.9</span>
             <span>🗽</span>
           </div>
-          <div class=“phase-bar“>
-            <div class=“phase-fill“ id=“phase-fill“ style=“width: 0%“></div>
+          <div class="phase-bar">
+            <div class="phase-fill" id="phase-fill" style="width: 0%"></div>
           </div>
-          <div class=“brand-motto“>DISZIPLIN IST FREIHEIT</div>
-          <div class=“brand-status“>
-            <span id=“datestamp“>—</span> · <span id=“status-display“>bereit</span>
+          <div class="brand-motto">DISZIPLIN IST FREIHEIT</div>
+          <div class="brand-status">
+            <span id="datestamp">—</span> · <span id="status-display">bereit</span>
           </div>
         </div>
-        <div class=“header-actions“>
-          <button class=“btn btn-icon btn-ghost“ id=“theme-toggle“ title=“Theme umschalten“ aria-label=“Farbschema wechseln“>
-            <span id=“theme-icon“>🌙</span>
+        <div class="header-actions">
+          <button class="btn btn-icon btn-ghost" id="theme-toggle" title="Theme umschalten" aria-label="Farbschema wechseln">
+            <span id="theme-icon">🌙</span>
           </button>
         </div>
       </div>
@@ -1278,48 +1278,48 @@
     <!-- ═══════════════════════════════════════════════════════════════════
          MAIN
          ═══════════════════════════════════════════════════════════════════ 
-    <main class=“main“ id=“main-view“>
+    <main class="main" id="main-view">
       <!—Rendered by JS 
     </main>
 
     <!-- ═══════════════════════════════════════════════════════════════════
          NAVIGATION
          ═══════════════════════════════════════════════════════════════════ 
-    <nav class=“nav“ role=“navigation“ aria-label=“Hauptnavigation“>
-      <div class=“nav-bar“ id=“nav-bar“>
+    <nav class="nav" role="navigation" aria-label="Hauptnavigation">
+      <div class="nav-bar" id="nav-bar">
         <!—Rendered by JS 
       </div>
     </nav>
   </div>
 
   <!—Toast Container 
-  <div class=“toast-container“ id=“toast-container“ aria-live=“polite“></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
   <!—File Import 
-  <input type=“file“ id=“file-import“ accept=“application/json“ class=“hidden“ aria-hidden=“true“>
+  <input type="file" id="file-import" accept="application/json" class="hidden" aria-hidden="true">
 
   <!-- ═══════════════════════════════════════════════════════════════════════
        PHOENIX v12.9 OMEGA — APPLICATION CORE
        ═══════════════════════════════════════════════════════════════════════ 
   <script>
   (function() {
-    ‚use strict‘;
+    'use strict';
 
     /* ═══════════════════════════════════════════════════════════════════════
        CONFIGURATION — Die Wahrheit in Zahlen
        ═══════════════════════════════════════════════════════════════════════ */
     Const CONFIG = Object.freeze({
-      VERSION: ‚12.9‘,
-      CODENAME: ‚OMEGA‘,
-      STORAGE_KEY: ‚PHOENIX_V12_9_OMEGA‘,
-      STORAGE_KEY_LEGACY: ‚PHOENIX_V12_7_OMEGA‘,
+      VERSION: '12.9',
+      CODENAME: 'OMEGA',
+      STORAGE_KEY: 'PHOENIX_V12_9_OMEGA',
+      STORAGE_KEY_LEGACY: 'PHOENIX_V12_7_OMEGA',
       
       // Timeline — Der Masterplan
       TIMELINE: Object.freeze({
-        START: ‚2025-11-12‘,
-        PHASE1_END: ‚2026-01-31‘,
-        OPERATIVE_START: ‚2026-02-01‘,
-        PROJECT_END: ‚2029-03-31‘
+        START: '2025-11-12',
+        PHASE1_END: '2026-01-31',
+        OPERATIVE_START: '2026-02-01',
+        PROJECT_END: '2029-03-31'
       }),
       
       // Limits — Die heiligen Grenzen
@@ -1334,57 +1334,57 @@
       
       // Navigation Tabs
       TABS: Object.freeze([
-        { id: ‚cockpit‘, icon: ‚🎯‘, label: ‚Cockpit‘, hasNotification: false },
-        { id: ‚protocol‘, icon: ‚📋‘, label: ‚Protokoll‘, hasNotification: false },
-        { id: ‚sprint‘, icon: ‚⏱️‘, label: ‚Sprint‘, hasNotification: false },
-        { id: ‚audits‘, icon: ‚🔍‘, label: ‚Audits‘, hasNotification: false },
-        { id: ‚evidence‘, icon: ‚📎‘, label: ‚Evidence‘, hasNotification: false },
-        { id: ‚survival‘, icon: ‚🛡️‘, label: ‚Survival‘, hasNotification: false }
+        { id: 'cockpit', icon: '🎯', label: 'Cockpit', hasNotification: false },
+        { id: 'protocol', icon: '📋', label: 'Protokoll', hasNotification: false },
+        { id: 'sprint', icon: '⏱️', label: 'Sprint', hasNotification: false },
+        { id: 'audits', icon: '🔍', label: 'Audits', hasNotification: false },
+        { id: 'evidence', icon: '📎', label: 'Evidence', hasNotification: false },
+        { id: 'survival', icon: '🛡️', label: 'Survival', hasNotification: false }
       ]),
       
       // Lobo-Stil Texte — Das Salz in der Suppe
       LOBO: Object.freeze({
         Greetings: [
-          ‚Willkommen in der Realität.‘,
-          ‚Bereit, die Matrix zu zerlegen?‘,
-          ‚Deine Constraints sind dein Skalpell.‘,
-          ‚Du bist gezwungen, genial zu sein.‘,
-          ‚Das hier ist kein Ratgeber für Träumer.‘,
-          ‚Disziplin ist Freiheit. Das ist Physik.‘,
-          ‚Zeit, den Operationsplan zu exekutieren.‘,
-          ‚Die Uhr tickt. Du auch.‘
+          'Willkommen in der Realität.',
+          'Bereit, die Matrix zu zerlegen?',
+          'Deine Constraints sind dein Skalpell.',
+          'Du bist gezwungen, genial zu sein.',
+          'Das hier ist kein Ratgeber für Träumer.',
+          'Disziplin ist Freiheit. Das ist Physik.',
+          'Zeit, den Operationsplan zu exekutieren.',
+          'Die Uhr tickt. Du auch.'
         ],
         
         toasts: Object.freeze({
-          saved: [‚Ins System gebrannt.‘, ‚Dokumentiert.‘, ‚Gesichert.‘],
-          copied: [‚In der Zwischenablage.‘, ‚Kopiert. Nutze es weise.‘],
-          exported: [‚Backup erstellt. Paranoia zahlt sich aus.‘],
-          imported: [‚Daten geladen. Weiter im Protokoll.‘],
-          error: [‚Das System sagt nein.‘, ‚Fehler. Aber du findest einen Weg.‘],
-          sprintStart: [‚Die Uhr tickt. Du auch.‘, ‚Sprint läuft. Fokus.‘],
-          sprintPause: [‚Durchatmen. Dann weiter.‘, ‚Pause. Aber nicht zu lange.‘],
-          sprintComplete: [‚Sprint beendet. Du hast geliefert.‘, ‚90 Minuten. Abgehakt.‘],
-          limitWarning: [‚Achtung: Limit in Sicht.‘, ‚Gelbe Zone. Pass auf.‘],
-          limitExceeded: [‚Stopp. Limit überschritten.‘, ‚Die Rente ruft. Mach Schluss für heute.‘],
-          auditAdded: [‚Audit angelegt. Jetzt liefern.‘],
-          evidenceAdded: [‚Evidence gesichert.‘],
-          directiveAdded: [‚Direktive gesetzt.‘],
-          directiveDone: [‚Abgehakt. Weiter.‘],
-          deleted: [‚Entfernt. Liegt im Papierkorb.‘],
-          restored: [‚Wiederhergestellt.‘]
+          saved: ['Ins System gebrannt.', 'Dokumentiert.', 'Gesichert.'],
+          copied: ['In der Zwischenablage.', 'Kopiert. Nutze es weise.'],
+          exported: ['Backup erstellt. Paranoia zahlt sich aus.'],
+          imported: ['Daten geladen. Weiter im Protokoll.'],
+          error: ['Das System sagt nein.', 'Fehler. Aber du findest einen Weg.'],
+          sprintStart: ['Die Uhr tickt. Du auch.', 'Sprint läuft. Fokus.'],
+          sprintPause: ['Durchatmen. Dann weiter.', 'Pause. Aber nicht zu lange.'],
+          sprintComplete: ['Sprint beendet. Du hast geliefert.', '90 Minuten. Abgehakt.'],
+          limitWarning: ['Achtung: Limit in Sicht.', 'Gelbe Zone. Pass auf.'],
+          limitExceeded: ['Stopp. Limit überschritten.', 'Die Rente ruft. Mach Schluss für heute.'],
+          auditAdded: ['Audit angelegt. Jetzt liefern.'],
+          evidenceAdded: ['Evidence gesichert.'],
+          directiveAdded: ['Direktive gesetzt.'],
+          directiveDone: ['Abgehakt. Weiter.'],
+          deleted: ['Entfernt. Liegt im Papierkorb.'],
+          restored: ['Wiederhergestellt.']
         }),
         
         empty: Object.freeze({
-          audits: ‚Noch keine Audits. Zeit, das zu ändern.‘,
-          evidence: ‚Keine Beweise gesichert. Das Portfolio wartet.‘,
-          directives: ‚Keine Direktiven. Was ist heute wichtig?‘,
-          trash: ‚Papierkorb leer. Gut so.‘
+          audits: 'Noch keine Audits. Zeit, das zu ändern.',
+          evidence: 'Keine Beweise gesichert. Das Portfolio wartet.',
+          directives: 'Keine Direktiven. Was ist heute wichtig?',
+          trash: 'Papierkorb leer. Gut so.'
         }),
         
         corridor: Object.freeze({
-          green: ‚Grüne Zone. Du hast Puffer. Nutze ihn weise.‘,
-          yellow: ‚Gelbe Zone. Die Grenze naht. Vorsicht.‘,
-          red: ‚Limit überschritten. Die DRV guckt zu. Stopp.‘
+          green: 'Grüne Zone. Du hast Puffer. Nutze ihn weise.',
+          yellow: 'Gelbe Zone. Die Grenze naht. Vorsicht.',
+          red: 'Limit überschritten. Die DRV guckt zu. Stopp.'
         })
       })
     });
@@ -1400,20 +1400,20 @@
       Today: () => new Date().toISOString().slice(0, 10),
       
       formatDate: (date = new Date()) => {
-        return new Intl.DateTimeFormat(‚de-DE‘, {
-          weekday: ‚short‘,
-          day: ‚2-digit‘,
-          month: ‚2-digit‘,
-          year: ‚numeric‘,
-          hour: ‚2-digit‘,
-          minute: ‚2-digit‘
+        return new Intl.DateTimeFormat('de-DE', {
+          weekday: 'short',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
         }).format(date instanceof Date ? date : new Date(date));
       },
       
       formatDateShort: (date = new Date()) => {
-        return new Intl.DateTimeFormat(‚de-DE‘, {
-          day: ‚2-digit‘,
-          month: ‚2-digit‘
+        return new Intl.DateTimeFormat('de-DE', {
+          day: '2-digit',
+          month: '2-digit'
         }).format(date instanceof Date ? date : new Date(date));
       },
       
@@ -1422,7 +1422,7 @@
         const s = Math.max(0, Math.floor(seconds));
         const m = Math.floor(s / 60);
         const sec = s % 60;
-        return `${m.toString().padStart(2, ‚0‘)}:${sec.toString().padStart(2, ‚0‘)}`;
+        return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
       },
       
       // Clamp
@@ -1430,9 +1430,9 @@
       
       // HTML Escape
       Esc: (str) => {
-        If (!str) return ‚‘;
-        Const map = { ‚&‘: ‚&amp;‘, ‚<‘: ‚&lt;‘, ‚>‘: ‚&gt;‘, ‚“‘: ‚&quot;‘, „‘“: ‚&#39;‘ };
-        Return String(str).replace(/[&<>“‘]/g, c => map[c]);
+        If (!str) return '';
+        Const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+        Return String(str).replace(/[&<>"']/g, c => map[c]);
       },
       
       // Random from Array
@@ -1452,8 +1452,8 @@
       
       // Days between dates
       daysBetween: (start, end) => {
-        const s = new Date(start + ‚T00:00:00‘);
-        const e = new Date(end + ‚T00:00:00‘);
+        const s = new Date(start + 'T00:00:00');
+        const e = new Date(end + 'T00:00:00');
         return Math.round((e – s) / (1000 * 60 * 60 * 24));
       }
     };
@@ -1493,15 +1493,15 @@
       _createDefault() {
         Return {
           Version: CONFIG.VERSION,
-          theme: ‚dark‘,
-          activeTab: ‚cockpit‘,
+          theme: 'dark',
+          activeTab: 'cockpit',
           lastSaved: Date.now(),
           
           daily: {
             date: Utils.today(),
-            mode: ‚A‘,
+            mode: 'A',
             activeMinutes: 0,
-            logs: { buddha: ‚‘, intern: ‚‘, exec: ‚‘ }
+            logs: { buddha: '', intern: '', exec: '' }
           },
           
           phoenix: {
@@ -1521,7 +1521,7 @@
             startedAt: null,
             durationMin: CONFIG.LIMITS.SPRINT_DEFAULT,
             remainingSec: CONFIG.LIMITS.SPRINT_DEFAULT * 60,
-            note: ‚‘
+            note: ''
           },
           
           directives: [],
@@ -1543,7 +1543,7 @@
         This._state = this._load() || this._createDefault();
         This._migrate();
         This._updateStreak();
-        EventBus.emit(‚state:init‘, this._state);
+        EventBus.emit('state:init', this._state);
         Return this._state;
       },
       
@@ -1557,13 +1557,13 @@
           If (!raw) {
             Raw = localStorage.getItem(CONFIG.STORAGE_KEY_LEGACY);
             If (raw) {
-              Console.log(‚📦 Migrating from v12.7…‘);
+              Console.log('📦 Migrating from v12.7…');
             }
           }
           
           Return raw ? JSON.parse(raw) : null;
         } catch € {
-          Console.warn(‚Load failed:‘, e);
+          Console.warn('Load failed:', e);
           Return null;
         }
       },
@@ -1573,11 +1573,11 @@
         Try {
           This._state.lastSaved = Date.now();
           localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this._state));
-          EventBus.emit(‚state:saved‘, this._state);
+          EventBus.emit('state:saved', this._state);
           Return true;
         } catch € {
-          Console.error(‚Save failed:‘, e);
-          EventBus.emit(‚state:error‘, e);
+          Console.error('Save failed:', e);
+          EventBus.emit('state:error', e);
           Return false;
         }
       },
@@ -1596,9 +1596,9 @@
           
           s.daily = {
             date: today,
-            mode: s.daily.mode || ‚A‘,
+            mode: s.daily.mode || 'A',
             activeMinutes: 0,
-            logs: { buddha: ‚‘, intern: ‚‘, exec: ‚‘ }
+            logs: { buddha: '', intern: '', exec: '' }
           };
         }
         
@@ -1635,25 +1635,25 @@
       // Getters
       Get state() { return this._state; },
       get(path) {
-        return path.split(‚.‘).reduce((obj, key) => obj?.[key], this._state);
+        return path.split('.').reduce((obj, key) => obj?.[key], this._state);
       },
       
       // Update
       Set(path, value) {
-        Const keys = path.split(‚.‘);
+        Const keys = path.split('.');
         Let obj = this._state;
         For (let i = 0; i < keys.length – 1; i++) {
           Obj = obj[keys[i]];
         }
         Obj[keys[keys.length – 1]] = value;
         This.save();
-        EventBus.emit(‚state:change‘, { path, value });
+        EventBus.emit('state:change', { path, value });
       },
       
       // Batch Update
       Update(updates) {
         Object.entries(updates).forEach(([path, value]) => {
-          Const keys = path.split(‚.‘);
+          Const keys = path.split('.');
           Let obj = this._state;
           For (let i = 0; i < keys.length – 1; i++) {
             Obj = obj[keys[i]];
@@ -1661,14 +1661,14 @@
           Obj[keys[keys.length – 1]] = value;
         });
         This.save();
-        EventBus.emit(‚state:change‘, updates);
+        EventBus.emit('state:change', updates);
       },
       
       // Export
       Export() {
-        Const blob = new Blob([JSON.stringify(this._state, null, 2)], { type: ‚application/json‘ });
+        Const blob = new Blob([JSON.stringify(this._state, null, 2)], { type: 'application/json' });
         Const url = URL.createObjectURL(blob);
-        Const a = document.createElement(‚a‘);
+        Const a = document.createElement('a');
         a.href = url;
         a.download = `PHOENIX_v${CONFIG.VERSION}_${Utils.today()}.json`;
         document.body.appendChild(a);
@@ -1681,14 +1681,14 @@
       // Import
       Import(data) {
         Try {
-          Const parsed = typeof data === ‚string‘ ? JSON.parse(data) : data;
+          Const parsed = typeof data === 'string' ? JSON.parse(data) : data;
           This._state = { …this._createDefault(), …parsed };
           This._migrate();
           This.save();
-          EventBus.emit(‚state:imported‘, this._state);
+          EventBus.emit('state:imported', this._state);
           Return true;
         } catch € {
-          Console.error(‚Import failed:‘, e);
+          Console.error('Import failed:', e);
           Return false;
         }
       },
@@ -1716,13 +1716,13 @@
         this._state.trash.splice(idx, 1);
         
         switch (type) {
-          case ‚directive‘:
+          case 'directive':
             this._state.directives.push(item);
             break;
-          case ‚audit‘:
+          case 'audit':
             this._state.audits.unshift(item);
             break;
-          case ‚evidence‘:
+          case 'evidence':
             this._state.evidence.unshift(item);
             break;
         }
@@ -1737,9 +1737,9 @@
        ═══════════════════════════════════════════════════════════════════════ */
     Const PhoenixCalc = {
       dayInfo() {
-        const start = new Date(CONFIG.TIMELINE.START + ‚T00:00:00‘);
-        const end = new Date(CONFIG.TIMELINE.PHASE1_END + ‚T00:00:00‘);
-        const now = new Date(Utils.today() + ‚T00:00:00‘);
+        const start = new Date(CONFIG.TIMELINE.START + 'T00:00:00');
+        const end = new Date(CONFIG.TIMELINE.PHASE1_END + 'T00:00:00');
+        const now = new Date(Utils.today() + 'T00:00:00');
         const total = 80;
         
         let passed = Math.round((now – start) / (1000 * 60 * 60 * 24)) + 1;
@@ -1747,13 +1747,13 @@
         const left = Math.max(0, total – passed);
         const percent = Utils.clamp((passed / total) * 100, 0, 100);
         
-        let phase = ‚Vorbereitung‘;
-        if (passed <= 0) phase = ‚Vorbereitung‘;
-        else if (passed <= 14) phase = ‚Phase 1 – Fundament‘;
-        else if (passed <= 45) phase = ‚Phase 2 – Kalte Werkstatt‘;
-        else if (passed <= 70) phase = ‚Phase 3 – Masterplan‘;
-        else if (passed <= 80) phase = ‚Phase 4 – Endabnahme‘;
-        else phase = ‚Post-80-Tage‘;
+        let phase = 'Vorbereitung';
+        if (passed <= 0) phase = 'Vorbereitung';
+        else if (passed <= 14) phase = 'Phase 1 – Fundament';
+        else if (passed <= 45) phase = 'Phase 2 – Kalte Werkstatt';
+        else if (passed <= 70) phase = 'Phase 3 – Masterplan';
+        else if (passed <= 80) phase = 'Phase 4 – Endabnahme';
+        else phase = 'Post-80-Tage';
         
         return { total, passed, left, percent, phase };
       },
@@ -1763,14 +1763,14 @@
         const green = CONFIG.LIMITS.GREEN_ZONE;
         const percent = Utils.clamp((minutes / limit) * 100, 0, 100);
         
-        let zone = ‚green‘;
+        let zone = 'green';
         let message = CONFIG.LOBO.corridor.green;
         
         if (minutes > limit) {
-          zone = ‚red‘;
+          zone = 'red';
           message = CONFIG.LOBO.corridor.red;
         } else if (minutes > green) {
-          Zone = ‚yellow‘;
+          Zone = 'yellow';
           Message = CONFIG.LOBO.corridor.yellow;
         }
         
@@ -1783,23 +1783,23 @@
        ═══════════════════════════════════════════════════════════════════════ */
     Const UI = {
       // Toast Notification
-      Toast(message, type = ‚info‘, duration = 3000) {
-        Const container = document.getElementById(‚toast-container‘);
-        Const icons = { success: ‚✓‘, warning: ‚⚠‘, error: ‚✕‘, info: ‚ℹ‘ };
+      Toast(message, type = 'info', duration = 3000) {
+        Const container = document.getElementById('toast-container');
+        Const icons = { success: '✓', warning: '⚠', error: '✕', info: 'ℹ' };
         
-        Const toast = document.createElement(‚div‘);
+        Const toast = document.createElement('div');
         Toast.className = `toast ${type}`;
-        Toast.innerHTML = `<span class=“toast-icon“>${icons[type] || icons.info}</span><span>${Utils.esc(message)}</span>`;
+        Toast.innerHTML = `<span class="toast-icon">${icons[type] || icons.info}</span><span>${Utils.esc(message)}</span>`;
         Container.appendChild(toast);
         
         setTimeout(() => {
-          toast.classList.add(‚toast-exit‘);
+          toast.classList.add('toast-exit');
           setTimeout(() => toast.remove(), 300);
         }, duration);
       },
       
       // Show random toast from category
-      toastRandom(category, type = ‚success‘) {
+      toastRandom(category, type = 'success') {
         const messages = CONFIG.LOBO.toasts[category];
         if (messages) {
           this.toast(Utils.random(messages), type);
@@ -1808,19 +1808,19 @@
       
       // Update Status Display
       setStatus(text) {
-        const el = document.getElementById(‚status-display‘);
+        const el = document.getElementById('status-display');
         if (el) el.textContent = text;
       },
       
       // Update Datestamp
       updateDatestamp() {
-        const el = document.getElementById(‚datestamp‘);
+        const el = document.getElementById('datestamp');
         if (el) el.textContent = Utils.formatDate();
       },
       
       // Update Phase Bar
       updatePhaseBar() {
-        const el = document.getElementById(‚phase-fill‘);
+        const el = document.getElementById('phase-fill');
         if (el) {
           const info = PhoenixCalc.dayInfo();
           el.style.width = `${info.percent}%`;
@@ -1829,18 +1829,18 @@
       
       // Update Theme Icon
       updateThemeIcon(theme) {
-        const el = document.getElementById(‚theme-icon‘);
-        if (el) el.textContent = theme === ‚dark‘ ? ‚🌙‘ : ‚☀️‘;
+        const el = document.getElementById('theme-icon');
+        if (el) el.textContent = theme === 'dark' ? '🌙' : '☀️';
       },
       
       // Copy to Clipboard
       Async copy(text) {
         Try {
           Await navigator.clipboard.writeText(text);
-          This.toastRandom(‚copied‘, ‚success‘);
+          This.toastRandom('copied', 'success');
           Return true;
         } catch € {
-          This.toast(‚Kopieren fehlgeschlagen‘, ‚error‘);
+          This.toast('Kopieren fehlgeschlagen', 'error');
           Return false;
         }
       },
@@ -1869,36 +1869,36 @@
         }
         
         Store.update({
-          ‚sprint.running‘: true,
-          ‚sprint.startedAt‘: Store.state.sprint.startedAt || Date.now()
+          'sprint.running': true,
+          'sprint.startedAt': Store.state.sprint.startedAt || Date.now()
         });
         
         This._interval = setInterval(() => this._tick(), 1000);
-        UI.toastRandom(‚sprintStart‘, ‚success‘);
-        UI.setStatus(‚Sprint läuft‘);
-        EventBus.emit(‚sprint:start‘);
+        UI.toastRandom('sprintStart', 'success');
+        UI.setStatus('Sprint läuft');
+        EventBus.emit('sprint:start');
       },
       
       pause() {
         if (!Store.state.sprint.running) return;
         
-        Store.set(‚sprint.running‘, false);
+        Store.set('sprint.running', false);
         clearInterval(this._interval);
         this._interval = null;
         
-        UI.toastRandom(‚sprintPause‘, ‚info‘);
-        UI.setStatus(‚Pausiert‘);
-        EventBus.emit(‚sprint:pause‘);
+        UI.toastRandom('sprintPause', 'info');
+        UI.setStatus('Pausiert');
+        EventBus.emit('sprint:pause');
       },
       
       reset() {
         this.pause();
         Store.update({
-          ‚sprint.startedAt‘: null,
-          ‚sprint.remainingSec‘: Store.state.sprint.durationMin * 60,
-          ‚sprint.note‘: ‚‘
+          'sprint.startedAt': null,
+          'sprint.remainingSec': Store.state.sprint.durationMin * 60,
+          'sprint.note': ''
         });
-        EventBus.emit(‚sprint:reset‘);
+        EventBus.emit('sprint:reset');
       },
       
       _tick() {
@@ -1909,10 +1909,10 @@
           Return;
         }
         
-        Store.set(‚sprint.remainingSec‘, remaining – 1);
+        Store.set('sprint.remainingSec', remaining – 1);
         
         // Update display without full re-render
-        Const timerEl = document.getElementById(‚timer-display‘);
+        Const timerEl = document.getElementById('timer-display');
         If (timerEl) {
           timerEl.textContent = Utils.formatTimer(remaining – 1);
         }
@@ -1923,22 +1923,22 @@
         
         Const minutes = Store.state.sprint.durationMin;
         Store.update({
-          ‚stats.totalSprints‘: Store.state.stats.totalSprints + 1,
-          ‚daily.activeMinutes‘: Store.state.daily.activeMinutes + minutes,
-          ‚sprint.remainingSec‘: Store.state.sprint.durationMin * 60,
-          ‚sprint.startedAt‘: null
+          'stats.totalSprints': Store.state.stats.totalSprints + 1,
+          'daily.activeMinutes': Store.state.daily.activeMinutes + minutes,
+          'sprint.remainingSec': Store.state.sprint.durationMin * 60,
+          'sprint.startedAt': null
         });
         
-        UI.toastRandom(‚sprintComplete‘, ‚success‘);
-        UI.setStatus(‚Sprint beendet‘);
-        EventBus.emit(‚sprint:complete‘);
+        UI.toastRandom('sprintComplete', 'success');
+        UI.setStatus('Sprint beendet');
+        EventBus.emit('sprint:complete');
         
         // Check corridor status
         Const corridor = PhoenixCalc.corridorStatus(Store.state.daily.activeMinutes);
-        If (corridor.zone === ‚red‘) {
-          setTimeout(() => UI.toastRandom(‚limitExceeded‘, ‚warning‘), 1500);
-        } else if (corridor.zone === ‚yellow‘) {
-          setTimeout(() => UI.toastRandom(‚limitWarning‘, ‚warning‘), 1500);
+        If (corridor.zone === 'red') {
+          setTimeout(() => UI.toastRandom('limitExceeded', 'warning'), 1500);
+        } else if (corridor.zone === 'yellow') {
+          setTimeout(() => UI.toastRandom('limitWarning', 'warning'), 1500);
         }
       }
     };
@@ -1954,7 +1954,7 @@
       },
       
       render() {
-        const view = document.getElementById(‚main-view‘);
+        const view = document.getElementById('main-view');
         const activeTab = Store.state.activeTab;
         const renderFn = this._views.get(activeTab);
         
@@ -1963,24 +1963,24 @@
           this._bindEvents();
         } else {
           View.innerHTML = `
-            <div class=“card“>
-              <div class=“empty“>
-                <div class=“empty-icon“>🚧</div>
-                <div class=“empty-text“>Modul in Entwicklung</div>
+            <div class="card">
+              <div class="empty">
+                <div class="empty-icon">🚧</div>
+                <div class="empty-text">Modul in Entwicklung</div>
               </div>
             </div>
           `;
         }
         
-        EventBus.emit(‚view:rendered‘, activeTab);
+        EventBus.emit('view:rendered', activeTab);
       },
       
       _bindEvents() {
-        Const view = document.getElementById(‚main-view‘);
+        Const view = document.getElementById('main-view');
         
         // Click Events
-        View.addEventListener(‚click‘, € => {
-          Const action = e.target.closest(‚[data-action]‘);
+        View.addEventListener('click', € => {
+          Const action = e.target.closest('[data-action]');
           If (action) {
             e.preventDefault();
             Actions.handle(action.dataset.action, action.dataset);
@@ -1988,7 +1988,7 @@
         });
         
         // Change Events
-        View.addEventListener(‚change‘, € => {
+        View.addEventListener('change', € => {
           Const handler = e.target.dataset.change;
           If (handler) {
             Actions.handleChange(handler, e.target);
@@ -1996,7 +1996,7 @@
         });
         
         // Input Events (debounced)
-        View.addEventListener(‚input‘, Utils.debounce(€ => {
+        View.addEventListener('input', Utils.debounce(€ => {
           Const handler = e.target.dataset.input;
           If (handler) {
             Actions.handleInput(handler, e.target);
@@ -2005,11 +2005,11 @@
       },
       
       navigate(tabId) {
-        if (Store.state.sprint.running && tabId !== ‚sprint‘) {
+        if (Store.state.sprint.running && tabId !== 'sprint') {
           SprintTimer.pause();
         }
         
-        Store.set(‚activeTab‘, tabId);
+        Store.set('activeTab', tabId);
         Navigation.render();
         This.render();
       }
@@ -2022,8 +2022,8 @@
       Init() {
         This.render();
         
-        Document.getElementById(‚nav-bar‘).addEventListener(‚click‘, € => {
-          Const tab = e.target.closest(‚.nav-tab‘);
+        Document.getElementById('nav-bar').addEventListener('click', € => {
+          Const tab = e.target.closest('.nav-tab');
           If (tab) {
             Router.navigate(tab.dataset.tab);
           }
@@ -2031,16 +2031,16 @@
       },
       
       render() {
-        const bar = document.getElementById(‚nav-bar‘);
+        const bar = document.getElementById('nav-bar');
         bar.innerHTML = CONFIG.TABS.map(tab => `
-          <button class=“nav-tab ${Store.state.activeTab === tab.id ? ‚active‘ : ‚‘}“ 
-                  Data-tab=“${tab.id}“ 
-                  Aria-current=“${Store.state.activeTab === tab.id ? ‚page‘ : ‚false‘}“>
-            <span class=“nav-icon“>${tab.icon}</span>
-            <span class=“nav-label“>${tab.label}</span>
-            ${tab.hasNotification ? ‚<span class=“nav-dot“></span>‘ : ‚‘}
+          <button class="nav-tab ${Store.state.activeTab === tab.id ? 'active' : ''}" 
+                  Data-tab="${tab.id}" 
+                  Aria-current="${Store.state.activeTab === tab.id ? 'page' : 'false'}">
+            <span class="nav-icon">${tab.icon}</span>
+            <span class="nav-label">${tab.label}</span>
+            ${tab.hasNotification ? '<span class="nav-dot"></span>' : ''}
           </button>
-        `).join(‚‘);
+        `).join('');
       }
     };
 
@@ -2051,59 +2051,59 @@
       Handle(action, data = {}) {
         Switch (action) {
           // Phoenix Toggles
-          Case ‚toggle-phoenix‘:
+          Case 'toggle-phoenix':
             Store.set(`phoenix.${data.key}`, !Store.get(`phoenix.${data.key}`));
-            UI.toastRandom(‚saved‘, ‚success‘);
+            UI.toastRandom('saved', 'success');
             Router.render();
             Break;
             
           // Directives
-          Case ‚toggle-directive‘: {
+          Case 'toggle-directive': {
             Const dirs = Store.state.directives;
             Const dir = dirs.find(d => d.id === data.id);
             If (dir) {
               Dir.done = !dir.done;
               Store.save();
-              UI.toastRandom(‚directiveDone‘, ‚success‘);
+              UI.toastRandom('directiveDone', 'success');
               Router.render();
             }
             Break;
           }
           
-          Case ‚add-directive‘: {
-            Const input = document.getElementById(‚new-directive‘);
+          Case 'add-directive': {
+            Const input = document.getElementById('new-directive');
             Const text = input?.value.trim();
             If (!text) return;
             
             Const dirs = Store.state.directives;
             If (dirs.length >= CONFIG.LIMITS.MAX_DIRECTIVES) {
               Const removed = dirs.shift();
-              Store.moveToTrash(‚directive‘, removed);
+              Store.moveToTrash('directive', removed);
             }
             Dirs.push({ id: Utils.id(), text, done: false, createdAt: new Date().toISOString() });
             Store.save();
-            UI.toastRandom(‚directiveAdded‘, ‚success‘);
+            UI.toastRandom('directiveAdded', 'success');
             Router.render();
             Break;
           }
           
-          Case ‚delete-directive‘: {
+          Case 'delete-directive': {
             Const dirs = Store.state.directives;
             Const idx = dirs.findIndex(d => d.id === data.id);
             If (idx !== -1) {
-              Store.moveToTrash(‚directive‘, dirs[idx]);
+              Store.moveToTrash('directive', dirs[idx]);
               Dirs.splice(idx, 1);
               Store.save();
-              UI.toastRandom(‚deleted‘, ‚info‘);
+              UI.toastRandom('deleted', 'info');
               Router.render();
             }
             Break;
           }
           
           // Audits
-          Case ‚add-audit‘: {
-            Const domain = document.getElementById(‚audit-domain‘)?.value.trim();
-            Const stage = document.getElementById(‚audit-stage‘)?.value;
+          Case 'add-audit': {
+            Const domain = document.getElementById('audit-domain')?.value.trim();
+            Const stage = document.getElementById('audit-stage')?.value;
             If (!domain) return;
             
             Store.state.audits.unshift({
@@ -2114,30 +2114,30 @@
               gateScore: 0
             });
             Store.save();
-            UI.toastRandom(‚auditAdded‘, ‚success‘);
+            UI.toastRandom('auditAdded', 'success');
             Router.render();
             Break;
           }
           
-          Case ‚delete-audit‘: {
+          Case 'delete-audit': {
             Const audits = Store.state.audits;
             Const idx = audits.findIndex(a => a.id === data.id);
             If (idx !== -1) {
-              Store.moveToTrash(‚audit‘, audits[idx]);
+              Store.moveToTrash('audit', audits[idx]);
               Audits.splice(idx, 1);
               Store.save();
-              UI.toastRandom(‚deleted‘, ‚info‘);
+              UI.toastRandom('deleted', 'info');
               Router.render();
             }
             Break;
           }
           
           // Evidence
-          Case ‚add-evidence‘: {
-            Const title = document.getElementById(‚evidence-title‘)?.value.trim();
-            Const type = document.getElementById(‚evidence-type‘)?.value;
-            Const url = document.getElementById(‚evidence-url‘)?.value.trim();
-            Const note = document.getElementById(‚evidence-note‘)?.value.trim();
+          Case 'add-evidence': {
+            Const title = document.getElementById('evidence-title')?.value.trim();
+            Const type = document.getElementById('evidence-type')?.value;
+            Const url = document.getElementById('evidence-url')?.value.trim();
+            Const note = document.getElementById('evidence-note')?.value.trim();
             If (!title && !note) return;
             
             Store.state.evidence.unshift({
@@ -2146,26 +2146,26 @@
               ts: new Date().toISOString()
             });
             Store.save();
-            UI.toastRandom(‚evidenceAdded‘, ‚success‘);
+            UI.toastRandom('evidenceAdded', 'success');
             Router.render();
             Break;
           }
           
-          Case ‚delete-evidence‘: {
+          Case 'delete-evidence': {
             Const evidence = Store.state.evidence;
             Const idx = evidence.findIndex(e => e.id === data.id);
             If (idx !== -1) {
-              Store.moveToTrash(‚evidence‘, evidence[idx]);
+              Store.moveToTrash('evidence', evidence[idx]);
               Evidence.splice(idx, 1);
               Store.save();
-              UI.toastRandom(‚deleted‘, ‚info‘);
+              UI.toastRandom('deleted', 'info');
               Router.render();
             }
             Break;
           }
           
           // Sprint
-          Case ‚sprint-toggle‘:
+          Case 'sprint-toggle':
             If (Store.state.sprint.running) {
               SprintTimer.pause();
             } else {
@@ -2174,42 +2174,42 @@
             Router.render();
             Break;
             
-          Case ‚sprint-reset‘:
+          Case 'sprint-reset':
             SprintTimer.reset();
             Router.render();
             Break;
           
           // Navigation
-          Case ‚goto‘:
+          Case 'goto':
             Router.navigate(data.tab);
             Break;
           
           // Report
-          Case ‚copy-report‘:
+          Case 'copy-report':
             UI.copy(this._buildReport());
             Break;
           
           // Export/Import
-          Case ‚export‘:
+          Case 'export':
             Store.export();
-            UI.toastRandom(‚exported‘, ‚success‘);
+            UI.toastRandom('exported', 'success');
             Break;
             
-          Case ‚import‘:
-            Document.getElementById(‚file-import‘).click();
+          Case 'import':
+            Document.getElementById('file-import').click();
             Break;
           
           // Trash
-          Case ‚restore‘: {
+          Case 'restore': {
             If (Store.restoreFromTrash(data.id)) {
-              UI.toastRandom(‚restored‘, ‚success‘);
+              UI.toastRandom('restored', 'success');
               Router.render();
             }
             Break;
           }
           
-          Case ‚empty-trash‘:
-            If (UI.confirm(‚Papierkorb endgültig leeren?‘)) {
+          Case 'empty-trash':
+            If (UI.confirm('Papierkorb endgültig leeren?')) {
               Store.state.trash = [];
               Store.save();
               Router.render();
@@ -2220,32 +2220,32 @@
       
       handleChange(handler, target) {
         switch (handler) {
-          case ‚daily-date‘:
-            Store.set(‚daily.date‘, target.value);
+          case 'daily-date':
+            Store.set('daily.date', target.value);
             Break;
-          Case ‚daily-minutes‘:
-            Store.set(‚daily.activeMinutes‘, Utils.clamp(parseInt(target.value) || 0, 0, 600));
+          Case 'daily-minutes':
+            Store.set('daily.activeMinutes', Utils.clamp(parseInt(target.value) || 0, 0, 600));
             Router.render();
             Break;
-          Case ‚daily-mode‘:
-            Store.set(‚daily.mode‘, target.value);
+          Case 'daily-mode':
+            Store.set('daily.mode', target.value);
             Break;
         }
       },
       
       handleInput(handler, target) {
         switch (handler) {
-          case ‚log-buddha‘:
-            Store.set(‚daily.logs.buddha‘, target.value);
+          case 'log-buddha':
+            Store.set('daily.logs.buddha', target.value);
             Break;
-          Case ‚log-intern‘:
-            Store.set(‚daily.logs.intern‘, target.value);
+          Case 'log-intern':
+            Store.set('daily.logs.intern', target.value);
             Break;
-          Case ‚log-exec‘:
-            Store.set(‚daily.logs.exec‘, target.value);
+          Case 'log-exec':
+            Store.set('daily.logs.exec', target.value);
             Break;
-          Case ‚sprint-note‘:
-            Store.set(‚sprint.note‘, target.value);
+          Case 'sprint-note':
+            Store.set('sprint.note', target.value);
             Break;
         }
       },
@@ -2264,16 +2264,16 @@ Verbleibend (80-Tage): ${info.left} Tage
 
 ── PARAMETER ZEIT-LIMIT (§ 9 SGB IX / DRV) ──
 Arbeitsähnliche Minuten: ${d.activeMinutes} / ${CONFIG.LIMITS.DAILY_MINUTES}
-Modus: ${d.mode === ‚A‘ ? ‚A (Lernen)‘ : ‚B (Audits)‘}
+Modus: ${d.mode === 'A' ? 'A (Lernen)' : 'B (Audits)'}
 
 ── 1. DRV (BUDDHA-LOG) ──
-${d.logs.buddha || ‚(keine Einträge)‘}
+${d.logs.buddha || '(keine Einträge)'}
 
 ── 2. INTERN (FAKTEN-LOG) ──
-${d.logs.intern || ‚(keine Einträge)‘}
+${d.logs.intern || '(keine Einträge)'}
 
 ── 3. IV (EXECUTIVE SUMMARY) ──
-${d.logs.exec || ‚(keine Einträge)‘}
+${d.logs.exec || '(keine Einträge)'}
 
 ══════════════════════════════════════════════════════════════
 Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
@@ -2284,7 +2284,7 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: COCKPIT
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚cockpit‘, () => {
+    Router.register('cockpit', () => {
       Const s = Store.state;
       Const p = s.phoenix;
       Const d = s.daily;
@@ -2295,139 +2295,139 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
       // Directives HTML
       Const directivesHtml = s.directives.length > 0 
         ? s.directives.map(dir => `
-            <div class=“check-item“>
-              <div class=“check-box ${dir.done ? ‚done‘ : ‚‘}“ 
-                   Data-action=“toggle-directive“ data-id=“${dir.id}“>
-                ${dir.done ? ‚✓‘ : ‚‘}
+            <div class="check-item">
+              <div class="check-box ${dir.done ? 'done' : ''}" 
+                   Data-action="toggle-directive" data-id="${dir.id}">
+                ${dir.done ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>${Utils.esc(dir.text)}</div>
+              <div class="check-content">
+                <div class="check-label">${Utils.esc(dir.text)}</div>
               </div>
-              <button class=“btn btn-ghost btn-icon text-danger“ 
-                      Data-action=“delete-directive“ data-id=“${dir.id}“ 
-                      Title=“Löschen“>✕</button>
+              <button class="btn btn-ghost btn-icon text-danger" 
+                      Data-action="delete-directive" data-id="${dir.id}" 
+                      Title="Löschen">✕</button>
             </div>
-          `).join(‚‘)
-        : `<div class=“empty“><div class=“empty-text“>${CONFIG.LOBO.empty.directives}</div></div>`;
+          `).join('')
+        : `<div class="empty"><div class="empty-text">${CONFIG.LOBO.empty.directives}</div></div>`;
       
       Return `
         <!—Status Card 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>🎯 PHOENIX STATUS</h2>
-            <span class=“badge badge-brand“>Tag ${info.passed}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🎯 PHOENIX STATUS</h2>
+            <span class="badge badge-brand">Tag ${info.passed}</span>
           </div>
-          <div class=“card-subtitle“>
-            ${info.phase} · ${info.left > 0 ? `Noch ${info.left} Tage bis Deadline` : ‚Post-80-Tage-Phase‘}
+          <div class="card-subtitle">
+            ${info.phase} · ${info.left > 0 ? `Noch ${info.left} Tage bis Deadline` : 'Post-80-Tage-Phase'}
           </div>
-          <div class=“lobo-quote“>${greeting}</div>
+          <div class="lobo-quote">${greeting}</div>
           
-          <div class=“ampel-list mt“>
-            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“pKonto“>
-              <div class=“ampel-icon ${p.pKonto ? ‚ok‘ : ‚nok‘}“>${p.pKonto ? ‚✓‘ : ‚!‘}</div>
-              <div class=“ampel-content“>
-                <div class=“ampel-title“>P-Konto aktiv (§ 850k ZPO)</div>
-                <div class=“ampel-desc“>${p.pKonto ? ‚Basisschutz steht. Das Fundament hält.‘ : ‚P-Konto-Bescheinigung holen. Keine Ausreden.‘}</div>
+          <div class="ampel-list mt">
+            <div class="ampel-item" data-action="toggle-phoenix" data-key="pKonto">
+              <div class="ampel-icon ${p.pKonto ? 'ok' : 'nok'}">${p.pKonto ? '✓' : '!'}</div>
+              <div class="ampel-content">
+                <div class="ampel-title">P-Konto aktiv (§ 850k ZPO)</div>
+                <div class="ampel-desc">${p.pKonto ? 'Basisschutz steht. Das Fundament hält.' : 'P-Konto-Bescheinigung holen. Keine Ausreden.'}</div>
               </div>
             </div>
             
-            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“businessAccountCold“>
-              <div class=“ampel-icon ${p.businessAccountCold ? ‚ok‘ : ‚nok‘}“>${p.businessAccountCold ? ‚✓‘ : ‚!‘}</div>
-              <div class=“ampel-content“>
-                <div class=“ampel-title“>Geschäftskonto „kalt“</div>
-                <div class=“ampel-desc“>${p.businessAccountCold ? ‚Saubere Trennung. Keine Altlasten.‘ : ‚Neues Konto ohne Dispo eröffnen. Heute.‘}</div>
+            <div class="ampel-item" data-action="toggle-phoenix" data-key="businessAccountCold">
+              <div class="ampel-icon ${p.businessAccountCold ? 'ok' : 'nok'}">${p.businessAccountCold ? '✓' : '!'}</div>
+              <div class="ampel-content">
+                <div class="ampel-title">Geschäftskonto "kalt"</div>
+                <div class="ampel-desc">${p.businessAccountCold ? 'Saubere Trennung. Keine Altlasten.' : 'Neues Konto ohne Dispo eröffnen. Heute.'}</div>
               </div>
             </div>
             
-            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“tagXPackageDraft“>
-              <div class=“ampel-icon ${p.tagXPackageDraft ? ‚ok‘ : ‚nok‘}“>${p.tagXPackageDraft ? ‚✓‘ : ‚!‘}</div>
-              <div class=“ampel-content“>
-                <div class=“ampel-title“>Tag-X-Paket (§ 35 Abs. 2 InsO)</div>
-                <div class=“ampel-desc“>${p.tagXPackageDraft ? ‚Freigabe-Antrag druckreif. Bereit für den Ernstfall.‘ : ‚Gläubigerliste & Vermögen vorbereiten.‘}</div>
+            <div class="ampel-item" data-action="toggle-phoenix" data-key="tagXPackageDraft">
+              <div class="ampel-icon ${p.tagXPackageDraft ? 'ok' : 'nok'}">${p.tagXPackageDraft ? '✓' : '!'}</div>
+              <div class="ampel-content">
+                <div class="ampel-title">Tag-X-Paket (§ 35 Abs. 2 InsO)</div>
+                <div class="ampel-desc">${p.tagXPackageDraft ? 'Freigabe-Antrag druckreif. Bereit für den Ernstfall.' : 'Gläubigerliste & Vermögen vorbereiten.'}</div>
               </div>
             </div>
           </div>
         </div>
         
         <!—179-Minuten-Korridor 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>⏱️ 179-Minuten-Korridor</h2>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">⏱️ 179-Minuten-Korridor</h2>
           </div>
           
-          <div class=“corridor“>
-            <div class=“corridor-header“>
-              <span class=“corridor-title“>Tagesbudget</span>
-              <span class=“corridor-value text-${corridor.zone === ‚green‘ ? ‚ok‘ : corridor.zone === ‚yellow‘ ? ‚warn‘ : ‚danger‘}“>
+          <div class="corridor">
+            <div class="corridor-header">
+              <span class="corridor-title">Tagesbudget</span>
+              <span class="corridor-value text-${corridor.zone === 'green' ? 'ok' : corridor.zone === 'yellow' ? 'warn' : 'danger'}">
                 ${corridor.minutes} / ${corridor.limit} Min
               </span>
             </div>
-            <div class=“corridor-bar“>
-              <div class=“corridor-fill ${corridor.zone}“ style=“width: ${corridor.percent}%“></div>
+            <div class="corridor-bar">
+              <div class="corridor-fill ${corridor.zone}" style="width: ${corridor.percent}%"></div>
             </div>
-            <div class=“corridor-markers“>
+            <div class="corridor-markers">
               <span>0</span>
-              <span class=“corridor-marker-green“>${CONFIG.LIMITS.GREEN_ZONE}</span>
-              <span class=“corridor-marker-limit“>${CONFIG.LIMITS.DAILY_MINUTES}</span>
+              <span class="corridor-marker-green">${CONFIG.LIMITS.GREEN_ZONE}</span>
+              <span class="corridor-marker-limit">${CONFIG.LIMITS.DAILY_MINUTES}</span>
             </div>
-            <div class=“corridor-status ${corridor.zone}“>
+            <div class="corridor-status ${corridor.zone}">
               ${corridor.message}
             </div>
           </div>
         </div>
         
         <!—Primär-Direktiven 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>📌 Primär-Direktiven</h2>
-            <span class=“badge“>${s.directives.filter(d => d.done).length}/${s.directives.length}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📌 Primär-Direktiven</h2>
+            <span class="badge">${s.directives.filter(d => d.done).length}/${s.directives.length}</span>
           </div>
-          <div class=“card-subtitle“>Maximal 3. Kurz. Klar. Prüffähig. Was zählt heute?</div>
+          <div class="card-subtitle">Maximal 3. Kurz. Klar. Prüffähig. Was zählt heute?</div>
           
-          <div class=“checklist mt“>
+          <div class="checklist mt">
             ${directivesHtml}
           </div>
           
-          <div class=“form-row mt“>
-            <input type=“text“ class=“form-input“ id=“new-directive“ 
-                   Placeholder=“Neue Direktive…“ maxlength=“100“>
-            <button class=“btn btn-success“ data-action=“add-directive“>+</button>
+          <div class="form-row mt">
+            <input type="text" class="form-input" id="new-directive" 
+                   Placeholder="Neue Direktive…" maxlength="100">
+            <button class="btn btn-success" data-action="add-directive">+</button>
           </div>
         </div>
         
         <!—KPIs 
-        <div class=“card“>
-          <h2 class=“card-title“>📊 KPIs</h2>
-          <div class=“kpi-grid mt“>
-            <div class=“kpi-card“>
-              <div class=“kpi-label“>Audits</div>
-              <div class=“kpi-value“>${s.audits.length}</div>
+        <div class="card">
+          <h2 class="card-title">📊 KPIs</h2>
+          <div class="kpi-grid mt">
+            <div class="kpi-card">
+              <div class="kpi-label">Audits</div>
+              <div class="kpi-value">${s.audits.length}</div>
             </div>
-            <div class=“kpi-card“>
-              <div class=“kpi-label“>Evidence</div>
-              <div class=“kpi-value“>${s.evidence.length}</div>
+            <div class="kpi-card">
+              <div class="kpi-label">Evidence</div>
+              <div class="kpi-value">${s.evidence.length}</div>
             </div>
-            <div class=“kpi-card“>
-              <div class=“kpi-label“>Sprints</div>
-              <div class=“kpi-value“>${s.stats.totalSprints}</div>
+            <div class="kpi-card">
+              <div class="kpi-label">Sprints</div>
+              <div class="kpi-value">${s.stats.totalSprints}</div>
             </div>
           </div>
         </div>
         
         <!—Quick Actions 
-        <div class=“card“>
-          <h2 class=“card-title“>⚡ Schnellzugriff</h2>
-          <div class=“btn-group mt“>
-            <button class=“btn btn-primary btn-fat“ data-action=“goto“ data-tab=“sprint“>
+        <div class="card">
+          <h2 class="card-title">⚡ Schnellzugriff</h2>
+          <div class="btn-group mt">
+            <button class="btn btn-primary btn-fat" data-action="goto" data-tab="sprint">
               ⏱️ Sprint
             </button>
-            <button class=“btn btn-fat“ data-action=“copy-report“>
+            <button class="btn btn-fat" data-action="copy-report">
               📋 Report
             </button>
           </div>
-          <div class=“btn-group mt-sm“>
-            <button class=“btn“ data-action=“export“>💾 Backup</button>
-            <button class=“btn“ data-action=“import“>📂 Laden</button>
+          <div class="btn-group mt-sm">
+            <button class="btn" data-action="export">💾 Backup</button>
+            <button class="btn" data-action="import">📂 Laden</button>
           </div>
         </div>
       `;
@@ -2436,64 +2436,64 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: PROTOCOL
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚protocol‘, () => {
+    Router.register('protocol', () => {
       Const d = Store.state.daily;
       
       Return `
-        <div class=“card“>
-          <h2 class=“card-title“>📋 PHOENIX-Protokoll</h2>
-          <div class=“card-subtitle“>
-            Jeden Tag ein Eintrag. Auch „0 Minuten“ zählt. Das ist dein Schutzschild vor der DRV.
+        <div class="card">
+          <h2 class="card-title">📋 PHOENIX-Protokoll</h2>
+          <div class="card-subtitle">
+            Jeden Tag ein Eintrag. Auch "0 Minuten" zählt. Das ist dein Schutzschild vor der DRV.
           </div>
-          <div class=“lobo-quote“>Das Gesetz fragt nicht, wie du dich fühlst. Es fragt, was dokumentiert ist.</div>
+          <div class="lobo-quote">Das Gesetz fragt nicht, wie du dich fühlst. Es fragt, was dokumentiert ist.</div>
           
-          <div class=“form-row mt“>
-            <div class=“form-group“>
-              <label class=“form-label“>Datum</label>
-              <input type=“date“ class=“form-input“ value=“${d.date}“ data-change=“daily-date“>
+          <div class="form-row mt">
+            <div class="form-group">
+              <label class="form-label">Datum</label>
+              <input type="date" class="form-input" value="${d.date}" data-change="daily-date">
             </div>
-            <div class=“form-group“>
-              <label class=“form-label“>Minuten</label>
-              <input type=“number“ class=“form-input“ value=“${d.activeMinutes}“ 
-                     Min=“0“ max=“600“ step=“5“ data-change=“daily-minutes“>
+            <div class="form-group">
+              <label class="form-label">Minuten</label>
+              <input type="number" class="form-input" value="${d.activeMinutes}" 
+                     Min="0" max="600" step="5" data-change="daily-minutes">
             </div>
           </div>
           
-          <div class=“form-group“>
-            <label class=“form-label“>Modus</label>
-            <select class=“form-select“ data-change=“daily-mode“>
-              <option value=“A“ ${d.mode === ‚A‘ ? ‚selected‘ : ‚‘}>A — Lernen & Dokumentation</option>
-              <option value=“B“ ${d.mode === ‚B‘ ? ‚selected‘ : ‚‘}>B — Übungs-Audits & Templates</option>
+          <div class="form-group">
+            <label class="form-label">Modus</label>
+            <select class="form-select" data-change="daily-mode">
+              <option value="A" ${d.mode === 'A' ? 'selected' : ''}>A — Lernen & Dokumentation</option>
+              <option value="B" ${d.mode === 'B' ? 'selected' : ''}>B — Übungs-Audits & Templates</option>
             </select>
           </div>
         </div>
         
-        <div class=“card“>
-          <h2 class=“card-title“>📝 Logbuch (3-teilig)</h2>
-          <div class=“card-subtitle“>DRV · Intern · Executive — Drei Perspektiven, ein Tag.</div>
+        <div class="card">
+          <h2 class="card-title">📝 Logbuch (3-teilig)</h2>
+          <div class="card-subtitle">DRV · Intern · Executive — Drei Perspektiven, ein Tag.</div>
           
-          <div class=“form-group mt“>
-            <label class=“form-label“>1. DRV (Buddha-Log) — sachlich, klinisch</label>
-            <textarea class=“form-textarea“ data-input=“log-buddha“
-                      Placeholder=“Bsp: Tag 12: 90 Min Sprint, danach 30 Min Erholung nötig. Konzentration stabil.“>${Utils.esc(d.logs.buddha)}</textarea>
-            <div class=“form-hint“>Für die Rentenversicherung. Nur Fakten, keine Meinungen.</div>
+          <div class="form-group mt">
+            <label class="form-label">1. DRV (Buddha-Log) — sachlich, klinisch</label>
+            <textarea class="form-textarea" data-input="log-buddha"
+                      Placeholder="Bsp: Tag 12: 90 Min Sprint, danach 30 Min Erholung nötig. Konzentration stabil.">${Utils.esc(d.logs.buddha)}</textarea>
+            <div class="form-hint">Für die Rentenversicherung. Nur Fakten, keine Meinungen.</div>
           </div>
           
-          <div class=“form-group“>
-            <label class=“form-label“>2. Intern (Fakten-Log) — rein faktisch</label>
-            <textarea class=“form-textarea“ data-input=“log-intern“
-                      Placeholder=“Bsp: Sprint 1 (90): Drill P0-CTA-Blocker, 2 Funde gesichert, Gate-Check 92%.“>${Utils.esc(d.logs.intern)}</textarea>
-            <div class=“form-hint“>Dein internes Protokoll. Was genau hast du gemacht?</div>
+          <div class="form-group">
+            <label class="form-label">2. Intern (Fakten-Log) — rein faktisch</label>
+            <textarea class="form-textarea" data-input="log-intern"
+                      Placeholder="Bsp: Sprint 1 (90): Drill P0-CTA-Blocker, 2 Funde gesichert, Gate-Check 92%.">${Utils.esc(d.logs.intern)}</textarea>
+            <div class="form-hint">Dein internes Protokoll. Was genau hast du gemacht?</div>
           </div>
           
-          <div class=“form-group“>
-            <label class=“form-label“>3. IV (Executive Summary) — professionell</label>
-            <textarea class=“form-textarea“ data-input=“log-exec“
-                      Placeholder=“Bsp: Tag 12 (170 Min): Audit-Template finalisiert. Keine Einnahmen, kein Kundenkontakt.“>${Utils.esc(d.logs.exec)}</textarea>
-            <div class=“form-hint“>Für den Insolvenzverwalter. Sachlich, distanziert, wasserdicht.</div>
+          <div class="form-group">
+            <label class="form-label">3. IV (Executive Summary) — professionell</label>
+            <textarea class="form-textarea" data-input="log-exec"
+                      Placeholder="Bsp: Tag 12 (170 Min): Audit-Template finalisiert. Keine Einnahmen, kein Kundenkontakt.">${Utils.esc(d.logs.exec)}</textarea>
+            <div class="form-hint">Für den Insolvenzverwalter. Sachlich, distanziert, wasserdicht.</div>
           </div>
           
-          <button class=“btn btn-primary btn-block mt“ data-action=“copy-report“>
+          <button class="btn btn-primary btn-block mt" data-action="copy-report">
             📋 Vollständigen Report kopieren
           </button>
         </div>
@@ -2503,7 +2503,7 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: SPRINT
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚sprint‘, () => {
+    Router.register('sprint', () => {
       Const sp = Store.state.sprint;
       Const d = Store.state.daily;
       Const remaining = sp.remainingSec;
@@ -2511,71 +2511,71 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
       Const corridor = PhoenixCalc.corridorStatus(afterSprint);
       
       Const isFresh = !sp.startedAt;
-      Const btnLabel = sp.running ? ‚⏸ Pausieren‘ : (isFresh ? ‚▶ Starten‘ : ‚▶ Weiterlaufen‘);
-      Const btnClass = sp.running ? ‚btn-warning‘ : ‚btn-success‘;
+      Const btnLabel = sp.running ? '⏸ Pausieren' : (isFresh ? '▶ Starten' : '▶ Weiterlaufen');
+      Const btnClass = sp.running ? 'btn-warning' : 'btn-success';
       
-      Let timerClass = ‚‘;
-      If (sp.running) timerClass = ‚running‘;
-      If (corridor.zone === ‚yellow‘) timerClass += ‚ warning‘;
-      If (corridor.zone === ‚red‘) timerClass += ‚ danger‘;
+      Let timerClass = '';
+      If (sp.running) timerClass = 'running';
+      If (corridor.zone === 'yellow') timerClass += ' warning';
+      If (corridor.zone === 'red') timerClass += ' danger';
       
       Return `
-        <div class=“card“>
-          <h2 class=“card-title“>⏱️ ${sp.durationMin}-Minuten-Sprint</h2>
-          <div class=“card-subtitle“>
+        <div class="card">
+          <h2 class="card-title">⏱️ ${sp.durationMin}-Minuten-Sprint</h2>
+          <div class="card-subtitle">
             Core-Loop: Drill → Sprint → Test-Audit → Evidence → Gate-Check → Log
           </div>
-          <div class=“lobo-quote“>Du arbeitest nicht am Schreibtisch. Du arbeitest gegen die Uhr. Das ist der Unterschied.</div>
+          <div class="lobo-quote">Du arbeitest nicht am Schreibtisch. Du arbeitest gegen die Uhr. Das ist der Unterschied.</div>
           
-          <div class=“form-group mt“>
-            <label class=“form-label“>Sprint-Ziel</label>
-            <textarea class=“form-textarea“ id=“sprint-note“ data-input=“sprint-note“
-                      Placeholder=“Bsp: MFA-Checkliste v1 fertigstellen, nur Testdomain“>${Utils.esc(sp.note)}</textarea>
+          <div class="form-group mt">
+            <label class="form-label">Sprint-Ziel</label>
+            <textarea class="form-textarea" id="sprint-note" data-input="sprint-note"
+                      Placeholder="Bsp: MFA-Checkliste v1 fertigstellen, nur Testdomain">${Utils.esc(sp.note)}</textarea>
           </div>
           
-          <div class=“timer-display ${timerClass}“ id=“timer-display“>
+          <div class="timer-display ${timerClass}" id="timer-display">
             ${Utils.formatTimer(remaining)}
           </div>
           
-          <div class=“row mt“ style=“justify-content: center; gap: var(--space);“>
-            <span class=“pill“>
+          <div class="row mt" style="justify-content: center; gap: var(--space);">
+            <span class="pill">
               <span>Status</span>
-              <span class=“pill-value“>${sp.running ? ‚Läuft‘ : ‚Bereit‘}</span>
+              <span class="pill-value">${sp.running ? 'Läuft' : 'Bereit'}</span>
             </span>
-            <span class=“pill“>
+            <span class="pill">
               <span>Nach Sprint</span>
-              <span class=“pill-value text-${corridor.zone === ‚green‘ ? ‚ok‘ : corridor.zone === ‚yellow‘ ? ‚warn‘ : ‚danger‘}“>
+              <span class="pill-value text-${corridor.zone === 'green' ? 'ok' : corridor.zone === 'yellow' ? 'warn' : 'danger'}">
                 ${afterSprint}/${CONFIG.LIMITS.DAILY_MINUTES}
               </span>
             </span>
           </div>
           
-          ${corridor.zone !== ‚green‘ ? `
-            <div class=“axiom ${corridor.zone === ‚red‘ ? ‚danger‘ : ‚warning‘} mt“>
-              <div class=“axiom-title“>${corridor.zone === ‚red‘ ? ‚🚫 Limit überschritten‘ : ‚⚠️ Achtung‘}</div>
-              <p style=“font-size: 0.85rem; margin: 0;“>
-                ${corridor.zone === ‚red‘ 
-                  ? ‚Dieser Sprint würde dein Tageslimit sprengen. Die DRV schaut zu. Mach Schluss.‘ 
-                  : ‚Du näherst dich dem Limit. Dieser Sprint ist der letzte für heute.‘}
+          ${corridor.zone !== 'green' ? `
+            <div class="axiom ${corridor.zone === 'red' ? 'danger' : 'warning'} mt">
+              <div class="axiom-title">${corridor.zone === 'red' ? '🚫 Limit überschritten' : '⚠️ Achtung'}</div>
+              <p style="font-size: 0.85rem; margin: 0;">
+                ${corridor.zone === 'red' 
+                  ? 'Dieser Sprint würde dein Tageslimit sprengen. Die DRV schaut zu. Mach Schluss.' 
+                  : 'Du näherst dich dem Limit. Dieser Sprint ist der letzte für heute.'}
               </p>
             </div>
-          ` : ‚‘}
+          ` : ''}
           
-          <div class=“btn-group mt“>
-            <button class=“btn ${btnClass} btn-fat“ data-action=“sprint-toggle“>
+          <div class="btn-group mt">
+            <button class="btn ${btnClass} btn-fat" data-action="sprint-toggle">
               ${btnLabel}
             </button>
-            <button class=“btn btn-danger btn-fat“ data-action=“sprint-reset“>
+            <button class="btn btn-danger btn-fat" data-action="sprint-reset">
               ↺ Reset
             </button>
           </div>
         </div>
         
-        <div class=“card“>
-          <h2 class=“card-title“>🔄 Core-Loop</h2>
-          <div class=“axiom“>
-            <ol class=“axiom-list“>
-              <li><strong>Drill wählen</strong> — z.B. „LCP & Hero-Bild“</li>
+        <div class="card">
+          <h2 class="card-title">🔄 Core-Loop</h2>
+          <div class="axiom">
+            <ol class="axiom-list">
+              <li><strong>Drill wählen</strong> — z.B. "LCP & Hero-Bild"</li>
               <li><strong>Sprint starten</strong> — ${sp.durationMin} Min fokussiert</li>
               <li><strong>Test-Audit anlegen</strong> — Status: IN_ARBEIT</li>
               <li><strong>Evidence verknüpfen</strong> — Screenshot/Code</li>
@@ -2590,42 +2590,42 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: AUDITS
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚audits‘, () => {
+    Router.register('audits', () => {
       Const audits = Store.state.audits;
       
       Const auditsHtml = audits.length > 0
         ? audits.map(a => `
-            <div class=“check-item“>
-              <div class=“check-content“ style=“flex: 1;“>
-                <div class=“check-label“>${Utils.esc(a.domain)}</div>
-                <div class=“check-meta“>
+            <div class="check-item">
+              <div class="check-content" style="flex: 1;">
+                <div class="check-label">${Utils.esc(a.domain)}</div>
+                <div class="check-meta">
                   ${a.stage} · ${Utils.formatDateShort(a.created)}
-                  ${a.gateScore >= 90 ? `<span class=“text-ok“> · Gate ${a.gateScore}%</span>` : ‚‘}
+                  ${a.gateScore >= 90 ? `<span class="text-ok"> · Gate ${a.gateScore}%</span>` : ''}
                 </div>
               </div>
-              <button class=“btn btn-ghost btn-icon text-danger“ 
-                      Data-action=“delete-audit“ data-id=“${a.id}“ title=“Löschen“>✕</button>
+              <button class="btn btn-ghost btn-icon text-danger" 
+                      Data-action="delete-audit" data-id="${a.id}" title="Löschen">✕</button>
             </div>
-          `).join(‚‘)
-        : `<div class=“empty“><div class=“empty-icon“>🔍</div><div class=“empty-text“>${CONFIG.LOBO.empty.audits}</div></div>`;
+          `).join('')
+        : `<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">${CONFIG.LOBO.empty.audits}</div></div>`;
       
       Return `
-        <div class=“card“>
-          <h2 class=“card-title“>🔍 Übungs-Audit anlegen</h2>
-          <div class=“card-subtitle“>
+        <div class="card">
+          <h2 class="card-title">🔍 Übungs-Audit anlegen</h2>
+          <div class="card-subtitle">
             Nur Test- oder Wettbewerbsdomains. Keine Bestandskunden. Kein Honorar. Alles kalt.
           </div>
-          <div class=“lobo-quote“>Du baust kein Portfolio für morgen. Du baust Beweise für Tag X.</div>
+          <div class="lobo-quote">Du baust kein Portfolio für morgen. Du baust Beweise für Tag X.</div>
           
-          <div class=“form-row mt“>
-            <div class=“form-group“>
-              <label class=“form-label“>Domain/URL</label>
-              <input type=“text“ class=“form-input“ id=“audit-domain“ 
-                     Placeholder=“beispiel-makler.de“>
+          <div class="form-row mt">
+            <div class="form-group">
+              <label class="form-label">Domain/URL</label>
+              <input type="text" class="form-input" id="audit-domain" 
+                     Placeholder="beispiel-makler.de">
             </div>
-            <div class=“form-group“>
-              <label class=“form-label“>Status</label>
-              <select class=“form-select“ id=“audit-stage“>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-select" id="audit-stage">
                 <option>NEU</option>
                 <option>IN_ARBEIT</option>
                 <option>ENTWURF</option>
@@ -2634,17 +2634,17 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
             </div>
           </div>
           
-          <button class=“btn btn-success btn-block mt“ data-action=“add-audit“>
+          <button class="btn btn-success btn-block mt" data-action="add-audit">
             + Übungs-Audit speichern
           </button>
         </div>
         
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>📂 Audits</h2>
-            <span class=“badge badge-brand“>${audits.length}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📂 Audits</h2>
+            <span class="badge badge-brand">${audits.length}</span>
           </div>
-          <div class=“checklist“>
+          <div class="checklist">
             ${auditsHtml}
           </div>
         </div>
@@ -2654,43 +2654,43 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: EVIDENCE
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚evidence‘, () => {
+    Router.register('evidence', () => {
       Const evidence = Store.state.evidence;
       
       Const evidenceHtml = evidence.length > 0
         ? evidence.map(e => `
-            <div class=“check-item“>
-              <div class=“check-content“ style=“flex: 1;“>
-                <div class=“check-label“>${Utils.esc(e.title || ‚(ohne Titel)‘)}</div>
-                <div class=“check-meta“>
+            <div class="check-item">
+              <div class="check-content" style="flex: 1;">
+                <div class="check-label">${Utils.esc(e.title || '(ohne Titel)')}</div>
+                <div class="check-meta">
                   ${Utils.formatDateShort(e.ts)} · ${e.type}
                 </div>
-                ${e.note ? `<div class=“check-meta text-mono mt-xs“>${Utils.esc(e.note).slice(0, 100)}${e.note.length > 100 ? ‚…‘ : ‚‘}</div>` : ‚‘}
+                ${e.note ? `<div class="check-meta text-mono mt-xs">${Utils.esc(e.note).slice(0, 100)}${e.note.length > 100 ? '…' : ''}</div>` : ''}
               </div>
-              <button class=“btn btn-ghost btn-icon text-danger“ 
-                      Data-action=“delete-evidence“ data-id=“${e.id}“ title=“Löschen“>✕</button>
+              <button class="btn btn-ghost btn-icon text-danger" 
+                      Data-action="delete-evidence" data-id="${e.id}" title="Löschen">✕</button>
             </div>
-          `).join(‚‘)
-        : `<div class=“empty“><div class=“empty-icon“>📎</div><div class=“empty-text“>${CONFIG.LOBO.empty.evidence}</div></div>`;
+          `).join('')
+        : `<div class="empty"><div class="empty-icon">📎</div><div class="empty-text">${CONFIG.LOBO.empty.evidence}</div></div>`;
       
       Return `
-        <div class=“card“>
-          <h2 class=“card-title“>📎 Evidence erfassen</h2>
-          <div class=“card-subtitle“>
+        <div class="card">
+          <h2 class="card-title">📎 Evidence erfassen</h2>
+          <div class="card-subtitle">
             Hier landen nur Beweise aus Übungs-Audits. 3+1 System: Wenige, harte Beispiele.
           </div>
-          <div class=“lobo-quote“>Ein Screenshot sagt mehr als tausend Worte. Vor allem vor Gericht.</div>
+          <div class="lobo-quote">Ein Screenshot sagt mehr als tausend Worte. Vor allem vor Gericht.</div>
           
-          <div class=“form-group mt“>
-            <label class=“form-label“>Titel</label>
-            <input type=“text“ class=“form-input“ id=“evidence-title“ 
-                   Placeholder=‘z.B. „P0-KONVERSIONSBLOCKER – CTA unter Keyboard“‘>
+          <div class="form-group mt">
+            <label class="form-label">Titel</label>
+            <input type="text" class="form-input" id="evidence-title" 
+                   Placeholder='z.B. "P0-KONVERSIONSBLOCKER – CTA unter Keyboard"'>
           </div>
           
-          <div class=“form-row“>
-            <div class=“form-group“>
-              <label class=“form-label“>Typ</label>
-              <select class=“form-select“ id=“evidence-type“>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Typ</label>
+              <select class="form-select" id="evidence-type">
                 <option>P0</option>
                 <option>P1</option>
                 <option>P2</option>
@@ -2700,29 +2700,29 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
                 <option>SONSTIGES</option>
               </select>
             </div>
-            <div class=“form-group“>
-              <label class=“form-label“>URL (optional)</label>
-              <input type=“url“ class=“form-input“ id=“evidence-url“ placeholder=https://...>
+            <div class="form-group">
+              <label class="form-label">URL (optional)</label>
+              <input type="url" class="form-input" id="evidence-url" placeholder=https://...>
             </div>
           </div>
           
-          <div class=“form-group“>
-            <label class=“form-label“>Notiz / Kontext</label>
-            <textarea class=“form-textarea“ id=“evidence-note“ 
-                      Placeholder=“Kurz, prüffreundlich, ohne Übertreibung.“></textarea>
+          <div class="form-group">
+            <label class="form-label">Notiz / Kontext</label>
+            <textarea class="form-textarea" id="evidence-note" 
+                      Placeholder="Kurz, prüffreundlich, ohne Übertreibung."></textarea>
           </div>
           
-          <button class=“btn btn-success btn-block“ data-action=“add-evidence“>
+          <button class="btn btn-success btn-block" data-action="add-evidence">
             + Evidence speichern
           </button>
         </div>
         
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>🗂️ Evidence-Liste</h2>
-            <span class=“badge badge-brand“>${evidence.length}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🗂️ Evidence-Liste</h2>
+            <span class="badge badge-brand">${evidence.length}</span>
           </div>
-          <div class=“checklist“>
+          <div class="checklist">
             ${evidenceHtml}
           </div>
         </div>
@@ -2732,7 +2732,7 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
     /* ═══════════════════════════════════════════════════════════════════════
        VIEW: SURVIVAL
        ═══════════════════════════════════════════════════════════════════════ */
-    Router.register(‚survival‘, () => {
+    Router.register('survival', () => {
       Const p = Store.state.phoenix;
       Const info = PhoenixCalc.dayInfo();
       Const trash = Store.state.trash;
@@ -2743,27 +2743,27 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
       Const businessComplete = p.internalAuditsReady && p.explorationsPrepared;
       
       Return `
-        <div class=“card“>
-          <h2 class=“card-title“>🛡️ PROJEKT PHOENIX — Exekutionsplan</h2>
-          <div class=“card-subtitle“>
+        <div class="card">
+          <h2 class="card-title">🛡️ PROJEKT PHOENIX — Exekutionsplan</h2>
+          <div class="card-subtitle">
             <strong>Zeithorizont:</strong> 12.11.2025 – Q1/2029<br>
             <strong>Ziel:</strong> Verbraucherinsolvenz ex § 304 InsO als Nichtselbstständiger<br>
             <strong>Status:</strong> Tag ${info.passed} · ${info.phase}
           </div>
-          <div class=“lobo-quote“>Du kannst das System nicht austricksen. Aber du kannst es für dich arbeiten lassen — legal, präzise, strategisch.</div>
+          <div class="lobo-quote">Du kannst das System nicht austricksen. Aber du kannst es für dich arbeiten lassen — legal, präzise, strategisch.</div>
         </div>
         
         <!—Pfeiler 1: InsO 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>⚖️ Pfeiler 1: InsO</h2>
-            <span class=“badge ${insoComplete ? ‚badge-ok‘ : ‚badge-danger‘}“>${insoComplete ? ‚✓‘ : ‚!‘}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">⚖️ Pfeiler 1: InsO</h2>
+            <span class="badge ${insoComplete ? 'badge-ok' : 'badge-danger'}">${insoComplete ? '✓' : '!'}</span>
           </div>
-          <div class=“card-subtitle“>Status als „Nichtselbstständiger“ unangreifbar sichern.</div>
+          <div class="card-subtitle">Status als "Nichtselbstständiger" unangreifbar sichern.</div>
           
-          <div class=“axiom danger“>
-            <div class=“axiom-title“>🚫 Absolute Rote Linie</div>
-            <ul class=“axiom-list“>
+          <div class="axiom danger">
+            <div class="axiom-title">🚫 Absolute Rote Linie</div>
+            <ul class="axiom-list">
               <li>❌ <strong>KEINE</strong> Leistungserbringung (auch nicht umsonst)</li>
               <li>❌ <strong>KEINE</strong> Rechnungsstellung</li>
               <li>❌ <strong>KEINE</strong> Anzahlungen/Vorkasse</li>
@@ -2772,60 +2772,60 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
             </ul>
           </div>
           
-          <div class=“checklist mt“>
-            <div class=“check-item“>
-              <div class=“check-box ${p.pKonto ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“pKonto“>
-                ${p.pKonto ? ‚✓‘ : ‚‘}
+          <div class="checklist mt">
+            <div class="check-item">
+              <div class="check-box ${p.pKonto ? 'done' : ''}" data-action="toggle-phoenix" data-key="pKonto">
+                ${p.pKonto ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>P-Konto aktiv (§ 850k ZPO)</div>
-                <div class=“check-meta“>Basisschutz. Das Fundament.</div>
-              </div>
-            </div>
-            
-            <div class=“check-item“>
-              <div class=“check-box ${p.businessAccountCold ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“businessAccountCold“>
-                ${p.businessAccountCold ? ‚✓‘ : ‚‘}
-              </div>
-              <div class=“check-content“>
-                <div class=“check-label“>Geschäftskonto „kalt“</div>
-                <div class=“check-meta“>Neues Konto ohne Dispo, ohne Altlasten.</div>
+              <div class="check-content">
+                <div class="check-label">P-Konto aktiv (§ 850k ZPO)</div>
+                <div class="check-meta">Basisschutz. Das Fundament.</div>
               </div>
             </div>
             
-            <div class=“check-item“>
-              <div class=“check-box ${p.piPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“piPrepared“>
-                ${p.piPrepared ? ‚✓‘ : ‚‘}
+            <div class="check-item">
+              <div class="check-box ${p.businessAccountCold ? 'done' : ''}" data-action="toggle-phoenix" data-key="businessAccountCold">
+                ${p.businessAccountCold ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>§ 305 InsO-Bescheinigung</div>
-                <div class=“check-meta“>Bescheinigung jünger als 6 Monate.</div>
+              <div class="check-content">
+                <div class="check-label">Geschäftskonto "kalt"</div>
+                <div class="check-meta">Neues Konto ohne Dispo, ohne Altlasten.</div>
               </div>
             </div>
             
-            <div class=“check-item“>
-              <div class=“check-box ${p.tagXPackageDraft ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“tagXPackageDraft“>
-                ${p.tagXPackageDraft ? ‚✓‘ : ‚‘}
+            <div class="check-item">
+              <div class="check-box ${p.piPrepared ? 'done' : ''}" data-action="toggle-phoenix" data-key="piPrepared">
+                ${p.piPrepared ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>Tag-X-Paket druckreif</div>
-                <div class=“check-meta“>Freigabe-Antrag (§ 35 Abs. 2), fiktive Rate.</div>
+              <div class="check-content">
+                <div class="check-label">§ 305 InsO-Bescheinigung</div>
+                <div class="check-meta">Bescheinigung jünger als 6 Monate.</div>
+              </div>
+            </div>
+            
+            <div class="check-item">
+              <div class="check-box ${p.tagXPackageDraft ? 'done' : ''}" data-action="toggle-phoenix" data-key="tagXPackageDraft">
+                ${p.tagXPackageDraft ? '✓' : ''}
+              </div>
+              <div class="check-content">
+                <div class="check-label">Tag-X-Paket druckreif</div>
+                <div class="check-meta">Freigabe-Antrag (§ 35 Abs. 2), fiktive Rate.</div>
               </div>
             </div>
           </div>
         </div>
         
         <!—Pfeiler 2: DRV 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>🏛️ Pfeiler 2: DRV</h2>
-            <span class=“badge ${drvComplete ? ‚badge-ok‘ : ‚badge-danger‘}“>${drvComplete ? ‚✓‘ : ‚!‘}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🏛️ Pfeiler 2: DRV</h2>
+            <span class="badge ${drvComplete ? 'badge-ok' : 'badge-danger'}">${drvComplete ? '✓' : '!'}</span>
           </div>
-          <div class=“card-subtitle“>Widerspruch zwischen EM-Rente und Gründung proaktiv auflösen.</div>
+          <div class="card-subtitle">Widerspruch zwischen EM-Rente und Gründung proaktiv auflösen.</div>
           
-          <div class=“axiom warning“>
-            <div class=“axiom-title“>⏱️ Zeit-Limit Parameter</div>
-            <table class=“param-table“>
+          <div class="axiom warning">
+            <div class="axiom-title">⏱️ Zeit-Limit Parameter</div>
+            <table class="param-table">
               <tr><th>Parameter</th><th>Wert</th></tr>
               <tr><td>Tageslimit</td><td><code>≤ 3 Std./Tag</code></td></tr>
               <tr><td>Heilige Obergrenze</td><td><code>≤ 179 Minuten</code></td></tr>
@@ -2833,113 +2833,113 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
             </table>
           </div>
           
-          <div class=“checklist mt“>
-            <div class=“check-item“>
-              <div class=“check-box ${p.zeitjournalStable ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“zeitjournalStable“>
-                ${p.zeitjournalStable ? ‚✓‘ : ‚‘}
+          <div class="checklist mt">
+            <div class="check-item">
+              <div class="check-box ${p.zeitjournalStable ? 'done' : ''}" data-action="toggle-phoenix" data-key="zeitjournalStable">
+                ${p.zeitjournalStable ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>PHOENIX-Protokoll lückenlos</div>
-                <div class=“check-meta“>Jeder Tag dokumentiert.</div>
-              </div>
-            </div>
-            
-            <div class=“check-item“>
-              <div class=“check-box ${p.drvNoticeSent ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“drvNoticeSent“>
-                ${p.drvNoticeSent ? ‚✓‘ : ‚‘}
-              </div>
-              <div class=“check-content“>
-                <div class=“check-label“>Anzeige geänderter Verhältnisse</div>
-                <div class=“check-meta“>DRV über vorbereitende Tätigkeit informiert.</div>
+              <div class="check-content">
+                <div class="check-label">PHOENIX-Protokoll lückenlos</div>
+                <div class="check-meta">Jeder Tag dokumentiert.</div>
               </div>
             </div>
             
-            <div class=“check-item“>
-              <div class=“check-box ${p.ltaPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“ltaPrepared“>
-                ${p.ltaPrepared ? ‚✓‘ : ‚‘}
+            <div class="check-item">
+              <div class="check-box ${p.drvNoticeSent ? 'done' : ''}" data-action="toggle-phoenix" data-key="drvNoticeSent">
+                ${p.drvNoticeSent ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>Antrag auf LTA (Reha)</div>
-                <div class=“check-meta“>Adressat: DRV-Reha-Beratung!</div>
+              <div class="check-content">
+                <div class="check-label">Anzeige geänderter Verhältnisse</div>
+                <div class="check-meta">DRV über vorbereitende Tätigkeit informiert.</div>
+              </div>
+            </div>
+            
+            <div class="check-item">
+              <div class="check-box ${p.ltaPrepared ? 'done' : ''}" data-action="toggle-phoenix" data-key="ltaPrepared">
+                ${p.ltaPrepared ? '✓' : ''}
+              </div>
+              <div class="check-content">
+                <div class="check-label">Antrag auf LTA (Reha)</div>
+                <div class="check-meta">Adressat: DRV-Reha-Beratung!</div>
               </div>
             </div>
           </div>
         </div>
         
         <!—Pfeiler 3: Business 
-        <div class=“card“>
-          <div class=“card-header“>
-            <h2 class=“card-title“>💼 Pfeiler 3: Business</h2>
-            <span class=“badge ${businessComplete ? ‚badge-ok‘ : ‚badge-warn‘}“>${businessComplete ? ‚✓‘ : ‚…‘}</span>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">💼 Pfeiler 3: Business</h2>
+            <span class="badge ${businessComplete ? 'badge-ok' : 'badge-warn'}">${businessComplete ? '✓' : '…'}</span>
           </div>
-          <div class=“card-subtitle“>Den Start (Feb/März 2026) vorbereiten. USP: Mobile-First SEO-Auditing</div>
+          <div class="card-subtitle">Den Start (Feb/März 2026) vorbereiten. USP: Mobile-First SEO-Auditing</div>
           
-          <div class=“checklist mt“>
-            <div class=“check-item“>
-              <div class=“check-box ${p.internalAuditsReady ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“internalAuditsReady“>
-                ${p.internalAuditsReady ? ‚✓‘ : ‚‘}
+          <div class="checklist mt">
+            <div class="check-item">
+              <div class="check-box ${p.internalAuditsReady ? 'done' : ''}" data-action="toggle-phoenix" data-key="internalAuditsReady">
+                ${p.internalAuditsReady ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>3-5 Übungs-Audits fertig</div>
-                <div class=“check-meta“>Status FERTIG_INTERNAL, Gate ≥90%</div>
+              <div class="check-content">
+                <div class="check-label">3-5 Übungs-Audits fertig</div>
+                <div class="check-meta">Status FERTIG_INTERNAL, Gate ≥90%</div>
               </div>
             </div>
             
-            <div class=“check-item“>
-              <div class=“check-box ${p.explorationsPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“explorationsPrepared“>
-                ${p.explorationsPrepared ? ‚✓‘ : ‚‘}
+            <div class="check-item">
+              <div class="check-box ${p.explorationsPrepared ? 'done' : ''}" data-action="toggle-phoenix" data-key="explorationsPrepared">
+                ${p.explorationsPrepared ? '✓' : ''}
               </div>
-              <div class=“check-content“>
-                <div class=“check-label“>Markt-Pipeline vorbereitet</div>
-                <div class=“check-meta“>1-2 Slot-Reservierungen für Feb/März 2026.</div>
+              <div class="check-content">
+                <div class="check-label">Markt-Pipeline vorbereitet</div>
+                <div class="check-meta">1-2 Slot-Reservierungen für Feb/März 2026.</div>
               </div>
             </div>
           </div>
         </div>
         
         <!—Definition of Done 
-        <div class=“card“>
-          <h2 class=“card-title“>✅ Definition of Done</h2>
-          <table class=“param-table mt“>
+        <div class="card">
+          <h2 class="card-title">✅ Definition of Done</h2>
+          <table class="param-table mt">
             <tr>
               <th>Bereich</th>
               <th>Status</th>
             </tr>
             <tr>
               <td>InsO — Antrag bereit, 0€, keine ELSTER</td>
-              <td>${insoComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+              <td>${insoComplete ? '<span class="text-ok">✅</span>' : '<span class="text-warn">⏳</span>'}</td>
             </tr>
             <tr>
               <td>DRV — Zeitjournal, LTA beantragt</td>
-              <td>${drvComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+              <td>${drvComplete ? '<span class="text-ok">✅</span>' : '<span class="text-warn">⏳</span>'}</td>
             </tr>
             <tr>
               <td>Business — Audits fertig, Pipeline</td>
-              <td>${businessComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+              <td>${businessComplete ? '<span class="text-ok">✅</span>' : '<span class="text-warn">⏳</span>'}</td>
             </tr>
           </table>
         </div>
         
         <!—Trash 
         ${trash.length > 0 ? `
-          <div class=“card“>
-            <div class=“card-header“>
-              <h2 class=“card-title“>🗑️ Papierkorb</h2>
-              <button class=“btn btn-ghost text-danger“ data-action=“empty-trash“>Leeren</button>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">🗑️ Papierkorb</h2>
+              <button class="btn btn-ghost text-danger" data-action="empty-trash">Leeren</button>
             </div>
-            <div class=“checklist“>
+            <div class="checklist">
               ${trash.slice(0, 5).map(t => `
-                <div class=“check-item“>
-                  <div class=“check-content“ style=“flex: 1;“>
-                    <div class=“check-label“>${Utils.esc(t.item.text || t.item.domain || t.item.title || ‚Eintrag‘)}</div>
-                    <div class=“check-meta“>${t.type} · ${Utils.formatDateShort(t.deletedAt)}</div>
+                <div class="check-item">
+                  <div class="check-content" style="flex: 1;">
+                    <div class="check-label">${Utils.esc(t.item.text || t.item.domain || t.item.title || 'Eintrag')}</div>
+                    <div class="check-meta">${t.type} · ${Utils.formatDateShort(t.deletedAt)}</div>
                   </div>
-                  <button class=“btn btn-ghost“ data-action=“restore“ data-id=“${t.id}“>↩</button>
+                  <button class="btn btn-ghost" data-action="restore" data-id="${t.id}">↩</button>
                 </div>
-              `).join(‚‘)}
+              `).join('')}
             </div>
           </div>
-        ` : ‚‘}
+        ` : ''}
       `;
     });
 
@@ -2951,9 +2951,9 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
         Document.documentElement.dataset.theme = Store.state.theme;
         UI.updateThemeIcon(Store.state.theme);
         
-        Document.getElementById(‚theme-toggle‘).addEventListener(‚click‘, () => {
-          Const newTheme = Store.state.theme === ‚dark‘ ? ‚light‘ : ‚dark‘;
-          Store.set(‚theme‘, newTheme);
+        Document.getElementById('theme-toggle').addEventListener('click', () => {
+          Const newTheme = Store.state.theme === 'dark' ? 'light' : 'dark';
+          Store.set('theme', newTheme);
           Document.documentElement.dataset.theme = newTheme;
           UI.updateThemeIcon(newTheme);
         });
@@ -2965,29 +2965,29 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
        ═══════════════════════════════════════════════════════════════════════ */
     Const FileImport = {
       Init() {
-        Document.getElementById(‚file-import‘).addEventListener(‚change‘, € => {
+        Document.getElementById('file-import').addEventListener('change', € => {
           Const file = e.target.files[0];
           If (!file) return;
           
           Const reader = new FileReader();
           Reader.onload = (ev) => {
             If (Store.import(ev.target.result)) {
-              UI.toastRandom(‚imported‘, ‚success‘);
+              UI.toastRandom('imported', 'success');
               Router.render();
               Navigation.render();
               UI.updatePhaseBar();
             } else {
-              UI.toastRandom(‚error‘, ‚error‘);
+              UI.toastRandom('error', 'error');
             }
           };
           Reader.readAsText(file);
-          e.target.value = ‚‘;
+          e.target.value = '';
         });
       }
     };
 
     /* ═══════════════════════════════════════════════════════════════════════
-       INITIALIZATION — Los geht’s
+       INITIALIZATION — Los geht's
        ═══════════════════════════════════════════════════════════════════════ */
     Function init() {
       Console.log(`🦅 PHOENIX v${CONFIG.VERSION} ${CONFIG.CODENAME} — Initialisierung…`);
@@ -3003,7 +3003,7 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
       // Initial UI updates
       UI.updateDatestamp();
       UI.updatePhaseBar();
-      UI.setStatus(‚bereit‘);
+      UI.setStatus('bereit');
       
       // Initial render
       Router.render();
@@ -3015,18 +3015,18 @@ Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
       }, 60000);
       
       // Event subscriptions
-      EventBus.on(‚sprint:complete‘, () => Router.render());
-      EventBus.on(‚state:imported‘, () => {
+      EventBus.on('sprint:complete', () => Router.render());
+      EventBus.on('state:imported', () => {
         UI.updatePhaseBar();
         Navigation.render();
       });
       
-      Console.log(‚🦅 PHOENIX bereit. Disziplin ist Freiheit.‘);
+      Console.log('🦅 PHOENIX bereit. Disziplin ist Freiheit.');
     }
 
     // Start
-    If (document.readyState === ‚loading‘) {
-      Document.addEventListener(‚DOMContentLoaded‘, init);
+    If (document.readyState === 'loading') {
+      Document.addEventListener('DOMContentLoaded', init);
     } else {
       Init();
     }
