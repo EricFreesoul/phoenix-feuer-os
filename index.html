@@ -1,1972 +1,3036 @@
-<!doctype html>
-<html lang="de" data-theme="dark">
+<!DOCTYPE html>
+<html lang=“de“ data-theme=“dark“>
 <head>
-  <meta charset="utf-8">
-  <title>🦅 PHOENIX v12 — DISZIPLIN IST FREIHEIT 🗽</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#020817">
+  <meta charset=“utf-8“>
+  <title>🦅 PHOENIX v12.9 — DISZIPLIN IST FREIHEIT</title>
+  <meta name=“viewport“ content=“width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover“>
+  <meta name=“theme-color“ content=“#0f172a“>
+  <meta name=“color-scheme“ content=“dark light“>
+  <meta name=“description“ content=“PROJEKT PHOENIX – Dein Operationsplan. Kein Start-up. Eine verdammte Symphonie des kontrollierten Chaos.“>
+  
+  <!—Preload kritische Ressourcen 
+  <link rel=“preconnect“ href=https://fonts.googleapis.com>
+  <link rel=“preconnect“ href=https://fonts.gstatic.com crossorigin>
+
   <style>
-    :root{
-      --bg:#020817;
-      --bg-elev:#050816;
-      --card:#0b1020;
-      --ink:#e5e7ff;
-      --ink-dim:#cbd5ff;
-      --brand:#60a5fa;
-      --ok:#22c55e;
-      --warn:#facc15;
-      --danger:#fb7185;
-      --muted:#111827;
-      --ring:#3b82f6;
-      --shadow:0 10px 30px rgba(0,0,0,.46);
-      --radius:18px;
-      --radius-sm:12px;
-      --space:14px;
-      --space-lg:20px;
-      --tap:46px;
-      --font: system-ui, -apple-system, BlinkMacSystemFont, -system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    /* ══════════════════════════════════════════════════════════════════════════
+       PHOENIX v12.9 OMEGA 🔥 — POWA APP
+       ══════════════════════════════════════════════════════════════════════════
+       
+       „Du bist gezwungen, genial zu sein.“
+       
+       PROJEKT PHOENIX – EXEKUTIONSPLAN
+       Zeithorizont: 01.01.2026 – Q1/2029
+       
+       Stil: Lobo-Fusion
+       - Ton: Direkt, frech, warm
+       - Zielbild: Kohle verdienen mit Würde – maximal, aber legal
+       - Compliance: Auditfest, PI-konform
+       - Humor: Subversiv-ernst, nie albern
+       
+       ══════════════════════════════════════════════════════════════════════════ */
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       DESIGN TOKENS — Das Fundament
+       ═══════════════════════════════════════════════════════════════════════ */
+    :root {
+      /* === Farben: Dunkel, aber nicht depressiv === */
+      --bg-void: #050810;
+      --bg: #0a0f1a;
+      --bg-elev: #0f1628;
+      --bg-surface: #141d2f;
+      --card: #111827;
+      --card-hover: #1a2744;
+      
+      /* === Typografie: Klar, nicht kalt === */
+      --ink: #f0f4ff;
+      --ink-strong: #ffffff;
+      --ink-dim: #94a3c4;
+      --ink-muted: #5b6b8a;
+      
+      /* === Brand: Lila-Blau-Gradient — Ambition ohne Arroganz === */
+      --brand-primary: #6366f1;
+      --brand-secondary: #8b5cf6;
+      --brand-glow: rgba(99, 102, 241, 0.2);
+      --brand-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+      
+      /* === Semantisch: Ampel des Lebens === */
+      --ok: #10b981;
+      --ok-soft: rgba(16, 185, 129, 0.12);
+      --ok-glow: rgba(16, 185, 129, 0.3);
+      
+      --warn: #f59e0b;
+      --warn-soft: rgba(245, 158, 11, 0.12);
+      --warn-glow: rgba(245, 158, 11, 0.3);
+      
+      --danger: #ef4444;
+      --danger-soft: rgba(239, 68, 68, 0.12);
+      --danger-glow: rgba(239, 68, 68, 0.3);
+      
+      /* === Utility === */
+      --border: rgba(148, 163, 196, 0.1);
+      --border-strong: rgba(148, 163, 196, 0.2);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 60px var(--brand-glow);
+      
+      /* === Spacing: Rhythmus === */
+      --space-2xs: 4px;
+      --space-xs: 6px;
+      --space-sm: 10px;
+      --space: 16px;
+      --space-md: 20px;
+      --space-lg: 28px;
+      --space-xl: 40px;
+      --space-2xl: 56px;
+      
+      /* === Sizing === */
+      --tap: 48px;
+      --radius-sm: 8px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --radius-full: 9999px;
+      
+      /* === Typography === */
+      --font: -apple-system, BlinkMacSystemFont, ‚Segoe UI‘, system-ui, sans-serif;
+      --font-display: var(--font);
+      --mono: ‚SF Mono‘, ‚Fira Code‘, ‚JetBrains Mono‘, ui-monospace, monospace;
+      
+      /* === Motion: Lebendig, nicht hektisch === */
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --duration-instant: 100ms;
+      --duration-fast: 180ms;
+      --duration: 280ms;
+      --duration-slow: 400ms;
+      --duration-slower: 600ms;
     }
-    [data-theme="light"]{
-      --bg:#eef2ff;
-      --bg-elev:#ffffff;
-      --card:#ffffff;
-      --ink:#020817;
-      --ink-dim:#4b5563;
-      --muted:#e5e7eb;
-      --shadow:0 10px 24px rgba(15,23,42,.12);
+
+    /* === Light Theme: Für die seltenen sonnigen Tage === */
+    [data-theme=“light“] {
+      --bg-void: #f8fafc;
+      --bg: #f1f5f9;
+      --bg-elev: #ffffff;
+      --bg-surface: #ffffff;
+      --card: #ffffff;
+      --card-hover: #f8fafc;
+      --ink: #0f172a;
+      --ink-strong: #020617;
+      --ink-dim: #475569;
+      --ink-muted: #94a3b8;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(15, 23, 42, 0.15);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--font);
-      background:radial-gradient(circle at top, #111827 0, #020817 55%, #000 100%);
-      color:var(--ink);
-      line-height:1.55;
-      letter-spacing:.15px;
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       RESET & FOUNDATION
+       ═══════════════════════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      Box-sizing: border-box;
+      Margin: 0;
+      Padding: 0;
     }
-    .wrap{
-      max-width:540px;
-      margin:0 auto;
-      padding:env(safe-area-inset-top) var(--space) calc(94px + env(safe-area-inset-bottom));
+
+    Html {
+      Height: 100%;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+      Scroll-behavior: smooth;
     }
-    header.top{
-      position:sticky;top:0;z-index:40;
-      backdrop-filter:saturate(160%) blur(10px);
-      background:color-mix(in oklab,var(--bg) 92%,transparent);
-      border-bottom:1px solid color-mix(in oklab,var(--ink) 10%,transparent);
-      padding:10px var(--space);
+
+    Body {
+      Font-family: var(--font);
+      Font-size: 15px;
+      Line-height: 1.6;
+      Color: var(--ink);
+      Background: var(--bg);
+      Min-height: 100%;
+      Overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    .brandline{display:flex;align-items:center;gap:10px;}
-    .logo{
-      width:32px;height:32px;border-radius:10px;
-      background:radial-gradient(120% 120% at 20% 20%, #38bdf8 0%, #6366f1 45%, #a855f7 100%);
-      box-shadow:var(--shadow);
+
+    /* === Scrollbar: Subtil === */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { 
+      Background: var(--border-strong); 
+      Border-radius: var(--radius-full);
     }
-    h1{
-      font-size:clamp(18px,4.6vw,22px);
-      margin:0;
-      letter-spacing:.35px;
-      font-weight:650;
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
+
+    /* === Selection: On-Brand === */
+    ::selection {
+      Background: var(--brand-primary);
+      Color: white;
     }
-    .sub{
-      font-size:13px;
-      color:var(--ink-dim);
-      margin-top:2px;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       APP SHELL — Das Skelett
+       ═══════════════════════════════════════════════════════════════════════ */
+    #app {
+      Display: flex;
+      Flex-direction: column;
+      Min-height: 100vh;
+      Min-height: 100dvh;
     }
-    .sub span{display:inline-flex;align-items:center;gap:4px}
-    .grid{display:grid;gap:var(--space);margin-top:var(--space-lg)}
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:var(--space);
-      border:1px solid rgba(148,163,253,.12);
-      box-shadow:var(--shadow);
+
+    /* === HEADER === */
+    .header {
+      Position: sticky;
+      Top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, 
+        color-mix(in srgb, var(--bg-elev) 97%, transparent) 0%,
+        color-mix(in srgb, var(--bg-elev) 92%, transparent) 100%
+      );
+      Backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      Border-bottom: 1px solid var(--border);
+      Padding: var(--space) var(--space-md);
+      Padding-top: calc(var(--space) + env(safe-area-inset-top));
     }
-    .card h2{
-      font-size:15px;
-      margin:0 0 6px 0;
-      letter-spacing:.25px;
-      font-weight:640;
+
+    .header-inner {
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space);
+      Max-width: 540px;
+      Margin: 0 auto;
     }
-    .row{display:flex;align-items:center;gap:8px}
-    .row.wrap{flex-wrap:wrap}
-    .muted{color:var(--ink-dim);font-size:13px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      min-height:var(--tap);
-      padding:8px 12px;
-      border-radius:14px;
-      border:1px solid color-mix(in oklab,var(--ink) 12%,transparent);
-      background:linear-gradient(180deg,color-mix(in oklab,var(--bg-elev) 84%,#1d2438) 0%,var(--bg-elev) 100%);
-      color:var(--ink);
-      font-weight:600;
-      font-size:13px;
-      cursor:pointer;
-      box-shadow:var(--shadow);
+
+    /* === Logo: Der Phönix === */
+    .logo {
+      Width: 52px;
+      Height: 52px;
+      Border-radius: var(--radius);
+      Background: var(--brand-gradient);
+      Display: flex;
+      Align-items: center;
+      Justify-content: center;
+      Font-size: 28px;
+      Flex-shrink: 0;
+      Box-shadow: 
+        0 4px 20px rgba(99, 102, 241, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      animation: logo-breathe 4s ease-in-out infinite;
+      user-select: none;
     }
-    .btn:active{transform:translateY(1px)}
-    .btn.primary{background:linear-gradient(180deg,#2563eb,#1d4ed8);border-color:#1e40af;color:#eff6ff}
-    .btn.ok{background:linear-gradient(180deg,#059669,#047857);border-color:#065f46;color:#ecfdf5}
-    .btn.warn{background:linear-gradient(180deg,#f97316,#ea580c);border-color:#c2410c;color:#fff7ed}
-    .btn.danger{background:linear-gradient(180deg,#fb7185,#e11d48);border-color:#be123c;color:#fef2f2}
-    .btn.ghost{background:transparent;box-shadow:none}
-    .btn.block{width:100%}
-    .btn.switch{min-width:var(--tap);font-size:14px}
-    .ctl{display:flex;flex-direction:column;gap:4px}
-    label{font-size:12px;color:var(--ink-dim)}
-    input[type="text"],input[type="url"],input[type="number"],input[type="date"],textarea,select{
-      width:100%;
-      min-height:var(--tap);
-      padding:9px 10px;
-      border-radius:12px;
-      border:1px solid color-mix(in oklab,var(--ink) 14%,transparent);
-      background:var(--bg-elev);
-      color:var(--ink);
-      font-size:14px;
-      outline:none;
+
+    @keyframes logo-breathe {
+      0%, 100% { 
+        Box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        Transform: scale(1);
+      }
+      50% { 
+        Box-shadow: 0 6px 30px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        Transform: scale(1.02);
+      }
     }
-    textarea{min-height:92px;resize:vertical}
-    input[type="checkbox"]{width:17px;height:17px;accent-color:#22c55e;cursor:pointer}
-    .pill{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:5px 9px;
-      border-radius:999px;
-      background:color-mix(in oklab,var(--muted) 70%,transparent);
-      border:1px solid rgba(148,163,253,.16);
-      font-size:12px;
-      color:var(--ink-dim);
+
+    /* === Brand Info === */
+    .brand {
+      Flex: 1;
+      Min-width: 0;
     }
-    .kpi{font:700 17px var(--mono);letter-spacing:.25px}
-    .list{display:flex;flex-direction:column;gap:9px}
-    .item{
-      display:flex;align-items:flex-start;gap:10px;
-      padding:9px;
-      border-radius:12px;
-      background:color-mix(in oklab,var(--muted) 40%,transparent);
-      border:1px solid rgba(75,85,99,.55);
+
+    .brand-row {
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space-sm);
+      Flex-wrap: wrap;
     }
-    .item strong{font-size:13px}
-    .check{
-      width:21px;height:21px;border-radius:8px;
-      display:grid;place-items:center;
-      background:#020817;
-      border:1px solid rgba(148,163,253,.26);
-      cursor:pointer;flex-shrink:0;font-size:12px;
+
+    .brand-name {
+      Font-size: 1.35rem;
+      Font-weight: 800;
+      Letter-spacing: -0.03em;
+      Background: linear-gradient(90deg, var(--ink-strong) 0%, var(--brand-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      Background-clip: text;
     }
-    .check.done{background:#22c55e;border-color:#16a34a;color:#020817}
-    .check.danger{background:color-mix(in oklab,var(--danger) 30%,transparent);border-color:var(--danger);color:#111827}
-    .tag{
-      font:600 12px var(--mono);
-      padding:4px 8px;border-radius:999px;
-      background:#020817;
-      border:1px solid #1d2a4d;
-      color:var(--ink-dim);
+
+    .brand-badge {
+      Font-family: var(--mono);
+      Font-size: 0.6rem;
+      Font-weight: 800;
+      Letter-spacing: 0.12em;
+      Text-transform: uppercase;
+      Background: rgba(139, 92, 246, 0.15);
+      Color: var(--brand-secondary);
+      Padding: 4px 8px;
+      Border-radius: var(--radius-sm);
+      Border: 1px solid rgba(139, 92, 246, 0.25);
     }
-    .badge{
-      font:700 17px var(--mono);
-      padding:6px 10px;
-      border-radius:10px;
-      background:#020817;
-      border:1px solid #1f2937;
-      display:inline-block;
+
+    .brand-version {
+      Font-size: 0.8rem;
+      Color: var(--ink-dim);
+      Margin-top: 2px;
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space-xs);
     }
-    .update-notice{
-      position:fixed;
-      left:50%;
-      bottom:calc(82px + env(safe-area-inset-bottom));
-      transform:translateX(-50%);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border-radius:var(--radius);
-      border:1px solid rgba(148,163,253,.28);
-      background:color-mix(in oklab,var(--bg-elev) 94%,#0b1020);
-      box-shadow:var(--shadow);
-      z-index:60;
-      max-width:calc(100% - 2*var(--space));
+
+    .brand-motto {
+      Font-size: 0.6rem;
+      Font-weight: 700;
+      Text-transform: uppercase;
+      Letter-spacing: 0.2em;
+      Color: var(--warn);
+      Margin-top: 6px;
+      Padding-top: 6px;
+      Border-top: 1px solid rgba(245, 158, 11, 0.25);
     }
-    .update-notice[hidden]{display:none;}
-    .update-notice span{
-      font-size:12px;
-      color:var(--ink);
+
+    /* === Phase Progress Bar === */
+    .phase-bar {
+      Height: 3px;
+      Background: var(--border);
+      Border-radius: var(--radius-full);
+      Margin-top: var(--space-xs);
+      Overflow: hidden;
     }
-    @media (max-width:420px){
-      .update-notice{flex-direction:column;align-items:stretch;text-align:center;}
+
+    .phase-fill {
+      Height: 100%;
+      Background: var(--brand-gradient);
+      Border-radius: var(--radius-full);
+      Transition: width var(--duration-slow) var(--ease-out);
     }
-    nav.tabs{
-      position:fixed;bottom:0;left:0;right:0;z-index:50;
-      background:color-mix(in oklab,var(--bg) 94%,#020817);
-      border-top:1px solid color-mix(in oklab,var(--ink) 12%,transparent);
-      padding:8px calc((100vw - 540px)/2 + var(--space)) calc(8px + env(safe-area-inset-bottom));
+
+    .brand-status {
+      Font-family: var(--mono);
+      Font-size: 0.65rem;
+      Color: var(--ink-muted);
+      Margin-top: var(--space-xs);
     }
-    .tabbar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-    .tab{
-      min-height:50px;
-      border-radius:13px;
-      border:1px solid rgba(75,85,99,.85);
-      background:linear-gradient(180deg,var(--bg-elev),color-mix(in oklab,var(--bg-elev) 90%,#000));
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-      font-size:12px;
-      color:var(--ink-dim);
-      cursor:pointer;
+
+    /* === Header Actions === */
+    .header-actions {
+      Display: flex;
+      Gap: var(--space-xs);
     }
-    .tab:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
-    .tab.active{outline:2px solid var(--ring);color:var(--ink);border-color:var(--ring)}
-    .ic{font:700 14px var(--mono)}
-    .template-box{
-      margin-top:var(--space);
-      padding:var(--space);
-      border-radius:var(--radius-sm);
-      background:color-mix(in oklab,var(--bg-elev) 70%,transparent);
-      border:1px solid rgba(75,85,99,.7);
-      font-size:13px;
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════════════════ */
+    .main {
+      Flex: 1;
+      Width: 100%;
+      Max-width: 540px;
+      Margin: 0 auto;
+      Padding: var(--space-lg) var(--space-md);
+      Padding-bottom: calc(110px + env(safe-area-inset-bottom));
     }
-    .template-box pre{
-      margin-top:6px;
-      padding:7px;
-      border-radius:8px;
-      background:#020817;
-      border:1px solid #111827;
-      font-family:var(--mono);
-      font-size:12px;
-      white-space:pre-wrap;
-      word-wrap:break-word;
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════════════════════════════════ */
+    .nav {
+      Position: fixed;
+      Bottom: 0;
+      Left: 0;
+      Right: 0;
+      z-index: 100;
+      background: linear-gradient(180deg,
+        color-mix(in srgb, var(--bg) 85%, transparent) 0%,
+        var(--bg) 40%
+      );
+      Backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      Border-top: 1px solid var(--border);
+      Padding: var(--space-sm) var(--space-md);
+      Padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom));
     }
-    .roadmap-content h3{
-      font-size:12.5px;
-      color:var(--brand);
-      margin:14px 0 4px 0;
-      padding-bottom:4px;
-      border-bottom:1px solid rgba(75,85,99,.9);
+
+    .nav-bar {
+      Display: grid;
+      Grid-template-columns: repeat(6, 1fr);
+      Gap: var(--space-xs);
+      Max-width: 540px;
+      Margin: 0 auto;
     }
-    .roadmap-content p{font-size:13px}
-    .roadmap-content ul{padding-left:16px;font-size:13px}
-    .roadmap-content li{margin-bottom:3px}
-    @media (max-width:420px){
-      .wrap{max-width:100%}
-      .tabbar{gap:4px}
-      .btn{padding:7px 9px}
+
+    .nav-tab {
+      Display: flex;
+      Flex-direction: column;
+      Align-items: center;
+      Justify-content: center;
+      Gap: 3px;
+      Min-height: 58px;
+      Padding: var(--space-xs);
+      Border-radius: var(--radius);
+      Border: 1px solid transparent;
+      Background: transparent;
+      Color: var(--ink-muted);
+      Font-size: 0.6rem;
+      Font-weight: 600;
+      Cursor: pointer;
+      Transition: all var(--duration) var(--ease);
+      User-select: none;
+      Position: relative;
+      Overflow: hidden;
+    }
+
+    .nav-tab::before {
+      Content: ‚‘;
+      Position: absolute;
+      Inset: 0;
+      Background: var(--brand-gradient);
+      Opacity: 0;
+      Transition: opacity var(--duration) var(--ease);
+    }
+
+    .nav-tab:hover {
+      Color: var(--ink-dim);
+      Background: var(--bg-surface);
+    }
+
+    .nav-tab.active {
+      Color: var(--ink);
+      Background: var(--card);
+      Border-color: var(--brand-primary);
+      Box-shadow: 0 0 24px var(--brand-glow), var(--shadow-sm);
+    }
+
+    .nav-tab.active::before {
+      Opacity: 0.08;
+    }
+
+    .nav-icon {
+      Font-size: 1.2rem;
+      Position: relative;
+      z-index: 1;
+    }
+
+    .nav-label {
+      Position: relative;
+      z-index: 1;
+    }
+
+    /* === Notification Dot === */
+    .nav-dot {
+      Position: absolute;
+      Top: 8px;
+      Right: calc(50% - 16px);
+      Width: 7px;
+      Height: 7px;
+      Background: var(--danger);
+      Border-radius: 50%;
+      Box-shadow: 0 0 8px var(--danger-glow);
+      Animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       CARDS — Die Bausteine
+       ═══════════════════════════════════════════════════════════════════════ */
+    .card {
+      Background: var(--card);
+      Border: 1px solid var(--border);
+      Border-radius: var(--radius-lg);
+      Padding: var(--space-md);
+      Margin-bottom: var(--space);
+      Box-shadow: var(--shadow-sm);
+      Transition: all var(--duration) var(--ease);
+      Animation: card-enter var(--duration-slow) var(--ease-out) both;
+    }
+
+    .card:hover {
+      Box-shadow: var(--shadow);
+      Border-color: var(--border-strong);
+    }
+
+    @keyframes card-enter {
+      From {
+        Opacity: 0;
+        Transform: translateY(12px);
+      }
+    }
+
+    /* Staggered Animation */
+    .card:nth-child(1) { animation-delay: 0ms; }
+    .card:nth-child(2) { animation-delay: 60ms; }
+    .card:nth-child(3) { animation-delay: 120ms; }
+    .card:nth-child(4) { animation-delay: 180ms; }
+    .card:nth-child(5) { animation-delay: 240ms; }
+
+    .card-header {
+      Display: flex;
+      Align-items: flex-start;
+      Justify-content: space-between;
+      Gap: var(--space);
+      Margin-bottom: var(--space-sm);
+    }
+
+    .card-title {
+      Font-size: 1rem;
+      Font-weight: 700;
+      Letter-spacing: -0.01em;
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space-sm);
+    }
+
+    .card-subtitle {
+      Font-size: 0.8rem;
+      Color: var(--ink-dim);
+      Line-height: 1.5;
+    }
+
+    /* === Lobo Quote — Das Salz === */
+    .lobo-quote {
+      Font-size: 0.78rem;
+      Color: var(--warn);
+      Font-style: italic;
+      Margin-top: var(--space-sm);
+      Padding: var(--space-sm) var(--space);
+      Background: var(--warn-soft);
+      Border-left: 3px solid var(--warn);
+      Border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      Position: relative;
+    }
+
+    .lobo-quote::before {
+      Content: ‚“‘;
+      Font-size: 1.5rem;
+      Position: absolute;
+      Left: var(--space-sm);
+      Top: 2px;
+      Opacity: 0.3;
+      Font-style: normal;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       BUTTONS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .btn {
+      Display: inline-flex;
+      Align-items: center;
+      Justify-content: center;
+      Gap: var(--space-sm);
+      Min-height: var(--tap);
+      Padding: var(--space-sm) var(--space);
+      Border-radius: var(--radius);
+      Border: 1px solid var(--border-strong);
+      Background: var(--bg-surface);
+      Color: var(--ink);
+      Font-size: 0.875rem;
+      Font-weight: 600;
+      Font-family: inherit;
+      Cursor: pointer;
+      Transition: all var(--duration-fast) var(--ease);
+      User-select: none;
+      Text-decoration: none;
+      Position: relative;
+      Overflow: hidden;
+    }
+
+    .btn:hover {
+      Background: var(--card-hover);
+      Transform: translateY(-1px);
+    }
+
+    .btn:active {
+      Transform: translateY(0) scale(0.98);
+    }
+
+    .btn-primary {
+      Background: linear-gradient(180deg, var(--brand-primary) 0%, #4f46e5 100%);
+      Border-color: #4338ca;
+      Color: white;
+      Box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      Background: linear-gradient(180deg, #818cf8 0%, var(--brand-primary) 100%);
+      Box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-success {
+      Background: linear-gradient(180deg, var(--ok) 0%, #059669 100%);
+      Border-color: #047857;
+      Color: white;
+      Box-shadow: 0 4px 12px var(--ok-glow);
+    }
+
+    .btn-warning {
+      Background: linear-gradient(180deg, var(--warn) 0%, #d97706 100%);
+      Border-color: #b45309;
+      Color: #0f172a;
+    }
+
+    .btn-danger {
+      Background: linear-gradient(180deg, var(--danger) 0%, #dc2626 100%);
+      Border-color: #b91c1c;
+      Color: white;
+    }
+
+    .btn-ghost {
+      Background: transparent;
+      Border-color: transparent;
+      Box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+      Background: var(--border);
+    }
+
+    .btn-block { width: 100%; }
+
+    .btn-icon {
+      Width: var(--tap);
+      Padding: 0;
+      Font-size: 1.2rem;
+    }
+
+    .btn-fat {
+      Min-height: 56px;
+      Font-size: 0.95rem;
+      Border-radius: var(--radius);
+    }
+
+    .btn-group {
+      Display: flex;
+      Gap: var(--space-sm);
+    }
+
+    .btn-group > * { flex: 1; }
+
+    @media (max-width: 400px) {
+      .btn-group {
+        Flex-direction: column;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       FORM ELEMENTS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .form-group {
+      Margin-bottom: var(--space);
+    }
+
+    .form-label {
+      Display: block;
+      Font-size: 0.75rem;
+      Font-weight: 600;
+      Color: var(--ink-dim);
+      Margin-bottom: var(--space-2xs);
+      Text-transform: uppercase;
+      Letter-spacing: 0.05em;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      Width: 100%;
+      Min-height: var(--tap);
+      Padding: var(--space-sm) var(--space);
+      Border-radius: var(--radius);
+      Border: 1px solid var(--border-strong);
+      Background: var(--bg);
+      Color: var(--ink);
+      Font-size: 0.9375rem;
+      Font-family: inherit;
+      Transition: all var(--duration-fast) var(--ease);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      Outline: none;
+      Border-color: var(--brand-primary);
+      Box-shadow: 0 0 0 3px var(--brand-glow);
+    }
+
+    .form-textarea {
+      Min-height: 100px;
+      Resize: vertical;
+      Line-height: 1.5;
+    }
+
+    .form-hint {
+      Font-size: 0.7rem;
+      Color: var(--ink-muted);
+      Margin-top: var(--space-2xs);
+    }
+
+    .form-row {
+      Display: grid;
+      Grid-template-columns: repeat(2, 1fr);
+      Gap: var(--space-sm);
+    }
+
+    @media (max-width: 400px) {
+      .form-row {
+        Grid-template-columns: 1fr;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       PILLS & BADGES
+       ═══════════════════════════════════════════════════════════════════════ */
+    .pill {
+      Display: inline-flex;
+      Align-items: center;
+      Gap: var(--space-xs);
+      Padding: var(--space-2xs) var(--space-sm);
+      Border-radius: var(--radius-full);
+      Background: var(--bg-surface);
+      Border: 1px solid var(--border);
+      Font-size: 0.72rem;
+      Color: var(--ink-dim);
+    }
+
+    .pill-value {
+      Font-family: var(--mono);
+      Font-weight: 700;
+      Color: var(--ink);
+    }
+
+    .badge {
+      Display: inline-flex;
+      Align-items: center;
+      Justify-content: center;
+      Min-width: 24px;
+      Height: 24px;
+      Padding: 0 var(--space-sm);
+      Border-radius: var(--radius-full);
+      Font-family: var(--mono);
+      Font-size: 0.72rem;
+      Font-weight: 700;
+    }
+
+    .badge-ok { background: var(--ok-soft); color: var(--ok); }
+    .badge-warn { background: var(--warn-soft); color: var(--warn); }
+    .badge-danger { background: var(--danger-soft); color: var(--danger); }
+    .badge-brand { background: var(--brand-glow); color: var(--brand-primary); }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       AMPEL SYSTEM — Status auf einen Blick
+       ═══════════════════════════════════════════════════════════════════════ */
+    .ampel-list {
+      Display: flex;
+      Flex-direction: column;
+      Gap: var(--space-sm);
+    }
+
+    .ampel-item {
+      Display: flex;
+      Align-items: flex-start;
+      Gap: var(--space);
+      Padding: var(--space);
+      Background: var(--bg-surface);
+      Border: 1px solid var(--border);
+      Border-radius: var(--radius);
+      Cursor: pointer;
+      Transition: all var(--duration) var(--ease);
+    }
+
+    .ampel-item:hover {
+      Background: var(--card-hover);
+      Transform: translateX(4px);
+    }
+
+    .ampel-item:active {
+      Transform: translateX(2px) scale(0.99);
+    }
+
+    .ampel-icon {
+      Width: 40px;
+      Height: 40px;
+      Border-radius: 50%;
+      Display: flex;
+      Align-items: center;
+      Justify-content: center;
+      Font-size: 1.1rem;
+      Font-weight: 700;
+      Flex-shrink: 0;
+      Transition: all var(--duration) var(--ease);
+    }
+
+    .ampel-icon.ok {
+      Background: var(--ok-soft);
+      Color: var(--ok);
+      Border: 2px solid rgba(16, 185, 129, 0.3);
+      Box-shadow: 0 0 16px var(--ok-glow);
+    }
+
+    .ampel-icon.nok {
+      Background: var(--danger-soft);
+      Color: var(--danger);
+      Border: 2px solid rgba(239, 68, 68, 0.3);
+      Animation: attention 2s ease-in-out infinite;
+    }
+
+    @keyframes attention {
+      0%, 100% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+      50% { box-shadow: 0 0 16px var(--danger-glow); }
+    }
+
+    .ampel-content {
+      Flex: 1;
+      Min-width: 0;
+    }
+
+    .ampel-title {
+      Font-size: 0.9rem;
+      Font-weight: 600;
+      Margin-bottom: 2px;
+    }
+
+    .ampel-desc {
+      Font-size: 0.78rem;
+      Color: var(--ink-dim);
+      Line-height: 1.45;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       CHECKLIST
+       ═══════════════════════════════════════════════════════════════════════ */
+    .checklist {
+      Display: flex;
+      Flex-direction: column;
+      Gap: var(--space-sm);
+    }
+
+    .check-item {
+      Display: flex;
+      Align-items: flex-start;
+      Gap: var(--space);
+      Padding: var(--space-sm) var(--space);
+      Background: var(--bg-surface);
+      Border-radius: var(--radius);
+      Border: 1px solid var(--border);
+      Transition: all var(--duration) var(--ease);
+    }
+
+    .check-item:hover {
+      Border-color: var(--border-strong);
+    }
+
+    .check-box {
+      Width: 26px;
+      Height: 26px;
+      Border-radius: var(--radius-sm);
+      Border: 2px solid var(--border-strong);
+      Background: var(--bg);
+      Display: flex;
+      Align-items: center;
+      Justify-content: center;
+      Cursor: pointer;
+      Flex-shrink: 0;
+      Transition: all var(--duration-fast) var(--ease-bounce);
+      Font-size: 0.85rem;
+      Font-weight: 700;
+    }
+
+    .check-box:hover {
+      Border-color: var(--ok);
+      Transform: scale(1.05);
+    }
+
+    .check-box.done {
+      Background: var(--ok);
+      Border-color: var(--ok);
+      Color: white;
+      Box-shadow: 0 2px 8px var(--ok-glow);
+    }
+
+    .check-content {
+      Flex: 1;
+      Min-width: 0;
+    }
+
+    .check-label {
+      Font-size: 0.875rem;
+      Font-weight: 500;
+    }
+
+    .check-meta {
+      Font-size: 0.75rem;
+      Color: var(--ink-muted);
+      Margin-top: 2px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       KPI GRID
+       ═══════════════════════════════════════════════════════════════════════ */
+    .kpi-grid {
+      Display: grid;
+      Grid-template-columns: repeat(3, 1fr);
+      Gap: var(--space-sm);
+    }
+
+    .kpi-card {
+      Background: var(--bg-surface);
+      Border-radius: var(--radius);
+      Padding: var(--space-sm);
+      Text-align: center;
+      Border: 1px solid var(--border);
+    }
+
+    .kpi-label {
+      Font-size: 0.65rem;
+      Color: var(--ink-muted);
+      Text-transform: uppercase;
+      Letter-spacing: 0.05em;
+      Margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      Font-family: var(--mono);
+      Font-size: 1.4rem;
+      Font-weight: 800;
+      Background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      Background-clip: text;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       CORRIDOR — Der 179-Minuten-Korridor
+       ═══════════════════════════════════════════════════════════════════════ */
+    .corridor {
+      Margin: var(--space) 0;
+    }
+
+    .corridor-header {
+      Display: flex;
+      Align-items: center;
+      Justify-content: space-between;
+      Margin-bottom: var(--space-xs);
+    }
+
+    .corridor-title {
+      Font-size: 0.75rem;
+      Font-weight: 600;
+      Color: var(--ink-dim);
+    }
+
+    .corridor-value {
+      Font-family: var(--mono);
+      Font-size: 0.85rem;
+      Font-weight: 700;
+    }
+
+    .corridor-bar {
+      Height: 10px;
+      Background: var(--bg);
+      Border-radius: var(--radius-full);
+      Overflow: hidden;
+      Position: relative;
+      Border: 1px solid var(--border);
+    }
+
+    .corridor-fill {
+      Height: 100%;
+      Border-radius: var(--radius-full);
+      Transition: width var(--duration-slow) var(--ease-out);
+      Position: relative;
+    }
+
+    .corridor-fill.green { 
+      Background: linear-gradient(90deg, #10b981, #34d399);
+      Box-shadow: 0 0 12px var(--ok-glow);
+    }
+    .corridor-fill.yellow { 
+      Background: linear-gradient(90deg, #f59e0b, #fbbf24);
+      Box-shadow: 0 0 12px var(--warn-glow);
+    }
+    .corridor-fill.red { 
+      Background: linear-gradient(90deg, #dc2626, #ef4444);
+      Box-shadow: 0 0 12px var(--danger-glow);
+    }
+
+    .corridor-markers {
+      Display: flex;
+      Justify-content: space-between;
+      Margin-top: var(--space-xs);
+      Font-size: 0.65rem;
+      Color: var(--ink-muted);
+    }
+
+    .corridor-marker-green { color: var(--ok); }
+    .corridor-marker-limit { color: var(--danger); font-weight: 700; }
+
+    .corridor-status {
+      Font-size: 0.8rem;
+      Margin-top: var(--space-sm);
+      Padding: var(--space-sm);
+      Border-radius: var(--radius-sm);
+      Text-align: center;
+    }
+
+    .corridor-status.green {
+      Background: var(--ok-soft);
+      Color: var(--ok);
+    }
+
+    .corridor-status.yellow {
+      Background: var(--warn-soft);
+      Color: var(--warn);
+    }
+
+    .corridor-status.red {
+      Background: var(--danger-soft);
+      Color: var(--danger);
+      Font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       TIMER — Die Uhr tickt
+       ═══════════════════════════════════════════════════════════════════════ */
+    .timer-display {
+      Font-family: var(--mono);
+      Font-size: 4rem;
+      Font-weight: 800;
+      Text-align: center;
+      Padding: var(--space-xl) var(--space-lg);
+      Background: var(--bg);
+      Border-radius: var(--radius-lg);
+      Border: 2px solid var(--border);
+      Letter-spacing: 0.05em;
+      Transition: all var(--duration) var(--ease);
+    }
+
+    .timer-display.running {
+      Border-color: var(--ok);
+      Box-shadow: 
+        0 0 40px var(--ok-glow),
+        inset 0 0 60px var(--ok-soft);
+      animation: timer-pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes timer-pulse {
+      0%, 100% { box-shadow: 0 0 40px var(--ok-glow), inset 0 0 60px var(--ok-soft); }
+      50% { box-shadow: 0 0 60px var(--ok-glow), inset 0 0 80px var(--ok-soft); }
+    }
+
+    .timer-display.warning {
+      Border-color: var(--warn);
+      Color: var(--warn);
+      Box-shadow: 0 0 40px var(--warn-glow);
+    }
+
+    .timer-display.danger {
+      Border-color: var(--danger);
+      Color: var(--danger);
+      Box-shadow: 0 0 40px var(--danger-glow);
+      Animation: timer-danger 0.5s ease-in-out infinite;
+    }
+
+    @keyframes timer-danger {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       AXIOM SECTIONS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .axiom {
+      Margin-top: var(--space);
+      Padding: var(--space);
+      Background: color-mix(in srgb, var(--bg-surface) 80%, transparent);
+      Border: 1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent);
+      Border-radius: var(--radius);
+    }
+
+    .axiom.warning {
+      Border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+      Background: var(--warn-soft);
+    }
+
+    .axiom.danger {
+      Border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+      Background: var(--danger-soft);
+    }
+
+    .axiom-title {
+      Font-size: 0.85rem;
+      Font-weight: 700;
+      Color: var(--brand-primary);
+      Margin-bottom: var(--space-sm);
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space-sm);
+    }
+
+    .axiom.warning .axiom-title { color: var(--warn); }
+    .axiom.danger .axiom-title { color: var(--danger); }
+
+    .axiom-list {
+      Margin: 0;
+      Padding-left: var(--space-md);
+      Font-size: 0.8rem;
+      Line-height: 1.7;
+    }
+
+    .axiom-list li {
+      Margin-bottom: var(--space-2xs);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       PARAM TABLE
+       ═══════════════════════════════════════════════════════════════════════ */
+    .param-table {
+      Width: 100%;
+      Border-collapse: collapse;
+      Font-size: 0.78rem;
+      Margin: var(--space-sm) 0;
+    }
+
+    .param-table th,
+    .param-table td {
+      Padding: var(--space-sm);
+      Border: 1px solid var(--border);
+      Text-align: left;
+    }
+
+    .param-table th {
+      Background: var(--bg-surface);
+      Font-weight: 600;
+      Color: var(--brand-primary);
+      Font-size: 0.72rem;
+      Text-transform: uppercase;
+      Letter-spacing: 0.05em;
+    }
+
+    .param-table code {
+      Font-family: var(--mono);
+      Font-size: 0.72rem;
+      Background: var(--bg);
+      Padding: 2px 6px;
+      Border-radius: var(--radius-sm);
+      Color: var(--ink);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       EMPTY STATE
+       ═══════════════════════════════════════════════════════════════════════ */
+    .empty {
+      Text-align: center;
+      Padding: var(--space-xl) var(--space);
+      Color: var(--ink-dim);
+    }
+
+    .empty-icon {
+      Font-size: 3rem;
+      Margin-bottom: var(--space);
+      Opacity: 0.4;
+    }
+
+    .empty-text {
+      Font-size: 0.9rem;
+      Font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       TOAST NOTIFICATIONS
+       ═══════════════════════════════════════════════════════════════════════ */
+    .toast-container {
+      Position: fixed;
+      Top: calc(env(safe-area-inset-top) + 90px);
+      Left: 50%;
+      Transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      pointer-events: none;
+      width: calc(100% - var(--space-lg));
+      max-width: 400px;
+    }
+
+    .toast {
+      Background: var(--card);
+      Border: 1px solid var(--border-strong);
+      Border-radius: var(--radius);
+      Padding: var(--space-sm) var(--space);
+      Box-shadow: var(--shadow-lg);
+      Font-size: 0.875rem;
+      Animation: toast-in var(--duration) var(--ease-bounce);
+      Pointer-events: auto;
+      Display: flex;
+      Align-items: center;
+      Gap: var(--space-sm);
+    }
+
+    .toast-icon {
+      Font-size: 1.1rem;
+    }
+
+    .toast.success { border-left: 4px solid var(--ok); }
+    .toast.warning { border-left: 4px solid var(--warn); }
+    .toast.error { border-left: 4px solid var(--danger); }
+    .toast.info { border-left: 4px solid var(--brand-primary); }
+
+    @keyframes toast-in {
+      From {
+        Opacity: 0;
+        Transform: translateY(-20px) scale(0.95);
+      }
+    }
+
+    .toast-exit {
+      Animation: toast-out var(--duration) var(--ease) forwards;
+    }
+
+    @keyframes toast-out {
+      To {
+        Opacity: 0;
+        Transform: translateY(-10px) scale(0.95);
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       UTILITIES
+       ═══════════════════════════════════════════════════════════════════════ */
+    .text-ok { color: var(--ok) !important; }
+    .text-warn { color: var(--warn) !important; }
+    .text-danger { color: var(--danger) !important; }
+    .text-brand { color: var(--brand-primary) !important; }
+    .text-muted { color: var(--ink-dim) !important; }
+    .text-center { text-align: center; }
+    .text-mono { font-family: var(--mono); }
+    .font-bold { font-weight: 700; }
+    
+    .mt-xs { margin-top: var(--space-xs); }
+    .mt-sm { margin-top: var(--space-sm); }
+    .mt { margin-top: var(--space); }
+    .mt-md { margin-top: var(--space-md); }
+    .mt-lg { margin-top: var(--space-lg); }
+    .mb { margin-bottom: var(--space); }
+    
+    .hidden { display: none !important; }
+    .sr-only {
+      Position: absolute;
+      Width: 1px;
+      Height: 1px;
+      Padding: 0;
+      Margin: -1px;
+      Overflow: hidden;
+      Clip: rect(0, 0, 0, 0);
+      Border: 0;
+    }
+
+    /* === Focus States === */
+    :focus-visible {
+      Outline: 2px solid var(--brand-primary);
+      Outline-offset: 2px;
+    }
+
+    /* === Reduced Motion === */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        Animation-duration: 0.01ms !important;
+        Animation-iteration-count: 1 !important;
+        Transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
-<header class="top">
-  <div class="brandline">
-    <div class="logo" aria-hidden="true"></div>
-    <div>
-      <h1>🦅 PHOENIX v12 — DISZIPLIN IST FREIHEIT 🗽</h1>
-      <div class="sub">
-        <span><span>Tag</span><span id="phoenixRange"></span></span>
-        <span>·</span>
-        <span id="datestamp"></span>
-        <span>·</span>
-        <span id="status" role="status" aria-live="polite" aria-atomic="true">bereit</span>
+  <div id=“app“>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         HEADER
+         ═══════════════════════════════════════════════════════════════════ 
+    <header class=“header“>
+      <div class=“header-inner“>
+        <div class=“logo“ aria-hidden=“true“>🦅</div>
+        <div class=“brand“>
+          <div class=“brand-row“>
+            <span class=“brand-name“>PHOENIX</span>
+            <span class=“brand-badge“>POWA</span>
+          </div>
+          <div class=“brand-version“>
+            <span>v12.9</span>
+            <span>🗽</span>
+          </div>
+          <div class=“phase-bar“>
+            <div class=“phase-fill“ id=“phase-fill“ style=“width: 0%“></div>
+          </div>
+          <div class=“brand-motto“>DISZIPLIN IST FREIHEIT</div>
+          <div class=“brand-status“>
+            <span id=“datestamp“>—</span> · <span id=“status-display“>bereit</span>
+          </div>
+        </div>
+        <div class=“header-actions“>
+          <button class=“btn btn-icon btn-ghost“ id=“theme-toggle“ title=“Theme umschalten“ aria-label=“Farbschema wechseln“>
+            <span id=“theme-icon“>🌙</span>
+          </button>
+        </div>
       </div>
-    </div>
-    <div style="margin-left:auto" class="row">
-      <button id="themeBtn" class="btn switch" title="Hell/Dunkel">☀️/🌙</button>
-    </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MAIN
+         ═══════════════════════════════════════════════════════════════════ 
+    <main class=“main“ id=“main-view“>
+      <!—Rendered by JS 
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════════════════════════════ 
+    <nav class=“nav“ role=“navigation“ aria-label=“Hauptnavigation“>
+      <div class=“nav-bar“ id=“nav-bar“>
+        <!—Rendered by JS 
+      </div>
+    </nav>
   </div>
-</header>
 
-<main class="wrap">
-  <section id="view" class="grid" role="tabpanel" tabindex="0" aria-live="polite" aria-labelledby="tab-generator"></section>
-</main>
+  <!—Toast Container 
+  <div class=“toast-container“ id=“toast-container“ aria-live=“polite“></div>
 
-<div id="updateNotice" class="update-notice" hidden>
-  <span id="updateText">Neue Version verfügbar.</span>
-  <button id="updateReload" class="btn primary">Neu laden</button>
-</div>
+  <!—File Import 
+  <input type=“file“ id=“file-import“ accept=“application/json“ class=“hidden“ aria-hidden=“true“>
 
-<nav class="tabs" role="navigation" aria-label="Primäre Navigation">
-  <div class="tabbar" role="tablist" aria-orientation="horizontal">
-    <button class="tab" id="tab-home" type="button" role="tab" data-tab="home" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🏠</div><div>Home</div></button>
-    <button class="tab" id="tab-fokus" type="button" role="tab" data-tab="fokus" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">⏱️</div><div>Fokus</div></button>
-    <button class="tab" id="tab-prototypen" type="button" role="tab" data-tab="prototypen" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🧭</div><div>Prototypen</div></button>
-    <button class="tab" id="tab-evidence" type="button" role="tab" data-tab="evidence" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">📎</div><div>Evidence</div></button>
-    <button class="tab" id="tab-outreach" type="button" role="tab" data-tab="outreach" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">📬</div><div>Explor.</div></button>
-    <button class="tab" id="tab-manifest" type="button" role="tab" data-tab="manifest" aria-controls="view" aria-selected="false" tabindex="-1"><div class="ic">🦅</div><div>Manifest</div></button>
-    <button class="tab active" id="tab-generator" type="button" role="tab" data-tab="generator" aria-controls="view" aria-selected="true" tabindex="0"><div class="ic">⚡</div><div>Generator</div></button>
-  </div>
-</nav>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PHOENIX v12.9 OMEGA — APPLICATION CORE
+       ═══════════════════════════════════════════════════════════════════════ 
+  <script>
+  (function() {
+    ‚use strict‘;
 
-<input id="importFile" type="file" accept="application/json" class="hide">
-
-<script>
-(() => {
-  "use strict";
-
-  const VERSION      = "12.2-omega-final";
-  const STORAGE_KEY  = "PHOENIX_V12_STATE_OMEGA";
-  const PHOENIX_START = "2025-11-07";
-  const PHOENIX_END   = "2026-01-31";
-
-  const el  = (sel, root=document) => root.querySelector(sel);
-  const els = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-  const view      = el("#view");
-  const tabs      = els(".tab");
-  const importEl  = el("#importFile");
-  const themeBtn  = el("#themeBtn");
-  const updateNotice    = el("#updateNotice");
-  const updateText      = el("#updateText");
-  const updateReloadBtn = el("#updateReload");
-
-  let sprintTimer = null;
-  let swWaitingWorker = null;
-  let state = loadState() || seedState();
-  let rovingFocusTab = null;
-
-  initServiceWorker();
-  initTheme();
-  bindNav();
-  bindImport();
-  bindGlobal();
-  render();
-
-  // ---------- STATE ----------
-
-  function initServiceWorker(){
-    if (!('serviceWorker' in navigator)) return;
-
-    navigator.serviceWorker.addEventListener("message", handleServiceWorkerMessage);
-
-    navigator.serviceWorker.register("sw.js")
-      .then((registration) => {
-        if (registration.waiting) {
-          swWaitingWorker = registration.waiting;
-          requestServiceWorkerVersion(registration.waiting);
-        }
-        registration.addEventListener("updatefound", () => {
-          const newWorker = registration.installing;
-          if (!newWorker) return;
-          swWaitingWorker = newWorker;
-          newWorker.addEventListener("statechange", () => {
-            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-              requestServiceWorkerVersion(newWorker);
-            }
-          });
-        });
-      })
-      .catch((err) => console.error("Service Worker registration fehlgeschlagen:", err));
-
-    if (navigator.serviceWorker.controller) {
-      requestServiceWorkerVersion();
-    }
-
-    if (updateReloadBtn) {
-      updateReloadBtn.addEventListener("click", () => {
-        if (swWaitingWorker && typeof swWaitingWorker.postMessage === "function") {
-          swWaitingWorker.postMessage({ type: "SKIP_WAITING" });
-        } else if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage({ type: "SKIP_WAITING" });
-        }
-        window.location.reload();
-      });
-    }
-  }
-
-  function requestServiceWorkerVersion(target){
-    const recipient = target || (navigator.serviceWorker && navigator.serviceWorker.controller);
-    if (recipient && typeof recipient.postMessage === "function") {
-      recipient.postMessage({ type: "REQUEST_VERSION" });
-    }
-  }
-
-  function handleServiceWorkerMessage(event){
-    const data = event.data;
-    if (!data || data.type !== "SW_VERSION") return;
-    if (data.updated) showUpdateNotice(data.version);
-  }
-
-  function showUpdateNotice(version){
-    if (!updateNotice || !updateText) return;
-    updateText.textContent = `Version ${version} verfügbar — neu laden, um sie zu aktivieren.`;
-    updateNotice.removeAttribute("hidden");
-  }
-
-  function seedState(){
-    return {
-      version: VERSION,
-      theme: "dark",
-      activeTab: "generator",
-      lastSaved: Date.now(),
-      phoenix: {
-        start: PHOENIX_START,
-        end: PHOENIX_END,
-        targetRoute: "A", // A=Verbraucherinsolvenz nach bewusstem Cut; B=Regelinsolvenz + §35 II
-        pKonto: false,
-        businessAccountCold: false,
-        piPrepared: false,
-        drvNoticeSent: false,
-        ltaPrepared: false,
-        zeitjournalStable: false,
-        tagXPackageDraft: false,
-        routeDecisionNote: ""
-      },
-      daily: defaultDaily(),
-      logbook: [],
-      finances: {
-        entries: [] // {id,date,type:"EIN"|"AUS",cat,amount,note,year}
-      },
-      home: {
-        mit: [
-          {id:id(),text:"Heute Mini-Betrieb transparent halten (keine Expansion, keine Grauzone).",done:false},
-          {id:id(),text:"Zeitjournal & Logs sauber pflegen.",done:false},
-          {id:id(),text:"80-Tage-Route kurz spiegeln.",done:false}
+    /* ═══════════════════════════════════════════════════════════════════════
+       CONFIGURATION — Die Wahrheit in Zahlen
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const CONFIG = Object.freeze({
+      VERSION: ‚12.9‘,
+      CODENAME: ‚OMEGA‘,
+      STORAGE_KEY: ‚PHOENIX_V12_9_OMEGA‘,
+      STORAGE_KEY_LEGACY: ‚PHOENIX_V12_7_OMEGA‘,
+      
+      // Timeline — Der Masterplan
+      TIMELINE: Object.freeze({
+        START: ‚2025-11-12‘,
+        PHASE1_END: ‚2026-01-31‘,
+        OPERATIVE_START: ‚2026-02-01‘,
+        PROJECT_END: ‚2029-03-31‘
+      }),
+      
+      // Limits — Die heiligen Grenzen
+      LIMITS: Object.freeze({
+        DAILY_MINUTES: 179,
+        GREEN_ZONE: 120,
+        SPRINT_DEFAULT: 90,
+        SPRINT_MIN: 15,
+        SPRINT_MAX: 180,
+        MAX_DIRECTIVES: 3
+      }),
+      
+      // Navigation Tabs
+      TABS: Object.freeze([
+        { id: ‚cockpit‘, icon: ‚🎯‘, label: ‚Cockpit‘, hasNotification: false },
+        { id: ‚protocol‘, icon: ‚📋‘, label: ‚Protokoll‘, hasNotification: false },
+        { id: ‚sprint‘, icon: ‚⏱️‘, label: ‚Sprint‘, hasNotification: false },
+        { id: ‚audits‘, icon: ‚🔍‘, label: ‚Audits‘, hasNotification: false },
+        { id: ‚evidence‘, icon: ‚📎‘, label: ‚Evidence‘, hasNotification: false },
+        { id: ‚survival‘, icon: ‚🛡️‘, label: ‚Survival‘, hasNotification: false }
+      ]),
+      
+      // Lobo-Stil Texte — Das Salz in der Suppe
+      LOBO: Object.freeze({
+        Greetings: [
+          ‚Willkommen in der Realität.‘,
+          ‚Bereit, die Matrix zu zerlegen?‘,
+          ‚Deine Constraints sind dein Skalpell.‘,
+          ‚Du bist gezwungen, genial zu sein.‘,
+          ‚Das hier ist kein Ratgeber für Träumer.‘,
+          ‚Disziplin ist Freiheit. Das ist Physik.‘,
+          ‚Zeit, den Operationsplan zu exekutieren.‘,
+          ‚Die Uhr tickt. Du auch.‘
         ],
-        kpis:{sprints:0}
+        
+        toasts: Object.freeze({
+          saved: [‚Ins System gebrannt.‘, ‚Dokumentiert.‘, ‚Gesichert.‘],
+          copied: [‚In der Zwischenablage.‘, ‚Kopiert. Nutze es weise.‘],
+          exported: [‚Backup erstellt. Paranoia zahlt sich aus.‘],
+          imported: [‚Daten geladen. Weiter im Protokoll.‘],
+          error: [‚Das System sagt nein.‘, ‚Fehler. Aber du findest einen Weg.‘],
+          sprintStart: [‚Die Uhr tickt. Du auch.‘, ‚Sprint läuft. Fokus.‘],
+          sprintPause: [‚Durchatmen. Dann weiter.‘, ‚Pause. Aber nicht zu lange.‘],
+          sprintComplete: [‚Sprint beendet. Du hast geliefert.‘, ‚90 Minuten. Abgehakt.‘],
+          limitWarning: [‚Achtung: Limit in Sicht.‘, ‚Gelbe Zone. Pass auf.‘],
+          limitExceeded: [‚Stopp. Limit überschritten.‘, ‚Die Rente ruft. Mach Schluss für heute.‘],
+          auditAdded: [‚Audit angelegt. Jetzt liefern.‘],
+          evidenceAdded: [‚Evidence gesichert.‘],
+          directiveAdded: [‚Direktive gesetzt.‘],
+          directiveDone: [‚Abgehakt. Weiter.‘],
+          deleted: [‚Entfernt. Liegt im Papierkorb.‘],
+          restored: [‚Wiederhergestellt.‘]
+        }),
+        
+        empty: Object.freeze({
+          audits: ‚Noch keine Audits. Zeit, das zu ändern.‘,
+          evidence: ‚Keine Beweise gesichert. Das Portfolio wartet.‘,
+          directives: ‚Keine Direktiven. Was ist heute wichtig?‘,
+          trash: ‚Papierkorb leer. Gut so.‘
+        }),
+        
+        corridor: Object.freeze({
+          green: ‚Grüne Zone. Du hast Puffer. Nutze ihn weise.‘,
+          yellow: ‚Gelbe Zone. Die Grenze naht. Vorsicht.‘,
+          red: ‚Limit überschritten. Die DRV guckt zu. Stopp.‘
+        })
+      })
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       UTILITIES — Das Schweizer Taschenmesser
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Utils = {
+      // ID Generator
+      Id: () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+      
+      // Date Utilities
+      Today: () => new Date().toISOString().slice(0, 10),
+      
+      formatDate: (date = new Date()) => {
+        return new Intl.DateTimeFormat(‚de-DE‘, {
+          weekday: ‚short‘,
+          day: ‚2-digit‘,
+          month: ‚2-digit‘,
+          year: ‚numeric‘,
+          hour: ‚2-digit‘,
+          minute: ‚2-digit‘
+        }).format(date instanceof Date ? date : new Date(date));
       },
-      sprint: {
-        running:false,
-        startedAt:null,
-        durationMin:90,
-        remainingSec:90*60,
-        note:"",
-        buddhaPauseBefore:false
+      
+      formatDateShort: (date = new Date()) => {
+        return new Intl.DateTimeFormat(‚de-DE‘, {
+          day: ‚2-digit‘,
+          month: ‚2-digit‘
+        }).format(date instanceof Date ? date : new Date(date));
       },
-      audits: [],   // Prototypen / Übungs-Audits
-      evidence: [], // interne Evidence
-      outreach: []  // Explorationskontakte mit Startklausel
-    };
-  }
-
-  function defaultDaily(date = todayISO()){
-    return {
-      date,
-      mode:"A",                // A=Lernen/Struktur, B=Audits/Templates
-      activeMinutes:0,         // arbeitsähnliche Zeit (inkl. Mini-Betrieb + kalte Arbeit)
-      healthLog:"",            // DRV-fähiges Leistungs-/Belastungsprotokoll
-      execLog:"",              // IV/InsO-Perspektive (keine verdeckte Vollselbst.)
-      factsLog:"",             // neutrale Tätigkeitsliste
-      buddhaNote:"",           // nur privat, kein Extern-Export
-      outreachToday:0
-    };
-  }
-
-  function loadState(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return null;
-      const s = JSON.parse(raw);
-
-      s.version    = s.version || VERSION;
-      s.theme      = s.theme || "dark";
-      s.activeTab  = s.activeTab || "generator";
-
-      s.daily      = s.daily || defaultDaily();
-      s.logbook    = Array.isArray(s.logbook) ? s.logbook : [];
-
-      s.phoenix    = Object.assign(seedState().phoenix, s.phoenix || {});
-
-      s.finances   = s.finances || {entries:[]};
-      s.finances.entries = Array.isArray(s.finances.entries) ? s.finances.entries : [];
-
-      s.home       = s.home || {mit:[],kpis:{}};
-      s.home.mit   = Array.isArray(s.home.mit) ? s.home.mit : [];
-      s.home.kpis  = Object.assign({sprints:0}, s.home.kpis || {});
-
-      s.sprint     = Object.assign(seedState().sprint, s.sprint || {});
-
-      s.audits     = Array.isArray(s.audits) ? s.audits : [];
-      s.evidence   = Array.isArray(s.evidence) ? s.evidence : [];
-      s.outreach   = Array.isArray(s.outreach) ? s.outreach : [];
-
-      return s;
-    }catch(e){
-      console.warn("Load failed", e);
-      return null;
-    }
-  }
-
-  function saveState(){
-    applyGuards(state.daily);
-    state.lastSaved = Date.now();
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      setStatus("gespeichert");
-      setTimeout(()=>setStatus("bereit"),600);
-    }catch(e){
-      console.warn("Save failed", e);
-      setStatus("Speicherfehler");
-    }
-  }
-
-  // ---------- UTIL ----------
-
-  function id(){return Math.random().toString(36).slice(2,10);}
-  function todayISO(){return new Date().toISOString().slice(0,10);}
-  function at00(d){return new Date(d + "T00:00:00");}
-  function clamp(v,min,max){return v<min?min:(v>max?max:v);}
-  function escapeHTML(s=""){
-    return s.replace(/[&<>"']/g, m=>({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[m]));
-  }
-  function setStatus(t){
-    const statusEl = el("#status");
-    if(!statusEl) return;
-    statusEl.textContent = "";
-    requestAnimationFrame(()=>{statusEl.textContent = t;});
-  }
-  function copyToClipboard(text){
-    if(!navigator.clipboard){setStatus("Clipboard nicht verfügbar");return;}
-    navigator.clipboard.writeText(text)
-      .then(()=>{setStatus("kopiert");setTimeout(()=>setStatus("bereit"),600);})
-      .catch(()=>setStatus("Kopieren fehlgeschlagen"));
-  }
-
-  function phoenixDayInfo(){
-    const start = at00(PHOENIX_START);
-    const end   = at00(PHOENIX_END);
-    const now   = at00(todayISO());
-    const total = Math.round((end - start)/(1000*60*60*24)) + 1;
-    const passed = clamp(Math.round((now - start)/(1000*60*60*24)) + 1,0,total);
-    const left   = clamp(total - passed,0,total);
-    return {total,passed,left};
-  }
-
-  function filterLogsByRange(allLogs, range){
-    const today = at00(todayISO());
-    let cut = new Date(today);
-    if(range === "30") cut.setDate(today.getDate() - 30);
-    if(range === "60") cut.setDate(today.getDate() - 60);
-    if(range === "all"){
-      return allLogs.slice().sort((a,b)=>at00(a.date)-at00(b.date));
-    }
-    return allLogs
-      .filter(l => at00(l.date) >= cut)
-      .sort((a,b)=>at00(a.date)-at00(b.date));
-  }
-
-  // ---------- COMPLIANCE GUARDS ----------
-
-  function applyGuards(d){
-    const health = (d.healthLog || "").toLowerCase();
-    const exec   = (d.execLog || "").toLowerCase();
-    const mins   = d.activeMinutes || 0;
-
-    if(mins > 180 && !health.includes("erschöpf")){
-      setStatus("Warnung: >3h ohne Erschöpfungsprotokoll (DRV-Risiko prüfen).");
-    }
-    if(exec && !exec.match(/intern|prototype|prototyp|vorbereitung|ohne einnahmen|minibetrieb|mini-betrieb|keine rechnung/)){
-      setStatus("Hinweis: Executive-Log schärfen (kein Eindruck verdeckter Vollselbstständigkeit).");
-    }
-  }
-
-  function evaluateGlobalWarnings(){
-    const out = [];
-    // Zeitjournal-Tage
-    const daysSet = new Set(state.logbook.map(l=>l.date));
-    if(daysSet.size < 30){
-      out.push({lvl:"warn",text:"Zeitjournal unter 30 Tagen – für DRV & IV noch dünn. Kontinuierlich weiterführen."});
-    } else if(daysSet.size < 60){
-      out.push({lvl:"info",text:`Zeitjournal ${daysSet.size} Tage – solide Basis im Aufbau.`});
-    } else {
-      state.phoenix.zeitjournalStable = true;
-    }
-    // Finanzen: Hinzuverdienst grob
-    const year = new Date().getFullYear().toString();
-    const sumYear = state.finances.entries
-      .filter(e=>e.type==="EIN" && (e.year===year || (e.date||"").startsWith(year)))
-      .reduce((n,e)=>n+(Number(e.amount)||0),0);
-    if(sumYear > 0 && sumYear > 15000){
-      out.push({lvl:"warn",text:`Hinzuverdienst ${sumYear.toFixed(2)} € – aktuelle Grenzen prüfen (individuelles Rentenkonto, Bescheid).`});
-    }
-    // Outreach ohne Startklausel
-    const riskOut = state.outreach.filter(o=>o.status !== "EXPLORATION (Klausel OK)");
-    if(riskOut.length){
-      out.push({lvl:"warn",text:"Explorationskontakte ohne bestätigte Startklausel vorhanden – prüfen und nachziehen."});
-    }
-    // Prototypen
-    const fert = state.audits.filter(a=>a.stage==="FERTIG_INTERNAL").length;
-    if(fert < 3){
-      out.push({lvl:"info",text:`Bisher ${fert} fertige Prototypen. Ziel Tag X: mind. 3–5 belastbare Übungs-Audits.`});
-    }
-    return out;
-  }
-
-  // ---------- INIT ----------
-
-  function initTheme(){
-    document.documentElement.dataset.theme = state.theme === "light" ? "light" : "dark";
-    if(themeBtn){
-      themeBtn.onclick = () => {
-        state.theme = state.theme === "dark" ? "light" : "dark";
-        document.documentElement.dataset.theme = state.theme;
-        saveState();
-      };
-    }
-  }
-
-  function bindNav(){
-    const tabList = el(".tabbar");
-    if(tabList){
-      tabList.setAttribute("role","tablist");
-      tabList.setAttribute("aria-orientation","horizontal");
-    }
-
-    rovingFocusTab = tabs.find(tab => tab.dataset.tab === state.activeTab) || tabs[0] || null;
-
-    const focusTab = tab => {
-      if(!tab) return;
-      rovingFocusTab = tab;
-      updateTabState();
-      tab.focus();
-    };
-
-    const activateTab = tab => {
-      if(!tab) return;
-      const target = tab.dataset.tab;
-      if(!target || target === state.activeTab) {
-        focusTab(tab);
-        return;
-      }
-      state.activeTab = target;
-      saveState();
-      render();
-      focusTab(tab);
-    };
-
-    const handleKeydown = event => {
-      const currentTab = event.currentTarget;
-      const key = event.key;
-      const currentIndex = tabs.indexOf(currentTab);
-      if(currentIndex < 0) return;
-
-      const moveFocus = newIndex => {
-        const target = tabs[(newIndex + tabs.length) % tabs.length];
-        focusTab(target);
-      };
-
-      switch(key){
-        case "ArrowRight":
-        case "ArrowDown":
-          event.preventDefault();
-          moveFocus(currentIndex + 1);
-          break;
-        case "ArrowLeft":
-        case "ArrowUp":
-          event.preventDefault();
-          moveFocus(currentIndex - 1);
-          break;
-        case "Home":
-          event.preventDefault();
-          moveFocus(0);
-          break;
-        case "End":
-          event.preventDefault();
-          moveFocus(tabs.length - 1);
-          break;
-        case "Enter":
-        case " ":
-          event.preventDefault();
-          activateTab(currentTab);
-          break;
+      
+      // Timer Format
+      formatTimer: (seconds) => {
+        const s = Math.max(0, Math.floor(seconds));
+        const m = Math.floor(s / 60);
+        const sec = s % 60;
+        return `${m.toString().padStart(2, ‚0‘)}:${sec.toString().padStart(2, ‚0‘)}`;
+      },
+      
+      // Clamp
+      Clamp: (val, min, max) => Math.min(Math.max(val, min), max),
+      
+      // HTML Escape
+      Esc: (str) => {
+        If (!str) return ‚‘;
+        Const map = { ‚&‘: ‚&amp;‘, ‚<‘: ‚&lt;‘, ‚>‘: ‚&gt;‘, ‚“‘: ‚&quot;‘, „‘“: ‚&#39;‘ };
+        Return String(str).replace(/[&<>“‘]/g, c => map[c]);
+      },
+      
+      // Random from Array
+      Random: (arr) => arr[Math.floor(Math.random() * arr.length)],
+      
+      // Debounce
+      Debounce: (fn, ms = 300) => {
+        Let timer;
+        Return (…args) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn(…args), ms);
+        };
+      },
+      
+      // Deep Clone
+      Clone: (obj) => JSON.parse(JSON.stringify(obj)),
+      
+      // Days between dates
+      daysBetween: (start, end) => {
+        const s = new Date(start + ‚T00:00:00‘);
+        const e = new Date(end + ‚T00:00:00‘);
+        return Math.round((e – s) / (1000 * 60 * 60 * 24));
       }
     };
 
-    tabs.forEach((tab, index)=>{
-      if(!tab.id){
-        tab.id = `tab-${tab.dataset.tab || index}`;
-      }
-      tab.setAttribute("role","tab");
-      tab.setAttribute("aria-controls","view");
-      tab.addEventListener("click",()=>activateTab(tab));
-      tab.addEventListener("keydown",handleKeydown);
-      tab.addEventListener("focus",()=>{
-        if(rovingFocusTab !== tab){
-          rovingFocusTab = tab;
-          updateTabState();
+    /* ═══════════════════════════════════════════════════════════════════════
+       EVENT BUS — Kommunikation ohne Chaos
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const EventBus = {
+      _listeners: new Map(),
+      
+      on(event, callback) {
+        if (!this._listeners.has(event)) {
+          this._listeners.set(event, new Set());
         }
-      });
-    });
-
-    updateTabState();
-  }
-
-  function bindImport(){
-    if(!importEl) return;
-    importEl.addEventListener("change",e=>{
-      const file = e.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ev=>{
-        try{
-          const data = JSON.parse(ev.target.result);
-          const merged = Object.assign(seedState(), data);
-          merged.version = VERSION;
-          state = merged;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          setStatus("Import ok");
-          location.reload();
-        }catch(err){
-          console.error(err);
-          setStatus("Import ungültig");
-        }
-      };
-      reader.readAsText(file);
-    });
-  }
-
-  function bindGlobal(){
-    document.addEventListener("click",e=>{
-      const copy = e.target.closest(".copy-btn");
-      if(copy){
-        const target = copy.dataset.copyTarget;
-        const src = target && el("#"+target);
-        if(src){
-          const txt = src.textContent || src.value || "";
-          copyToClipboard(txt);
-        }
-      }
-    });
-  }
-
-  // ---------- EXPORT / ARCHIV ----------
-
-  function archiveCurrentDaily(){
-    const cur = state.daily;
-    if(!cur || !cur.date) return;
-    const idx = state.logbook.findIndex(l=>l.date === cur.date);
-    const clone = JSON.parse(JSON.stringify(cur));
-    if(idx > -1) state.logbook[idx] = clone;
-    else state.logbook.push(clone);
-  }
-
-  function exportJSON(){
-    archiveCurrentDaily();
-    saveState();
-    const blob = new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${todayISO()}_PHOENIX_v12_backup.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(a.href);
-    setStatus("Export erstellt");
-  }
-
-  // ---------- ROOT RENDER ----------
-
-  function updateTabState(){
-    const activeTab = tabs.find(tab => tab.dataset.tab === state.activeTab) || null;
-    if(!rovingFocusTab || !tabs.includes(rovingFocusTab)){
-      rovingFocusTab = activeTab || tabs[0] || null;
-    }
-
-    tabs.forEach(tab => {
-      const isActive = tab === activeTab;
-      const isFocusTarget = tab === rovingFocusTab;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
-      tab.tabIndex = isFocusTarget ? 0 : -1;
-    });
-
-    if(view){
-      if(activeTab){
-        view.setAttribute("aria-labelledby", activeTab.id);
-      }else{
-        view.removeAttribute("aria-labelledby");
-      }
-    }
-  }
-
-  function render(){
-    const now = new Intl.DateTimeFormat("de-DE",{dateStyle:"full",timeStyle:"short"}).format(new Date());
-    el("#datestamp").textContent = now;
-
-    const info = phoenixDayInfo();
-    el("#phoenixRange").textContent =
-      info.passed<=0
-        ? `Start ab ${PHOENIX_START}`
-        : (info.left<=0
-            ? `Tag ${info.total} · Fenster abgeschlossen`
-            : `Tag ${info.passed}/${info.total} · noch ${info.left}`);
-
-    updateTabState();
-    view.innerHTML = "";
-
-    const map = {
-      home:       renderHome,
-      fokus:      renderFokus,
-      prototypen: renderPrototypen,
-      evidence:   renderEvidence,
-      outreach:   renderOutreach,
-      manifest:   renderManifest,
-      generator:  renderGenerator
-    };
-    (map[state.activeTab] || renderHome)();
-  }
-
-  // ---------- HOME ----------
-
-  function renderHome(){
-    const c = document.createElement("div");
-    c.className = "grid";
-
-    const warns = evaluateGlobalWarnings();
-    if(warns.length){
-      const w = document.createElement("div");
-      w.className = "card";
-      w.innerHTML = `<h2>Compliance-Monitor</h2>`;
-      const ul = document.createElement("div");
-      ul.className = "list";
-      warns.forEach(n=>{
-        const it = document.createElement("div");
-        it.className = "item";
-        const col =
-          n.lvl==="danger" ? "danger" :
-          n.lvl==="warn"   ? "warn"   : "okc";
-        it.innerHTML = `<div class="${col}">●</div><div class="muted">${escapeHTML(n.text)}</div>`;
-        ul.append(it);
-      });
-      w.append(ul);
-      c.append(w);
-    }
-
-    c.append(
-      cardPhoenixStatus(),
-      cardDailyProtection(),
-      cardMIT(),
-      cardLogs(),
-      cardBuddha(),
-      cardFinanceMini(),
-      cardTools(),
-      cardQuickActions(),
-      cardBackup()
-    );
-    view.append(c);
-  }
-
-  function cardPhoenixStatus(){
-    const {total,passed,left} = phoenixDayInfo();
-    const p = state.phoenix;
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Projekt PHOENIX · 80-Tage-Kompass</h2>
-      <div class="row wrap">
-        <div class="pill"><span>Fenster</span><span class="tag">${PHOENIX_START} → ${PHOENIX_END}</span></div>
-        <div class="pill"><span>Heute</span><span class="tag">${passed>0?passed:0}/${total}</span></div>
-        <div class="pill"><span>Rest</span><span class="tag">${left>=0?left:0}</span></div>
-        <div class="pill">
-          <span>Route</span>
-          <select id="routeSel" class="tag">
-            <option value="A" ${p.targetRoute==="A"?"selected":""}>A: Verbr.-InsO nach Cut</option>
-            <option value="B" ${p.targetRoute==="B"?"selected":""}>B: RegelinsO + §35 II</option>
-          </select>
-        </div>
-      </div>
-      <div class="muted" style="margin-top:6px">
-        Diese Oberfläche hält Mini-Betrieb, EM-Rente und Insolvenzziel synchron:
-        Keine verdeckte Expansion, klare Trennung von realer Tätigkeit und kalter Vorbereitung,
-        belastbare Unterlagen für DRV, Finanzamt und Insolvenzverwalter.
-      </div>
-      <div class="list" style="margin-top:8px">
-        <div class="item">
-          <div class="check ${p.pKonto?'done':'danger'}" data-flag="pKonto">${p.pKonto?'✓':'!'}</div>
-          <div><strong>P-Konto gesetzt</strong><div class="muted">Basisschutz aktivieren, bevor es eng wird.</div></div>
-        </div>
-        <div class="item">
-          <div class="check ${p.businessAccountCold?'done':'danger'}" data-flag="businessAccountCold">${p.businessAccountCold?'✓':'!'}</div>
-          <div><strong>Geschäftskonto „kalt“ vorbereitet</strong><div class="muted">Saubere Trennung, keine Altlasten, keine verdeckte Vermischung.</div></div>
-        </div>
-        <div class="item">
-          <div class="check ${p.piPrepared?'done':'danger'}" data-flag="piPrepared">${p.piPrepared?'✓':'!'}</div>
-          <div><strong>Insolvenzantrag (Unterlagen) vorbereitet</strong><div class="muted">Gläubigerliste, Vermögensübersicht, Bescheinigung – prüffähig angelegt.</div></div>
-        </div>
-      </div>
-    `;
-    d.addEventListener("click",e=>{
-      const box = e.target.closest(".check[data-flag]");
-      if(box){
-        const k = box.dataset.flag;
-        state.phoenix[k] = !state.phoenix[k];
-        saveState(); render();
-      }
-    });
-    d.querySelector("#routeSel").onchange = e=>{
-      state.phoenix.targetRoute = e.target.value;
-      saveState();
-    };
-    return d;
-  }
-
-  function cardDailyProtection(){
-    const d = document.createElement("div");
-    const day = state.daily.date || todayISO();
-    const mins = state.daily.activeMinutes || 0;
-    const over = mins > 180;
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Tägliches Schutz-Protokoll</h2>
-      <div class="row">
-        <div class="ctl">
-          <label>Datum</label>
-          <input id="dpDate" type="date" value="${day}">
-        </div>
-        <div class="ctl">
-          <label>Arbeitsähnliche Minuten (Mini-Betrieb + Aufbau)</label>
-          <input id="dpMins" type="number" min="0" max="600" step="5" value="${mins}">
-        </div>
-      </div>
-      <div class="row wrap" style="margin-top:6px">
-        <div class="pill">
-          <span>Limit Leitplanke</span>
-          <span class="tag" style="color:${over?'#fb7185':'#22c55e'}">${mins}/180</span>
-        </div>
-        <label class="pill">
-          <input type="radio" name="mode" value="A" ${state.daily.mode==="A"?"checked":""}>
-          <span>Modus A · Lernen/Struktur</span>
-        </label>
-        <label class="pill">
-          <input type="radio" name="mode" value="B" ${state.daily.mode==="B"?"checked":""}>
-          <span>Modus B · Übungs-Audits/Templates</span>
-        </label>
-      </div>
-      <div class="muted" style="margin-top:4px">
-        Trage nur Tätigkeiten ein, die als Arbeit gelesen werden könnten.
-        Regeneration, Buddha-Zeit, Spaziergang bleiben draußen.
-      </div>
-    `;
-    const dateEl = d.querySelector("#dpDate");
-    const minEl  = d.querySelector("#dpMins");
-
-    dateEl.onchange = e=>{
-      const newDate = e.target.value || todayISO();
-      // aktuelles daily archivieren
-      archiveCurrentDaily();
-      // neues laden oder frisches Daily
-      const exist = state.logbook.find(l=>l.date===newDate);
-      state.daily = exist ? JSON.parse(JSON.stringify(exist)) : defaultDaily(newDate);
-      saveState(); render();
-    };
-    minEl.onchange = e=>{
-      const v = parseInt(e.target.value||"0",10);
-      state.daily.activeMinutes = clamp(isNaN(v)?0:v,0,600);
-      saveState(); render();
-    };
-    d.querySelectorAll('input[name="mode"]').forEach(r=>{
-      r.onchange = ev=>{
-        state.daily.mode = ev.target.value;
-        saveState();
-      };
-    });
-    return d;
-  }
-
-  function cardMIT(){
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `<h2>Primär-Direktiven für heute (max. 3)</h2>`;
-    const list = document.createElement("div");
-    list.className = "list";
-    state.home.mit.forEach(item=>{
-      const it = document.createElement("div");
-      it.className = "item";
-      const chk = document.createElement("div");
-      chk.className = "check"+(item.done?" done":"");
-      chk.textContent = item.done ? "✓" : "";
-      chk.onclick = ()=>{
-        item.done = !item.done;
-        saveState(); render();
-      };
-      const txt = document.createElement("div");
-      txt.innerHTML = `<strong>${escapeHTML(item.text)}</strong>`;
-      it.append(chk,txt);
-      list.append(it);
-    });
-    const add = document.createElement("div");
-    add.className = "row";
-    add.innerHTML = `
-      <div class="ctl" style="flex:1">
-        <label>Neue Direktive</label>
-        <input id="mitNew" type="text" maxlength="90" placeholder="Kurz, klar, ohne Pathos.">
-      </div>
-      <button class="btn ok" id="mitAdd">+</button>
-    `;
-    add.querySelector("#mitAdd").onclick = ()=>{
-      const v = add.querySelector("#mitNew").value.trim();
-      if(!v) return;
-      if(state.home.mit.length>=3) state.home.mit.shift();
-      state.home.mit.push({id:id(),text:v,done:false});
-      saveState(); render();
-    };
-    d.append(list,add);
-    return d;
-  }
-
-  function cardLogs(){
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Logbuch · Drei Perspektiven</h2>
-      <div class="ctl">
-        <label>Gesundheits-/Belastungslog (für DRV · sachlich)</label>
-        <textarea id="lgHealth" placeholder="z. B. 120 Min Belastung, danach Kopfschmerz, 30 Min Ruhe.">${escapeHTML(state.daily.healthLog||"")}</textarea>
-      </div>
-      <div class="ctl">
-        <label>Executive Summary (für IV · Vorbereitung, keine verdeckten Umsätze)</label>
-        <textarea id="lgExec" placeholder="z. B. Interne Prototypenarbeit, kein Kundenkontakt, keine Rechnungen.">${escapeHTML(state.daily.execLog||"")}</textarea>
-      </div>
-      <div class="ctl">
-        <label>Fakten-Log (Was genau erledigt? Neutral.)</label>
-        <textarea id="lgFacts" placeholder="z. B. 10:00–11:30: Test-Audit Struktur überarbeitet; 1 Mini-Textauftrag (15 €) dokumentiert.">${escapeHTML(state.daily.factsLog||"")}</textarea>
-      </div>
-      <div class="muted" style="margin-top:4px">
-        Diese drei Ebenen müssen zusammenpassen.
-        Widersprüche sind Gift in jedem Verfahren.
-      </div>
-    `;
-    d.querySelector("#lgHealth").oninput = e=>{
-      state.daily.healthLog = e.target.value;
-      saveState();
-    };
-    d.querySelector("#lgExec").oninput = e=>{
-      state.daily.execLog = e.target.value;
-      saveState();
-    };
-    d.querySelector("#lgFacts").oninput = e=>{
-      state.daily.factsLog = e.target.value;
-      saveState();
-    };
-    return d;
-  }
-
-  function cardBuddha(){
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Buddha-Checkpoint 🐾</h2>
-      <div class="muted">
-        Buddha ist dein Kater und dein Taktgeber.
-        Wenn du überziehst, Pause mit ihm (ca. 10 Min), dann ein klar gesetzter 90-Minuten-Fokusblock.
-        Dieser Bereich ist rein privat und wird in keinem externen Report ausgegeben.
-      </div>
-      <div class="ctl" style="margin-top:6px">
-        <label>Notiz (optional)</label>
-        <textarea id="bdNote" placeholder="z. B. 2x Pause mit Buddha, Stress runter, dann fokussierter Sprint.">${escapeHTML(state.daily.buddhaNote||"")}</textarea>
-      </div>
-    `;
-    d.querySelector("#bdNote").oninput = e=>{
-      state.daily.buddhaNote = e.target.value;
-      saveState();
-    };
-    return d;
-  }
-
-  function cardFinanceMini(){
-    const d = document.createElement("div");
-    d.className = "card";
-    const year = new Date().getFullYear().toString();
-    const ein = state.finances.entries.filter(e=>e.type==="EIN" && (e.year===year || (e.date||"").startsWith(year)))
-                .reduce((n,e)=>n+(Number(e.amount)||0),0);
-    const aus = state.finances.entries.filter(e=>e.type==="AUS" && (e.year===year || (e.date||"").startsWith(year)))
-                .reduce((n,e)=>n+(Number(e.amount)||0),0);
-    d.innerHTML = `
-      <h2>Mini-Betrieb · Finanz-Snapshot</h2>
-      <div class="row wrap">
-        <div class="pill"><span>Einnahmen ${year}</span><span class="tag">${ein.toFixed(2)} €</span></div>
-        <div class="pill"><span>Ausgaben ${year}</span><span class="tag">${aus.toFixed(2)} €</span></div>
-        <div class="pill"><span>Ergebnis</span><span class="tag">${(ein-aus).toFixed(2)} €</span></div>
-      </div>
-      <div class="row" style="margin-top:6px">
-        <div class="ctl">
-          <label>Datum</label>
-          <input id="fiDate" type="date" value="${todayISO()}">
-        </div>
-        <div class="ctl">
-          <label>Typ</label>
-          <select id="fiType">
-            <option value="EIN">Einnahme (Mini-Auftrag)</option>
-            <option value="AUS">Ausgabe (Tool, Technik)</option>
-          </select>
-        </div>
-      </div>
-      <div class="row" style="margin-top:4px">
-        <div class="ctl">
-          <label>Betrag (€)</label>
-          <input id="fiAmount" type="number" min="0" step="0.01">
-        </div>
-        <div class="ctl">
-          <label>Kategorie / Notiz</label>
-          <input id="fiNote" type="text" placeholder="z. B. Plattform X · Kurzauftrag">
-        </div>
-      </div>
-      <button class="btn ok block" id="fiAdd" style="margin-top:6px">Eintrag speichern</button>
-      <div class="muted" style="margin-top:4px">
-        Nur echte Buchungen erfassen.
-        Diese Liste bildet deine Kurz-EÜR und Hinzuverdienstbasis ab.
-      </div>
-    `;
-    d.querySelector("#fiAdd").onclick = ()=>{
-      const date = d.querySelector("#fiDate").value || todayISO();
-      const type = d.querySelector("#fiType").value;
-      const amount = parseFloat(d.querySelector("#fiAmount").value||"0");
-      const note = d.querySelector("#fiNote").value.trim();
-      if(!amount) return;
-      state.finances.entries.unshift({
-        id:id(),
-        date,
-        year: (date||todayISO()).slice(0,4),
-        type,
-        amount,
-        note,
-        cat:""
-      });
-      saveState(); render();
-    };
-    return d;
-  }
-
-  function cardTools(){
-    const d = document.createElement("div");
-    const dt = state.daily.date || todayISO();
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Dateistruktur-Helfer</h2>
-      <div class="row">
-        <div class="ctl">
-          <label>Datum</label>
-          <input id="tDate" type="date" value="${dt}">
-        </div>
-        <div class="ctl">
-          <label>Test-/Übungsdomain</label>
-          <input id="tDomain" type="text" placeholder="example-immobilien.de">
-        </div>
-      </div>
-      <div class="row" style="margin-top:6px">
-        <button class="btn primary" id="tPaths">Ordnerstruktur</button>
-        <button class="btn" id="tNames">Dateinamen</button>
-      </div>
-      <div class="template-box">
-        <strong>Struktur</strong>
-        <pre id="pathsOut">(Ausgabe)</pre>
-        <button class="btn ok block copy-btn" data-copy-target="pathsOut">Pfade kopieren</button>
-      </div>
-      <div class="template-box">
-        <strong>Dateinamen</strong>
-        <pre id="namesOut">(Ausgabe)</pre>
-        <button class="btn ok block copy-btn" data-copy-target="namesOut">Namen kopieren</button>
-      </div>
-    `;
-    d.querySelector("#tPaths").onclick = ()=>{
-      const date = d.querySelector("#tDate").value || dt;
-      const dom  = (d.querySelector("#tDomain").value || "domain.tld").toLowerCase();
-      const root = `/PHOENIX/${date}_${dom}/`;
-      el("#pathsOut").textContent = `${root}
-${root}01_ZEITJOURNAL/
-${root}02_TEST_AUDITS/
-${root}03_SCREENSHOTS/
-${root}04_CODE_SNIPS/
-${root}05_SERP/
-${root}06_REPORT_ENTWURF/
-${root}07_TAGX_PAKET/
-${root}08_RECHT_UNTERLAGEN/`;
-      setStatus("Pfade generiert");
-    };
-    d.querySelector("#tNames").onclick = ()=>{
-      const date = d.querySelector("#tDate").value || dt;
-      const dom  = (d.querySelector("#tDomain").value || "domain.tld").toLowerCase();
-      el("#namesOut").textContent =
-`${date}_${dom}_INTERN_AUDIT_v01.docx
-${date}_${dom}_EXEC_SUMMARY_INTERN_v01.docx
-${date}_${dom}_P0P1_CHECKLISTE_v01.xlsx
-${date}_${dom}_TAGX_PAKET_ENTWURF_v01.pdf`;
-      setStatus("Dateinamen generiert");
-    };
-    return d;
-  }
-
-  function cardQuickActions(){
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Quick Actions</h2>
-      <div class="row">
-        <button class="btn primary block" id="qaFokus">⏱️ 90-Min-Fokus starten</button>
-        <button class="btn block" id="qaManifest">🦅 Manifest öffnen</button>
-      </div>
-      <div class="muted" style="margin-top:4px">
-        Fokus-Slots sind harte Belastungszeit.
-        Nutze sie gezielt: Lernen, Prototypen, Tag-X-Dokumente. Kein echter Kundenservice.
-      </div>
-    `;
-    d.querySelector("#qaFokus").onclick = ()=>{
-      state.activeTab = "fokus";
-      saveState(); render();
-    };
-    d.querySelector("#qaManifest").onclick = ()=>{
-      state.activeTab = "manifest";
-      saveState(); render();
-    };
-    return d;
-  }
-
-  function cardBackup(){
-    const d = document.createElement("div");
-    d.className = "card";
-    d.innerHTML = `
-      <h2>Backup</h2>
-      <div class="row">
-        <button class="btn block" id="exp">⬇️ Export JSON</button>
-        <button class="btn block" id="imp">⬆️ Import JSON</button>
-      </div>
-      <div class="muted" style="margin-top:4px">
-        Empfehlung: regelmäßig sichern als <code>YYYY-MM-DD_PHOENIX_v12_backup.json</code>.
-      </div>
-    `;
-    d.querySelector("#exp").onclick = exportJSON;
-    d.querySelector("#imp").onclick = ()=>importEl.click();
-    return d;
-  }
-
-  // ---------- FOKUS / SPRINT ----------
-
-  function renderFokus(){
-    const wrap = document.createElement("div");
-    wrap.className = "grid";
-    const s = state.sprint;
-    const remaining = s.remainingSec || s.durationMin*60;
-    const dailyM = state.daily.activeMinutes || 0;
-    const overRisk = dailyM + s.durationMin > 180;
-
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h2>90-Minuten-Fokus-Sprint</h2>
-      <div class="muted">
-        Ein Block = dokumentierte Belastung.
-        Vorher kurze Buddha-Pause einplanen, wenn du angeschlagen bist.
-      </div>
-      <div class="ctl" style="margin-top:6px">
-        <label>Ziel dieses Sprints</label>
-        <textarea id="spNote" placeholder="z. B. 1 Test-Audit-Struktur schärfen, keine echten Kunden.">${escapeHTML(s.note||"")}</textarea>
-      </div>
-      <div class="row wrap" style="margin-top:6px">
-        <span class="badge" id="spTimer">${fmtTimer(remaining)}</span>
-        <span class="pill"><span>Status</span><span class="tag">${s.running?"läuft":"bereit"}</span></span>
-        <span class="pill" style="color:${overRisk?'#fb7185':'#22c55e'}">
-          <span>Nach Sprint:</span>
-          <span class="tag">${dailyM + s.durationMin}/180 Min</span>
-        </span>
-      </div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn primary block" id="spStart">${s.running?"Fortsetzen":"Starten"}</button>
-        <button class="btn warn block" id="spReset">Reset</button>
-      </div>
-    `;
-    wrap.append(card);
-    view.append(wrap);
-
-    card.querySelector("#spNote").oninput = e=>{
-      state.sprint.note = e.target.value;
-      saveState();
-    };
-    card.querySelector("#spStart").onclick = ()=>{
-      if(!state.sprint.running){
-        const next = (state.daily.activeMinutes||0) + state.sprint.durationMin;
-        if(next > 180){
-          const ok = confirm("Dieser Sprint überschreitet die 3h-Leitplanke. Nur starten, wenn du die Folgen im Gesundheitslog dokumentierst.");
-          if(!ok) return;
-        }
-        startSprint();
-      }
-    };
-    card.querySelector("#spReset").onclick = ()=>{
-      stopSprint(true);
-      saveState(); render();
-    };
-  }
-
-  function startSprint(){
-    if(state.sprint.running) return;
-    state.sprint.running = true;
-    if(!state.sprint.startedAt){
-      state.sprint.startedAt = Date.now();
-      state.sprint.remainingSec = state.sprint.durationMin * 60;
-    }
-    if(sprintTimer) clearInterval(sprintTimer);
-    sprintTimer = setInterval(()=>{
-      if(state.sprint.remainingSec > 0){
-        state.sprint.remainingSec -= 1;
-        const b = el("#spTimer");
-        if(b) b.textContent = fmtTimer(state.sprint.remainingSec);
-      }else{
-        stopSprint(false);
-        alert("Fokus-Sprint beendet. Ergebnis im Fakten-/Exec-Log sichern.");
-        state.home.kpis.sprints = (state.home.kpis.sprints||0)+1;
-        state.daily.activeMinutes = (state.daily.activeMinutes||0) + state.sprint.durationMin;
-        saveState(); render();
-      }
-    },1000);
-    saveState(); render();
-  }
-
-  function stopSprint(reset){
-    state.sprint.running = false;
-    if(sprintTimer){clearInterval(sprintTimer);sprintTimer=null;}
-    if(reset){
-      state.sprint.startedAt = null;
-      state.sprint.remainingSec = state.sprint.durationMin * 60;
-      state.sprint.note = "";
-    }
-  }
-
-  function fmtTimer(sec){
-    const s = Math.max(0,sec|0);
-    const m = Math.floor(s/60).toString().padStart(2,"0");
-    const r = (s%60).toString().padStart(2,"0");
-    return `${m}:${r}`;
-  }
-
-  // ---------- PROTOTYPEN (ÜBUNGS-AUDITS) ----------
-
-  const GATE_ITEMS = [
-    ["klartext","Klarer, verständlicher Befund"],
-    ["belege","Mindestens 2 belastbare Belege"],
-    ["struktur","Saubere Struktur / Dateinamen"],
-    ["prio","P0/P1/P2 nachvollziehbar"],
-    ["mobil","Mobile-First geprüft"],
-    ["intern","Nur intern, keine echte Beauftragung"],
-    ["exec","Kurzfassung für Tag X möglich"]
-  ];
-
-  function renderPrototypen(){
-    const wrap = document.createElement("div");
-    wrap.className = "grid";
-
-    const mk = document.createElement("div");
-    mk.className = "card";
-    mk.innerHTML = `
-      <h2>Prototyp (Übungs-Audit) anlegen</h2>
-      <div class="muted">
-        Nur Test-/Wettbewerbsdomains oder eigene Projekte.
-        Kein echter Kunde, keine Rechnung, kein Lockangebot.
-      </div>
-      <div class="row" style="margin-top:6px">
-        <div class="ctl">
-          <label>Domain/Label</label>
-          <input id="aDom" type="text" placeholder="z. B. demo-immo.test">
-        </div>
-        <div class="ctl">
-          <label>Status</label>
-          <select id="aStage">
-            <option>NEU</option>
-            <option>IN_ARBEIT</option>
-            <option>ENTWURF</option>
-            <option>FERTIG_INTERNAL</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn ok block" id="aAdd" style="margin-top:6px">Prototyp speichern</button>
-    `;
-    mk.querySelector("#aAdd").onclick = ()=>{
-      const dom = mk.querySelector("#aDom").value.trim();
-      const st  = mk.querySelector("#aStage").value;
-      if(!dom) return;
-      state.audits.unshift({
-        id:id(),
-        domain:dom,
-        stage:st,
-        created:todayISO(),
-        gate:{},
-        gateScore:0
-      });
-      saveState(); render();
-    };
-    wrap.append(mk);
-
-    const filter = document.createElement("div");
-    filter.className = "card";
-    filter.innerHTML = `
-      <h2>Prototypen-Übersicht (${state.audits.length})</h2>
-      <div class="row">
-        <div class="ctl">
-          <label>Suche</label>
-          <input id="fText" type="text" placeholder="Domain / Label">
-        </div>
-        <div class="ctl">
-          <label>Status</label>
-          <select id="fStage">
-            <option value="">(alle)</option>
-            <option>NEU</option>
-            <option>IN_ARBEIT</option>
-            <option>ENTWURF</option>
-            <option>FERTIG_INTERNAL</option>
-          </select>
-        </div>
-      </div>
-    `;
-    wrap.append(filter);
-
-    const listCard = document.createElement("div");
-    listCard.className = "card";
-    const ul = document.createElement("div");
-    ul.className = "list";
-
-    function applyFilter(){
-      ul.innerHTML = "";
-      const q  = (filter.querySelector("#fText").value||"").toLowerCase();
-      const st = filter.querySelector("#fStage").value;
-      state.audits
-        .filter(a=>(!q || a.domain.toLowerCase().includes(q)) && (!st || a.stage===st))
-        .forEach(a=>{
-          const linked = state.evidence.filter(ev=>ev.auditId===a.id);
-          const it = document.createElement("div");
-          it.className = "item";
-          it.innerHTML = `
-            <div style="flex:1">
-              <strong>${escapeHTML(a.domain)}</strong>
-              <div class="muted">
-                Status: ${a.stage} · seit ${a.created}
-                ${a.gateScore>=90?` · <span class="okc">Gate ${a.gateScore}</span>`:""}
-              </div>
-              <details style="margin-top:4px">
-                <summary>Gate-Check (Ziel ≥ 90)</summary>
-                ${renderGateChecklistHTML(a)}
-              </details>
-              <details style="margin-top:4px">
-                <summary>Evidence (${linked.length})</summary>
-                <div class="muted">
-                  ${linked.length
-                    ? linked.map(ev=>`- [${ev.type}] ${escapeHTML(ev.title||"(ohne Titel)")}`).join("<br>")
-                    : "Noch keine Evidence verknüpft."}
-                </div>
-              </details>
-            </div>
-            <div class="ctl" style="width:100px">
-              <label>Stage</label>
-              <select class="auditStage" data-id="${a.id}">
-                ${["NEU","IN_ARBEIT","ENTWURF","FERTIG_INTERNAL"].map(s=>`<option ${a.stage===s?"selected":""}>${s}</option>`).join("")}
-              </select>
-            </div>
-            <button class="btn ghost danger" data-del="${a.id}">✕</button>
-          `;
-          ul.append(it);
+        This._listeners.get(event).add(callback);
+        Return () => this.off(event, callback);
+      },
+      
+      off(event, callback) {
+        this._listeners.get(event)?.delete(callback);
+      },
+      
+      emit(event, data) {
+        this._listeners.get(event)?.forEach(cb => {
+          try { cb(data); } catch € { console.error(`Event handler error [${event}]:`, e); }
         });
-    }
-
-    filter.querySelectorAll("input,select").forEach(n=>n.oninput = applyFilter);
-    applyFilter();
-
-    ul.addEventListener("change",e=>{
-      const sel = e.target.closest(".auditStage");
-      if(sel){
-        const a = state.audits.find(x=>x.id===sel.dataset.id);
-        if(a){a.stage = sel.value; saveState();}
       }
-      const gateChk = e.target.closest('input[type="checkbox"][data-gate]');
-      if(gateChk){
-        const aid = gateChk.dataset.aid;
-        const key = gateChk.dataset.gate;
-        const a = state.audits.find(x=>x.id===aid);
-        if(a){
-          a.gate = a.gate || {};
-          a.gate[key] = !!gateChk.checked;
-          a.gateScore = calcGateScore(a.gate);
-          saveState(); render();
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       STATE STORE — Single Source of Truth
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Store = {
+      _state: null,
+      
+      // Default State Factory
+      _createDefault() {
+        Return {
+          Version: CONFIG.VERSION,
+          theme: ‚dark‘,
+          activeTab: ‚cockpit‘,
+          lastSaved: Date.now(),
+          
+          daily: {
+            date: Utils.today(),
+            mode: ‚A‘,
+            activeMinutes: 0,
+            logs: { buddha: ‚‘, intern: ‚‘, exec: ‚‘ }
+          },
+          
+          phoenix: {
+            pKonto: false,
+            businessAccountCold: false,
+            piPrepared: false,
+            tagXPackageDraft: false,
+            zeitjournalStable: false,
+            drvNoticeSent: false,
+            ltaPrepared: false,
+            internalAuditsReady: false,
+            explorationsPrepared: false
+          },
+          
+          sprint: {
+            running: false,
+            startedAt: null,
+            durationMin: CONFIG.LIMITS.SPRINT_DEFAULT,
+            remainingSec: CONFIG.LIMITS.SPRINT_DEFAULT * 60,
+            note: ‚‘
+          },
+          
+          directives: [],
+          audits: [],
+          evidence: [],
+          trash: [],
+          
+          stats: {
+            totalSprints: 0,
+            totalMinutes: 0,
+            streakDays: 0,
+            lastActiveDate: null
+          }
+        };
+      },
+      
+      // Initialize
+      Init() {
+        This._state = this._load() || this._createDefault();
+        This._migrate();
+        This._updateStreak();
+        EventBus.emit(‚state:init‘, this._state);
+        Return this._state;
+      },
+      
+      // Load from Storage
+      _load() {
+        Try {
+          // Try new key first
+          Let raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+          
+          // Fallback to legacy
+          If (!raw) {
+            Raw = localStorage.getItem(CONFIG.STORAGE_KEY_LEGACY);
+            If (raw) {
+              Console.log(‚📦 Migrating from v12.7…‘);
+            }
+          }
+          
+          Return raw ? JSON.parse(raw) : null;
+        } catch € {
+          Console.warn(‚Load failed:‘, e);
+          Return null;
+        }
+      },
+      
+      // Save to Storage
+      Save() {
+        Try {
+          This._state.lastSaved = Date.now();
+          localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this._state));
+          EventBus.emit(‚state:saved‘, this._state);
+          Return true;
+        } catch € {
+          Console.error(‚Save failed:‘, e);
+          EventBus.emit(‚state:error‘, e);
+          Return false;
+        }
+      },
+      
+      // Migration
+      _migrate() {
+        Const s = this._state;
+        Const today = Utils.today();
+        
+        // Reset daily if new day
+        If (s.daily.date !== today) {
+          // Archive old stats
+          If (s.daily.date && s.daily.activeMinutes > 0) {
+            s.stats.totalMinutes += s.daily.activeMinutes;
+          }
+          
+          s.daily = {
+            date: today,
+            mode: s.daily.mode || ‚A‘,
+            activeMinutes: 0,
+            logs: { buddha: ‚‘, intern: ‚‘, exec: ‚‘ }
+          };
+        }
+        
+        // Ensure structures exist
+        s.directives = s.directives || [];
+        s.audits = s.audits || [];
+        s.evidence = s.evidence || [];
+        s.trash = s.trash || [];
+        s.stats = { totalSprints: 0, totalMinutes: 0, streakDays: 0, lastActiveDate: null, …s.stats };
+        s.phoenix = { …this._createDefault().phoenix, …s.phoenix };
+        s.sprint = { …this._createDefault().sprint, …s.sprint };
+        
+        // Update version
+        s.version = CONFIG.VERSION;
+      },
+      
+      // Update Streak
+      _updateStreak() {
+        Const s = this._state;
+        Const today = Utils.today();
+        Const yesterday = new Date(Date.now() – 86400000).toISOString().slice(0, 10);
+        
+        If (s.stats.lastActiveDate === today) {
+          // Already counted today
+        } else if (s.stats.lastActiveDate === yesterday) {
+          s.stats.streakDays++;
+          s.stats.lastActiveDate = today;
+        } else if (s.stats.lastActiveDate !== today) {
+          s.stats.streakDays = 1;
+          s.stats.lastActiveDate = today;
+        }
+      },
+      
+      // Getters
+      Get state() { return this._state; },
+      get(path) {
+        return path.split(‚.‘).reduce((obj, key) => obj?.[key], this._state);
+      },
+      
+      // Update
+      Set(path, value) {
+        Const keys = path.split(‚.‘);
+        Let obj = this._state;
+        For (let i = 0; i < keys.length – 1; i++) {
+          Obj = obj[keys[i]];
+        }
+        Obj[keys[keys.length – 1]] = value;
+        This.save();
+        EventBus.emit(‚state:change‘, { path, value });
+      },
+      
+      // Batch Update
+      Update(updates) {
+        Object.entries(updates).forEach(([path, value]) => {
+          Const keys = path.split(‚.‘);
+          Let obj = this._state;
+          For (let i = 0; i < keys.length – 1; i++) {
+            Obj = obj[keys[i]];
+          }
+          Obj[keys[keys.length – 1]] = value;
+        });
+        This.save();
+        EventBus.emit(‚state:change‘, updates);
+      },
+      
+      // Export
+      Export() {
+        Const blob = new Blob([JSON.stringify(this._state, null, 2)], { type: ‚application/json‘ });
+        Const url = URL.createObjectURL(blob);
+        Const a = document.createElement(‚a‘);
+        a.href = url;
+        a.download = `PHOENIX_v${CONFIG.VERSION}_${Utils.today()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        Return true;
+      },
+      
+      // Import
+      Import(data) {
+        Try {
+          Const parsed = typeof data === ‚string‘ ? JSON.parse(data) : data;
+          This._state = { …this._createDefault(), …parsed };
+          This._migrate();
+          This.save();
+          EventBus.emit(‚state:imported‘, this._state);
+          Return true;
+        } catch € {
+          Console.error(‚Import failed:‘, e);
+          Return false;
+        }
+      },
+      
+      // Trash Management
+      moveToTrash(type, item) {
+        this._state.trash.unshift({
+          id: Utils.id(),
+          type,
+          deletedAt: new Date().toISOString(),
+          item: Utils.clone(item)
+        });
+        // Keep only last 50 items
+        If (this._state.trash.length > 50) {
+          This._state.trash = this._state.trash.slice(0, 50);
+        }
+        This.save();
+      },
+      
+      restoreFromTrash(trashId) {
+        const idx = this._state.trash.findIndex(t => t.id === trashId);
+        if (idx === -1) return false;
+        
+        const { type, item } = this._state.trash[idx];
+        this._state.trash.splice(idx, 1);
+        
+        switch (type) {
+          case ‚directive‘:
+            this._state.directives.push(item);
+            break;
+          case ‚audit‘:
+            this._state.audits.unshift(item);
+            break;
+          case ‚evidence‘:
+            this._state.evidence.unshift(item);
+            break;
+        }
+        
+        This.save();
+        Return true;
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       PHOENIX CALCULATOR
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const PhoenixCalc = {
+      dayInfo() {
+        const start = new Date(CONFIG.TIMELINE.START + ‚T00:00:00‘);
+        const end = new Date(CONFIG.TIMELINE.PHASE1_END + ‚T00:00:00‘);
+        const now = new Date(Utils.today() + ‚T00:00:00‘);
+        const total = 80;
+        
+        let passed = Math.round((now – start) / (1000 * 60 * 60 * 24)) + 1;
+        passed = Utils.clamp(passed, 0, 999);
+        const left = Math.max(0, total – passed);
+        const percent = Utils.clamp((passed / total) * 100, 0, 100);
+        
+        let phase = ‚Vorbereitung‘;
+        if (passed <= 0) phase = ‚Vorbereitung‘;
+        else if (passed <= 14) phase = ‚Phase 1 – Fundament‘;
+        else if (passed <= 45) phase = ‚Phase 2 – Kalte Werkstatt‘;
+        else if (passed <= 70) phase = ‚Phase 3 – Masterplan‘;
+        else if (passed <= 80) phase = ‚Phase 4 – Endabnahme‘;
+        else phase = ‚Post-80-Tage‘;
+        
+        return { total, passed, left, percent, phase };
+      },
+      
+      corridorStatus(minutes) {
+        const limit = CONFIG.LIMITS.DAILY_MINUTES;
+        const green = CONFIG.LIMITS.GREEN_ZONE;
+        const percent = Utils.clamp((minutes / limit) * 100, 0, 100);
+        
+        let zone = ‚green‘;
+        let message = CONFIG.LOBO.corridor.green;
+        
+        if (minutes > limit) {
+          zone = ‚red‘;
+          message = CONFIG.LOBO.corridor.red;
+        } else if (minutes > green) {
+          Zone = ‚yellow‘;
+          Message = CONFIG.LOBO.corridor.yellow;
+        }
+        
+        Return { percent, zone, message, minutes, limit };
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       UI MODULE — Das Gesicht der Maschine
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const UI = {
+      // Toast Notification
+      Toast(message, type = ‚info‘, duration = 3000) {
+        Const container = document.getElementById(‚toast-container‘);
+        Const icons = { success: ‚✓‘, warning: ‚⚠‘, error: ‚✕‘, info: ‚ℹ‘ };
+        
+        Const toast = document.createElement(‚div‘);
+        Toast.className = `toast ${type}`;
+        Toast.innerHTML = `<span class=“toast-icon“>${icons[type] || icons.info}</span><span>${Utils.esc(message)}</span>`;
+        Container.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.classList.add(‚toast-exit‘);
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      },
+      
+      // Show random toast from category
+      toastRandom(category, type = ‚success‘) {
+        const messages = CONFIG.LOBO.toasts[category];
+        if (messages) {
+          this.toast(Utils.random(messages), type);
+        }
+      },
+      
+      // Update Status Display
+      setStatus(text) {
+        const el = document.getElementById(‚status-display‘);
+        if (el) el.textContent = text;
+      },
+      
+      // Update Datestamp
+      updateDatestamp() {
+        const el = document.getElementById(‚datestamp‘);
+        if (el) el.textContent = Utils.formatDate();
+      },
+      
+      // Update Phase Bar
+      updatePhaseBar() {
+        const el = document.getElementById(‚phase-fill‘);
+        if (el) {
+          const info = PhoenixCalc.dayInfo();
+          el.style.width = `${info.percent}%`;
+        }
+      },
+      
+      // Update Theme Icon
+      updateThemeIcon(theme) {
+        const el = document.getElementById(‚theme-icon‘);
+        if (el) el.textContent = theme === ‚dark‘ ? ‚🌙‘ : ‚☀️‘;
+      },
+      
+      // Copy to Clipboard
+      Async copy(text) {
+        Try {
+          Await navigator.clipboard.writeText(text);
+          This.toastRandom(‚copied‘, ‚success‘);
+          Return true;
+        } catch € {
+          This.toast(‚Kopieren fehlgeschlagen‘, ‚error‘);
+          Return false;
+        }
+      },
+      
+      // Confirm Dialog
+      Confirm(message) {
+        Return window.confirm(message);
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       SPRINT TIMER — Die Uhr tickt
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const SprintTimer = {
+      _interval: null,
+      
+      start() {
+        if (Store.state.sprint.running) return;
+        
+        // Check limit warning
+        Const afterSprint = Store.state.daily.activeMinutes + Store.state.sprint.durationMin;
+        If (afterSprint > CONFIG.LIMITS.DAILY_MINUTES) {
+          If (!UI.confirm(`Dieser Sprint würde dein ${CONFIG.LIMITS.DAILY_MINUTES}-Min-Limit überschreiten. Trotzdem starten?`)) {
+            Return;
+          }
+        }
+        
+        Store.update({
+          ‚sprint.running‘: true,
+          ‚sprint.startedAt‘: Store.state.sprint.startedAt || Date.now()
+        });
+        
+        This._interval = setInterval(() => this._tick(), 1000);
+        UI.toastRandom(‚sprintStart‘, ‚success‘);
+        UI.setStatus(‚Sprint läuft‘);
+        EventBus.emit(‚sprint:start‘);
+      },
+      
+      pause() {
+        if (!Store.state.sprint.running) return;
+        
+        Store.set(‚sprint.running‘, false);
+        clearInterval(this._interval);
+        this._interval = null;
+        
+        UI.toastRandom(‚sprintPause‘, ‚info‘);
+        UI.setStatus(‚Pausiert‘);
+        EventBus.emit(‚sprint:pause‘);
+      },
+      
+      reset() {
+        this.pause();
+        Store.update({
+          ‚sprint.startedAt‘: null,
+          ‚sprint.remainingSec‘: Store.state.sprint.durationMin * 60,
+          ‚sprint.note‘: ‚‘
+        });
+        EventBus.emit(‚sprint:reset‘);
+      },
+      
+      _tick() {
+        Const remaining = Store.state.sprint.remainingSec;
+        
+        If (remaining <= 1) {
+          This._complete();
+          Return;
+        }
+        
+        Store.set(‚sprint.remainingSec‘, remaining – 1);
+        
+        // Update display without full re-render
+        Const timerEl = document.getElementById(‚timer-display‘);
+        If (timerEl) {
+          timerEl.textContent = Utils.formatTimer(remaining – 1);
+        }
+      },
+      
+      _complete() {
+        This.pause();
+        
+        Const minutes = Store.state.sprint.durationMin;
+        Store.update({
+          ‚stats.totalSprints‘: Store.state.stats.totalSprints + 1,
+          ‚daily.activeMinutes‘: Store.state.daily.activeMinutes + minutes,
+          ‚sprint.remainingSec‘: Store.state.sprint.durationMin * 60,
+          ‚sprint.startedAt‘: null
+        });
+        
+        UI.toastRandom(‚sprintComplete‘, ‚success‘);
+        UI.setStatus(‚Sprint beendet‘);
+        EventBus.emit(‚sprint:complete‘);
+        
+        // Check corridor status
+        Const corridor = PhoenixCalc.corridorStatus(Store.state.daily.activeMinutes);
+        If (corridor.zone === ‚red‘) {
+          setTimeout(() => UI.toastRandom(‚limitExceeded‘, ‚warning‘), 1500);
+        } else if (corridor.zone === ‚yellow‘) {
+          setTimeout(() => UI.toastRandom(‚limitWarning‘, ‚warning‘), 1500);
         }
       }
-    });
-
-    ul.addEventListener("click",e=>{
-      const del = e.target.closest("button[data-del]");
-      if(del){
-        const idd = del.dataset.del;
-        const i = state.audits.findIndex(x=>x.id===idd);
-        if(i>-1){state.audits.splice(i,1); saveState(); render();}
-      }
-    });
-
-    listCard.append(ul);
-    wrap.append(listCard);
-    view.append(wrap);
-  }
-
-  function renderGateChecklistHTML(a){
-    const gate = a.gate || {};
-    return `
-      <div class="list" style="margin-top:4px">
-        ${GATE_ITEMS.map(([k,label])=>`
-          <label class="row">
-            <input type="checkbox" data-gate="${k}" data-aid="${a.id}" ${gate[k]?"checked":""}>
-            <span>${label}</span>
-          </label>
-        `).join("")}
-        <div class="pill" style="margin-top:4px">
-          <span>Score</span><span class="tag">${a.gateScore||0}</span>
-        </div>
-      </div>
-    `;
-  }
-
-  function calcGateScore(gate){
-    const total = GATE_ITEMS.length;
-    const ok = GATE_ITEMS.reduce((n,[k])=>n+(gate[k]?1:0),0);
-    return Math.round(100*ok/total);
-  }
-
-  // ---------- EVIDENCE ----------
-
-  function renderEvidence(){
-    const wrap = document.createElement("div");
-    wrap.className = "grid";
-
-    const form = document.createElement("div");
-    form.className = "card";
-    form.innerHTML = `
-      <h2>Evidence (intern)</h2>
-      <div class="muted">
-        Nur Funde aus Prototypen. Nichts, was wie ein echter Kundenbericht wirkt.
-      </div>
-      <div class="ctl" style="margin-top:6px">
-        <label>Titel</label>
-        <input id="eTitle" type="text" placeholder="z. B. P0-CTA verdeckt (Testfall)">
-      </div>
-      <div class="ctl">
-        <label>Ablage (optional)</label>
-        <input id="eUrl" type="url" placeholder="Pfad oder Notiz zur Datei">
-      </div>
-      <div class="row" style="margin-top:4px">
-        <div class="ctl">
-          <label>Typ</label>
-          <select id="eType">
-            <option>P0</option><option>P1</option><option>P2</option>
-            <option>TECH</option><option>UX</option><option>SEO</option><option>SONSTIG</option>
-          </select>
-        </div>
-        <div class="ctl">
-          <label>Prototyp zuordnen</label>
-          <select id="eAudit">
-            <option value="">(optional)</option>
-            ${state.audits.map(a=>`<option value="${a.id}">${escapeHTML(a.domain)}</option>`).join("")}
-          </select>
-        </div>
-      </div>
-      <div class="ctl">
-        <label>Notiz</label>
-        <textarea id="eNote" placeholder="Kurz, prüffreundlich, ohne Marketing."></textarea>
-      </div>
-      <button class="btn ok block" id="eAdd" style="margin-top:6px">Evidence speichern</button>
-    `;
-    form.querySelector("#eAdd").onclick = ()=>{
-      const title = form.querySelector("#eTitle").value.trim();
-      const url   = form.querySelector("#eUrl").value.trim();
-      const type  = form.querySelector("#eType").value;
-      const auditId = form.querySelector("#eAudit").value || null;
-      const note  = form.querySelector("#eNote").value.trim();
-      if(!title && !note) return;
-      state.evidence.unshift({
-        id:id(),
-        title,
-        url,
-        type,
-        auditId,
-        note,
-        ts:new Date().toISOString()
-      });
-      saveState(); render();
     };
-    wrap.append(form);
 
-    const list = document.createElement("div");
-    list.className = "card";
-    list.innerHTML = `<h2>Evidence-Liste (${state.evidence.length})</h2>`;
-    const ul = document.createElement("div");
-    ul.className = "list";
-    state.evidence.slice(0,120).forEach(ev=>{
-      const a = ev.auditId && state.audits.find(x=>x.id===ev.auditId);
-      const it = document.createElement("div");
-      it.className = "item";
-      it.innerHTML = `
-        <div style="flex:1">
-          <strong>${escapeHTML(ev.title || "(ohne Titel)")}</strong>
-          <div class="muted">
-            ${new Date(ev.ts).toLocaleString("de-DE")}
-            · ${ev.type}
-            · ${a ? escapeHTML(a.domain) : "kein Prototyp verknüpft"}
-          </div>
-          ${ev.url?`<div class="muted">Ablage: ${escapeHTML(ev.url)}</div>`:""}
-          ${ev.note?`<div class="muted" style="margin-top:3px;font-family:var(--mono);font-size:12px">${escapeHTML(ev.note)}</div>`:""}
-        </div>
-        <button class="btn ghost danger" data-del="${ev.id}">✕</button>
-      `;
-      ul.append(it);
-    });
-    ul.addEventListener("click",e=>{
-      const del = e.target.closest("button[data-del]");
-      if(del){
-        const idd = del.dataset.del;
-        const i = state.evidence.findIndex(x=>x.id===idd);
-        if(i>-1){state.evidence.splice(i,1);saveState();render();}
-      }
-    });
-    list.append(ul);
-    wrap.append(list);
-
-    view.append(wrap);
-  }
-
-  // ---------- OUTREACH ----------
-
-  function renderOutreach(){
-    const wrap = document.createElement("div");
-    wrap.className = "grid";
-
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h2>Explorationskontakte (kalt, rechtssicher)</h2>
-      <div class="muted">
-        Erlaubt: wenige, klar deklarierte Vorgespräche. Kein Angebot, kein Preis, keine Zusage vor Freigabe.
-      </div>
-      <div class="row" style="margin-top:6px">
-        <div class="ctl">
-          <label>Kontakt</label>
-          <input id="oName" type="text" placeholder="Firma / Person">
-        </div>
-        <div class="ctl">
-          <label>Kanal</label>
-          <select id="oChannel">
-            <option>Email</option><option>LinkedIn</option><option>Telefon</option><option>Sonstiges</option>
-          </select>
-        </div>
-      </div>
-      <div class="ctl">
-        <label>Adresse/Handle</label>
-        <input id="oHandle" type="text" placeholder="mail@..., URL oder Profil">
-      </div>
-      <div class="ctl">
-        <label>Notiz</label>
-        <textarea id="oNote" placeholder="Kontext, Interesse, Hinweis auf Start erst nach Freigabe."></textarea>
-      </div>
-      <button class="btn ok block" id="oAdd" style="margin-top:6px">Speichern</button>
-      <div class="template-box">
-        <strong>Startklausel (Blueprint)</strong>
-        <pre id="startClause">
-Ich befinde mich in einer rechtlichen und gesundheitlichen Neuordnungsphase (u. a. laufendes Renten- und Insolvenzverfahren).
-Bis zur schriftlichen Freigabe meiner selbstständigen Tätigkeit durch das Insolvenzgericht/den Insolvenzverwalter
-kann und werde ich keine Aufträge verbindlich annehmen, keine Leistungen ausführen und keine Rechnungen stellen.
-Gerne kann ich Ihr Feedback zu einer möglichen Zusammenarbeit ab 2026 aufnehmen; alle Gespräche bis dahin dienen
-ausschließlich der unverbindlichen Vorbereitung.</pre>
-        <button class="btn block copy-btn" data-copy-target="startClause">Startklausel kopieren</button>
-      </div>
-    `;
-    card.querySelector("#oAdd").onclick = ()=>{
-      const contact = card.querySelector("#oName").value.trim();
-      const channel = card.querySelector("#oChannel").value;
-      const handle  = card.querySelector("#oHandle").value.trim();
-      const notes   = card.querySelector("#oNote").value.trim();
-      if(!contact) return;
-      state.outreach.unshift({
-        id:id(),
-        contact,
-        channel,
-        handle,
-        notes,
-        status:"EXPLORATION",
-        created:todayISO()
-      });
-      state.daily.outreachToday = (state.daily.outreachToday||0)+1;
-      saveState(); render();
-    };
-    wrap.append(card);
-
-    const list = document.createElement("div");
-    list.className = "card";
-    list.innerHTML = `<h2>Kontakte (${state.outreach.length})</h2>`;
-    const ul = document.createElement("div");
-    ul.className = "list";
-    state.outreach.forEach(o=>{
-      const col = o.status==="EXPLORATION (Klausel OK)" ? "okc" : "warnc";
-      const it = document.createElement("div");
-      it.className = "item";
-      it.innerHTML = `
-        <div style="flex:1">
-          <strong>${escapeHTML(o.contact)}</strong>
-          <div class="muted">
-            ${o.channel}${o.handle?" · "+escapeHTML(o.handle):""}
-            · ${o.created}
-            · <span class="${col}">${o.status}</span>
-          </div>
-          ${o.notes?`<div class="muted" style="margin-top:3px">${escapeHTML(o.notes)}</div>`:""}
-        </div>
-        <div class="row">
-          <button class="btn ghost ok" data-act="OK" data-id="${o.id}">Klausel OK</button>
-          <button class="btn ghost danger" data-act="DEL" data-id="${o.id}">✕</button>
-        </div>
-      `;
-      ul.append(it);
-    });
-    ul.addEventListener("click",e=>{
-      const b = e.target.closest("button[data-act]");
-      if(!b) return;
-      const idd = b.dataset.id;
-      const o = state.outreach.find(x=>x.id===idd);
-      if(!o) return;
-      if(b.dataset.act==="OK") o.status = "EXPLORATION (Klausel OK)";
-      if(b.dataset.act==="DEL"){
-        const i = state.outreach.findIndex(x=>x.id===idd);
-        if(i>-1) state.outreach.splice(i,1);
-      }
-      saveState(); render();
-    });
-    list.append(ul);
-    wrap.append(list);
-
-    view.append(wrap);
-  }
-
-  // ---------- MANIFEST (80-TAGE-PLAN) ----------
-
-  function renderManifest(){
-    const d = document.createElement("div");
-    d.className = "card roadmap-content";
-    const {total,passed} = phoenixDayInfo();
-    const p = state.phoenix;
-
-    d.innerHTML = `
-      <h2>PHOENIX 80-Tage-Manifest</h2>
-      <p class="muted">
-        Dieses Manifest verknüpft deinen real laufenden Mini-Betrieb mit dem 80-Tage-Fenster:
-        Ziel: prüffähige Entschuldung, stabiles Leistungsbild, startklares Business-Modell.
-      </p>
-
-      <h3>Phase 1 · Fundament (Tag 1–14)</h3>
-      <ul>
-        <li>Zeitjournal täglich führen (aktive Minuten + 3-Log-System).</li>
-        <li>Kurz-EÜR Rückblick 2023–heute erstellen (Mini-Betrieb). </li>
-        <li>DRV informieren & Unterlagen in Arbeit anzeigen.</li>
-      </ul>
-
-      <h3>Phase 2 · Kalte Werkstatt & Mini-Betrieb (Tag 15–40)</h3>
-      <ul>
-        <li>2–5 Prototypen-Audits intern erstellen (Fokus Immobilien/SEO).</li>
-        <li>Evidence-Datenbank füllen (P0/P1/UX/Tech-Befunde).</li>
-        <li>Mini-Betrieb klein, transparent, lückenlos verbucht.</li>
-      </ul>
-
-      <h3>Phase 3 · Schnitt & Routenentscheidung (Tag 41–65)</h3>
-      <ul>
-        <li>Route A: Vorbereitung des formellen Cuts der Selbstständigkeit,
-            um Verbraucherinsolvenz zu ermöglichen.</li>
-        <li>Route B: Vorbereitung einer Regelinsolvenz mit sauberem
-            Freigabeantrag nach § 35 Abs. 2 InsO.</li>
-        <li>Tag-X-Paket-Entwurf mit Prototypen & Evidence.</li>
-      </ul>
-
-      <h3>Phase 4 · Versiegelung (Tag 66–80)</h3>
-      <ul>
-        <li>Vollständige Antragsunterlagen fertigstellen.</li>
-        <li>Tag-X-Paket finalisieren (noch nicht versenden ohne Beratung).</li>
-        <li>JSON-Backup exportieren und sicher ablegen.</li>
-      </ul>
-
-      <h3>Live-Status (autonom aus deinen Eingaben)</h3>
-      <ul>
-        <li>Zeitjournal-Tage: <strong>${new Set(state.logbook.map(l=>l.date)).size}</strong> / 80</li>
-        <li>Fokus-Sprints: <strong>${state.home.kpis.sprints||0}</strong></li>
-        <li>FERTIG_INTERNAL Prototypen: <strong>${state.audits.filter(a=>a.stage==="FERTIG_INTERNAL").length}</strong> (Ziel 3–5)</li>
-        <li>Explorationskontakte mit Klausel OK:
-          <strong>${state.outreach.filter(o=>o.status==="EXPLORATION (Klausel OK)").length}</strong></li>
-      </ul>
-      <p class="muted">
-        Tag ${passed}/${total}: Dieses Dashboard ersetzt kein Gericht,
-        aber es liefert deiner anwaltlichen Vertretung, DRV und dem Insolvenzverwalter
-        eine saubere, konsistente Geschichte.
-      </p>
-    `;
-    view.append(d);
-  }
-
-  // ---------- GENERATOR ----------
-
-  function renderGenerator(){
-    const d = document.createElement("div");
-    d.className = "grid";
-
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <h2>⚡ Beweismittel-Generator</h2>
-      <p class="muted">
-        Aus deinen Daten entstehen drei Texte:
-        Tag-X-Paket für den Insolvenzverwalter,
-        Leistungsbild für die DRV,
-        Kurz-EÜR-Report für Steuer/Anwalt.
-        Alles offline, du kopierst nur Inhalte in deine finalen PDFs.
-      </p>
-
-      <h3>1 · Tag-X-Paket (IV / § 35 Abs. 2 InsO)</h3>
-      <button class="btn primary block" id="gIV">Entwurf erzeugen</button>
-
-      <h3 style="margin-top:10px;">2 · DRV-Leistungsbild</h3>
-      <div class="row">
-        <div class="ctl">
-          <label>Zeitraum</label>
-          <select id="gDRVRange">
-            <option value="30">Letzte 30 Tage</option>
-            <option value="60">Letzte 60 Tage</option>
-            <option value="all">Komplette PHOENIX-Phase</option>
-          </select>
-        </div>
-        <button class="btn ok block" id="gDRV">Report erzeugen</button>
-      </div>
-
-      <h3 style="margin-top:10px;">3 · Kurz-EÜR / Hinzuverdienst</h3>
-      <button class="btn block" id="gEUE">Kurz-EÜR erzeugen</button>
-
-      <div class="template-box" id="genOutBox" style="display:none;">
-        <strong id="genTitle">Ergebnis</strong>
-        <button class="btn block copy-btn" data-copy-target="genOut">Inhalt kopieren</button>
-        <pre id="genOut"></pre>
-      </div>
-    `;
-    d.append(card);
-    view.append(d);
-
-    const outBox = el("#genOutBox");
-    const outTit = el("#genTitle");
-    const out    = el("#genOut");
-
-    el("#gIV").onclick = ()=>{
-      archiveCurrentDaily();
-      const audits = state.audits.filter(a=>a.stage==="FERTIG_INTERNAL");
-      const outreach = state.outreach.filter(o=>o.status==="EXPLORATION (Klausel OK)");
-      const execLogs = filterLogsByRange([...state.logbook,state.daily],'30')
-        .filter(l=>(l.execLog||"").trim());
-      const route = state.phoenix.targetRoute;
-
-      let s = "";
-      s += "ENTWURF · TAG-X-PAKET / ANTRAG AUF FREIGABE SELBSTSTÄNDIGER TÄTIGKEIT (§ 35 ABS. 2 INSO)\n";
-      s += "-------------------------------------------------------------------------------\n\n";
-      s += "1. Ausgangslage\n";
-      s += "- Laufender Mini-Betrieb (freiberuflich, geringes Volumen, vollständig erklärt).\n";
-      s += "- Geplante Entschuldung im Rahmen " +
-           (route==="A"
-             ? "einer Verbraucherinsolvenz nach Einstellung der selbstständigen Tätigkeit.\n"
-             : "einer Regelinsolvenz mit beantragter Freigabe meiner selbstständigen Tätigkeit.\n");
-      s += "- Parallel: Aufbau eines klar umrissenen Angebots 'Mobile-First SEO Audits (Immobilien)'.\n\n";
-
-      s += "2. Prototypen (interne Referenzen)\n";
-      if(!audits.length){
-        s += "- Noch keine FERTIG_INTERNAL-Prototypen dokumentiert.\n";
-      }else{
-        audits.forEach((a,i)=>{
-          s += `- Prototyp ${i+1}: ${a.domain} (FERTIG_INTERNAL, Gate-Score ${a.gateScore||0})\n`;
-          const evs = state.evidence.filter(ev=>ev.auditId===a.id);
-          if(evs.length){
-            s += `  Evidence-Auszug:\n`;
-            evs.slice(0,5).forEach(ev=>{
-              s += `  · [${ev.type}] ${ev.title}: ${ev.note.slice(0,120)}\n`;
-            });
+    /* ═══════════════════════════════════════════════════════════════════════
+       ROUTER — Navigation ohne Verwirrung
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Router = {
+      _views: new Map(),
+      
+      register(id, renderFn) {
+        this._views.set(id, renderFn);
+      },
+      
+      render() {
+        const view = document.getElementById(‚main-view‘);
+        const activeTab = Store.state.activeTab;
+        const renderFn = this._views.get(activeTab);
+        
+        if (renderFn) {
+          view.innerHTML = renderFn();
+          this._bindEvents();
+        } else {
+          View.innerHTML = `
+            <div class=“card“>
+              <div class=“empty“>
+                <div class=“empty-icon“>🚧</div>
+                <div class=“empty-text“>Modul in Entwicklung</div>
+              </div>
+            </div>
+          `;
+        }
+        
+        EventBus.emit(‚view:rendered‘, activeTab);
+      },
+      
+      _bindEvents() {
+        Const view = document.getElementById(‚main-view‘);
+        
+        // Click Events
+        View.addEventListener(‚click‘, € => {
+          Const action = e.target.closest(‚[data-action]‘);
+          If (action) {
+            e.preventDefault();
+            Actions.handle(action.dataset.action, action.dataset);
           }
         });
+        
+        // Change Events
+        View.addEventListener(‚change‘, € => {
+          Const handler = e.target.dataset.change;
+          If (handler) {
+            Actions.handleChange(handler, e.target);
+          }
+        });
+        
+        // Input Events (debounced)
+        View.addEventListener(‚input‘, Utils.debounce(€ => {
+          Const handler = e.target.dataset.input;
+          If (handler) {
+            Actions.handleInput(handler, e.target);
+          }
+        }, 400));
+      },
+      
+      navigate(tabId) {
+        if (Store.state.sprint.running && tabId !== ‚sprint‘) {
+          SprintTimer.pause();
+        }
+        
+        Store.set(‚activeTab‘, tabId);
+        Navigation.render();
+        This.render();
       }
-      s += "\n3. Markt-Pipeline (unverbindlich)\n";
-      if(!outreach.length){
-        s += "- Keine verbindlichen Voranfragen. Nur Konzeptniveau.\n";
-      }else{
-        outreach.forEach(o=>{
-          s += `- ${o.contact} (${o.channel}): Explorationskontakt mit dokumentierter Startklausel.\n`;
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Navigation = {
+      Init() {
+        This.render();
+        
+        Document.getElementById(‚nav-bar‘).addEventListener(‚click‘, € => {
+          Const tab = e.target.closest(‚.nav-tab‘);
+          If (tab) {
+            Router.navigate(tab.dataset.tab);
+          }
+        });
+      },
+      
+      render() {
+        const bar = document.getElementById(‚nav-bar‘);
+        bar.innerHTML = CONFIG.TABS.map(tab => `
+          <button class=“nav-tab ${Store.state.activeTab === tab.id ? ‚active‘ : ‚‘}“ 
+                  Data-tab=“${tab.id}“ 
+                  Aria-current=“${Store.state.activeTab === tab.id ? ‚page‘ : ‚false‘}“>
+            <span class=“nav-icon“>${tab.icon}</span>
+            <span class=“nav-label“>${tab.label}</span>
+            ${tab.hasNotification ? ‚<span class=“nav-dot“></span>‘ : ‚‘}
+          </button>
+        `).join(‚‘);
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       ACTIONS — Command Center
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Actions = {
+      Handle(action, data = {}) {
+        Switch (action) {
+          // Phoenix Toggles
+          Case ‚toggle-phoenix‘:
+            Store.set(`phoenix.${data.key}`, !Store.get(`phoenix.${data.key}`));
+            UI.toastRandom(‚saved‘, ‚success‘);
+            Router.render();
+            Break;
+            
+          // Directives
+          Case ‚toggle-directive‘: {
+            Const dirs = Store.state.directives;
+            Const dir = dirs.find(d => d.id === data.id);
+            If (dir) {
+              Dir.done = !dir.done;
+              Store.save();
+              UI.toastRandom(‚directiveDone‘, ‚success‘);
+              Router.render();
+            }
+            Break;
+          }
+          
+          Case ‚add-directive‘: {
+            Const input = document.getElementById(‚new-directive‘);
+            Const text = input?.value.trim();
+            If (!text) return;
+            
+            Const dirs = Store.state.directives;
+            If (dirs.length >= CONFIG.LIMITS.MAX_DIRECTIVES) {
+              Const removed = dirs.shift();
+              Store.moveToTrash(‚directive‘, removed);
+            }
+            Dirs.push({ id: Utils.id(), text, done: false, createdAt: new Date().toISOString() });
+            Store.save();
+            UI.toastRandom(‚directiveAdded‘, ‚success‘);
+            Router.render();
+            Break;
+          }
+          
+          Case ‚delete-directive‘: {
+            Const dirs = Store.state.directives;
+            Const idx = dirs.findIndex(d => d.id === data.id);
+            If (idx !== -1) {
+              Store.moveToTrash(‚directive‘, dirs[idx]);
+              Dirs.splice(idx, 1);
+              Store.save();
+              UI.toastRandom(‚deleted‘, ‚info‘);
+              Router.render();
+            }
+            Break;
+          }
+          
+          // Audits
+          Case ‚add-audit‘: {
+            Const domain = document.getElementById(‚audit-domain‘)?.value.trim();
+            Const stage = document.getElementById(‚audit-stage‘)?.value;
+            If (!domain) return;
+            
+            Store.state.audits.unshift({
+              Id: Utils.id(),
+              domain,
+              stage,
+              created: Utils.today(),
+              gateScore: 0
+            });
+            Store.save();
+            UI.toastRandom(‚auditAdded‘, ‚success‘);
+            Router.render();
+            Break;
+          }
+          
+          Case ‚delete-audit‘: {
+            Const audits = Store.state.audits;
+            Const idx = audits.findIndex(a => a.id === data.id);
+            If (idx !== -1) {
+              Store.moveToTrash(‚audit‘, audits[idx]);
+              Audits.splice(idx, 1);
+              Store.save();
+              UI.toastRandom(‚deleted‘, ‚info‘);
+              Router.render();
+            }
+            Break;
+          }
+          
+          // Evidence
+          Case ‚add-evidence‘: {
+            Const title = document.getElementById(‚evidence-title‘)?.value.trim();
+            Const type = document.getElementById(‚evidence-type‘)?.value;
+            Const url = document.getElementById(‚evidence-url‘)?.value.trim();
+            Const note = document.getElementById(‚evidence-note‘)?.value.trim();
+            If (!title && !note) return;
+            
+            Store.state.evidence.unshift({
+              Id: Utils.id(),
+              title, type, url, note,
+              ts: new Date().toISOString()
+            });
+            Store.save();
+            UI.toastRandom(‚evidenceAdded‘, ‚success‘);
+            Router.render();
+            Break;
+          }
+          
+          Case ‚delete-evidence‘: {
+            Const evidence = Store.state.evidence;
+            Const idx = evidence.findIndex(e => e.id === data.id);
+            If (idx !== -1) {
+              Store.moveToTrash(‚evidence‘, evidence[idx]);
+              Evidence.splice(idx, 1);
+              Store.save();
+              UI.toastRandom(‚deleted‘, ‚info‘);
+              Router.render();
+            }
+            Break;
+          }
+          
+          // Sprint
+          Case ‚sprint-toggle‘:
+            If (Store.state.sprint.running) {
+              SprintTimer.pause();
+            } else {
+              SprintTimer.start();
+            }
+            Router.render();
+            Break;
+            
+          Case ‚sprint-reset‘:
+            SprintTimer.reset();
+            Router.render();
+            Break;
+          
+          // Navigation
+          Case ‚goto‘:
+            Router.navigate(data.tab);
+            Break;
+          
+          // Report
+          Case ‚copy-report‘:
+            UI.copy(this._buildReport());
+            Break;
+          
+          // Export/Import
+          Case ‚export‘:
+            Store.export();
+            UI.toastRandom(‚exported‘, ‚success‘);
+            Break;
+            
+          Case ‚import‘:
+            Document.getElementById(‚file-import‘).click();
+            Break;
+          
+          // Trash
+          Case ‚restore‘: {
+            If (Store.restoreFromTrash(data.id)) {
+              UI.toastRandom(‚restored‘, ‚success‘);
+              Router.render();
+            }
+            Break;
+          }
+          
+          Case ‚empty-trash‘:
+            If (UI.confirm(‚Papierkorb endgültig leeren?‘)) {
+              Store.state.trash = [];
+              Store.save();
+              Router.render();
+            }
+            Break;
+        }
+      },
+      
+      handleChange(handler, target) {
+        switch (handler) {
+          case ‚daily-date‘:
+            Store.set(‚daily.date‘, target.value);
+            Break;
+          Case ‚daily-minutes‘:
+            Store.set(‚daily.activeMinutes‘, Utils.clamp(parseInt(target.value) || 0, 0, 600));
+            Router.render();
+            Break;
+          Case ‚daily-mode‘:
+            Store.set(‚daily.mode‘, target.value);
+            Break;
+        }
+      },
+      
+      handleInput(handler, target) {
+        switch (handler) {
+          case ‚log-buddha‘:
+            Store.set(‚daily.logs.buddha‘, target.value);
+            Break;
+          Case ‚log-intern‘:
+            Store.set(‚daily.logs.intern‘, target.value);
+            Break;
+          Case ‚log-exec‘:
+            Store.set(‚daily.logs.exec‘, target.value);
+            Break;
+          Case ‚sprint-note‘:
+            Store.set(‚sprint.note‘, target.value);
+            Break;
+        }
+      },
+      
+      _buildReport() {
+        Const d = Store.state.daily;
+        Const info = PhoenixCalc.dayInfo();
+        
+        Return `══════════════════════════════════════════════════════════════
+🦅 PHOENIX v${CONFIG.VERSION} — TAGES-REPORT
+══════════════════════════════════════════════════════════════
+
+Datum: ${d.date}
+PHOENIX-Status: Tag ${info.passed} · ${info.phase}
+Verbleibend (80-Tage): ${info.left} Tage
+
+── PARAMETER ZEIT-LIMIT (§ 9 SGB IX / DRV) ──
+Arbeitsähnliche Minuten: ${d.activeMinutes} / ${CONFIG.LIMITS.DAILY_MINUTES}
+Modus: ${d.mode === ‚A‘ ? ‚A (Lernen)‘ : ‚B (Audits)‘}
+
+── 1. DRV (BUDDHA-LOG) ──
+${d.logs.buddha || ‚(keine Einträge)‘}
+
+── 2. INTERN (FAKTEN-LOG) ──
+${d.logs.intern || ‚(keine Einträge)‘}
+
+── 3. IV (EXECUTIVE SUMMARY) ──
+${d.logs.exec || ‚(keine Einträge)‘}
+
+══════════════════════════════════════════════════════════════
+Status: 0,00 € Umsatz · keine ELSTER · kein Kundenkontakt
+══════════════════════════════════════════════════════════════`;
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: COCKPIT
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚cockpit‘, () => {
+      Const s = Store.state;
+      Const p = s.phoenix;
+      Const d = s.daily;
+      Const info = PhoenixCalc.dayInfo();
+      Const corridor = PhoenixCalc.corridorStatus(d.activeMinutes);
+      Const greeting = Utils.random(CONFIG.LOBO.greetings);
+      
+      // Directives HTML
+      Const directivesHtml = s.directives.length > 0 
+        ? s.directives.map(dir => `
+            <div class=“check-item“>
+              <div class=“check-box ${dir.done ? ‚done‘ : ‚‘}“ 
+                   Data-action=“toggle-directive“ data-id=“${dir.id}“>
+                ${dir.done ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>${Utils.esc(dir.text)}</div>
+              </div>
+              <button class=“btn btn-ghost btn-icon text-danger“ 
+                      Data-action=“delete-directive“ data-id=“${dir.id}“ 
+                      Title=“Löschen“>✕</button>
+            </div>
+          `).join(‚‘)
+        : `<div class=“empty“><div class=“empty-text“>${CONFIG.LOBO.empty.directives}</div></div>`;
+      
+      Return `
+        <!—Status Card 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>🎯 PHOENIX STATUS</h2>
+            <span class=“badge badge-brand“>Tag ${info.passed}</span>
+          </div>
+          <div class=“card-subtitle“>
+            ${info.phase} · ${info.left > 0 ? `Noch ${info.left} Tage bis Deadline` : ‚Post-80-Tage-Phase‘}
+          </div>
+          <div class=“lobo-quote“>${greeting}</div>
+          
+          <div class=“ampel-list mt“>
+            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“pKonto“>
+              <div class=“ampel-icon ${p.pKonto ? ‚ok‘ : ‚nok‘}“>${p.pKonto ? ‚✓‘ : ‚!‘}</div>
+              <div class=“ampel-content“>
+                <div class=“ampel-title“>P-Konto aktiv (§ 850k ZPO)</div>
+                <div class=“ampel-desc“>${p.pKonto ? ‚Basisschutz steht. Das Fundament hält.‘ : ‚P-Konto-Bescheinigung holen. Keine Ausreden.‘}</div>
+              </div>
+            </div>
+            
+            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“businessAccountCold“>
+              <div class=“ampel-icon ${p.businessAccountCold ? ‚ok‘ : ‚nok‘}“>${p.businessAccountCold ? ‚✓‘ : ‚!‘}</div>
+              <div class=“ampel-content“>
+                <div class=“ampel-title“>Geschäftskonto „kalt“</div>
+                <div class=“ampel-desc“>${p.businessAccountCold ? ‚Saubere Trennung. Keine Altlasten.‘ : ‚Neues Konto ohne Dispo eröffnen. Heute.‘}</div>
+              </div>
+            </div>
+            
+            <div class=“ampel-item“ data-action=“toggle-phoenix“ data-key=“tagXPackageDraft“>
+              <div class=“ampel-icon ${p.tagXPackageDraft ? ‚ok‘ : ‚nok‘}“>${p.tagXPackageDraft ? ‚✓‘ : ‚!‘}</div>
+              <div class=“ampel-content“>
+                <div class=“ampel-title“>Tag-X-Paket (§ 35 Abs. 2 InsO)</div>
+                <div class=“ampel-desc“>${p.tagXPackageDraft ? ‚Freigabe-Antrag druckreif. Bereit für den Ernstfall.‘ : ‚Gläubigerliste & Vermögen vorbereiten.‘}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!—179-Minuten-Korridor 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>⏱️ 179-Minuten-Korridor</h2>
+          </div>
+          
+          <div class=“corridor“>
+            <div class=“corridor-header“>
+              <span class=“corridor-title“>Tagesbudget</span>
+              <span class=“corridor-value text-${corridor.zone === ‚green‘ ? ‚ok‘ : corridor.zone === ‚yellow‘ ? ‚warn‘ : ‚danger‘}“>
+                ${corridor.minutes} / ${corridor.limit} Min
+              </span>
+            </div>
+            <div class=“corridor-bar“>
+              <div class=“corridor-fill ${corridor.zone}“ style=“width: ${corridor.percent}%“></div>
+            </div>
+            <div class=“corridor-markers“>
+              <span>0</span>
+              <span class=“corridor-marker-green“>${CONFIG.LIMITS.GREEN_ZONE}</span>
+              <span class=“corridor-marker-limit“>${CONFIG.LIMITS.DAILY_MINUTES}</span>
+            </div>
+            <div class=“corridor-status ${corridor.zone}“>
+              ${corridor.message}
+            </div>
+          </div>
+        </div>
+        
+        <!—Primär-Direktiven 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>📌 Primär-Direktiven</h2>
+            <span class=“badge“>${s.directives.filter(d => d.done).length}/${s.directives.length}</span>
+          </div>
+          <div class=“card-subtitle“>Maximal 3. Kurz. Klar. Prüffähig. Was zählt heute?</div>
+          
+          <div class=“checklist mt“>
+            ${directivesHtml}
+          </div>
+          
+          <div class=“form-row mt“>
+            <input type=“text“ class=“form-input“ id=“new-directive“ 
+                   Placeholder=“Neue Direktive…“ maxlength=“100“>
+            <button class=“btn btn-success“ data-action=“add-directive“>+</button>
+          </div>
+        </div>
+        
+        <!—KPIs 
+        <div class=“card“>
+          <h2 class=“card-title“>📊 KPIs</h2>
+          <div class=“kpi-grid mt“>
+            <div class=“kpi-card“>
+              <div class=“kpi-label“>Audits</div>
+              <div class=“kpi-value“>${s.audits.length}</div>
+            </div>
+            <div class=“kpi-card“>
+              <div class=“kpi-label“>Evidence</div>
+              <div class=“kpi-value“>${s.evidence.length}</div>
+            </div>
+            <div class=“kpi-card“>
+              <div class=“kpi-label“>Sprints</div>
+              <div class=“kpi-value“>${s.stats.totalSprints}</div>
+            </div>
+          </div>
+        </div>
+        
+        <!—Quick Actions 
+        <div class=“card“>
+          <h2 class=“card-title“>⚡ Schnellzugriff</h2>
+          <div class=“btn-group mt“>
+            <button class=“btn btn-primary btn-fat“ data-action=“goto“ data-tab=“sprint“>
+              ⏱️ Sprint
+            </button>
+            <button class=“btn btn-fat“ data-action=“copy-report“>
+              📋 Report
+            </button>
+          </div>
+          <div class=“btn-group mt-sm“>
+            <button class=“btn“ data-action=“export“>💾 Backup</button>
+            <button class=“btn“ data-action=“import“>📂 Laden</button>
+          </div>
+        </div>
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: PROTOCOL
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚protocol‘, () => {
+      Const d = Store.state.daily;
+      
+      Return `
+        <div class=“card“>
+          <h2 class=“card-title“>📋 PHOENIX-Protokoll</h2>
+          <div class=“card-subtitle“>
+            Jeden Tag ein Eintrag. Auch „0 Minuten“ zählt. Das ist dein Schutzschild vor der DRV.
+          </div>
+          <div class=“lobo-quote“>Das Gesetz fragt nicht, wie du dich fühlst. Es fragt, was dokumentiert ist.</div>
+          
+          <div class=“form-row mt“>
+            <div class=“form-group“>
+              <label class=“form-label“>Datum</label>
+              <input type=“date“ class=“form-input“ value=“${d.date}“ data-change=“daily-date“>
+            </div>
+            <div class=“form-group“>
+              <label class=“form-label“>Minuten</label>
+              <input type=“number“ class=“form-input“ value=“${d.activeMinutes}“ 
+                     Min=“0“ max=“600“ step=“5“ data-change=“daily-minutes“>
+            </div>
+          </div>
+          
+          <div class=“form-group“>
+            <label class=“form-label“>Modus</label>
+            <select class=“form-select“ data-change=“daily-mode“>
+              <option value=“A“ ${d.mode === ‚A‘ ? ‚selected‘ : ‚‘}>A — Lernen & Dokumentation</option>
+              <option value=“B“ ${d.mode === ‚B‘ ? ‚selected‘ : ‚‘}>B — Übungs-Audits & Templates</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class=“card“>
+          <h2 class=“card-title“>📝 Logbuch (3-teilig)</h2>
+          <div class=“card-subtitle“>DRV · Intern · Executive — Drei Perspektiven, ein Tag.</div>
+          
+          <div class=“form-group mt“>
+            <label class=“form-label“>1. DRV (Buddha-Log) — sachlich, klinisch</label>
+            <textarea class=“form-textarea“ data-input=“log-buddha“
+                      Placeholder=“Bsp: Tag 12: 90 Min Sprint, danach 30 Min Erholung nötig. Konzentration stabil.“>${Utils.esc(d.logs.buddha)}</textarea>
+            <div class=“form-hint“>Für die Rentenversicherung. Nur Fakten, keine Meinungen.</div>
+          </div>
+          
+          <div class=“form-group“>
+            <label class=“form-label“>2. Intern (Fakten-Log) — rein faktisch</label>
+            <textarea class=“form-textarea“ data-input=“log-intern“
+                      Placeholder=“Bsp: Sprint 1 (90): Drill P0-CTA-Blocker, 2 Funde gesichert, Gate-Check 92%.“>${Utils.esc(d.logs.intern)}</textarea>
+            <div class=“form-hint“>Dein internes Protokoll. Was genau hast du gemacht?</div>
+          </div>
+          
+          <div class=“form-group“>
+            <label class=“form-label“>3. IV (Executive Summary) — professionell</label>
+            <textarea class=“form-textarea“ data-input=“log-exec“
+                      Placeholder=“Bsp: Tag 12 (170 Min): Audit-Template finalisiert. Keine Einnahmen, kein Kundenkontakt.“>${Utils.esc(d.logs.exec)}</textarea>
+            <div class=“form-hint“>Für den Insolvenzverwalter. Sachlich, distanziert, wasserdicht.</div>
+          </div>
+          
+          <button class=“btn btn-primary btn-block mt“ data-action=“copy-report“>
+            📋 Vollständigen Report kopieren
+          </button>
+        </div>
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: SPRINT
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚sprint‘, () => {
+      Const sp = Store.state.sprint;
+      Const d = Store.state.daily;
+      Const remaining = sp.remainingSec;
+      Const afterSprint = d.activeMinutes + sp.durationMin;
+      Const corridor = PhoenixCalc.corridorStatus(afterSprint);
+      
+      Const isFresh = !sp.startedAt;
+      Const btnLabel = sp.running ? ‚⏸ Pausieren‘ : (isFresh ? ‚▶ Starten‘ : ‚▶ Weiterlaufen‘);
+      Const btnClass = sp.running ? ‚btn-warning‘ : ‚btn-success‘;
+      
+      Let timerClass = ‚‘;
+      If (sp.running) timerClass = ‚running‘;
+      If (corridor.zone === ‚yellow‘) timerClass += ‚ warning‘;
+      If (corridor.zone === ‚red‘) timerClass += ‚ danger‘;
+      
+      Return `
+        <div class=“card“>
+          <h2 class=“card-title“>⏱️ ${sp.durationMin}-Minuten-Sprint</h2>
+          <div class=“card-subtitle“>
+            Core-Loop: Drill → Sprint → Test-Audit → Evidence → Gate-Check → Log
+          </div>
+          <div class=“lobo-quote“>Du arbeitest nicht am Schreibtisch. Du arbeitest gegen die Uhr. Das ist der Unterschied.</div>
+          
+          <div class=“form-group mt“>
+            <label class=“form-label“>Sprint-Ziel</label>
+            <textarea class=“form-textarea“ id=“sprint-note“ data-input=“sprint-note“
+                      Placeholder=“Bsp: MFA-Checkliste v1 fertigstellen, nur Testdomain“>${Utils.esc(sp.note)}</textarea>
+          </div>
+          
+          <div class=“timer-display ${timerClass}“ id=“timer-display“>
+            ${Utils.formatTimer(remaining)}
+          </div>
+          
+          <div class=“row mt“ style=“justify-content: center; gap: var(--space);“>
+            <span class=“pill“>
+              <span>Status</span>
+              <span class=“pill-value“>${sp.running ? ‚Läuft‘ : ‚Bereit‘}</span>
+            </span>
+            <span class=“pill“>
+              <span>Nach Sprint</span>
+              <span class=“pill-value text-${corridor.zone === ‚green‘ ? ‚ok‘ : corridor.zone === ‚yellow‘ ? ‚warn‘ : ‚danger‘}“>
+                ${afterSprint}/${CONFIG.LIMITS.DAILY_MINUTES}
+              </span>
+            </span>
+          </div>
+          
+          ${corridor.zone !== ‚green‘ ? `
+            <div class=“axiom ${corridor.zone === ‚red‘ ? ‚danger‘ : ‚warning‘} mt“>
+              <div class=“axiom-title“>${corridor.zone === ‚red‘ ? ‚🚫 Limit überschritten‘ : ‚⚠️ Achtung‘}</div>
+              <p style=“font-size: 0.85rem; margin: 0;“>
+                ${corridor.zone === ‚red‘ 
+                  ? ‚Dieser Sprint würde dein Tageslimit sprengen. Die DRV schaut zu. Mach Schluss.‘ 
+                  : ‚Du näherst dich dem Limit. Dieser Sprint ist der letzte für heute.‘}
+              </p>
+            </div>
+          ` : ‚‘}
+          
+          <div class=“btn-group mt“>
+            <button class=“btn ${btnClass} btn-fat“ data-action=“sprint-toggle“>
+              ${btnLabel}
+            </button>
+            <button class=“btn btn-danger btn-fat“ data-action=“sprint-reset“>
+              ↺ Reset
+            </button>
+          </div>
+        </div>
+        
+        <div class=“card“>
+          <h2 class=“card-title“>🔄 Core-Loop</h2>
+          <div class=“axiom“>
+            <ol class=“axiom-list“>
+              <li><strong>Drill wählen</strong> — z.B. „LCP & Hero-Bild“</li>
+              <li><strong>Sprint starten</strong> — ${sp.durationMin} Min fokussiert</li>
+              <li><strong>Test-Audit anlegen</strong> — Status: IN_ARBEIT</li>
+              <li><strong>Evidence verknüpfen</strong> — Screenshot/Code</li>
+              <li><strong>Gate-Check</strong> — Ziel ≥ 90%</li>
+              <li><strong>Logbuch verbuchen</strong> — 3-teiliger Eintrag</li>
+            </ol>
+          </div>
+        </div>
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: AUDITS
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚audits‘, () => {
+      Const audits = Store.state.audits;
+      
+      Const auditsHtml = audits.length > 0
+        ? audits.map(a => `
+            <div class=“check-item“>
+              <div class=“check-content“ style=“flex: 1;“>
+                <div class=“check-label“>${Utils.esc(a.domain)}</div>
+                <div class=“check-meta“>
+                  ${a.stage} · ${Utils.formatDateShort(a.created)}
+                  ${a.gateScore >= 90 ? `<span class=“text-ok“> · Gate ${a.gateScore}%</span>` : ‚‘}
+                </div>
+              </div>
+              <button class=“btn btn-ghost btn-icon text-danger“ 
+                      Data-action=“delete-audit“ data-id=“${a.id}“ title=“Löschen“>✕</button>
+            </div>
+          `).join(‚‘)
+        : `<div class=“empty“><div class=“empty-icon“>🔍</div><div class=“empty-text“>${CONFIG.LOBO.empty.audits}</div></div>`;
+      
+      Return `
+        <div class=“card“>
+          <h2 class=“card-title“>🔍 Übungs-Audit anlegen</h2>
+          <div class=“card-subtitle“>
+            Nur Test- oder Wettbewerbsdomains. Keine Bestandskunden. Kein Honorar. Alles kalt.
+          </div>
+          <div class=“lobo-quote“>Du baust kein Portfolio für morgen. Du baust Beweise für Tag X.</div>
+          
+          <div class=“form-row mt“>
+            <div class=“form-group“>
+              <label class=“form-label“>Domain/URL</label>
+              <input type=“text“ class=“form-input“ id=“audit-domain“ 
+                     Placeholder=“beispiel-makler.de“>
+            </div>
+            <div class=“form-group“>
+              <label class=“form-label“>Status</label>
+              <select class=“form-select“ id=“audit-stage“>
+                <option>NEU</option>
+                <option>IN_ARBEIT</option>
+                <option>ENTWURF</option>
+                <option>FERTIG_INTERNAL</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class=“btn btn-success btn-block mt“ data-action=“add-audit“>
+            + Übungs-Audit speichern
+          </button>
+        </div>
+        
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>📂 Audits</h2>
+            <span class=“badge badge-brand“>${audits.length}</span>
+          </div>
+          <div class=“checklist“>
+            ${auditsHtml}
+          </div>
+        </div>
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: EVIDENCE
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚evidence‘, () => {
+      Const evidence = Store.state.evidence;
+      
+      Const evidenceHtml = evidence.length > 0
+        ? evidence.map(e => `
+            <div class=“check-item“>
+              <div class=“check-content“ style=“flex: 1;“>
+                <div class=“check-label“>${Utils.esc(e.title || ‚(ohne Titel)‘)}</div>
+                <div class=“check-meta“>
+                  ${Utils.formatDateShort(e.ts)} · ${e.type}
+                </div>
+                ${e.note ? `<div class=“check-meta text-mono mt-xs“>${Utils.esc(e.note).slice(0, 100)}${e.note.length > 100 ? ‚…‘ : ‚‘}</div>` : ‚‘}
+              </div>
+              <button class=“btn btn-ghost btn-icon text-danger“ 
+                      Data-action=“delete-evidence“ data-id=“${e.id}“ title=“Löschen“>✕</button>
+            </div>
+          `).join(‚‘)
+        : `<div class=“empty“><div class=“empty-icon“>📎</div><div class=“empty-text“>${CONFIG.LOBO.empty.evidence}</div></div>`;
+      
+      Return `
+        <div class=“card“>
+          <h2 class=“card-title“>📎 Evidence erfassen</h2>
+          <div class=“card-subtitle“>
+            Hier landen nur Beweise aus Übungs-Audits. 3+1 System: Wenige, harte Beispiele.
+          </div>
+          <div class=“lobo-quote“>Ein Screenshot sagt mehr als tausend Worte. Vor allem vor Gericht.</div>
+          
+          <div class=“form-group mt“>
+            <label class=“form-label“>Titel</label>
+            <input type=“text“ class=“form-input“ id=“evidence-title“ 
+                   Placeholder=‘z.B. „P0-KONVERSIONSBLOCKER – CTA unter Keyboard“‘>
+          </div>
+          
+          <div class=“form-row“>
+            <div class=“form-group“>
+              <label class=“form-label“>Typ</label>
+              <select class=“form-select“ id=“evidence-type“>
+                <option>P0</option>
+                <option>P1</option>
+                <option>P2</option>
+                <option>TECH</option>
+                <option>UX</option>
+                <option>LEGAL</option>
+                <option>SONSTIGES</option>
+              </select>
+            </div>
+            <div class=“form-group“>
+              <label class=“form-label“>URL (optional)</label>
+              <input type=“url“ class=“form-input“ id=“evidence-url“ placeholder=https://...>
+            </div>
+          </div>
+          
+          <div class=“form-group“>
+            <label class=“form-label“>Notiz / Kontext</label>
+            <textarea class=“form-textarea“ id=“evidence-note“ 
+                      Placeholder=“Kurz, prüffreundlich, ohne Übertreibung.“></textarea>
+          </div>
+          
+          <button class=“btn btn-success btn-block“ data-action=“add-evidence“>
+            + Evidence speichern
+          </button>
+        </div>
+        
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>🗂️ Evidence-Liste</h2>
+            <span class=“badge badge-brand“>${evidence.length}</span>
+          </div>
+          <div class=“checklist“>
+            ${evidenceHtml}
+          </div>
+        </div>
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       VIEW: SURVIVAL
+       ═══════════════════════════════════════════════════════════════════════ */
+    Router.register(‚survival‘, () => {
+      Const p = Store.state.phoenix;
+      Const info = PhoenixCalc.dayInfo();
+      Const trash = Store.state.trash;
+      
+      // Definition of Done Check
+      Const insoComplete = p.pKonto && p.businessAccountCold && p.piPrepared && p.tagXPackageDraft;
+      Const drvComplete = p.zeitjournalStable && p.drvNoticeSent && p.ltaPrepared;
+      Const businessComplete = p.internalAuditsReady && p.explorationsPrepared;
+      
+      Return `
+        <div class=“card“>
+          <h2 class=“card-title“>🛡️ PROJEKT PHOENIX — Exekutionsplan</h2>
+          <div class=“card-subtitle“>
+            <strong>Zeithorizont:</strong> 12.11.2025 – Q1/2029<br>
+            <strong>Ziel:</strong> Verbraucherinsolvenz ex § 304 InsO als Nichtselbstständiger<br>
+            <strong>Status:</strong> Tag ${info.passed} · ${info.phase}
+          </div>
+          <div class=“lobo-quote“>Du kannst das System nicht austricksen. Aber du kannst es für dich arbeiten lassen — legal, präzise, strategisch.</div>
+        </div>
+        
+        <!—Pfeiler 1: InsO 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>⚖️ Pfeiler 1: InsO</h2>
+            <span class=“badge ${insoComplete ? ‚badge-ok‘ : ‚badge-danger‘}“>${insoComplete ? ‚✓‘ : ‚!‘}</span>
+          </div>
+          <div class=“card-subtitle“>Status als „Nichtselbstständiger“ unangreifbar sichern.</div>
+          
+          <div class=“axiom danger“>
+            <div class=“axiom-title“>🚫 Absolute Rote Linie</div>
+            <ul class=“axiom-list“>
+              <li>❌ <strong>KEINE</strong> Leistungserbringung (auch nicht umsonst)</li>
+              <li>❌ <strong>KEINE</strong> Rechnungsstellung</li>
+              <li>❌ <strong>KEINE</strong> Anzahlungen/Vorkasse</li>
+              <li>❌ <strong>KEIN</strong> ELSTER-Fragebogen</li>
+              <li>❌ <strong>KEINE</strong> Gewerbeanmeldung</li>
+            </ul>
+          </div>
+          
+          <div class=“checklist mt“>
+            <div class=“check-item“>
+              <div class=“check-box ${p.pKonto ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“pKonto“>
+                ${p.pKonto ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>P-Konto aktiv (§ 850k ZPO)</div>
+                <div class=“check-meta“>Basisschutz. Das Fundament.</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.businessAccountCold ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“businessAccountCold“>
+                ${p.businessAccountCold ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>Geschäftskonto „kalt“</div>
+                <div class=“check-meta“>Neues Konto ohne Dispo, ohne Altlasten.</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.piPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“piPrepared“>
+                ${p.piPrepared ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>§ 305 InsO-Bescheinigung</div>
+                <div class=“check-meta“>Bescheinigung jünger als 6 Monate.</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.tagXPackageDraft ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“tagXPackageDraft“>
+                ${p.tagXPackageDraft ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>Tag-X-Paket druckreif</div>
+                <div class=“check-meta“>Freigabe-Antrag (§ 35 Abs. 2), fiktive Rate.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!—Pfeiler 2: DRV 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>🏛️ Pfeiler 2: DRV</h2>
+            <span class=“badge ${drvComplete ? ‚badge-ok‘ : ‚badge-danger‘}“>${drvComplete ? ‚✓‘ : ‚!‘}</span>
+          </div>
+          <div class=“card-subtitle“>Widerspruch zwischen EM-Rente und Gründung proaktiv auflösen.</div>
+          
+          <div class=“axiom warning“>
+            <div class=“axiom-title“>⏱️ Zeit-Limit Parameter</div>
+            <table class=“param-table“>
+              <tr><th>Parameter</th><th>Wert</th></tr>
+              <tr><td>Tageslimit</td><td><code>≤ 3 Std./Tag</code></td></tr>
+              <tr><td>Heilige Obergrenze</td><td><code>≤ 179 Minuten</code></td></tr>
+              <tr><td>Regel</td><td>Jeder Tag ein Eintrag</td></tr>
+            </table>
+          </div>
+          
+          <div class=“checklist mt“>
+            <div class=“check-item“>
+              <div class=“check-box ${p.zeitjournalStable ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“zeitjournalStable“>
+                ${p.zeitjournalStable ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>PHOENIX-Protokoll lückenlos</div>
+                <div class=“check-meta“>Jeder Tag dokumentiert.</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.drvNoticeSent ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“drvNoticeSent“>
+                ${p.drvNoticeSent ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>Anzeige geänderter Verhältnisse</div>
+                <div class=“check-meta“>DRV über vorbereitende Tätigkeit informiert.</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.ltaPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“ltaPrepared“>
+                ${p.ltaPrepared ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>Antrag auf LTA (Reha)</div>
+                <div class=“check-meta“>Adressat: DRV-Reha-Beratung!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!—Pfeiler 3: Business 
+        <div class=“card“>
+          <div class=“card-header“>
+            <h2 class=“card-title“>💼 Pfeiler 3: Business</h2>
+            <span class=“badge ${businessComplete ? ‚badge-ok‘ : ‚badge-warn‘}“>${businessComplete ? ‚✓‘ : ‚…‘}</span>
+          </div>
+          <div class=“card-subtitle“>Den Start (Feb/März 2026) vorbereiten. USP: Mobile-First SEO-Auditing</div>
+          
+          <div class=“checklist mt“>
+            <div class=“check-item“>
+              <div class=“check-box ${p.internalAuditsReady ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“internalAuditsReady“>
+                ${p.internalAuditsReady ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>3-5 Übungs-Audits fertig</div>
+                <div class=“check-meta“>Status FERTIG_INTERNAL, Gate ≥90%</div>
+              </div>
+            </div>
+            
+            <div class=“check-item“>
+              <div class=“check-box ${p.explorationsPrepared ? ‚done‘ : ‚‘}“ data-action=“toggle-phoenix“ data-key=“explorationsPrepared“>
+                ${p.explorationsPrepared ? ‚✓‘ : ‚‘}
+              </div>
+              <div class=“check-content“>
+                <div class=“check-label“>Markt-Pipeline vorbereitet</div>
+                <div class=“check-meta“>1-2 Slot-Reservierungen für Feb/März 2026.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!—Definition of Done 
+        <div class=“card“>
+          <h2 class=“card-title“>✅ Definition of Done</h2>
+          <table class=“param-table mt“>
+            <tr>
+              <th>Bereich</th>
+              <th>Status</th>
+            </tr>
+            <tr>
+              <td>InsO — Antrag bereit, 0€, keine ELSTER</td>
+              <td>${insoComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+            </tr>
+            <tr>
+              <td>DRV — Zeitjournal, LTA beantragt</td>
+              <td>${drvComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+            </tr>
+            <tr>
+              <td>Business — Audits fertig, Pipeline</td>
+              <td>${businessComplete ? ‚<span class=“text-ok“>✅</span>‘ : ‚<span class=“text-warn“>⏳</span>‘}</td>
+            </tr>
+          </table>
+        </div>
+        
+        <!—Trash 
+        ${trash.length > 0 ? `
+          <div class=“card“>
+            <div class=“card-header“>
+              <h2 class=“card-title“>🗑️ Papierkorb</h2>
+              <button class=“btn btn-ghost text-danger“ data-action=“empty-trash“>Leeren</button>
+            </div>
+            <div class=“checklist“>
+              ${trash.slice(0, 5).map(t => `
+                <div class=“check-item“>
+                  <div class=“check-content“ style=“flex: 1;“>
+                    <div class=“check-label“>${Utils.esc(t.item.text || t.item.domain || t.item.title || ‚Eintrag‘)}</div>
+                    <div class=“check-meta“>${t.type} · ${Utils.formatDateShort(t.deletedAt)}</div>
+                  </div>
+                  <button class=“btn btn-ghost“ data-action=“restore“ data-id=“${t.id}“>↩</button>
+                </div>
+              `).join(‚‘)}
+            </div>
+          </div>
+        ` : ‚‘}
+      `;
+    });
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       THEME MANAGEMENT
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const Theme = {
+      Init() {
+        Document.documentElement.dataset.theme = Store.state.theme;
+        UI.updateThemeIcon(Store.state.theme);
+        
+        Document.getElementById(‚theme-toggle‘).addEventListener(‚click‘, () => {
+          Const newTheme = Store.state.theme === ‚dark‘ ? ‚light‘ : ‚dark‘;
+          Store.set(‚theme‘, newTheme);
+          Document.documentElement.dataset.theme = newTheme;
+          UI.updateThemeIcon(newTheme);
         });
       }
+    };
 
-      s += "\n4. Compliance-Profil\n";
-      s += "- Keine Rechnungsstellung für Audits innerhalb des PHOENIX-Zeitraums ohne Freigabe.\n";
-      s += "- Mini-Betrieb über EÜR und Logbuch dokumentiert.\n";
-      s += "- Executive-Logs (Auszug letzte 30 Tage) belegen Vorbereitung statt faktischer Vollausübung.\n\n";
-      execLogs.forEach(l=>{
-        s += `  ${l.date}: ${l.execLog}\n`;
+    /* ═══════════════════════════════════════════════════════════════════════
+       FILE IMPORT HANDLER
+       ═══════════════════════════════════════════════════════════════════════ */
+    Const FileImport = {
+      Init() {
+        Document.getElementById(‚file-import‘).addEventListener(‚change‘, € => {
+          Const file = e.target.files[0];
+          If (!file) return;
+          
+          Const reader = new FileReader();
+          Reader.onload = (ev) => {
+            If (Store.import(ev.target.result)) {
+              UI.toastRandom(‚imported‘, ‚success‘);
+              Router.render();
+              Navigation.render();
+              UI.updatePhaseBar();
+            } else {
+              UI.toastRandom(‚error‘, ‚error‘);
+            }
+          };
+          Reader.readAsText(file);
+          e.target.value = ‚‘;
+        });
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════════
+       INITIALIZATION — Los geht’s
+       ═══════════════════════════════════════════════════════════════════════ */
+    Function init() {
+      Console.log(`🦅 PHOENIX v${CONFIG.VERSION} ${CONFIG.CODENAME} — Initialisierung…`);
+      
+      // Initialize store
+      Store.init();
+      
+      // Initialize modules
+      Theme.init();
+      Navigation.init();
+      FileImport.init();
+      
+      // Initial UI updates
+      UI.updateDatestamp();
+      UI.updatePhaseBar();
+      UI.setStatus(‚bereit‘);
+      
+      // Initial render
+      Router.render();
+      
+      // Periodic updates
+      setInterval(() => {
+        UI.updateDatestamp();
+        UI.updatePhaseBar();
+      }, 60000);
+      
+      // Event subscriptions
+      EventBus.on(‚sprint:complete‘, () => Router.render());
+      EventBus.on(‚state:imported‘, () => {
+        UI.updatePhaseBar();
+        Navigation.render();
       });
+      
+      Console.log(‚🦅 PHOENIX bereit. Disziplin ist Freiheit.‘);
+    }
 
-      s += "\n5. Vorschlag Abführungsmodell (Platzhalter)\n";
-      s += "- Nach Erreichen stabiler Einkünfte aus freigegebener Tätigkeit: feste monatliche Quote,\n";
-      s += "  orientiert an vergleichbaren Teilzeitnettoeinkommen.\n";
-
-      outTit.textContent = "Tag-X-Paket · Rohentwurf für Rechtsberatung / Insolvenzverwalter";
-      out.textContent = s;
-      outBox.style.display = "block";
-    };
-
-    el("#gDRV").onclick = ()=>{
-      archiveCurrentDaily();
-      const range = el("#gDRVRange").value;
-      const logsRaw = [...state.logbook];
-      const idx = logsRaw.findIndex(l=>l.date===state.daily.date);
-      if(idx>-1) logsRaw[idx] = JSON.parse(JSON.stringify(state.daily));
-      else logsRaw.push(JSON.parse(JSON.stringify(state.daily)));
-
-      const logs = filterLogsByRange(logsRaw, range);
-      let s = "";
-      s += "PROTOKOLL · LEISTUNGSBILD (INTERNER ENTWURF FÜR DRV-KOMMUNIKATION)\n";
-      s += "-----------------------------------------------------------------\n";
-      s += `Zeitraum: ${range==="all"?"gesamtes PHOENIX-Fenster":`letzte ${range} Tage`}\n\n`;
-      let total = 0;
-      if(!logs.length){
-        s += "(Keine Einträge im gewählten Zeitraum.)\n";
-      }else{
-        logs.forEach(l=>{
-          total += l.activeMinutes||0;
-          s += `Datum: ${l.date}\n`;
-          s += `Arbeitsähnliche Zeit: ${(l.activeMinutes||0)} Min\n`;
-          s += `Belastungsnotiz: ${l.healthLog||"(keine notiert)"}\n`;
-          s += "--------------------------------------------------\n";
-        });
-      }
-      const avg = logs.length ? Math.round(total/logs.length) : 0;
-      s += `\nDurchschnittliche arbeitsähnliche Zeit: ${avg} Min/Tag.\n`;
-      s += "Hinweis: Entwurf. Konkrete Bewertung und Grenzen immer mit der DRV abstimmen.\n";
-
-      outTit.textContent = "Leistungsbild-Protokoll · Entwurf für DRV";
-      out.textContent = s;
-      outBox.style.display = "block";
-    };
-
-    el("#gEUE").onclick = ()=>{
-      archiveCurrentDaily();
-      const byYear = {};
-      state.finances.entries.forEach(e=>{
-        const y = e.year || (e.date||"").slice(0,4);
-        if(!byYear[y]) byYear[y]={ein:0,aus:0};
-        if(e.type==="EIN") byYear[y].ein += Number(e.amount)||0;
-        if(e.type==="AUS") byYear[y].aus += Number(e.amount)||0;
-      });
-      let s = "";
-      s += "KURZ-EÜR (INTERNER AUSZUG)\n";
-      s += "--------------------------\n\n";
-      const years = Object.keys(byYear).sort();
-      if(!years.length){
-        s += "(Noch keine Einträge vorhanden.)\n";
-      }else{
-        years.forEach(y=>{
-          const ein = byYear[y].ein;
-          const aus = byYear[y].aus;
-          s += `Jahr ${y}:\n`;
-          s += `  Einnahmen: ${ein.toFixed(2)} €\n`;
-          s += `  Ausgaben:  ${aus.toFixed(2)} €\n`;
-          s += `  Gewinn:    ${(ein-aus).toFixed(2)} €\n\n`;
-        });
-      }
-      s += "Hinweis: Werte dienen als Basis für die offizielle Anlage S/EÜR in ELSTER.\n";
-
-      outTit.textContent = "Kurz-EÜR · Grundlage für Steuer / Beratung";
-      out.textContent = s;
-      outBox.style.display = "block";
-    };
-  }
-
-})();
-</script>
+    // Start
+    If (document.readyState === ‚loading‘) {
+      Document.addEventListener(‚DOMContentLoaded‘, init);
+    } else {
+      Init();
+    }
+  })();
+  </script>
 </body>
 </html>
