@@ -1,0 +1,64 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Binaries
+phoenix-api
+phoenix-worker
+phoenix-cli
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+*.out
+
+# Go workspace file
+go.work
+
+# Dependency directories
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+
+# Database
+*.db
+*.sqlite
+
+# Coverage
+coverage.txt
+coverage.html
+
+# Frontend
+node_modules/
+web/dist/
+web/build/
+web/.next/
+
+# Docker volumes
+postgres_data/
+redis_data/
